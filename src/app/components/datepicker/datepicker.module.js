@@ -6,6 +6,6 @@ import './datepicker.scss';
 const datepickerModule = angular.module('datepicker-module', []);
 
 datepickerModule
-  .directive('vacDatepicker', DatepickerDirective);
+  .directive('chiDatepicker', DatepickerDirective);
 
 export default datepickerModule;
