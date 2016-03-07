@@ -53,6 +53,7 @@ module.exports = function(_path) {
         ]
       }, {
         test: /\.js$/,
+        exclude: /node_modules/,
         loaders: [
           'baggage-loader?[file].html&[file].css',
           'ng-annotate-loader',

@@ -1,43 +1,34 @@
-import * as routeStates  from '../../core/constants/routeStates.const';
-import { ANONIM }  from '../../core/constants/roles.consts';
+export default function (app) {
+  
+  app.service('permission', PermissionService);
 
-let _this = {};
+  function PermissionService ($rootScope, $state, firebaseService, toastr, $parse, states, roles) {
+    'ngInject'
+    
+    this.init = init;
 
-export default class PermissionService {
-	constructor ($rootScope, $state, firebaseService, toastr, $parse) {
-		'ngInject';
-		
-		_this.firebaseService = firebaseService;
-		_this.$rootScope = $rootScope;
-		_this.$state = $state;
-		_this.toastr = toastr;
-    _this.$parse = $parse;
-		
-	}
-
-
-	init (event, toState, toParams, fromState) {
-        let roles = _this.$parse('data.roles')(toState) || ANONIM;
-        if( !roles.length ){
-          _this.toastr.error(this.$rootScope.error);
-          event.preventDefault();
-          return;
-        }
-
-        if ( _this.firebaseService.checkPersmissions(roles) ) {
-          return;
-        }
-
+    function init (event, toState, toParams, fromState) {
+      let roles = $parse('data.roles')(toState) || roles.ANONIM;
+      if( !roles.length ){
+        toastr.error('can not url fo this state');
         event.preventDefault();
+        return;
+      }
 
-        if( fromState.url === '^' ) {
-            if( _this.firebaseService.getAuthUser() ) {
-                _this.$state.go(routeStates.HOME);
-            } else {
-                _this.$state.go(routeStates.LOGIN);
-            }
-        }
+      if ( firebaseService.checkPersmissions(roles) ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if( fromState.url === '^' ) {
+          if( firebaseService.getAuthUser() ) {
+              $state.go(states.HOME);
+          } else {
+              $state.go(states.LOGIN);
+          }
+      }
     }
+  }
 
 }
-

@@ -1,9 +1,12 @@
 'use strict';
 
-function runBlock($log) {
+function runBlock($log, $rootScope, permission) {
 	'ngInject';
 
-	$log.debug('Hello from run block!');
+	$rootScope.$on("$stateChangeStart", permission.init);
+
+	$log.debug('run block end.');
+	
 }
 
 export default runBlock;

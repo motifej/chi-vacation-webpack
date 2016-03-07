@@ -1,0 +1,16 @@
+.datepicker {
+	display: block;
+	color: black;
+}
+.datepicker__input::-webkit-calendar-picker-indicator,
+.datepicker__input::-webkit-inner-spin-button {
+    display: none;
+}
+.datepicker__btn {
+	height: 34px;
+	border-radius: 0 4px 4px 0;
+	margin-top: 0;
+}
+.dropdown-menu table {
+	outline: none;
+}

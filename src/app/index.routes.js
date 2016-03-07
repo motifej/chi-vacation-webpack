@@ -1,16 +1,65 @@
 'use strict';
 
-function routeConfig($urlRouterProvider, $stateProvider, resolverProvider) {
+function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, firebaseResolverProvider, roles, states) {
   'ngInject';
 
-
     $stateProvider
-        .state('async', {
-          url: '/async',
-          templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/async-page-example/async.html'),
-          controller: 'asyncController',
+        .state(states.LOGIN, {
+          url: '/login',
+          data: {
+              roles: roles.ANONIM
+          },
+          views: {
+            'content@': {
+              templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/login/login.html'),
+              controller: 'LoginController'
+            }
+          },
           resolve: {
-            asyncPreloading: resolverProvider.asyncPagePrealoading
+            asyncPreloading: resolverProvider.asyncPagePrealoading('login')
+          }
+        })
+        .state(states.SITE, {
+          'abstract': true,
+          resolve: {
+            user : firebaseResolverProvider.loadUser
+          }
+        })
+        .state(states.ADMIN, {
+          parent: states.SITE,
+          url: '/admin',
+          data: {
+              roles: roles.ADMIN
+          },
+          resolve: {
+            asyncPreloading: resolverProvider.asyncPagePrealoading('admin'),
+            userList : firebaseResolverProvider.getUsersList
+          },
+          views: {
+            'content@': {
+              templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/admin/vv.html'),
+              controller: 'VvController',
+              controllerAs: 'vv'
+              }
+          }
+        })
+        .state(states.MANAGER, {
+          parent: states.SITE,
+          url: '/manager',
+          data: {
+              roles: roles.MANAGER
+          },
+          resolve: {
+            asyncPreloading: resolverProvider.asyncPagePrealoading('manager'),
+            userList : firebaseResolverProvider.getUsersList
+          },
+
+          views: {
+            'content@': {
+              templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/manager/manager.html'),
+              controller: 'ManagerController',
+              controllerAs: 'manager'
+              }
           }
         });
 
@@ -22,4 +71,3 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider) {
 export default angular
   .module('index.routes', [])
     .config(routeConfig);
-

@@ -5,23 +5,22 @@ export default function (app) {
 
     function resolverProvider () {
         this.asyncPagePrealoading = asyncPagePrealoading;
-        this.$get = function() { return this; };
+        this.$get = () => this;
     }
 
-    
-        function asyncPagePrealoading ($q, $ocLazyLoad) {
-            "ngInject";
-
-            var deferred = $q.defer();
-            require.ensure([], function (require) {
-                var asyncModule = require('../../pages/async-page-example/async.module');
-                $ocLazyLoad.load({
-                    name: asyncModule.name,
+        function asyncPagePrealoading(name) {
+            return ($q, $ocLazyLoad) => {
+                "ngInject";
+                var deferred = $q.defer();
+                require.ensure([], function (require) {
+                    var asyncModule = require(`../../pages/${name}/${name}.module`);
+                    $ocLazyLoad.load({
+                        name: asyncModule.name,
+                    });
+                    deferred.resolve(asyncModule.controller);
                 });
-                deferred.resolve(asyncModule.controller);
-            });
-            return deferred.promise;
+                return deferred.promise;
+            }
         }
-    
 
 }

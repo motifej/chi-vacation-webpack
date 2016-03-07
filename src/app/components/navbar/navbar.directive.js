@@ -1,8 +1,4 @@
-import * as actions from '../../core/constants/actions.const';
-import * as routeStates  from '../../core/constants/routeStates.const';
-import * as roles  from '../../core/constants/roles.consts';
 import navbarTpl from './navbar.html';
-
 
 export default function NavbarDirective() {
   'ngInject';
@@ -20,16 +16,18 @@ export default function NavbarDirective() {
 }
 
 class NavbarController {
-  constructor (firebaseService, $rootScope, $scope) {
+  constructor (firebaseService, $rootScope, $scope, actions, roles, states) {
     'ngInject';
     this.firebaseService = firebaseService;
-    this.routeStates = routeStates;
+    this.states = states;
+    this.roles = roles;
     this.user = {};
+    this.actions = actions
     this.activate($rootScope, $scope);
   }
 
   activate($rootScope, $scope) {
-    let destr = $rootScope.$on(actions.USERLOADED,
+    let destr = $rootScope.$on(this.actions.USERLOADED,
                   (ev, user) => this.user = user );
     $scope.$on('destroy', destr);
   }
@@ -40,10 +38,10 @@ class NavbarController {
   }
 
   isAdmin() {
-    return this.user.role == roles.ADMIN;
+    return this.user.role == this.roles.ADMIN;
   }
 
   isManager() {
-    return this.user.role == roles.MANAGER;
+    return this.user.role == this.roles.MANAGER;
   }
 }

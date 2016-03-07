@@ -8,6 +8,8 @@ import "angular-ui-router";
 
 import 'jquery';
 
+import 'ngstorage';
+
 
 
 import "oclazyload";
@@ -24,6 +26,13 @@ import "angular-messages";
 
 import "angular-aria";
 
+import "angularfire";
+
+import "angular-toastr";
+
+import "angular-ui-bootstrap";
+
+import "angular-bootstrap-calendar";
 
 
 // local scripts

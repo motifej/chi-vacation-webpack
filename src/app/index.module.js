@@ -4,7 +4,6 @@ import * as components from './index.components';
 import config from './index.config';
 import run from './index.run';
 
-
 const App = angular.module(
   "test", [
     // plugins
@@ -16,6 +15,12 @@ const App = angular.module(
 	"ngMessages", 
 	"ngAria", 
 	"oc.lazyLoad",
+  'toastr',
+  "firebase",
+  "ui.bootstrap",
+  "mwl.calendar",
+  "ngStorage",
+
 
     // core
     require("./core/core.module").name,
@@ -27,7 +32,8 @@ const App = angular.module(
     require("./index.routes").name,
 
     // pages
-    require("./pages/main/main.module").name
+    require("./pages/user/user.module").name,
+    require("./pages/error/error.module").name
 
   ]
 );
