@@ -1,8 +1,8 @@
-import newUserFormTmpl from './modal/addNewUser/newUserForm.html';
-import userInfoTmpl from './modal/userInfo/userInfo.html';
+let newUserFormTmpl =require('!!file!./modal/addNewUser/newUserForm.html');
+let userInfoTmpl = require('!!file!./modal/userInfo/userInfo.html');
 
 export default class ManagerController {
-  constructor ($scope, $timeout, firebaseService, userList, /*$modal,*/ moment, groups, status) {
+  constructor ($scope, $timeout, firebaseService, userList, $uibModal, moment, groups, status) {
     'ngInject';
 
     this.firebaseService = firebaseService;
@@ -14,7 +14,7 @@ export default class ManagerController {
     this.status = status;
     this.filter = {};
     this.statusFilter = { status: status.INPROGRESS };
-    //this.modal = $modal;
+    this.modal = $uibModal;
 
   }
 

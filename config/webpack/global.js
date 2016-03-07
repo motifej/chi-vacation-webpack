@@ -85,7 +85,12 @@ module.exports = function(_path) {
           "expose?angular"
         ]
       },
-      
+      {
+        test: require.resolve("moment"),
+        loaders: [
+          "expose?moment"
+        ]
+      },      
       {
         test: require.resolve("jquery"),
         loaders: [
