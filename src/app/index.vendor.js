@@ -34,6 +34,8 @@ import "angular-ui-bootstrap";
 
 import "angular-bootstrap-calendar";
 
+import "moment-weekday-calc";
+
 
 // local scripts
 //import "../assets/js/...";

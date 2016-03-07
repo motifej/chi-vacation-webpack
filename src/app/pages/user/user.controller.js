@@ -80,8 +80,8 @@ export default class UserController {
     }
   }
 
-  calcDays() { return 20;
-    //return this.moment().isoWeekdayCalc(this.$scope.startDate, this.$scope.endDate, [1,2,3,4,5]);
+  calcDays() { 
+    return this.moment().isoWeekdayCalc(this.$scope.startDate, this.$scope.endDate, [1,2,3,4,5]);
   }
 
   deleteVacation(item) {
