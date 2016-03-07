@@ -16,7 +16,7 @@ export default function (app) {
         }
 
         function getUsersList(firebaseService) {
-            'ngIngect'
+            'ngInject'
             return firebaseService.getUsersList();
         }
 
