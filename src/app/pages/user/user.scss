@@ -1,19 +1,20 @@
+$default-color: #FF5722;
+
 .user-wrapper {
 	background: url("../../../assets/images/bg.jpg") top center no-repeat;
 	background-size: cover;
 }
 .user__container {
 	display: flex;
-	min-height: 100vh;
+	min-height: calc(100vh - 51px);
 	align-items:center;
-	padding-top: 70px;
-	padding-bottom: 20px;
+	margin-top: 51px;
 }
 .user-form {
 	padding: 30px;
+	color: white;
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .6);
-	color: white;
 }
 .user-form input {
 	text-align: center;
@@ -26,8 +27,31 @@
 .user-form__last-row {
 	margin-bottom: 20px;
 }
-.user-page__wrapper .panel-heading {
-	background-color: #FF5722;
+.user-wrapper .user__container .panel {
+	background-color: $default-color;
+	color: #fff;
+}
+.user-wrapper .table tbody tr:hover {
+	background-color: #fff;
+	color: $default-color;
+}
+.table a.btn {
+	background-color: #000;
+	border: #000;
+	color: #fff;
+}
+.table a.btn:hover, .table a.btn:hover .glyphicon {
+	color: $default-color;
+}
+.glyphicon {
 	color: #000;
 }
-
+.table .glyphicon-remove {
+	color: #fff;
+}
+.user-wrapper .user__container .panel-heading:hover {
+	color: #000;
+}
+.user-wrapper .user__container .panel-heading:hover .glyphicon {
+	color: #fff;
+}

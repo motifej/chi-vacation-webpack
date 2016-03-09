@@ -21,6 +21,7 @@ class NavbarController {
     this.firebaseService = firebaseService;
     this.states = states;
     this.roles = roles;
+    this.isCollapsed = true;
     this.user = {};
     this.actions = actions
     this.activate($rootScope, $scope);
@@ -43,5 +44,9 @@ class NavbarController {
 
   isManager() {
     return this.user.role == this.roles.MANAGER;
+  }
+
+  collapsed() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }
