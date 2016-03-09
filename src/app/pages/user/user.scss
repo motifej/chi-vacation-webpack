@@ -48,14 +48,19 @@
 	border: #000;
 	color: #fff;
 }
-.table a.btn {
-	background-color: #000;
-	border: #000;
+.table a.btn:hover, .table a.btn:hover .glyphicon {
+	color: #FF5722;
 }
 .glyphicon {
 	color: #000;
 }
 .table .glyphicon-remove {
+	color: #fff;
+}
+.user-wrapper .user__container .panel-heading:hover {
+	color: #000;
+}
+.user-wrapper .user__container .panel-heading:hover .glyphicon {
 	color: #fff;
 }
 /*#FFEB3B
