@@ -1,11 +1,9 @@
 <div class="input-group">
-    <input name="{{name}}" type="date" class="form-control datepicker__input" disabled
-        datepicker-popup
+    <input name="{{name}}" type="date" class="form-control datepicker__input" readonly
+        uib-datepicker-popup
         ng-model="curDate"
         is-open="popup.opened"
-        min-date="minDate"
-        max-date="maxDate"
-        datepicker-options="{startingDay: 1}"
+        datepicker-options="{startingDay: 1, minDate: minDate, maxDate: maxDate}"
         show-button-bar="false"
         alt-input-formats="altInputFormats">
     <span class="input-group-btn">

@@ -9,17 +9,17 @@ const App = angular.module(
     // plugins
     require('angular-ui-router'),
     "ngAnimate", 
-	"ngCookies", 
-	"ngTouch", 
-	"ngSanitize", 
-	"ngMessages", 
-	"ngAria", 
-	"oc.lazyLoad",
-  'toastr',
-  "firebase",
-  "ui.bootstrap",
-  "mwl.calendar",
-  "ngStorage",
+  	"ngCookies", 
+  	"ngTouch", 
+  	"ngSanitize", 
+  	"ngMessages", 
+  	"ngAria", 
+  	"oc.lazyLoad",
+    'toastr',
+    "firebase",
+    "ui.bootstrap",
+    "mwl.calendar",
+    "ngStorage",
 
 
     // core

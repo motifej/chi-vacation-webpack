@@ -1,27 +1,23 @@
-import newUserFormTmpl from './modal/addNewUser/newUserForm.html';
-import userInfoTmpl from './modal/userInfo/userInfo.html';
+import { find } from 'lodash';
 
 export default class ManagerController {
-  constructor ($scope, $timeout, firebaseService, userList, /*$modal,*/ moment, groups, status) {
+  constructor ($scope, $timeout, firebaseService, userList, $uibModal, moment, groups, status) {
     'ngInject';
 
     this.firebaseService = firebaseService;
-    this.users = userList/*.map(user => {
-      user.vacations.list = user.vacations.list.filter(item => item.startDate && item.endDate);
-      return user;
-    })*/;
+    this.users = userList;
     this.groups = groups;
     this.status = status;
     this.filter = {};
     this.statusFilter = { status: status.INPROGRESS };
-    //this.modal = $modal;
+    this.modal = $uibModal;
 
   }
 
     confirmVacation(user, id) {
      var vacation = find(user.vacations.list, { id: id });
-     vacation.status = status.CONFIRMED;
-      //user.vacations.total -= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
+     vacation.status = this.status.CONFIRMED;
+      user.vacations.total -= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
       this.firebaseService.updateUserData(user);
     }
     rejectVacation(user, id) {
@@ -39,14 +35,14 @@ export default class ManagerController {
     }
     openNewUserForm() {
       this.modal.open({
-        templateUrl: newUserFormTmpl,
+        templateUrl: require('!!file!./modal/addNewUser/newUserForm.html'),
         controller: require('./modal/addNewUser/addNewUser.controller'),
         controllerAs: 'user'
       });
     }
     userInfo(user) {
       this.modal.open({
-        templateUrl: userInfoTmpl,
+        templateUrl: require('!!file!./modal/userInfo/userInfo.html'),
         controller: require('./modal/userInfo/userInfo.controller'),
         controllerAs: 'info',
         resolve: {
