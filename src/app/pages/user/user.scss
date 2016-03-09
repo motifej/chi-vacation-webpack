@@ -28,6 +28,14 @@
 .form-control[disabled] {
 	cursor: auto;
 }
+.user-form__btn:hover {
+	color: white;
+	background-color: rgba(155,155,155,.2);
+}
+.user-page__wrapper .panel-heading {
+	background-color: #FF5722;
+	color: #000;
+}
 /*#FFEB3B
 #E57373
 #81C784
