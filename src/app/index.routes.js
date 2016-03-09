@@ -16,7 +16,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
             }
           },
           resolve: {
-            asyncPreloading: resolverProvider.asyncPagePrealoading('login')
+            asyncPreloading: resolverProvider.loginPagePrealoading
           }
         })
         .state(states.SITE, {
@@ -32,7 +32,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
               roles: roles.ADMIN
           },
           resolve: {
-            asyncPreloading: resolverProvider.asyncPagePrealoading('admin'),
+            asyncPreloading: resolverProvider.adminPagePrealoading,
             userList : firebaseResolverProvider.getUsersList
           },
           views: {
@@ -50,7 +50,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
               roles: roles.MANAGER
           },
           resolve: {
-            asyncPreloading: resolverProvider.asyncPagePrealoading('manager'),
+            asyncPreloading: resolverProvider.managerPagePrealoading,
             userList : firebaseResolverProvider.getUsersList
           },
 

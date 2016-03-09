@@ -43,7 +43,7 @@ a:focus {
   border: 1px solid $default-color;
 }
 .chi--active {
-  background-color: $default-color !important;
+  background-color: $default-color;
 }
 .chi--active:hover {
   background-color: darken($default-color, 10%) !important;
