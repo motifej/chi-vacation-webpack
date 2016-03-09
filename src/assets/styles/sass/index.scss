@@ -1,12 +1,56 @@
+$default-color: #FF5722;
+$bg-color: rgba(0, 0, 0, .7);
+
+$font-color: white;
+
 
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+
+
+/*Theme color1: #f9844c, color2: #4ECB8C, color3: rgb(232, 71, 0), color4: #FF5722*/
+body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.clearfix:before {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+.chi-link {
+  color: white;
+  text-decoration: none;
+}
+.chi-link:hover {
+  color: #f9844c !important;
+}
+.chi-btn--default {
+  background-color: $default-color;
+}
+.chi-btn--default:hover {
+  color: white;
+  background-color: rgba(100, 34, 13, .2);
+  border: 1px solid $default-color;
+}
+.chi--active {
+  background-color: $default-color;
+}
+.page-loading {
+  margin-top: 15%;
+    font-size: 150px;
+    text-align: center;
+}
 
 
 html { height: 100%; }
 body {
   min-height: 100%;
   position: relative;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .page-loading {

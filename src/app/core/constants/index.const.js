@@ -7,8 +7,6 @@ import * as states  from './routeStates.const';
 import * as status from './status.consts';
 import { groups } from './groups.consts';
 
-let moment = require('moment');
-
 export default function (app) {
     app
         .constant('actions', actions)
@@ -18,5 +16,4 @@ export default function (app) {
         .constant('states', states)
         .constant('status', status)
         .constant('groups', groups)
-        .constant("moment", moment);
 }

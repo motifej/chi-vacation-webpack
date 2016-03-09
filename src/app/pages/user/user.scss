@@ -1,23 +1,18 @@
-.user-page__wrapper {
-	width: 95%;
-	margin: 0 auto;
-	padding: 50px 0 0;
-}
-
 .user-wrapper {
-    background: url('../../../assets/images/bg-body3.jpg') no-repeat;
-    background-color: #000;
-    background-size: cover;
-    height: 100%;
-    width: 100%;
+	background: url("../../../assets/images/bg.jpg") top center no-repeat;
+	background-size: cover;
+}
+.user__container {
+	display: flex;
+	min-height: calc(100vh - 51px);
+	align-items:center;
+	margin-top: 51px;
 }
 .user-form {
-	margin-top: 25%;
 	padding: 30px;
 	color: white;
-	border: 2px solid white;
 	border-radius: 5px;
-	background-color: rgba(155,155,155,.1);
+	background-color: rgba(0, 0, 0, .6);
 }
 .user-form input {
 	text-align: center;
@@ -27,9 +22,8 @@
 	margin-top: 0px;
 	margin-bottom: 20px;
 }
-.user-form__btn {
-	background-color: transparent;
-	border: solid #fff 1px;
+.user-form__last-row {
+	margin-bottom: 20px;
 }
 .form-control[disabled] {
 	cursor: auto;
@@ -38,3 +32,11 @@
 	color: white;
 	background-color: rgba(155,155,155,.2);
 }
+.user-page__wrapper .panel-heading {
+	background-color: #FF5722;
+	color: #000;
+}
+/*#FFEB3B
+#E57373
+#81C784
+#66BB6A*/

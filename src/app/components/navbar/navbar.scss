@@ -1,21 +1,26 @@
 vac-navbar {
 	.main-navbar{
+		position: absolute;
+		width: 100%;
+		top: 0;
+		left: 0;
 		margin: 0;
-	}
+		background-color: rgba(0, 0, 0, .8);
 
-	.logout__dropdown{
-		cursor: pointer;
-		text-align: center;
-		font-weight: bold;
-		letter-spacing: 2px;
-		line-height: 30px;
-		color: #9d9d9d;
-		background: #000;
-		border: solid #fff 1px;
-
-		&:hover {
-			color: #fff;
+		.logout__dropdown{
+			cursor: pointer;
+			text-align: center;
+			font-weight: bold;
+			letter-spacing: 2px;
+			line-height: 30px;
+			color: white;
+			background-color: rgba(100, 34, 13, .2);
+			border: 1px solid #f9844c;
+			&:hover{
+				background-color: #f9844c;
+			}
 		}
+
 	}
 
 }
