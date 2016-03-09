@@ -80,7 +80,7 @@ export default class UserController {
     }
   }
 
-  calcDays() { 
+  calcDays() {
     return this.moment().isoWeekdayCalc(this.$scope.startDate, this.$scope.endDate, [1,2,3,4,5]);
   }
 

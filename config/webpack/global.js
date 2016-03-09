@@ -91,14 +91,14 @@ module.exports = function(_path) {
         loaders: [
           "expose?moment"
         ]
-      },      
+      },
       {
         test: require.resolve("jquery"),
         loaders: [
           "expose?$!expose?jQuery"
         ]
       }
-      
+
       ]
     },
 
