@@ -1,18 +1,20 @@
 export default class UserController {
 
-  constructor ($scope, $log, firebaseService, moment, toastr, user) {
+  constructor ($scope, $log, $timeout, firebaseService, moment, toastr, user) {
     'ngInject';
 
     $scope.startDate = new Date();
-    $scope.minStartDate = $scope.startDate;
-    $scope.endDate = $scope.startDate;
-    $scope.minEndDate = $scope.startDate;
+    $scope.minStartDate = new Date($scope.startDate);
+    $scope.endDate = new Date($scope.startDate);
+    $scope.minEndDate = new Date($scope.startDate);
 
-    this.user = user;
     this.$scope = $scope;
+    this.$timeout = $timeout;
+    this.user = user;
+    this.vacationDays = this.calcDays();
     this.toastr = toastr;
     this.moment = moment;
-    this.log = $log;
+    this.$log = $log;
     this.firebaseService = firebaseService;
     this.activate($scope);
 
@@ -21,14 +23,14 @@ export default class UserController {
   activate(scope) {
 
     scope.$watch('startDate', function() {
-      if (scope.endDate <= scope.startDate) scope.endDate = scope.startDate;
-      scope.minEndDate = scope.startDate;
+      if (scope.endDate <= scope.startDate) scope.endDate = new Date(scope.startDate);
+      scope.minEndDate = new Date(scope.startDate);
     });
 
   }
 
   submitHandler(startDate, endDate) {
-    this.log.info(this.user);
+    this.$log.info(this.user);
 
     let vm = this;
     let sDate = new Date(startDate).getTime();
@@ -81,7 +83,7 @@ export default class UserController {
   }
 
   calcDays() {
-    return this.moment().isoWeekdayCalc(this.$scope.startDate, this.$scope.endDate, [1,2,3,4,5]);
+    this.$timeout(()=> this.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startDate, this.$scope.endDate, [1, 2, 3, 4, 5]));
   }
 
   deleteVacation(item) {

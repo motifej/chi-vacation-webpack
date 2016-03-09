@@ -123,6 +123,7 @@
             name="startDate"
             ng-model="startDate"
             min-date="minStartDate"
+            calc-days="userCtrl.calcDays(name, date)"
             >
             </chi-datepicker>
           </div>
@@ -132,6 +133,7 @@
             name="endDate"
             ng-model="endDate"
             min-date="minEndDate"
+            calc-days="userCtrl.calcDays(name)"
             >
             </chi-datepicker>
           </div>
@@ -140,7 +142,7 @@
           <div class="form-group col-md-4">
             <label for="selected">Selected vacation days</label>
             <input type="text" id="selected" class="form-control user__total-days" readonly
-            ng-value="userCtrl.calcDays()">
+            ng-value="userCtrl.vacationDays">
           </div>
           <div class="form-group col-md-4">
             <label for="available">Available days</label>

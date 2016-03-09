@@ -1,3 +1,5 @@
+$default-color: #FF5722;
+
 vac-navbar {
 	.main-navbar{
 		width: 100%;
@@ -30,8 +32,13 @@ vac-navbar {
 			border-radius: 3px;
 			margin: 10px;
 			line-height: 25px;
-			border: solid 1px #FF5722;
+			border: solid 1px $default-color;
 			color: white;
+			background-color: rgba(100, 34, 13, .2);
+			border: 1px solid $default-color;
+			&:hover{
+				background-color: $default-color;
+			}
 		}
 	}
 }
