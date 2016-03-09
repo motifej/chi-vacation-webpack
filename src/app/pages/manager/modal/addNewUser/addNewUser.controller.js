@@ -1,5 +1,5 @@
 export default class AddNewUserController {
-  constructor ($filter, $uibModalInstance, toastr, firebaseService) {
+  constructor ($filter, $uibModalInstance, toastr, firebaseService, users, groups) {
     'ngInject';
 
     this.invalidForm = false;
@@ -9,6 +9,8 @@ export default class AddNewUserController {
     this.firebaseService = firebaseService;
     this.toastr = toastr;
     this.modalInstance = $uibModalInstance;
+    this.group = groups;
+    this.role = users;
 
     this.newUser = {
       firstName: '',

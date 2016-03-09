@@ -3,7 +3,7 @@
 // Depends
 var path              = require('path');
 var webpack           = require('webpack');
-var autoprefixer      = require('autoprefixer-core');
+var autoprefixer      = require('autoprefixer');
 var Manifest          = require('manifest-revision-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -52,6 +52,9 @@ module.exports = function(_path) {
           'html-loader?attrs[]=img:src&attrs[]=img:data-src'
         ]
       }, {
+        test: /index.config.js$/,
+        loader: "imports?DEVELOPMENT=>" + DEVELOPMENT
+      }, {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: [
@@ -76,7 +79,7 @@ module.exports = function(_path) {
         ]
       }, {
         test: /\.(jpe?g|png|gif)$/i,
-        loaders: ['url-loader?name=assets/images/[name]_[hash].[ext]']
+        loader: DEVELOPMENT ? 'url-loader' : 'url-loader?name=assets/images/[name]_[hash].[ext]&limit=10000'
       }, {
         test: require.resolve("angular"),
         loaders: [
@@ -128,7 +131,7 @@ module.exports = function(_path) {
         rootAssetPath: rootAssetPath,
         ignorePaths: ['.DS_Store']
       }),
-      new ExtractTextPlugin('assets/styles/css/[name]' + (NODE_ENV === 'development' ? '' : '.[chunkhash]') + '.css', { allChunks: true }),
+      new ExtractTextPlugin('assets/styles/css/[name]' + ( DEVELOPMENT ? '' : '.[chunkhash]') + '.css', { allChunks: true }),
       new HtmlWebpackPlugin({
         filename: 'index.html',
         template: path.join(_path, 'src', 'tpl-index.html')
