@@ -11,8 +11,8 @@
       </a>
     </div>
 
-    <div class="collapse navbar-collapse main-navbar__menu" uib-collapse="vm.isCollapsed">
-      <ul class="nav navbar-nav" ng-click="vm.collapsed()">
+    <div class="collapse navbar-collapse" uib-collapse="vm.isCollapsed">
+      <ul class="nav navbar-nav main-navbar__menu" ng-click="vm.collapsed(true)">
         <li ui-sref-active="chi--active" ng-if='vm.user.role'>
           <a ui-sref={{vm.states.HOME}}>Home</a>
         </li>
@@ -25,16 +25,17 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right acme-navbar-text" ng-if='vm.user.uid'>
-        <li class="dropdown" uib-dropdown>
-            <a href="#" uib-dropdown-toggle class="chi-link">
-              Welcome, &nbsp; <span>{{vm.user.firstName + " " + vm.user.lastName}}</span>
-            </a>
-            <div  class="logout__dropdown"
-                  uib-dropdown-menu
+        <li>
+            <span class="welcome">
+              Welcome, &nbsp; {{vm.user.firstName + " " + vm.user.lastName}}
+            </span> 
+        </li>
+        <li>
+          <button class="chi-btn--default logout"
                   ng-click="vm.logOut()"
                   ui-sref={{vm.states.LOGIN}}>
-                <span>LogOut</span>
-            </div>
+                  LogOut
+          </button>
         </li>
       </ul>
     </div>

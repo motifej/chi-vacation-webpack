@@ -46,7 +46,7 @@ class NavbarController {
     return this.user.role == this.roles.MANAGER;
   }
 
-  collapsed() {
-    this.isCollapsed = !this.isCollapsed;
+  collapsed(val) {
+    this.isCollapsed = val || !this.isCollapsed;
   }
 }
