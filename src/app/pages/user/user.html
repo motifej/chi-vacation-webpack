@@ -1,10 +1,10 @@
 <div class="user-wrapper clearfix">
   <div class="container user__container">
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-6 col-md-5 col-lg-4">
         <div class="panel-group">
           <uib-accordion>
-            <uib-accordion-group is-open="false" class="panel panel-warning">
+            <uib-accordion-group is-open="false">
               <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-folder-open"></span></div>
@@ -14,25 +14,25 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th class="col-md-1 text-center">№</th>
-                    <th class="col-md-5 text-center">Start vacation</th>
-                    <th class="col-md-5 text-center">End vacation</th>
-                    <th class="col-md-1 text-center">Action</th>
+                    <th class="col-xs-1 text-center">№</th>
+                    <th class="col-xs-5 text-center">Start vacation</th>
+                    <th class="col-xs-5 text-center">End vacation</th>
+                    <th class="col-xs-1 text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'requests'">
-                    <td class="col-md-1 text-center">{{$index+1}}</td>
-                    <td class="col-md-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                    <td class="col-md-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                    <td class="col-md-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                    <td class="col-xs-1 text-center">{{$index+1}}</td>
+                    <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                    <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                    <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
                   </tr>
                 </tbody>
               </table>
             </uib-accordion-group>
           </uib-accordion>
           <uib-accordion>
-            <uib-accordion-group is-open="isCollapsed" class="panel panel-danger">
+            <uib-accordion-group is-open="isCollapsed">
               <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-remove"></span></div>
@@ -42,23 +42,23 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th class="col-md-2 text-center">№</th>
-                    <th class="col-md-5 text-center">Start vacation</th>
-                    <th class="col-md-5 text-center">End vacation</th>
+                    <th class="col-xs-2 text-center">№</th>
+                    <th class="col-xs-5 text-center">Start vacation</th>
+                    <th class="col-xs-5 text-center">End vacation</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'rejected'">
-                    <td class="col-md-1 text-center">{{$index+1}}</td>
-                    <td class="col-md-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                    <td class="col-md-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                    <td class="col-xs-1 text-center">{{$index+1}}</td>
+                    <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                    <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
                   </tr>
                 </tbody>
               </table>
             </uib-accordion-group>
           </uib-accordion>
           <uib-accordion>
-            <uib-accordion-group is-open="isCollapsed" class="panel panel-success">
+            <uib-accordion-group is-open="isCollapsed">
               <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
               <div class="row">
                 <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-ok"></span></div>
@@ -68,25 +68,25 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th class="col-md-1 text-center">№</th>
-                  <th class="col-md-5 text-center">Start vacation</th>
-                  <th class="col-md-5 text-center">End vacation</th>
-                  <th class="col-md-1 text-center">Action</th>
+                  <th class="col-xs-1 text-center">№</th>
+                  <th class="col-xs-5 text-center">Start vacation</th>
+                  <th class="col-xs-5 text-center">End vacation</th>
+                  <th class="col-xs-1 text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'approved'">
-                  <td class="col-md-1 text-center">{{$index+1}}</td>
-                  <td class="col-md-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                  <td class="col-md-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                  <td class="col-md-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)" ng-show="item.startDate > startDate"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                  <td class="col-xs-1 text-center">{{$index+1}}</td>
+                  <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                  <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                  <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)" ng-show="item.startDate > startDate"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
                 </tr>
               </tbody>
             </table>
           </uib-accordion-group>
         </uib-accordion>
         <uib-accordion>
-          <uib-accordion-group is-open="isCollapsed" class="panel panel-primary">
+          <uib-accordion-group is-open="isCollapsed">
             <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
               <div class="row">
                 <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-lock"></span></div>
@@ -96,16 +96,16 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th class="col-md-2 text-center">№</th>
-                  <th class="col-md-5 text-center">Start vacation</th>
-                  <th class="col-md-5 text-center">End vacation</th>
+                  <th class="col-xs-2 text-center">№</th>
+                  <th class="col-xs-5 text-center">Start vacation</th>
+                  <th class="col-xs-5 text-center">End vacation</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'spent'">
-                  <td class="col-md-1 text-center">{{$index+1}}</td>
-                  <td class="col-md-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                  <td class="col-md-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                  <td class="col-xs-1 text-center">{{$index+1}}</td>
+                  <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                  <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
                 </tr>
               </tbody>
             </table>
@@ -113,7 +113,7 @@
         </uib-accordion>
       </div>
     </div>
-    <div class="col-sm-8">
+    <div class="col-sm-6 col-md-7 col-lg-8">
       <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
         <legend class="user-form__title">Vacation request</legend>
         <div class="row">

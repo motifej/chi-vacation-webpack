@@ -1,17 +1,17 @@
 .login-page-wrapper {
+    background-color: red;
     background: url('../../../assets/images/login-bg.jpg') no-repeat;
-    // background-color: #000;
     background-size: cover;
     color: #fff;
     position: relative;
-  height: calc(100vh - 51px);
+    height: 100vh;
 
     .login-form-wrap{
         position: absolute;
         top: 45%;
         left: 50%;
         transform: translate(-50%,-50%);
-        border: 2px solid #fff;
+        border: 2px solid #FF5722;
         border-radius: 4px;
     }
     .login-form-legend{
@@ -19,26 +19,6 @@
     }
     .ng-invalid.ng-touched {
         border: solid red 1px;
-    }
-
-    .glyphicon.spinning {
-        animation: spin 1s infinite linear;
-        -webkit-animation: spin2 1s infinite linear;
-    }
-
-    @keyframes spin {
-        from { transform: scale(1) rotate(0deg);}
-        to { transform: scale(1) rotate(360deg);}
-    }
-
-    @-webkit-keyframes spin2 {
-        from { -webkit-transform: rotate(0deg);}
-        to { -webkit-transform: rotate(360deg);}
-    }
-
-    .login-btn{
-        background: black;
-      border: solid #fff 1px;
     }
 
 }

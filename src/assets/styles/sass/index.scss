@@ -9,8 +9,14 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
 
 /*Theme color1: #f9844c, color2: #4ECB8C, color3: rgb(232, 71, 0), color4: #FF5722*/
+html { height: 100%; }
 body {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  min-height: 100%;
+  position: relative;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+a:focus {
+  outline: none;
 }
 .clearfix:before {
   display: table;
@@ -39,24 +45,19 @@ body {
 .chi--active {
   background-color: $default-color;
 }
+.chi--active:hover {
+  background-color: darken($default-color, 10%) !important;
+}
 .page-loading {
   margin-top: 15%;
-    font-size: 150px;
-    text-align: center;
-}
-
-
-html { height: 100%; }
-body {
-  min-height: 100%;
-  position: relative;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.page-loading {
-	margin-top: 15%;
   font-size: 150px;
   text-align: center;
+}
+.btn-info {
+  background-color: $default-color !important;
+}
+.active .text-info {
+  color: white !important;
 }
 
 .glyphicon.spinning {
