@@ -17,18 +17,24 @@ export default class ManagerController {
     confirmVacation(user, id) {
      var vacation = find(user.vacations.list, { id: id });
      vacation.status = this.status.CONFIRMED;
+     if(user.vacations.total >= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5])){
       user.vacations.total -= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
+     }
       this.firebaseService.updateUserData(user);
     }
     rejectVacation(user, id) {
+     var vacation = find(user.vacations.list, { id: id });
+      if(vacation.status == this.status.CONFIRMED){
+        user.vacations.total += moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
+      }
      find(user.vacations.list, { id: id }).status = this.status.REJECTED;
       this.firebaseService.updateUserData(user);
     }
     choiceGroup(group) {
       this.filter = { group: group };
     }
-    choiceUser(user) {
-      this.filter = { uid: user };
+    choiceUser(user, group) {
+      this.filter = { uid: user, group:group };
     }
     choiceButtonFilter(filter) {
       this.statusFilter.status = filter;
