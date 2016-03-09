@@ -76,9 +76,7 @@ module.exports = function(_path) {
         ]
       }, {
         test: /\.(jpe?g|png|gif)$/i,
-        loaders: [
-          'url-loader?name=assets/images/[name]_[hash].[ext]&limit=10000'
-        ]
+        loaders: ['url-loader?name=assets/images/[name]_[hash].[ext]']
       }, {
         test: require.resolve("angular"),
         loaders: [
@@ -90,14 +88,14 @@ module.exports = function(_path) {
         loaders: [
           "expose?moment"
         ]
-      },      
+      },
       {
         test: require.resolve("jquery"),
         loaders: [
           "expose?$!expose?jQuery"
         ]
       }
-      
+
       ]
     },
 

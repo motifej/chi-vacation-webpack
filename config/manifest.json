@@ -1,1 +1,1 @@
-{"assets":{"app.map":"assets/styles/css/app.301fae3cabf164cb8989.css.map","vendor.map":"vendor.085b5010b476e01717e6.js.map","common.map":"common.530d89e217c8c1359553.js.map"},"publicPath":"/"}
+{"assets":{"app.map":"app.js.map","vendor.map":"vendor.js.map","common.map":"common.js.map"},"publicPath":"/"}
