@@ -5,13 +5,13 @@
         <div class="panel m-panel">
           <div class="panel-heading m-panel-head groups">
             <span ng-repeat="group in manager.groups">
-              <button class="btn btn-primary btn-xs m-button-black-group" ng-class="{'m-button-gray-group': manager.filter.group == group}" ng-click="manager.choiceGroup(group)">{{group}}</button>
+              <button class="btn btn-xs m-button-black" ng-class="{'m-button-orange': manager.filter.group == group}" ng-click="manager.choiceGroup(group)">{{group}}</button>
             </span>
-            <button class="btn btn-primary btn-xs" ng-click="manager.choiceGroup()">All</button>
+            <button class="btn btn-xs m-button-orange" ng-click="manager.choiceGroup()">All</button>
           </div>
           <div class="panel-body m-panel-body users">
             <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.filter">
-              <button class="btn btn-primary btn-sm m-button-gray" ng-click="manager.choiceUser(user.uid)">{{user.firstName + " " + user.lastName}}</button>
+              <button class="btn btn-sm m-button-gray" ng-click="manager.choiceUser(user.uid, user.group)" ng-class="{'m-button-orange': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</button>
             </span>
           </div>
         </div>
@@ -19,22 +19,27 @@
     </div>
     <div class="col-md-9">
       <div class="btn-group">
-          <label class="btn btn-primary m-button-gray" ng-class="{'m-button-black': manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
-          <label class="btn btn-primary m-button-gray" ng-class="{'m-button-black': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
-          <label class="btn btn-primary m-button-gray" ng-class="{'m-button-black': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn btn-primary m-button-gray" ng-class="{'m-button-black': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
+          <label class="btn m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
+          <label class="btn m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
+          <label class="btn m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
+          <label class="btn m-button-gray" ng-class="{'m-button-orange': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
       </div>
-      <button class="btn btn-primary m-button-user" ng-click="manager.openNewUserForm()">Add User</button>
+      <button class="btn m-button-user" ng-click="manager.openNewUserForm()">Add User</button>
       <hr>
       <div class="row">
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
-          <div class="col-md-4" ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
+          <div class="col-lg-4 col-md-6 col-sm-12" ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
             <div class="panel m-panel">
-              <div class="panel-heading m-panel-head"><span>{{user.firstName + " " + user.lastName}} <span class="m-vacation-group">{{user.group}}</span></span><div class="btn btn-xs btn-primary m-button-user" ng-click="manager.userInfo(user)">Info111</div></div>
+              <div class="panel-heading m-panel-head">
+                <div class="row">
+                  <div class="col-sm-9"><div>{{user.firstName.charAt(0) + ". " + user.lastName}} </div><span class="m-vacation-group">{{user.group}}</span></div>
+                  <div class="col-sm-3"><span class="btn m-button-user" ng-click="manager.userInfo(user)">Info</span></div>
+                </div>
+              </div>
               <div class="panel-body m-panel-body">
                 <div class="vacation-data well">
-                  <span>from {{item.startDate | date:'dd MMMM yyyy'}}</span>
-                  <span>to {{item.endDate | date:'dd MMMM yyyy'}}</span>
+                  <div>from {{item.startDate | date:'dd MMMM yyyy'}}</div>
+                  <div>to {{item.endDate | date:'dd MMMM yyyy'}}</div>
                 </div>
                 <div class="buttons-wrapper">
                   <button ng-disabled="item.status!='inprogress'" class="btn btn-primary col-md-offset-2" ng-click="manager.confirmVacation(user, item.id)">Confirm</button>

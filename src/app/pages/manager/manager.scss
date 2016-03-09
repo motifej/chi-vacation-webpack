@@ -1,12 +1,15 @@
 .m-content {
 	background: url('../../../assets/images/bg.jpg') no-repeat;
 	background-size: 100% auto;
-	min-height: calc(100vh - 51px);
+	min-height: 100vh;
 	padding-top: 10px;
 	background-color: black;
 	background-attachment: fixed;
 	color: white;
 	padding-top: 75px;
+}
+.m-content button:focus {
+	border: none;
 }
 .m-panel {
 	color: white;
@@ -24,7 +27,7 @@
 }
 .m-button-black {
 	margin-bottom: 3px;
-	background-color: rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(0, 0, 0, 0.1);
 	border: 1px solid #fff;
 }
 .m-button-gray {
@@ -32,20 +35,20 @@
 	background-color: rgba(155, 155, 155, 0.3);
 	border: 1px solid #fff;
 }
-.m-button-black-group {
-	margin-bottom: 3px;
-	background-color: rgba(0, 0, 0, 0.1);
-	border: 1px solid #fff;
+.m-button-gray:hover,.m-button-black:hover {
+	color: #fff;
+	border-color: #FF5722;
+	background-color: #FF5722;
 }
-.m-button-gray-group {
+.m-button-orange {
 	margin-bottom: 3px;
-	background-color: rgba(155, 155, 155, 0.3) !important;
+	background-color: #FF5722 !important;
 	border: 1px solid #fff;
 }
 .m-button-user {
 	float: right;
-	background-color: rgba(155, 155, 155, 0.3);
-	border: 1px solid #fff;
+	background-color: #FF5722;
+	border: 1px solid #FF5722;
 }
 .m-vacation-group {
 	font-weight: bold;
