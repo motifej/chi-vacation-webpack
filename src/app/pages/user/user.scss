@@ -32,9 +32,31 @@
 	color: white;
 	background-color: rgba(155,155,155,.2);
 }
-.user-page__wrapper .panel-heading {
+.user-wrapper .user__container .panel {
+	border-color: #FF5722;
+}
+.user-wrapper .user__container .panel-heading {
 	background-color: #FF5722;
+	color: #fff;
+}
+.user-wrapper .table tbody tr:hover {
+	background-color: #fff;
+	color: #FF5722;
+}
+.table a.btn {
+	background-color: #000;
+	border: #000;
+	color: #fff;
+}
+.table a.btn {
+	background-color: #000;
+	border: #000;
+}
+.glyphicon {
 	color: #000;
+}
+.table .glyphicon-remove {
+	color: #fff;
 }
 /*#FFEB3B
 #E57373
