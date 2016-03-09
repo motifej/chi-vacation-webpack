@@ -1,4 +1,4 @@
-<nav class="navbar navbar-static-top navbar-inverse main-navbar">
+<nav class="navbar navbar-fixed-top navbar-inverse main-navbar">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="http://chisw.com" target="_blank">
@@ -7,15 +7,15 @@
     </div>
 
     <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li ui-sref-active="active" ng-if='vm.user.role'>
-          <a ui-sref={{vm.states.HOME}} class="chi--active">Home</a>
+      <ul class="nav navbar-nav main-navbar__menu">
+        <li ui-sref-active="chi--active" ng-if='vm.user.role'>
+          <a ui-sref={{vm.states.HOME}}>Home</a>
         </li>
-        <li ui-sref-active="active" ng-if='vm.isAdmin()'>
-          <a ui-sref={{vm.states.ADMIN}} class="chi--active">admin</a>
+        <li ui-sref-active="chi--active" ng-if='vm.isAdmin()'>
+          <a ui-sref={{vm.states.ADMIN}} >admin</a>
         </li>
-        <li ui-sref-active="active" ng-if='vm.isManager()'>
-          <a ui-sref={{vm.states.MANAGER}} class="chi--active">manager</a>
+        <li ui-sref-active="chi--active" ng-if='vm.isManager()'>
+          <a ui-sref={{vm.states.MANAGER}} >manager</a>
         </li>
       </ul>
 
