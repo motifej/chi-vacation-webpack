@@ -8,6 +8,8 @@ export default class UserController {
     $scope.endDate = new Date($scope.startDate);
     $scope.minEndDate = new Date($scope.startDate);
 
+    this.user = user;
+    this.today = new Date();
     this.$scope = $scope;
     this.$timeout = $timeout;
     this.user = user;

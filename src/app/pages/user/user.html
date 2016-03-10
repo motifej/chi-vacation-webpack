@@ -21,7 +21,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'requests'">
+                  <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'requests' | orderBy:'endDate'">
                     <td class="col-xs-1 text-center">{{$index+1}}</td>
                     <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
                     <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
@@ -48,7 +48,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'rejected'">
+                  <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'rejected' | orderBy:'endDate'">
                     <td class="col-xs-1 text-center">{{$index+1}}</td>
                     <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
                     <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
@@ -75,11 +75,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'approved'">
+                <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'approved' | orderBy:'endDate'">
                   <td class="col-xs-1 text-center">{{$index+1}}</td>
                   <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
                   <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                  <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)" ng-show="item.startDate > startDate"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                  <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)" ng-show="item.startDate > userCtrl.today"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
                 </tr>
               </tbody>
             </table>
@@ -102,7 +102,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'spent'">
+                <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'spent' | orderBy:'endDate'">
                   <td class="col-xs-1 text-center">{{$index+1}}</td>
                   <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
                   <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
