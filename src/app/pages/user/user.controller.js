@@ -47,7 +47,10 @@ export default class UserController {
       }
     }
 
-    if (this.$scope.userForm.$invalid) return;
+    if (this.vacationDays == 0) {
+      this.toastr.error('Вы выбрали 0 дней отпуска. Укажите коректный промежуток времени.', toastrOptions);
+      return;
+    }
 
     if (list && isCrossingIntervals(vm.vacations)) {
       this.toastr.error('Промежутки отпусков совпадают c предыдущими заявками!', toastrOptions);
@@ -69,10 +72,8 @@ export default class UserController {
       if(dateIntervals.length === 0) return false;
 
       let result = dateIntervals.filter(function(item) {
-        if  (vm.moment(sDate).diff(vm.moment(item.startDate)) >= 0
-              && vm.moment(item.endDate).diff(vm.moment(sDate)) >= 0
-              || vm.moment(item.startDate).diff(vm.moment(eDate)) <= 0
-              && vm.moment(item.endDate).diff(vm.moment(eDate)) >= 0) {
+        if  (!(vm.moment(sDate).diff(vm.moment(item.startDate)) > 0
+            || vm.moment(item.startDate).diff(vm.moment(eDate)) > 0)) {
           return true;
         }
       });

@@ -4,7 +4,7 @@ vac-navbar {
 	.main-navbar{
 		width: 100%;
 		margin: 0;
-		background-color: rgba(0, 0, 0, .8);
+		background-color: rgba(0, 0, 0, .9);
 
 		.logout__dropdown{
 			cursor: pointer;
@@ -20,6 +20,9 @@ vac-navbar {
 			}
 		}
 
+	}
+	.navbar-inverse .navbar-nav > li > a {
+		color: white;
 	}
 
 }
