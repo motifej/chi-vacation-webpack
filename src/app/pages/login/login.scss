@@ -15,6 +15,10 @@
         margin: 0 auto;
         border-radius: $br-size;
         background-color: $bg-color;
+        .login-form{
+            width: 90%;
+            margin: 0 auto;
+        }
     }
     .login-form-legend{
         color: #fff;
