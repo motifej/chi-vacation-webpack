@@ -54,6 +54,11 @@ export default class UserController {
       return;
     }
 
+    if (this.vacationDays > this.user.vacations.total + this.user.vacations.dayOff) {
+      this.toastr.error('Превышено количество доступных дней отпуска.', toastrOptions);
+      return;
+    }
+
     if (list && isCrossingIntervals(vm.vacations)) {
       this.toastr.error('Промежутки отпусков совпадают c предыдущими заявками!', toastrOptions);
       return;
