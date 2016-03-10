@@ -38,6 +38,7 @@ a:focus {
 .chi-btn--default {
   border: 2px solid $default-color;
   background-color: $default-color;
+  outline:0 !important;
 }
 .chi-btn--default:hover{
   color: white;
