@@ -9,7 +9,6 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
 
-/*Theme color1: #f9844c, color2: #4ECB8C, color3: rgb(232, 71, 0), color4: #FF5722*/
 html { height: 100%; }
 body {
   min-height: 100%;
@@ -36,6 +35,8 @@ a:focus {
   color: $default-color !important;
 }
 .chi-btn--default {
+  font-weight: bold;
+  letter-spacing: 1px;
   border: 2px solid $default-color;
   background-color: $default-color;
   outline:0 !important;
