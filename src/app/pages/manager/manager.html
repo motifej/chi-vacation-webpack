@@ -25,17 +25,17 @@
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
         </div>
-        <button class="col-xs-12 col-sm-2 btn m-button-user" ng-click="manager.openNewUserForm()">Add User</button>
+        <button class="col-xs-12 col-sm-2 btn m-button-user chi-btn--default" ng-click="manager.openNewUserForm()">Add User</button>
       </div>
       <hr>
       <div class="row">
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
-          <div class="col-lg-4 col-md-6 col-sm-12" ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
             <div class="panel m-panel">
               <div class="panel-heading m-panel-head">
                 <div class="row">
                   <div class="col-xs-9"><div>{{user.firstName.charAt(0) + ". " + user.lastName}} </div><span class="m-vacation-group">{{user.group}}</span></div>
-                  <div class="col-xs-3"><span class="btn m-button-user" ng-click="manager.userInfo(user)">Info</span></div>
+                  <div class="col-xs-3"><span class="btn m-button-user chi-btn--default" ng-click="manager.userInfo(user)">Info</span></div>
                 </div>
               </div>
               <div class="panel-body m-panel-body">
