@@ -1,21 +1,23 @@
 function LoginController ($log, $state, $scope, firebaseService,toastr, states) {
   'ngInject';
 
+  $scope.sending = false;
   $scope.signin = signin;
   $scope.states = states;
-  $scope.sending = false;
+  $scope.passwordPattern = '.{1,}';
   $scope.resetPassword = resetPassword;
+  $scope.changePassword = changePassword;
 
 
   function signin () {
-    if($scope.loginForm.$invalid) {
+    if($scope.authForm.$invalid) {
       toastr.warning('Fieldes hasn\'t be empty!');
       return
     }
     $scope.sending = true;
     firebaseService.signInUserByEmail({
       email: $scope.email,
-      password: $scope.passw
+      password: $scope.passw || $scope.newPassword
     }).then( () => {
       $state.go(states.HOME);
     }).catch( err => {
@@ -47,10 +49,19 @@ function LoginController ($log, $state, $scope, firebaseService,toastr, states) 
       toastr.error('Entered passwords are different!', 'Error');
       return
     }
-    if ($scope.changePasswordForm.$valid) {
-      firebaseService.changeUserPass($scope.email, $scope.oldPassword, $scope.newPassword).then(
-        () => toastr.success('Password changed success', 'Success'),
-        error => toastr.error(error.error.message, 'Error changing password')
+    if ($scope.authForm.$valid) {
+      $scope.sending = true;
+      firebaseService
+        .changeUserPass($scope.email, $scope.oldPassword, $scope.newPassword)
+        .then(
+          () => { 
+            toastr.success('Password changed success!', 'Success');
+            signin();
+          },
+          error => {
+            $scope.sending = false;
+            toastr.error(error.error.message, 'Error changing password!');
+          }
         );
     } else {
       toastr.error('Not all fields are filled', 'Error');

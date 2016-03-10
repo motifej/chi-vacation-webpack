@@ -31,5 +31,15 @@
     .ng-invalid.ng-touched {
         border: solid red 1px;
     }
+    .form-close{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 25px;
+        color: rgba(255,255,255,0.7);
+        &:hover {
+            color: white;
+        }
+    }
 
 }

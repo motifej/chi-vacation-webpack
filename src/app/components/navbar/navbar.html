@@ -30,7 +30,7 @@
               Welcome, &nbsp; {{vm.user.firstName + " " + vm.user.lastName}}
             </a>
             <ul class="user-profile__menu" uib-dropdown-menu aria-labelledby="user-profile-dropdown">
-              <li class="user-profile__menu_item">
+              <li class="user-profile__menu_item" ng-click='vm.editProfile()'>
                 <span class="btn chi-btn--default user-profile__menu_text">user profile</span>
               </li>
             </ul>
