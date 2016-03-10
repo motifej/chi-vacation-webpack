@@ -62,6 +62,12 @@ export default function DatepickerDirective() {
         }
         ];
 
+        scope.disabled = function(data) {
+            let date = data.date,
+            mode = data.mode;
+            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+        }
+
         scope.getDayClass = function(date, mode) {
             if (mode === 'day') {
                 var dayToCheck = new Date(date).setHours(0,0,0,0);
