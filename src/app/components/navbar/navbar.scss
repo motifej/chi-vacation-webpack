@@ -16,6 +16,7 @@ vac-navbar {
                 }
             }
         }
+        .nav
 
         .welcome {
          color: #fff;
@@ -37,6 +38,13 @@ vac-navbar {
     }
     .navbar-inverse .navbar-nav > li > a {
         color: white;
+    }
+    .navbar__toggle-btn:hover {
+        border: 1px solid $default-color;
+        background-color: transparent !important;
+    }
+    .navbar__toggle-btn:hover .icon-bar {
+        background-color: $default-color;
     }
 
 }
