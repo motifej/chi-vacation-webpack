@@ -49,13 +49,8 @@ export default class UserController {
       }
     }
 
-    if (this.vacationDays == 0) {
-      this.toastr.error('Вы выбрали 0 дней отпуска. Укажите коректный промежуток времени.', toastrOptions);
-      return;
-    }
-
     if (list && isCrossingIntervals(vm.vacations)) {
-      this.toastr.error('Промежутки отпусков совпадают c предыдущими заявками!', toastrOptions);
+      this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
       return;
     }
 
@@ -68,7 +63,7 @@ export default class UserController {
 
     this.firebaseService.createNewVacation(vacation);
 
-    this.toastr.success('Заявка успешно отправлена!', toastrOptions);
+    this.toastr.success('Vacation request was sent successfully!', toastrOptions);
 
     function isCrossingIntervals(dateIntervals) {
       if(dateIntervals.length === 0) return false;
