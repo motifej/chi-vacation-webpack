@@ -18,18 +18,9 @@ body {
 a:focus {
   outline: none;
 }
-.clearfix:before {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  display: table;
-  content: "";
-  clear: both;
-}
 .chi-link{
   color: white;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 .chi-link:hover {
   color: $default-color !important;

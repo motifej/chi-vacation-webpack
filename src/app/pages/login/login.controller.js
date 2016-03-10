@@ -40,6 +40,21 @@ function LoginController ($log, $state, $scope, firebaseService,toastr, states) 
       $log.error(err);
       $scope.sending = false;
     });
+  }
+
+   function changePassword () {
+    if ($scope.newPassword !== $scope.newPassword2) {
+      toastr.error('Entered passwords are different!', 'Error');
+      return
+    }
+    if ($scope.changePasswordForm.$valid) {
+      firebaseService.changeUserPass($scope.email, $scope.oldPassword, $scope.newPassword).then(
+        () => toastr.success('Password changed success', 'Success'),
+        error => toastr.error(error.error.message, 'Error changing password')
+        );
+    } else {
+      toastr.error('Not all fields are filled', 'Error');
+    }
   }  
 
 }

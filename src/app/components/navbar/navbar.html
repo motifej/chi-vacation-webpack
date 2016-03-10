@@ -24,18 +24,16 @@
         </li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right acme-navbar-text" ng-if='vm.user.uid'>
-        <li>
-          <span uib-dropdown class="welcome">
+      <ul class="nav navbar-nav navbar-right acme-navbar-text user-profile" ng-if='vm.user.uid'>
+        <li uib-dropdown>
             <a href id="user-profile-dropdown" class="chi-link" uib-dropdown-toggle>
               Welcome, &nbsp; {{vm.user.firstName + " " + vm.user.lastName}}
             </a>
-            <ul uib-dropdown-menu aria-labelledby="user-profile-dropdown">
-              <li>
-                <a href>sdfafasfasfasfa</a>
+            <ul class="user-profile__menu" uib-dropdown-menu aria-labelledby="user-profile-dropdown">
+              <li class="user-profile__menu_item">
+                <span class="btn chi-btn--default user-profile__menu_text">user profile</span>
               </li>
             </ul>
-          </span>
         </li>
         <li>
           <button class="chi-btn--default logout"

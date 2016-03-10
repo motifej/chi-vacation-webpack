@@ -15,14 +15,14 @@
         margin: 0 auto;
         border-radius: $br-size;
         background-color: $bg-color;
-        .password-reset {
-            display: block;
-            padding-top: 10px;
-            cursor: pointer;
-        }
+
         .login-form {
             width: 90%;
             margin: 0 auto;
+            .password-link {
+                margin: 0 4px;
+                cursor: pointer;
+            }
         }
     }
     .login-form-legend{

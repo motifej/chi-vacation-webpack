@@ -18,18 +18,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
           resolve: {
             asyncPreloading: resolverProvider.loginPagePrealoading
           }
-        })
-        .state(states.RESETPASSWORD, {
-          data: {
-              roles: roles.ANONIM
-          },
-          views: {
-            'content@': {
-              templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/login/resetPassword/resetPassword.html'),
-              controller: 'LoginController'
-            }
-          }          
-        })        
+        })       
         .state(states.SITE, {
           'abstract': true,
           resolve: {

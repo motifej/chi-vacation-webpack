@@ -1,61 +1,72 @@
 <div class="login-page-wrapper clearfix">
 
   <div class="login-form-wrap text-center col-sm-6 col-xs-10 col-xs-offset-1">
-   <form class="login-form form-horizontal" name="loginForm" novalidate="novalidate" ng-submit='signin()'>
-    <fieldset>
+    <form class="login-form form-horizontal" name="loginForm" novalidate="novalidate" ng-submit='signin()'>
+      <fieldset>
 
-      <!-- Form Name -->
-      <legend>
-        <center class="login-form-legend">
-        Login Form
-        </center>
-      </legend>
+        <!-- Form Name -->
+        <legend>
+          <center class="login-form-legend">
+            Login Form
+          </center>
+        </legend>
 
-      <!-- Text input-->
-      <div class="form-group">
-        <label class="col-md-3 control-label" for="Email">Email</label>
-        <div class="col-md-7">
-          <div class="input-group">
-            <span class="input-group-addon "><i class="glyphicon glyphicon-envelope"></i></span>
-            <input  name="Email"
-                    type="email"
-                    required
-                    placeholder="Enter Your Email"
-                    class="form-control input-md"
-                    ng-model='email'>
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-3 control-label" for="Email">Email</label>
+          <div class="col-md-7">
+            <div class="input-group">
+              <span class="input-group-addon "><i class="glyphicon glyphicon-envelope"></i></span>
+              <input  name="Email"
+              type="email"
+              required
+              placeholder="Enter Your Email"
+              class="form-control input-md"
+              ng-model='email'>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Password input-->
-      <div class="form-group">
-        <label class="col-md-3 control-label" for="Password">Password</label>
-        <div class="col-md-7">
-          <div class="input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input  name="password"
-                    ng-pattern="/.{1,}/"
-                    required
-                    type="password"
-                    placeholder="Enter Your Password"
-                    class="form-control input-md"
-                    ng-model='passw'>
+        <!-- Password input-->
+        <div class="form-group">
+          <label class="col-md-3 control-label" for="Password">Password</label>
+          <div class="col-md-7">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input  name="password"
+              ng-pattern="/.{1,}/"
+              required
+              type="password"
+              placeholder="Enter Your Password"
+              class="form-control input-md"
+              ng-model='passw'>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Button -->
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="Submit"></label>
-        <div class="col-md-4">
-          <button class="btn btn-block chi-btn--default"  ng-disabled="sending" type="Submit">
-          <span ng-show="sending"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-          Login</button>
-          <a class="password-reset chi-link" ui-sref={{states.RESETPASSWORD}}>Reset password</a>
+         <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="Submit"></label>
+          <div class="col-md-4">
+            <button class="btn btn-block chi-btn--default"  ng-disabled="sending" type="Submit">
+              <span ng-show="sending"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+              Login
+            </button>
+          </div>
         </div>
-      </div>
-    </fieldset>
-  </form>
-</div>
+
+          <!-- link -->
+        <div class="form-group">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-6">
+            <a class="password-link chi-link" ui-sref={{states.RESETPASSWORD}}>Reset password</a>
+            <a class="password-link chi-link" ui-sref={{states.CHANGEPASSWORD}}>Change password</a>
+          </div>
+        </div>
+
+
+      </fieldset>
+    </form>
+  </div>
 
 </div>

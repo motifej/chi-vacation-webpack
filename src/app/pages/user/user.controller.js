@@ -32,7 +32,7 @@ export default class UserController {
 
   }
 
-  openChangePasswordForm() {
+/*  openChangePasswordForm() {
     this.modal.open({
       templateUrl: require('!!file!./modal/changePassword/changePassword.html'),
       controller: require('./modal/changePassword/changePassword.controller'),
@@ -40,7 +40,7 @@ export default class UserController {
       resolve: {user: this.user}
     });
   }
-
+*/
   submitHandler(startDate, endDate) {
     this.$log.info(this.user);
 
