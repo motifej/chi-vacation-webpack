@@ -5,13 +5,13 @@
         <div class="panel m-panel">
           <div class="panel-heading m-panel-head groups">
             <span ng-repeat="group in manager.groups">
-              <button class="btn btn-xs m-button-black" ng-class="{'m-button-orange': manager.filter.group == group}" ng-click="manager.choiceGroup(group)">{{group}}</button>
+              <a class="btn btn-xs m-button-black" ng-class="{'m-button-orange': manager.filter.group == group}" ng-click="manager.choiceGroup(group)">{{group}}</a>
             </span>
-            <button class="btn btn-xs m-button-orange" ng-click="manager.choiceGroup()">All</button>
+            <a class="btn btn-xs m-button-orange" ng-click="manager.choiceGroup()">All</a>
           </div>
           <div class="panel-body m-panel-body users">
             <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.filter">
-              <button class="btn btn-sm m-button-gray" ng-click="manager.choiceUser(user.uid, user.group)" ng-class="{'m-button-orange': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</button>
+              <a class="btn btn-sm m-button-gray" ng-click="manager.choiceUser(user.uid, user.group)" ng-class="{'m-button-orange': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
             </span>
           </div>
         </div>
@@ -37,7 +37,7 @@
                 </div>
               </div>
               <div class="panel-body m-panel-body">
-                <div class="vacation-data well">
+                <div class="vacation-data well m-well">
                   <div>from {{item.startDate | date:'dd MMMM yyyy'}}</div>
                   <div>to {{item.endDate | date:'dd MMMM yyyy'}}</div>
                 </div>
