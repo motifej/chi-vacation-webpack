@@ -16,8 +16,8 @@ export default class ManagerController {
 
     confirmVacation(user, id) {
      var vacation = find(user.vacations.list, { id: id });
-     vacation.status = this.status.CONFIRMED;
      if(user.vacations.total >= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5])){
+     vacation.status = this.status.CONFIRMED;
       user.vacations.total -= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
      }
       this.firebaseService.updateUserData(user);
