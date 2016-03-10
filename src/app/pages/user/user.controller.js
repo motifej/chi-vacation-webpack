@@ -9,6 +9,7 @@ export default class UserController {
     $scope.minEndDate = $scope.startDate;
 
     this.user = user;
+    this.today = new Date();
     this.$scope = $scope;
     this.toastr = toastr;
     this.moment = moment;
