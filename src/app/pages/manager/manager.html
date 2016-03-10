@@ -18,13 +18,15 @@
       </div>
     </div>
     <div class="col-md-9">
-      <div class="btn-group">
-          <label class="btn m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
-          <label class="btn m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
-          <label class="btn m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn m-button-gray" ng-class="{'m-button-orange': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
+      <div class="buttons-panel clearfix">
+        <div class="btn-group col-xs-12 col-sm-9 col-md-7">
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
+        </div>
+        <button class="col-xs-12 col-sm-2 btn m-button-user" ng-click="manager.openNewUserForm()">Add User</button>
       </div>
-      <button class="btn m-button-user" ng-click="manager.openNewUserForm()">Add User</button>
       <hr>
       <div class="row">
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
@@ -32,8 +34,8 @@
             <div class="panel m-panel">
               <div class="panel-heading m-panel-head">
                 <div class="row">
-                  <div class="col-sm-9"><div>{{user.firstName.charAt(0) + ". " + user.lastName}} </div><span class="m-vacation-group">{{user.group}}</span></div>
-                  <div class="col-sm-3"><span class="btn m-button-user" ng-click="manager.userInfo(user)">Info</span></div>
+                  <div class="col-xs-9"><div>{{user.firstName.charAt(0) + ". " + user.lastName}} </div><span class="m-vacation-group">{{user.group}}</span></div>
+                  <div class="col-xs-3"><span class="btn m-button-user" ng-click="manager.userInfo(user)">Info</span></div>
                 </div>
               </div>
               <div class="panel-body m-panel-body">
