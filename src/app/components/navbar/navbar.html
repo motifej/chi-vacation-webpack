@@ -26,18 +26,25 @@
 
       <ul class="nav navbar-nav navbar-right acme-navbar-text" ng-if='vm.user.uid'>
         <li>
-            <span class="welcome">
+          <span uib-dropdown class="welcome">
+            <a href id="user-profile-dropdown" class="chi-link" uib-dropdown-toggle>
               Welcome, &nbsp; {{vm.user.firstName + " " + vm.user.lastName}}
-            </span>
+            </a>
+            <ul uib-dropdown-menu aria-labelledby="user-profile-dropdown">
+              <li>
+                <a href>sdfafasfasfasfa</a>
+              </li>
+            </ul>
+          </span>
         </li>
         <li>
           <button class="chi-btn--default logout"
-                  ng-click="vm.logOut()"
-                  ui-sref={{vm.states.LOGIN}}>
-                  Log out
-          </button>
-        </li>
-      </ul>
-    </div>
+          ng-click="vm.logOut()"
+          ui-sref={{vm.states.LOGIN}}>
+          Log out
+        </button>
+      </li>
+    </ul>
   </div>
+</div>
 </nav>
