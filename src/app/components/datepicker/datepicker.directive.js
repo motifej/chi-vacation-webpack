@@ -6,7 +6,8 @@ export default function DatepickerDirective() {
     let directive = {
         scope: {
             curDate: '=ngModel',
-            minDate: '='
+            minDate: '=',
+            calcDays: '&'
         },
         restrict: 'E',
         link: link,
@@ -16,8 +17,11 @@ export default function DatepickerDirective() {
     return directive;
 
     function link(scope, element, attrs) {
+        console.log(scope.calcDays);
+        scope.test = function () {alert('test')};
         scope.name = attrs.name;
 
+        scope.minDate = new Date();
         scope.maxDate = new Date(2020, 5, 22);
 
         scope.open= function() {
@@ -26,11 +30,6 @@ export default function DatepickerDirective() {
 
         scope.setDate = function(year, month, day) {
             scope.curDate = new Date(year, month, day);
-        };
-
-        scope.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1
         };
 
         scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];

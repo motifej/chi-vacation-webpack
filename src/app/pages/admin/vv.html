@@ -26,23 +26,23 @@
     <div class="row col-md-9">
 
         <div  class="col-sm-4 col-sm-offset-3">
-          <vac-datepicker
+          <chi-datepicker
           ng-model =  "vv.newEvent.startsAt"
           >
-        </vac-datepicker>
+        </chi-datepicker>
         </div>
 
 
           <div  class="col-sm-4">
-            <vac-datepicker
+            <chi-datepicker
             ng-model = "vv.newEvent.endsAt"
             min-date = "vv.newEvent.startsAt"
             >
-          </vac-datepicker>
+          </chi-datepicker>
         </div>
 
         <div class="col-sm-1 add-event-block">
-          <button class="btn"
+          <button class="btn btn-block chi-btn--default"
           ng-disabled="!vv.newEvent.startsAt ||
           !vv.newEvent.endsAt"
           ng-click="vv.setDateInfo()"
@@ -66,21 +66,21 @@
       <div class="col-md-6 text-center">
         <div class="btn-group">
           <button
-            class="btn btn-primary"
+            class="btn chi-btn--default"
             mwl-date-modifier
             date="vv.calendarDay"
             decrement="vv.calendarView">
             Previous
           </button>
           <button
-            class="btn btn-default"
+            class="btn chi-btn--default"
             mwl-date-modifier
             date="vv.calendarDay"
             set-to-today>
             Today
           </button>
           <button
-            class="btn btn-primary"
+            class="btn chi-btn--default"
             mwl-date-modifier
             date="vv.calendarDay"
             increment="vv.calendarView">
@@ -93,10 +93,9 @@
 
     <div class="col-md-6 text-center">
       <div class="btn-group">
-        <label class="btn btn-primary" ng-model="vv.calendarView" btn-radio="'year'">Year</label>
-        <label class="btn btn-primary" ng-model="vv.calendarView" btn-radio="'month'">Month</label>
-        <label class="btn btn-primary" ng-model="vv.calendarView" btn-radio="'week'">Week</label>
-        <label class="btn btn-primary" ng-model="vv.calendarView" btn-radio="'day'">Day</label>
+        <label class="btn chi-btn--default" ng-model="vv.calendarView" uib-btn-radio="'year'">Year</label>
+        <label class="btn chi-btn--default" ng-model="vv.calendarView" uib-btn-radio="'month'">Month</label>
+        <label class="btn chi-btn--default" ng-model="vv.calendarView" uib-btn-radio="'week'">Week</label>
       </div>
     </div>
 

@@ -1,23 +1,44 @@
+$default-color: #FF5722;
+
 vac-navbar {
 	.main-navbar{
 		width: 100%;
 		margin: 0;
 		background-color: rgba(0, 0, 0, .8);
 
-		.logout__dropdown{
-			cursor: pointer;
-			text-align: center;
-			font-weight: bold;
-			letter-spacing: 2px;
-			line-height: 30px;
-			color: white;
-			background-color: rgba(100, 34, 13, .2);
-			border: 1px solid #f9844c;
-			&:hover{
-				background-color: #f9844c;
+		.main-navbar__menu{
+			li a{
+				color: #fff;
+				font-weight: bold;
+
+				&:hover{
+					background-color: rgba(100, 34, 13, .6);
+				}
 			}
 		}
 
+		.welcome {
+		 color: #fff;
+		 line-height: 50px; 
+		}
+		.in{
+			background-color: #000;
+			text-align: right;
+		}
+		.logout {
+			text-align: center;
+			font-weight: bold;
+			letter-spacing: 2px;
+			border-radius: 3px;
+			margin: 10px;
+			line-height: 25px;
+			border: solid 1px $default-color;
+			color: white;
+			background-color: rgba(100, 34, 13, .2);
+			border: 1px solid $default-color;
+			&:hover{
+				background-color: $default-color;
+			}
+		}
 	}
-
 }
