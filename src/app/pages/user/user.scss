@@ -3,11 +3,9 @@
 .user-wrapper {
 	background: url("../../../assets/images/bg.jpg") center no-repeat;
 	background-size: cover;
+	min-height: 100%;
 }
 .user__container {
-	display: flex;
-	min-height: 100vh;
-	align-items:center;
 	padding-top: 70px;
 	padding-bottom: 20px;
 }
