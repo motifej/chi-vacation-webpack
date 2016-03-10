@@ -28,7 +28,7 @@ a:focus {
   content: "";
   clear: both;
 }
-.chi-link {
+.chi-link{
   color: white;
   text-decoration: none;
 }
@@ -39,7 +39,7 @@ a:focus {
   border: 2px solid $default-color;
   background-color: $default-color;
 }
-.chi-btn--default:hover {
+.chi-btn--default:hover{
   color: white;
   background-color: rgba(100, 34, 13, .2);
 }

@@ -3,15 +3,15 @@
 1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
 1 verbose cli   'run',
 1 verbose cli   'dev' ]
-2 info using npm@3.3.12
-3 info using node@v5.5.0
+2 info using npm@3.6.0
+3 info using node@v5.6.0
 4 verbose run-script [ 'predev', 'dev', 'postdev' ]
 5 info lifecycle test@0.1.0~predev: test@0.1.0
 6 silly lifecycle test@0.1.0~predev: no script for predev, continuing
 7 info lifecycle test@0.1.0~dev: test@0.1.0
 8 verbose lifecycle test@0.1.0~dev: unsafe-perm in lifecycle true
-9 verbose lifecycle test@0.1.0~dev: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;D:\work\chi\angular\chi-vacation-webpack\node_modules\.bin;C:\Users\user\bin;C:\Program Files (x86)\Git\mingw32\bin;C:\Program Files (x86)\Git\usr\local\bin;C:\Program Files (x86)\Git\usr\bin;C:\Program Files (x86)\Git\usr\bin;C:\Program Files (x86)\Git\mingw32\bin;C:\Program Files (x86)\Git\usr\bin;C:\Users\user\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Skype\Phone;C:\Program Files (x86)\Git\cmd;C:\Program Files\nodejs;C:\Program Files\TortoiseGit\bin;C:\Users\user\AppData\Roaming\npm;C:\Program Files (x86)\Git\usr\bin\vendor_perl;C:\Program Files (x86)\Git\usr\bin\core_perl
-10 verbose lifecycle test@0.1.0~dev: CWD: D:\work\chi\angular\chi-vacation-webpack
+9 verbose lifecycle test@0.1.0~dev: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;Z:\Tasks\JS\chi-vacation-webpack\node_modules\.bin;C:\Users\Eva Braun\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\TXE Components\TCS;C:\Program Files\Intel\TXE Components\TCS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\Skype\Phone;C:\Program Files\nodejs;C:\Program Files\TortoiseGit\bin;C:\Ruby22-x64\bin;C:\Program Files\Git\cmd;C:\AppServ\Apache2.2\bin;C:\AppServ\php6;C:\AppServ\MySQL\bin;C:\Users\Eva Braun\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+10 verbose lifecycle test@0.1.0~dev: CWD: Z:\Tasks\JS\chi-vacation-webpack
 11 silly lifecycle test@0.1.0~dev: Args: [ '/d /s /c',
 11 silly lifecycle   'cross-env NODE_ENV=development webpack-dev-server --progress' ]
 12 silly lifecycle test@0.1.0~dev: Returned: code: 1  signal: null
@@ -24,14 +24,14 @@
 14 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:24:14)
 14 verbose stack     at emitTwo (events.js:100:13)
 14 verbose stack     at ChildProcess.emit (events.js:185:7)
-14 verbose stack     at maybeClose (internal/child_process.js:821:16)
+14 verbose stack     at maybeClose (internal/child_process.js:827:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
 15 verbose pkgid test@0.1.0
-16 verbose cwd D:\work\chi\angular\chi-vacation-webpack
-17 error Windows_NT 6.1.7601
+16 verbose cwd Z:\Tasks\JS\chi-vacation-webpack
+17 error Windows_NT 6.3.9600
 18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
-19 error node v5.5.0
-20 error npm  v3.3.12
+19 error node v5.6.0
+20 error npm  v3.6.0
 21 error code ELIFECYCLE
 22 error test@0.1.0 dev: `cross-env NODE_ENV=development webpack-dev-server --progress`
 22 error Exit status 1
@@ -41,7 +41,9 @@
 23 error not with npm itself.
 23 error Tell the author that this fails on your system:
 23 error     cross-env NODE_ENV=development webpack-dev-server --progress
-23 error You can get their info via:
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs test
+23 error Or if that isn't available, you can get their info via:
 23 error     npm owner ls test
 23 error There is likely additional logging output above.
 24 verbose exit [ 1, true ]
