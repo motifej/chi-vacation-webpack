@@ -74,13 +74,13 @@ export default class UserController {
       if(dateIntervals.length === 0) return false;
 
       let result = dateIntervals.filter(function(item) {
-        if  (!(vm.moment(sDate).diff(vm.moment(item.startDate)) > 0
-            || vm.moment(item.startDate).diff(vm.moment(eDate)) > 0)) {
+        if  (sDate <= item.endDate && eDate >= item.startDate) {
           return true;
         }
       });
+      console.log(result);
 
-      return result.length !== 0;
+      return !!result.length;
 
     }
   }

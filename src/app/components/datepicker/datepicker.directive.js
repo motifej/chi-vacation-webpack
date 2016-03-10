@@ -21,8 +21,14 @@ export default function DatepickerDirective() {
         scope.test = function () {alert('test')};
         scope.name = attrs.name;
 
-        scope.minDate = new Date();
         scope.maxDate = new Date(2020, 5, 22);
+
+        // scope.disabled = function() {
+        //     var data = new Date();
+        //     var date = data.date,
+        //       mode = data.mode;
+        //     return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+        // }
 
         scope.open= function() {
             scope.popup.opened = true;
