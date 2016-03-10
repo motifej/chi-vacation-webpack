@@ -4,13 +4,14 @@
     background-size: cover;
     color: #fff;
     padding-top: 75px;
+    min-height: 100vh;
 }
 .jumbotron {
     padding-top: 30px;
     padding-bottom: 30px;
     margin-bottom: 30px;
     color: inherit;
-    background-color: #0A0909;
+    background-color: rgba(0,0,0,.6);
 }
 
 span[data-cal-date] {
@@ -26,17 +27,17 @@ span[data-cal-date] {
     margin-right: 15px;
 }
 
-.cal-day-today span[data-cal-date] {
-    color: #000;
-}
-
 .badge-important {
     background-color: #484242;
+}
+.cal-day-today span[data-cal-date] {
+    color: #fff;
 }
 
 /**/
 .cal-day-today {
-    background-color: #0C0C0C;
+    background-color: #FF5722;
+    color: #fff;
 }
 
 .cal-day-weekend span[data-cal-date] {
@@ -52,11 +53,11 @@ span[data-cal-date] {
 }
 
 .cal-row-fluid:hover {
-    background-color: #3C3030;
+    background-color: rgba(0, 0, 0, .4);
 }
 
 [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
-    background-color: #231F1F;
+    background-color: rgba(100, 34, 13, 1);
 }
 
 .dropdown-menu-right {

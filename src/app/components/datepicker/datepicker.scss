@@ -1,3 +1,5 @@
+@import '../../../assets/styles/sass/variables.scss';
+
 .datepicker {
 	display: block;
 	color: black;
@@ -10,6 +12,9 @@
 	height: 34px;
 	border-radius: 0 4px 4px 0;
 	margin-top: 0;
+}
+.datepicker__btn:hover .glyphicon {
+	color: $default-color;
 }
 .dropdown-menu table {
 	outline: none;

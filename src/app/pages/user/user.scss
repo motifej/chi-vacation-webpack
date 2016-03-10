@@ -1,17 +1,20 @@
+@import '../../../assets/styles/sass/variables.scss';
+
 .user-wrapper {
 	background: url("../../../assets/images/bg.jpg") top center no-repeat;
 	background-size: cover;
 }
 .user__container {
 	display: flex;
-	min-height: calc(100vh - 51px);
+	min-height: 100vh;
 	align-items:center;
-	margin-top: 51px;
+	padding-top: 70px;
+	padding-bottom: 20px;
 }
 .user-form {
-	padding: 30px;
+	padding: 25px 0;
 	color: white;
-	border-radius: 5px;
+	border-radius: $br-size;
 	background-color: rgba(0, 0, 0, .6);
 }
 .user-form input {
@@ -25,40 +28,34 @@
 .user-form__last-row {
 	margin-bottom: 20px;
 }
-.form-control[disabled] {
-	cursor: auto;
-}
-.user-form__btn:hover {
-	color: white;
-	background-color: rgba(155,155,155,.2);
-}
 .user-wrapper .user__container .panel {
-	border-color: #FF5722;
-}
-.user-wrapper .user__container .panel-heading {
-	background-color: #FF5722;
-	color: #fff;
+	// background-color: $default-color;
+	color: #000;
 }
 .user-wrapper .table tbody tr:hover {
 	background-color: #fff;
-	color: #FF5722;
+	color: $default-color;
 }
 .table a.btn {
-	background-color: #000;
-	border: #000;
+	// background-color: #000;
+	// border: #000;
 	color: #fff;
 }
-.table a.btn {
-	background-color: #000;
-	border: #000;
+.table a.btn:hover, .table a.btn:hover .glyphicon {
+	// color: $default-color;
 }
 .glyphicon {
-	color: #000;
+	// color: #000;
 }
 .table .glyphicon-remove {
 	color: #fff;
 }
-/*#FFEB3B
-#E57373
-#81C784
-#66BB6A*/
+.panel-title {
+	font-weight: 600;
+}
+.user-wrapper .user__container .panel-heading:hover {
+	color: $default-color;
+}
+.user-wrapper .user__container .panel-heading:hover .glyphicon {
+	color: $default-color;
+}
