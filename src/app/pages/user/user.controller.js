@@ -1,6 +1,6 @@
 export default class UserController {
 
-  constructor ($scope, $log, $timeout, firebaseService, moment, toastr, user) {
+  constructor ($scope, $log, $timeout, firebaseService, moment, toastr, user, $uibModal) {
     'ngInject';
 
     $scope.startDate = new Date();
@@ -16,6 +16,7 @@ export default class UserController {
     this.vacationDays = this.calcDays();
     this.toastr = toastr;
     this.moment = moment;
+    this.modal = $uibModal;
     this.$log = $log;
     this.firebaseService = firebaseService;
     this.activate($scope);
@@ -31,6 +32,15 @@ export default class UserController {
 
   }
 
+/*  openChangePasswordForm() {
+    this.modal.open({
+      templateUrl: require('!!file!./modal/changePassword/changePassword.html'),
+      controller: require('./modal/changePassword/changePassword.controller'),
+      controllerAs: 'user',
+      resolve: {user: this.user}
+    });
+  }
+*/
   submitHandler(startDate, endDate) {
     this.$log.info(this.user);
 

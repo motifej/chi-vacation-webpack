@@ -17,9 +17,15 @@ vac-navbar {
             }
         }
 
-        .welcome {
-         color: #fff;
-         line-height: 50px;
+        .user-profile {
+            &__menu {
+                background-color: rgba(0, 0, 0, .9);
+                width: 100%;
+                color: #fff;
+                &_item {
+                    text-align: center;
+                }
+            }
         }
         .in {
             background-color: #000;
