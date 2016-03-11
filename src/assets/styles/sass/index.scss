@@ -51,6 +51,9 @@ a:focus {
 .chi--active:hover {
   background-color: lighten($default-color, 10%) !important;
 }
+.chi-glyphicon {
+  margin-right: 5px;
+}
 .page-loading {
   margin-top: 15%;
   font-size: 150px;
