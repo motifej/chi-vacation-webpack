@@ -10,39 +10,25 @@
         <img src="../../../assets/images/logo.png" class="text centr">
       </a>
     </div>
-
-    <div class="collapse navbar-collapse" uib-collapse="vm.isCollapsed">
+    <div class="navbar-collapse collapse in navbar__collapse" id="myNavbar" aria-expanded="true" uib-collapse="!vm.isCollapsed">
       <ul class="nav navbar-nav main-navbar__menu" ng-click="vm.collapsed(true)">
         <li ui-sref-active="chi--active" ng-if='vm.user.role'>
-          <a ui-sref={{vm.states.HOME}}>Home</a>
+          <a ui-sref={{vm.states.HOME}}><span class="glyphicon glyphicon-home chi-glyphicon"></span>Home</a>
         </li>
         <li ui-sref-active="chi--active" ng-if='vm.isAdmin()'>
-          <a ui-sref={{vm.states.ADMIN}} >admin</a>
+          <a ui-sref={{vm.states.ADMIN}}>
+          <span class="glyphicon glyphicon-user chi-glyphicon"></span>admin</a>
         </li>
         <li ui-sref-active="chi--active" ng-if='vm.isManager()'>
-          <a ui-sref={{vm.states.MANAGER}} >manager</a>
+          <a ui-sref={{vm.states.MANAGER}}>
+          <span class="glyphicon glyphicon-user chi-glyphicon"></span>manager</a>
         </li>
       </ul>
-
-      <ul class="nav navbar-nav navbar-right acme-navbar-text user-profile" ng-if='vm.user.uid'>
-        <li uib-dropdown>
-            <a href id="user-profile-dropdown" class="chi-link" uib-dropdown-toggle>
-              Welcome, &nbsp; {{vm.user.firstName + " " + vm.user.lastName}}
-            </a>
-            <ul class="user-profile__menu" uib-dropdown-menu aria-labelledby="user-profile-dropdown">
-              <li class="user-profile__menu_item" ng-click='vm.editProfile()'>
-                <span class="btn chi-btn--default user-profile__menu_text">user profile</span>
-              </li>
-            </ul>
+      <ul class="nav navbar-nav navbar-right" ng-if="vm.user.uid">
+        <li><a href="" class="navbar__user"><span class="glyphicon glyphicon-user chi-glyphicon"></span>{{vm.user.firstName + " " + vm.user.lastName}}</a></li>
+        <li><a ui-sref={{vm.states.LOGIN}} ng-click="vm.logOut()" class="logout"><span class="glyphicon glyphicon-log-out chi-glyphicon"></span>Logout</a>
         </li>
-        <li>
-          <button class="chi-btn--default logout"
-          ng-click="vm.logOut()"
-          ui-sref={{vm.states.LOGIN}}>
-          Log out
-        </button>
-      </li>
-    </ul>
+      </ul>
+    </div>
   </div>
-</div>
 </nav>
