@@ -3,7 +3,6 @@ export default function (app) {
 
     function statusUserFilter() {
         return function(input, filterKey, filterVal) {
-            console.log(filterVal);
             var filteredInput = {};
             angular.forEach(input, function(value, key) {
                 var vacationsList = value.vacations.list;

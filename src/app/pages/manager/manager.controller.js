@@ -10,6 +10,7 @@ export default class ManagerController {
     this.groups = groups;
     this.status = status;
     this.filter = {};
+    this.filtredUser;
     this.statusFilter = { status: status.INPROGRESS };
     this.modal = $uibModal;
 
@@ -44,8 +45,9 @@ this.columnDefs = [
     choiceGroup(group) {
       this.filter = { group: group };
     }
-    choiceUser(user, group) {
-      this.filter = { uid: user, group:group };
+    choiceUser(uid, group, user) {
+      this.filter = { uid: uid, group:group };
+      this.filtredUser = user;
     }
     choiceButtonFilter(filter) {
       this.statusFilter.status = filter;
@@ -66,6 +68,13 @@ this.columnDefs = [
           user: user
         }
       });
+    }
+    isRepeated(obj) {
+      console.log(obj);
+      for (var i in obj) {
+        return false;
+      }
+      return true;
     }
 
 } 
