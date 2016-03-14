@@ -38,6 +38,7 @@
 
         <div ng-repeat="user in manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status">
           <h4>{{user.firstName.charAt(0) + ". " + user.lastName}} <small class="text-warning">{{user.group}}</small></h4>
+          <h4 ng-show="!user.vacations.list">There are no vacations</h4>
           <table class="table table-bordered">
             <colgroup>
               <col class="col-md-4">
