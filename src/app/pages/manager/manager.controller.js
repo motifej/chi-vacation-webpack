@@ -6,11 +6,22 @@ export default class ManagerController {
 
     this.firebaseService = firebaseService;
     this.users = userList;
+    debugger;
     this.groups = groups;
     this.status = status;
     this.filter = {};
     this.statusFilter = { status: status.INPROGRESS };
     this.modal = $uibModal;
+
+
+
+this.columnDefs = [
+          { name:'firstName', field: 'firstName'},
+          { name:'lastName', field: 'lastName' },
+          { name:'startDate', field: 'startDate', type: 'date'},
+          { name:'endDate', field: 'endDate', type: 'date'}
+        ]
+
 
   }
 

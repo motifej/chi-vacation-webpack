@@ -60,5 +60,17 @@
 	.m-vacation-group {
 		font-weight: bold;
 	}
+	.well {
+		background-color: rgba(0, 0, 0, 0.3);
+	}
 	
+	.ui-grid-top-panel {
+		background: rgba(255,255,255,0);
+	}
+	.ui-grid-row:nth-child(odd) .ui-grid-cell {
+		background-color: rgba(255,255,255,0.2);
+	}
+	.ui-grid-row:nth-child(even) .ui-grid-cell {
+		background-color: rgba(255,255,255,0.1);
+	}
 }
