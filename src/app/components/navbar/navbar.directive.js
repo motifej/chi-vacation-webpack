@@ -16,14 +16,15 @@ export default function NavbarDirective() {
 }
 
 class NavbarController {
-  constructor (firebaseService, $rootScope, $scope, actions, roles, states) {
+  constructor (firebaseService, $rootScope, $scope, toastr, actions, roles, states) {
     'ngInject';
     this.firebaseService = firebaseService;
     this.states = states;
     this.roles = roles;
-    this.isCollapsed = true;
+    this.isCollapsed = false;
     this.user = {};
-    this.actions = actions
+    this.actions = actions;
+    this.toastr = toastr;
     this.activate($rootScope, $scope);
   }
 
@@ -48,5 +49,9 @@ class NavbarController {
 
   collapsed(val) {
     this.isCollapsed = val || !this.isCollapsed;
+  }
+
+  editProfile() {
+    this.toastr.info('this feature in development state');
   }
 }

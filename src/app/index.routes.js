@@ -18,7 +18,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
           resolve: {
             asyncPreloading: resolverProvider.loginPagePrealoading
           }
-        })
+        })       
         .state(states.SITE, {
           'abstract': true,
           resolve: {

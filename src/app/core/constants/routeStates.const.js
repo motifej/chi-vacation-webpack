@@ -1,4 +1,6 @@
 export const LOGIN = 'login';
+export const RESETPASSWORD = 'resetpassword';
+export const CHANGEPASSWORD = 'changepassword';
 export const HOME = 'home';
 export const ADMIN = 'admin';
 export const MANAGER = 'manager';

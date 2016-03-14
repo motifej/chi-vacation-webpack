@@ -3,9 +3,12 @@
 import './login.scss';
 
 import LoginController from './login.controller';
+import route from './login.route';
 
 const loginModule = angular.module('login-module', []);
 
-loginModule.controller('LoginController', LoginController);
+loginModule
+    .config(route)
+    .controller('LoginController', LoginController);
 
 export default loginModule;
