@@ -1,14 +1,14 @@
 @import '../../../assets/styles/sass/variables.scss';
 
 vac-navbar {
-    .main-navbar{
+    .main-navbar {
         width: 100%;
         margin: 0;
         background-color: rgba(0, 0, 0, .9);
         border: none;
         height: 50px;
 
-        .main-navbar__menu{
+        .main-navbar__menu {
             li a{
                 color: #fff;
                 font-weight: bold;
@@ -18,7 +18,6 @@ vac-navbar {
                 }
             }
         }
-        .nav
 
         .user-profile {
             &__menu {
@@ -30,29 +29,32 @@ vac-navbar {
                 }
             }
         }
-        .in{
+        .in {
             background-color: #000;
-            text-align: center;
         }
-        .logout {
-            text-align: center;
-            font-weight: bold;
-            letter-spacing: 1px;
-            border-radius: 3px;
-            margin: 10px;
-            line-height: 25px;
-            color: white;
+        .logout:hover {
+            color: $default-color !important;
+        }
+        .navbar__collapse {
+            overflow:  hidden;
+        }
+        .navbar__user:hover {
+            cursor: default;
+        }
+        .navbar__toggle-btn {
+            border: 2px solid white;
+        }
+        .navbar__toggle-btn:hover,
+        .navbar__toggle-btn:focus {
+            border-color: $default-color;
+            background-color: transparent;
+        }
+        .navbar__toggle-btn:hover .icon-bar,
+        .navbar__toggle-btn:focus .icon-bar {
+            background-color: $default-color;
         }
     }
     .navbar-inverse .navbar-nav > li > a {
         color: white;
     }
-    .navbar__toggle-btn:hover {
-        border: 1px solid $default-color;
-        background-color: transparent !important;
-    }
-    .navbar__toggle-btn:hover .icon-bar {
-        background-color: $default-color;
-    }
-
 }

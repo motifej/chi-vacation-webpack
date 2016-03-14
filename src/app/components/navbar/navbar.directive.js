@@ -21,7 +21,7 @@ class NavbarController {
     this.firebaseService = firebaseService;
     this.states = states;
     this.roles = roles;
-    this.isCollapsed = true;
+    this.isCollapsed = false;
     this.user = {};
     this.actions = actions;
     this.toastr = toastr;
