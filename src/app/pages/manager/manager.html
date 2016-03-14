@@ -11,7 +11,7 @@
           </div>
           <div class="panel-body m-panel-body users">
             <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.filter">
-              <a class="btn btn-sm m-button-gray" ng-click="manager.choiceUser(user.uid, user.group)" ng-class="{'m-button-orange': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
+              <a class="btn btn-sm m-button-gray" ng-click="manager.choiceUser(user.uid, user.group, user)" ng-class="{'m-button-orange': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
             </span>
           </div>
         </div>
@@ -32,13 +32,14 @@
 
       <!-- <div class="gridStyle" ui-grid-selection ui-grid="{columnDefs: manager.columnDefs, data: manager.users }"></div> -->
       <div class="well">
-        <div ng-repeat="user in manager.users | filter:manager.filter" ng-show="manager.filter.uid && !user.vacations.list">
-          <h4>{{user.firstName.charAt(0) + ". " + user.lastName}} <small class="text-warning">{{user.group}}</small> doesn't have vacations</h4>
+
+        <div ng-show="manager.isRepeated((manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status))">
+          <h4 ng-show="manager.filter.uid"><span class="btn btn-sm m-button-gray" ng-click="manager.userInfo(manager.filtredUser)">{{manager.filtredUser.firstName.charAt(0) + ". " + manager.filtredUser.lastName}}</span> <small class="text-warning">{{manager.filter.group}}</small> doesn't have <span ng-hide="!manager.filtredUser.vacations.list">{{manager.statusFilter.status}}</span> vacations</h4>
+          <h4 ng-hide="manager.filter.uid">There is no {{manager.statusFilter.status}} vacations<span ng-show="manager.filter.group"> in <small class="text-warning">{{manager.filter.group}}</small></span></h4>
         </div>
 
         <div ng-repeat="user in manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status">
-          <h4>{{user.firstName.charAt(0) + ". " + user.lastName}} <small class="text-warning">{{user.group}}</small></h4>
-          <h4 ng-show="!user.vacations.list">There are no vacations</h4>
+          <h4><span class="btn btn-sm m-button-gray" ng-click="manager.userInfo(manager.filtredUser)">{{user.firstName.charAt(0) + ". " + user.lastName}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <table class="table table-bordered">
             <colgroup>
               <col class="col-md-4">
