@@ -7,6 +7,7 @@
 	width: 100%;
 }
 .user__container {
+	min-height: 100vh;
 	padding-top: 70px;
 }
 .user-form {
@@ -29,28 +30,16 @@
 .user-wrapper .user__container .panel {
 	color: #000;
 }
-.user-wrapper .table tbody tr:hover {
-	background-color: #fff;
-	color: $default-color;
-}
 .table a.btn {
 	color: #fff;
-}
-.table a.btn:hover, .table a.btn:hover .glyphicon {
-	// color: $default-color;
-}
-.glyphicon {
-	// color: #000;
 }
 .table .glyphicon-remove {
 	color: #fff;
 }
+.user-wrapper .table tbody tr:hover, .user-wrapper .user__container .panel-heading:hover {
+	background-color: #fff;
+	color: $default-color;
+}
 .panel-title {
 	font-weight: 600;
-}
-.user-wrapper .user__container .panel-heading:hover {
-	color: $default-color;
-}
-.user-wrapper .user__container .panel-heading:hover .glyphicon {
-	color: $default-color;
 }

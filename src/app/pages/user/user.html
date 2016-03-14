@@ -1,6 +1,6 @@
 <div class="user-wrapper clearfix">
-  <div class="container user__container">
-    <div class="row">
+  <div id="parent" class="container user__container">
+    <div class="row vcenter">
       <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
         <div class="panel-group">
           <uib-accordion>
@@ -41,129 +41,133 @@
                   <div class="col-xs-10 text-center"><span>Rejected Vacations</span></div>
                 </div>
               </uib-accordion-heading>
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th class="col-xs-2 text-center">№</th>
-                    <th class="col-xs-5 text-center">Start vacation</th>
-                    <th class="col-xs-5 text-center">End vacation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'rejected' | orderBy:'endDate'">
-                    <td class="col-xs-1 text-center">{{$index+1}}</td>
-                    <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                    <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-2 text-center">№</th>
+                      <th class="col-xs-5 text-center">Start vacation</th>
+                      <th class="col-xs-5 text-center">End vacation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'rejected' | orderBy:'endDate'">
+                      <td class="col-xs-1 text-center">{{$index+1}}</td>
+                      <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </uib-accordion-group>
           </uib-accordion>
           <uib-accordion>
             <uib-accordion-group is-open="isCollapsed">
               <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
-              <div class="row">
-                <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-ok"></span></div>
-                <div class="col-xs-10 text-center"><span>Approved Vacation</span></div>
+                <div class="row">
+                  <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-ok"></span></div>
+                  <div class="col-xs-10 text-center"><span>Approved Vacation</span></div>
+                </div>
+              </uib-accordion-heading>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-1 text-center">№</th>
+                      <th class="col-xs-5 text-center">Start vacation</th>
+                      <th class="col-xs-5 text-center">End vacation</th>
+                      <th class="col-xs-1 text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'approved' | orderBy:'endDate'">
+                      <td class="col-xs-1 text-center">{{$index+1}}</td>
+                      <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)" ng-show="item.startDate > userCtrl.today"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </uib-accordion-heading>
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th class="col-xs-1 text-center">№</th>
-                  <th class="col-xs-5 text-center">Start vacation</th>
-                  <th class="col-xs-5 text-center">End vacation</th>
-                  <th class="col-xs-1 text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'approved' | orderBy:'endDate'">
-                  <td class="col-xs-1 text-center">{{$index+1}}</td>
-                  <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                  <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                  <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)" ng-show="item.startDate > userCtrl.today"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </uib-accordion-group>
-        </uib-accordion>
-        <uib-accordion>
-          <uib-accordion-group is-open="isCollapsed">
-            <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
-              <div class="row">
-                <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-lock"></span></div>
-                <div class="col-xs-10 text-center"><span>Spent Vacations</span></div>
+            </uib-accordion-group>
+          </uib-accordion>
+          <uib-accordion>
+            <uib-accordion-group is-open="isCollapsed">
+              <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
+                <div class="row">
+                  <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-lock"></span></div>
+                  <div class="col-xs-10 text-center"><span>Spent Vacations</span></div>
+                </div>
+              </uib-accordion-heading>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-2 text-center">№</th>
+                      <th class="col-xs-5 text-center">Start vacation</th>
+                      <th class="col-xs-5 text-center">End vacation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'spent' | orderBy:'endDate'">
+                      <td class="col-xs-1 text-center">{{$index+1}}</td>
+                      <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </uib-accordion-heading>
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th class="col-xs-2 text-center">№</th>
-                  <th class="col-xs-5 text-center">Start vacation</th>
-                  <th class="col-xs-5 text-center">End vacation</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'spent' | orderBy:'endDate'">
-                  <td class="col-xs-1 text-center">{{$index+1}}</td>
-                  <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                  <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </uib-accordion-group>
-        </uib-accordion>
+            </uib-accordion-group>
+          </uib-accordion>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+        <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
+          <legend class="user-form__title">Vacation request</legend>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="">Start date</label>
+              <chi-datepicker class="datepicker"
+              name="startDate"
+              ng-model="startDate"
+              min-date="minStartDate"
+              calc-days="userCtrl.calcDays(name, date)"
+              >
+              </chi-datepicker>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="">End date</label>
+              <chi-datepicker class="datepicker"
+              name="endDate"
+              ng-model="endDate"
+              min-date="minEndDate"
+              calc-days="userCtrl.calcDays(name)"
+              >
+              </chi-datepicker>
+            </div>
+          </div>
+          <div class="row user-form__last-row">
+            <div class="form-group col-md-4">
+              <label for="selected">Vacation days</label>
+              <input type="text" id="selected" class="form-control user__total-days" readonly
+              ng-value="userCtrl.vacationDays">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="available">Available days</label>
+              <input type="text" id="available" class="form-control user__left-days" readonly
+              ng-value="userCtrl.user.vacations.total || 0">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="dayoff">Available dayoffs</label>
+              <input type="text" id="dayoff" class="form-control user__left-days" readonly
+              ng-value="userCtrl.user.vacations.dayOff || 0">
+            </div>
+          </div>
+          <div class="row">
+            <button type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">Send</button>
+          </div>
+        </form>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
-      <form name="userForm" role="form" class="user-form col-md-12 text-center" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
-        <legend class="user-form__title">
-          <h1>Vacation request</h1>
-        </legend>
-        <div class="row">
-          <div class="form-group col-md-6">
-            <label for="">Start date</label>
-            <chi-datepicker class="datepicker"
-            name="startDate"
-            ng-model="startDate"
-            min-date="minStartDate"
-            calc-days="userCtrl.calcDays(name, date)"
-            >
-            </chi-datepicker>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="">End date</label>
-            <chi-datepicker class="datepicker"
-            name="endDate"
-            ng-model="endDate"
-            min-date="minEndDate"
-            calc-days="userCtrl.calcDays(name)"
-            >
-            </chi-datepicker>
-          </div>
-        </div>
-        <div class="row user-form__last-row">
-          <div class="form-group col-md-4">
-            <label for="selected">Vacation days</label>
-            <input type="text" id="selected" class="form-control user__total-days" readonly
-            ng-value="userCtrl.vacationDays">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="available">Available days</label>
-            <input type="text" id="available" class="form-control user__left-days" readonly
-            ng-value="userCtrl.user.vacations.total || 0">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="dayoff">Available dayoffs</label>
-            <input type="text" id="dayoff" class="form-control user__left-days" readonly
-            ng-value="userCtrl.user.vacations.dayOff || 0">
-          </div>
-        </div>
-        <div class="row">
-          <button type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">Send</button>
-        </div>
-      </form>
-    </div>
   </div>
-</div>
 </div>
