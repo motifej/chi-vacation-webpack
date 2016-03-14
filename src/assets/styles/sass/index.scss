@@ -28,6 +28,25 @@ a:focus {
 .chi-link:hover {
   color: $default-color !important;
 }
+.chi-link--active {
+  background-color: $default-color;
+}
+.chi-link--active:hover {
+  background-color: lighten($default-color, 10%) !important;
+}
+.chi-tab {
+  border: 2px solid transparent;
+}
+.chi-tab:hover {
+  border: 2px solid $default-color;
+}
+.chi-tab--active {
+  border: 2px solid $default-color;
+  background-color: $default-color;
+}
+.chi-tab--active:hover {
+  border: 2px solid $default-color;
+}
 .chi-btn--default {
   font-weight: bold;
   letter-spacing: 1px;
@@ -38,12 +57,6 @@ a:focus {
 .chi-btn--default:hover{
   color: white;
   background-color: rgba(100, 34, 13, .2);
-}
-.chi--active {
-  background-color: $default-color;
-}
-.chi--active:hover {
-  background-color: lighten($default-color, 10%) !important;
 }
 .chi-glyphicon {
   margin-right: 5px;
@@ -57,7 +70,6 @@ a:focus {
 .active .text-info {
   color: white !important;
 }
-.form__title
 
 .glyphicon.spinning {
     animation: spin 1s infinite linear;
