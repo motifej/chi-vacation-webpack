@@ -23,11 +23,51 @@
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter('')">All</label>
         </div>
         <button class="col-xs-12 col-sm-2 btn m-button-user chi-btn--default" ng-click="manager.openNewUserForm()">Add User</button>
       </div>
       <hr>
+
+
+      <!-- <div class="gridStyle" ui-grid-selection ui-grid="{columnDefs: manager.columnDefs, data: manager.users }"></div> -->
+      <div class="well">
+        <div ng-repeat="user in manager.users | filter:manager.filter" ng-show="manager.filter.uid && !user.vacations.list">
+          <h4>{{user.firstName.charAt(0) + ". " + user.lastName}} <small class="text-warning">{{user.group}}</small> doesn't have vacations</h4>
+        </div>
+
+        <div ng-repeat="user in manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status">
+          <h4>{{user.firstName.charAt(0) + ". " + user.lastName}} <small class="text-warning">{{user.group}}</small></h4>
+          <table class="table table-bordered">
+            <colgroup>
+              <col class="col-md-4">
+              <col class="col-md-4">
+              <col class="col-md-4">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
+                <td>{{item.startDate | date:'dd MMMM yyyy'}}</td>
+                <td>{{item.endDate | date:'dd MMMM yyyy'}}</td>
+                <td>
+                  <button ng-hide="item.status!='inprogress'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="manager.confirmVacation(user, item.id)">Confirm</button>
+                  <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="manager.rejectVacation(user, item.id)">Reject</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+  
+  
+
       <div class="row">
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
