@@ -6,6 +6,7 @@
 	min-height: 100%;
 }
 .user__container {
+	min-height: 100vh;
 	padding-top: 70px;
 	padding-bottom: 20px;
 }
@@ -26,34 +27,10 @@
 .user-form__last-row {
 	margin-bottom: 20px;
 }
-.user-wrapper .user__container .panel {
-	// background-color: $default-color;
-	color: #000;
-}
-.user-wrapper .table tbody tr:hover {
+.user-wrapper .table tbody tr:hover, .user-wrapper .user__container .panel-heading:hover {
 	background-color: #fff;
 	color: $default-color;
 }
-.table a.btn {
-	// background-color: #000;
-	// border: #000;
-	color: #fff;
-}
-.table a.btn:hover, .table a.btn:hover .glyphicon {
-	// color: $default-color;
-}
-.glyphicon {
-	// color: #000;
-}
-.table .glyphicon-remove {
-	color: #fff;
-}
 .panel-title {
 	font-weight: 600;
-}
-.user-wrapper .user__container .panel-heading:hover {
-	color: $default-color;
-}
-.user-wrapper .user__container .panel-heading:hover .glyphicon {
-	color: $default-color;
 }
