@@ -4,11 +4,11 @@
 	background: url("../../../assets/images/bg.jpg") center no-repeat;
 	background-size: cover;
 	min-height: 100%;
+	width: 100%;
 }
 .user__container {
 	min-height: 100vh;
 	padding-top: 70px;
-	padding-bottom: 20px;
 }
 .user-form {
 	padding: 25px 0;
@@ -26,6 +26,15 @@
 }
 .user-form__last-row {
 	margin-bottom: 20px;
+}
+.user-wrapper .user__container .panel {
+	color: #000;
+}
+.table a.btn {
+	color: #fff;
+}
+.table .glyphicon-remove {
+	color: #fff;
 }
 .user-wrapper .table tbody tr:hover, .user-wrapper .user__container .panel-heading:hover {
 	background-color: #fff;
