@@ -11,24 +11,26 @@
                   <div class="col-xs-10 text-center"><span>Vacation Requests</span></div>
                 </div>
               </uib-accordion-heading>
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th class="col-xs-1 text-center">№</th>
-                    <th class="col-xs-5 text-center">Start vacation</th>
-                    <th class="col-xs-5 text-center">End vacation</th>
-                    <th class="col-xs-1 text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'requests' | orderBy:'endDate'">
-                    <td class="col-xs-1 text-center">{{$index+1}}</td>
-                    <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                    <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                    <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-1 text-center">№</th>
+                      <th class="col-xs-5 text-center">Start vacation</th>
+                      <th class="col-xs-5 text-center">End vacation</th>
+                      <th class="col-xs-1 text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in userCtrl.user.vacations.list | userFilterVacation:'requests' | orderBy:'endDate'">
+                      <td class="col-xs-1 text-center">{{$index+1}}</td>
+                      <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </uib-accordion-group>
           </uib-accordion>
           <uib-accordion>
@@ -114,8 +116,10 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
-      <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
-        <legend class="user-form__title">Vacation request</legend>
+      <form name="userForm" role="form" class="user-form col-md-12 text-center" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
+        <legend class="user-form__title">
+          <h1>Vacation request</h1>
+        </legend>
         <div class="row">
           <div class="form-group col-md-6">
             <label for="">Start date</label>

@@ -4,10 +4,10 @@
 	background: url("../../../assets/images/bg.jpg") center no-repeat;
 	background-size: cover;
 	min-height: 100%;
+	width: 100%;
 }
 .user__container {
 	padding-top: 70px;
-	padding-bottom: 20px;
 }
 .user-form {
 	padding: 25px 0;
@@ -27,7 +27,6 @@
 	margin-bottom: 20px;
 }
 .user-wrapper .user__container .panel {
-	// background-color: $default-color;
 	color: #000;
 }
 .user-wrapper .table tbody tr:hover {
@@ -35,8 +34,6 @@
 	color: $default-color;
 }
 .table a.btn {
-	// background-color: #000;
-	// border: #000;
 	color: #fff;
 }
 .table a.btn:hover, .table a.btn:hover .glyphicon {
