@@ -1,13 +1,15 @@
 import Firebase from 'firebase';
 
 export default class FirebaseService {
-	constructor ($firebaseArray, $localStorage, $firebaseObject, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout, moment, $parse, API_URL, users, actions) {
+	constructor ($firebaseArray, $localStorage, $firebaseObject, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout, $state, moment, $parse, API_URL, users, actions, states) {
 		'ngInject';
 		this.$localStorage = $localStorage;
 		this.$firebaseObject = $firebaseObject;
 		this.$firebaseAuth = $firebaseAuth;
 		this.$firebaseArray = $firebaseArray;
 		this.$firebaseUtils = $firebaseUtils;
+		this.$state = $state;
+		this.states = states;
 		this.toJSON = $firebaseUtils.toJSON;
 		this.$parse = $parse;
 		this.userRole = users;
@@ -28,6 +30,26 @@ export default class FirebaseService {
 	checkPersmissions(arr) {
 		return !!~arr.indexOf(this.authUser.role || this.userRole.ANONIM);
 	}
+
+	checkExpired() {
+      let auth = this.firebaseObj.getAuth();
+      if (auth) {
+        let sessionTimeout = auth.expires * 1000;
+        let curDate = new Date();
+        let curTime = curDate.getTime();
+        let timer = sessionTimeout - curTime;
+        if (timer <= 0 ) {
+          this.logOut();
+          return true
+        } else {
+          this.$timeout( () => {
+            this.logOut();
+            this.$state.go(this.states.LOGIN);
+          }, timer);
+        }
+        return false;
+      }
+    }
 
 	getUsersList() {
 		let deferred = this.$q.defer();
