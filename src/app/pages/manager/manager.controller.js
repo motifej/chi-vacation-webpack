@@ -6,12 +6,12 @@ export default class ManagerController {
 
     this.firebaseService = firebaseService;
     this.users = userList;
-    debugger;
     this.groups = groups;
     this.status = status;
     this.filter = {};
     this.filtredUser;
     this.statusFilter = { status: status.INPROGRESS };
+    this.groupFilter = {};
     this.modal = $uibModal;
     this.pageState = "vacations";
     let today = new Date();
@@ -58,10 +58,12 @@ this.columnDefs = [
     }
     choiceGroup(group) {
       this.filter = { group: group };
+      this.groupFilter = { group: group };
       this.setDateInfo();
     }
     choiceUser(uid, group, user) {
       this.filter = { uid: uid, group:group };
+      this.groupFilter = { group: group };
       this.filtredUser = user;
       this.setDateInfo();
     }
@@ -87,7 +89,6 @@ this.columnDefs = [
       });
     }
     isRepeated(obj) {
-      console.log(obj);
       for (var i in obj) {
         return false;
       }
@@ -101,7 +102,7 @@ this.columnDefs = [
       var events = this.events = [];
       var {startsAt, endsAt} = this.newEvent;
       angular.forEach(this.awesomeThings, function (value) {
-        console.log((that.filter.group && that.filter.group == value.group) )
+        var user = value;
         if ( ('list' in value.vacations) && (!that.filter.group || that.filter.group == value.group) && (!that.filter.uid || that.filter.uid == value.uid) ) {
           let { list } = value.vacations;
           var {firstName, lastName} = value;
@@ -119,7 +120,8 @@ this.columnDefs = [
                   editable: false,
                   deletable: false,
                   incrementsBadgeTotal: true,
-                  recursOn: 'year'
+                  recursOn: 'year',
+                  user: user
                 };
                 events.push(event);
               }

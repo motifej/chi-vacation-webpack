@@ -7,10 +7,10 @@
             <span ng-repeat="group in manager.groups">
               <a class="btn btn-xs m-button-black" ng-class="{'m-button-orange': manager.filter.group == group}" ng-click="manager.choiceGroup(group)">{{group}}</a>
             </span>
-            <a class="btn btn-xs m-button-orange" ng-click="manager.choiceGroup()">All</a>
+            <a class="btn btn-xs m-button-gray" ng-class="{'m-button-orange': !manager.filter.group}"  ng-click="manager.choiceGroup()">All</a>
           </div>
           <div class="panel-body m-panel-body users">
-            <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.filter">
+            <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.groupFilter">
               <a class="btn btn-sm m-button-gray" ng-click="manager.choiceUser(user.uid, user.group, user)" ng-class="{'m-button-orange': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
             </span>
           </div>
@@ -25,7 +25,7 @@
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-button-gray" ng-class="{'m-button-orange': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter('')">All</label>
         </div>
-        <button class="col-xs-12 col-sm-2 btn m-button-user chi-btn--default" ng-click="manager.openNewUserForm()">Add User</button>
+        <div class="btn-group col-xs-12 col-sm-2 m-button-user"><button class="col-xs-12 btn chi-btn--default" ng-click="manager.openNewUserForm()">Add User</button></div>
       </div>
       <hr>
       <div class="buttons-panel clearfix">
@@ -94,6 +94,7 @@
           day-view-start="06:00"
           day-view-end="22:00"
           day-view-split="30"
+    on-event-click="manager.userInfo(calendarEvent.user)"
           >
           </mwl-calendar>
         </div>
@@ -109,7 +110,7 @@
         </div>
 
         <div ng-repeat="user in manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status">
-          <h4><span class="btn btn-sm m-button-gray" ng-click="manager.userInfo(manager.filtredUser)">{{user.firstName.charAt(0) + ". " + user.lastName}}</span> <small class="text-warning">{{user.group}}</small></h4>
+          <h4><span class="btn btn-sm m-button-gray" ng-click="manager.userInfo(user)">{{user.firstName.charAt(0) + ". " + user.lastName}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <table class="table table-bordered">
             <colgroup>
               <col class="col-md-4">
