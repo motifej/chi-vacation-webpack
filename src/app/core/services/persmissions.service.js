@@ -1,5 +1,5 @@
 export default function (app) {
-  
+
   app.service('permission', PermissionService);
 
   function PermissionService ($rootScope, $state, firebaseService, toastr, $parse, states, roles) {
@@ -8,6 +8,10 @@ export default function (app) {
     this.init = init;
 
     function init (event, toState, toParams, fromState) {
+      if ( firebaseService.checkExpired() && toState.name !== states.LOGIN) {
+        event.preventDefault();
+        $state.go(states.LOGIN);
+      }
       let roles = $parse('data.roles')(toState) || roles.ANONIM;
       if( !roles.length ){
         toastr.error('can not url fo this state');
@@ -22,13 +26,14 @@ export default function (app) {
       event.preventDefault();
 
       if( fromState.url === '^' ) {
-          if( firebaseService.getAuthUser() ) {
-              $state.go(states.HOME);
-          } else {
-              $state.go(states.LOGIN);
-          }
+        if( firebaseService.getAuthUser() ) {
+          $state.go(states.HOME);
+        } else {
+          $state.go(states.LOGIN);
+        }
       }
     }
+
   }
 
 }
