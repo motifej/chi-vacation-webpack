@@ -28,10 +28,80 @@
         <button class="col-xs-12 col-sm-2 btn m-button-user chi-btn--default" ng-click="manager.openNewUserForm()">Add User</button>
       </div>
       <hr>
+      <div class="buttons-panel clearfix">
+        <div class="btn-group col-xs-12 col-sm-9 col-md-7">
+          <label class="btn col-xs-12 col-sm-6 col-md-6 m-button-gray" ng-class="{'m-button-orange': manager.pageState == 'vacations'}" ng-click="manager.changePageState('vacations')">Vacations</label>
+          <label class="btn col-xs-12 col-sm-6 col-md-6 m-button-gray" ng-class="{'m-button-orange': manager.pageState == 'calendar'}" ng-click="manager.changePageState('calendar')">Calendar</label>
+        </div>
+      </div>
+      <hr>
+
+      <div class="m-calendar well clearfix" ng-show="manager.pageState == 'calendar'">
+        <div class="row col-md-12">
+
+          <br class="visible-xs visible-sm">
+
+          <h2 class="text-center">{{ manager.calendarTitle }}</h2>
+
+          <div class="row">
+
+            <div class="col-md-6 text-center">
+              <div class="btn-group">
+                <button
+                  class="btn chi-btn--default"
+                  mwl-date-modifier
+                  date="manager.calendarDay"
+                  decrement="manager.calendarView">
+                  Previous
+                </button>
+                <button
+                  class="btn chi-btn--default"
+                  mwl-date-modifier
+                  date="manager.calendarDay"
+                  set-to-today>
+                  Today
+                </button>
+                <button
+                  class="btn chi-btn--default"
+                  mwl-date-modifier
+                  date="manager.calendarDay"
+                  increment="manager.calendarView">
+                  Next
+                </button>
+              </div>
+          </div>
+
+          <br class="visible-xs visible-sm">
+
+          <div class="col-md-6 text-center">
+            <div class="btn-group">
+              <label class="btn chi-btn--default" ng-model="manager.calendarView" uib-btn-radio="'year'">Year</label>
+              <label class="btn chi-btn--default" ng-model="manager.calendarView" uib-btn-radio="'month'">Month</label>
+              <label class="btn chi-btn--default" ng-model="manager.calendarView" uib-btn-radio="'week'">Week</label>
+            </div>
+          </div>
+
+          </div>
+
+        </div>
+        <div class="col-md-12">
+          <mwl-calendar
+          view="manager.calendarView"
+          view-date="manager.calendarDay"
+          events="manager.events"
+          view-title="manager.calendarTitle"
+          auto-open="true"
+          day-view-start="06:00"
+          day-view-end="22:00"
+          day-view-split="30"
+          >
+          </mwl-calendar>
+        </div>
+      </div>
 
 
       <!-- <div class="gridStyle" ui-grid-selection ui-grid="{columnDefs: manager.columnDefs, data: manager.users }"></div> -->
-      <div class="well">
+      <div class="well" ng-show="manager.pageState == 'vacations'">
 
         <div ng-show="manager.isRepeated((manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status))">
           <h4 ng-show="manager.filter.uid"><span class="btn btn-sm m-button-gray" ng-click="manager.userInfo(manager.filtredUser)">{{manager.filtredUser.firstName.charAt(0) + ". " + manager.filtredUser.lastName}}</span> <small class="text-warning">{{manager.filter.group}}</small> doesn't have <span ng-hide="!manager.filtredUser.vacations.list">{{manager.statusFilter.status}}</span> vacations</h4>
