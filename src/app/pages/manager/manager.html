@@ -50,14 +50,14 @@
               <tr>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Action</th>
+                <th ng-hide="manager.statusFilter.status == 'rejected'">Action</th>
               </tr>
             </thead>
             <tbody >
               <tr ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
                 <td>{{item.startDate | date:'dd MMMM yyyy'}}</td>
                 <td>{{item.endDate | date:'dd MMMM yyyy'}}</td>
-                <td>
+                <td ng-hide="manager.statusFilter.status == 'rejected'">
                   <button ng-hide="item.status!='inprogress'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="manager.confirmVacation(user, item.id)">Confirm</button>
                   <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="manager.rejectVacation(user, item.id)">Reject</button>
                 </td>
@@ -70,7 +70,7 @@
   
   
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
             <div class="panel m-panel">
@@ -94,7 +94,7 @@
           </div>
 
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
