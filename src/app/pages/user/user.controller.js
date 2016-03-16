@@ -42,7 +42,6 @@ export default class UserController {
   }
 */
   submitHandler(startDate, endDate) {
-    this.$log.info(this.user);
 
     let vm = this;
     let sDate = new Date(startDate).getTime();
@@ -88,7 +87,6 @@ export default class UserController {
           return true;
         }
       });
-      console.log(result);
 
       return !!result.length;
 

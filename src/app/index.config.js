@@ -1,6 +1,6 @@
 'use strict';
 var DEVELOPMENT = false;
-function config($logProvider, $compileProvider, toastrConfig) {
+function config($logProvider, $compileProvider, toastrConfig, calendarConfig) {
 	'ngInject';
 
   // Enable log
@@ -11,6 +11,8 @@ function config($logProvider, $compileProvider, toastrConfig) {
   toastrConfig.timeOut = 2000;
   toastrConfig.positionClass = 'toast-top-right';
   toastrConfig.progressBar = true;
+
+  calendarConfig.templates.calendarSlideBox = require('!!file!./pages/templates/calendarSlideBox.html');
   
 }
 
