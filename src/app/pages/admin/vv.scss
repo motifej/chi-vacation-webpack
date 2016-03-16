@@ -1,17 +1,25 @@
+@import '../../../assets/styles/sass/variables.scss';
+
 .wrap {
     background: url('../../../assets/images/bg.jpg') no-repeat;
     width: 100%;
     background-size: cover;
+    background-attachment: fixed;
     color: #fff;
     padding-top: 75px;
     min-height: 100vh;
+
+    .admin__container {
+        background-color: $bg-color;
+        border-radius: $br-size;
+    }
 
     .jumbotron {
         padding-top: 30px;
         padding-bottom: 30px;
         margin-bottom: 30px;
         color: inherit;
-        background-color: rgba(0,0,0,.6);
+        background-color: transparent;
     }
 
     span[data-cal-date] {
@@ -35,7 +43,7 @@
 
     /**/
     .cal-day-today {
-        background-color: #FF5722;
+        background-color: $default-color;
         color: #fff;
     }
 
@@ -44,7 +52,7 @@
     }
 
     #cal-week-box {
-        border: 1px solid #CE0000;
+        border: 1px solid white;
         border-right: 0px;
         border-radius: 5px 0 0 5px;
         background-color: #544848;
@@ -56,7 +64,7 @@
     }
 
     [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
-        background-color: rgba(100, 34, 13, 1);
+        background-color: rgba(255, 255, 255, .2);
     }
 
     .dropdown-menu-right {
