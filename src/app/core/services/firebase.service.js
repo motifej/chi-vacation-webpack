@@ -1,7 +1,7 @@
 import Firebase from 'firebase';
 
 export default class FirebaseService {
-	constructor ($firebaseArray, $localStorage, $firebaseObject, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout, $state, moment, $parse, API_URL, users, actions, states) {
+	constructor ($firebaseArray, $localStorage, $firebaseObject, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout, $state, moment, $parse, API_URL, roles, actions, states) {
 		'ngInject';
 		this.$localStorage = $localStorage;
 		this.$firebaseObject = $firebaseObject;
@@ -12,7 +12,7 @@ export default class FirebaseService {
 		this.states = states;
 		this.toJSON = $firebaseUtils.toJSON;
 		this.$parse = $parse;
-		this.userRole = users;
+		this.roles = roles;
 		this.actions = actions;
 		this.$q = $q;
 		this.$timeout = $timeout;
@@ -28,7 +28,7 @@ export default class FirebaseService {
 	}
 
 	checkPersmissions(arr) {
-		return !!~arr.indexOf(this.authUser.role || this.userRole.ANONIM);
+		return !!~arr.indexOf(this.authUser.role || this.roles.GUEST);
 	}
 
 	checkExpired() {
