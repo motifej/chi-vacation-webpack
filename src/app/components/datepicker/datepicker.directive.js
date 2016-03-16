@@ -17,7 +17,6 @@ export default function DatepickerDirective() {
     return directive;
 
     function link(scope, element, attrs) {
-        console.log(scope.calcDays);
         scope.test = function () {alert('test')};
         scope.name = attrs.name;
 

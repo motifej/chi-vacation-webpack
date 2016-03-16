@@ -5,6 +5,7 @@
 	background-size: cover;
 	min-height: 100%;
 	width: 100%;
+	background-attachment: fixed;
 }
 .user__container {
 	min-height: 100vh;
@@ -15,6 +16,7 @@
 	color: white;
 	border-radius: $br-size;
 	background-color: rgba(0, 0, 0, .6);
+	border: 2px solid white;
 }
 .user-form input {
 	text-align: center;
