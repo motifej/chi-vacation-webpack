@@ -8,17 +8,19 @@ export default function dropdownListDirective() {
         itemsList: '=',
         placeholder: '@',
         obj: '=',
-        showEvents: '='
+        showEvents: '=',
+        search: '=' 
       },
       templateUrl: vvDropdownTpl,
       link: fnLink
   };
 
-
   return directive;
 
   function fnLink(scope){
+
     scope.chooseItem = function( item ){
+      
       scope.obj = item;
       var {firstName, lastName} = item;
       var fullName = scope.search = firstName + ' ' + lastName; 
