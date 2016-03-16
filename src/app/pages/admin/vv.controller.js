@@ -8,14 +8,17 @@ export default class VvController {
     this.userName = [];
     this.events = [];
     this.newEvent = {};
-    this.selected = "sds";
     this.calendarView = 'month';
     this.calendarDay = new Date(today);
     this.newEvent.startsAt = new Date(today); 
     this.newEvent.endsAt = new Date(today);
+    this.search = "";
   }
 
   setDateInfo() {
+    this.search = "";
+    this.oneThing = null;
+
     var events = this.events = [];
     var {startsAt, endsAt} = this.newEvent;
     angular.forEach(this.awesomeThings, function (value) {
