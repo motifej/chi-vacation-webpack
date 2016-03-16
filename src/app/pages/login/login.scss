@@ -5,12 +5,14 @@
     align-items:center;
     background: url('../../../assets/images/login-bg.jpg') center no-repeat;
     background-size: cover;
+    background-atachment: fixed;
     color: #fff;
     position: relative;
     min-height: 100%;
     padding-top: 70px;
 
     .login-form-wrap {
+        border: 2px solid white;
         padding-top: 25px;
         margin: 0 auto;
         border-radius: $br-size;
