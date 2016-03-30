@@ -1,10 +1,11 @@
 import { find } from 'lodash';
 
 export default class ManagerController {
-  constructor ($scope, $timeout, firebaseService, userList, $uibModal, moment, groups, status) {
+  constructor ($scope, $timeout, firebaseService, userList, $uibModal, moment, groups, status, toastr) {
     'ngInject';
 
     this.firebaseService = firebaseService;
+    this.toastr = toastr;
     this.users = userList;
     this.groups = groups;
     this.status = status;
@@ -28,16 +29,12 @@ export default class ManagerController {
     this.newEvent.endsAt = new Date(today);
     this.setDateInfo();
 
-
-
 this.columnDefs = [
           { name:'firstName', field: 'firstName'},
           { name:'lastName', field: 'lastName' },
           { name:'startDate', field: 'startDate', type: 'date'},
           { name:'endDate', field: 'endDate', type: 'date'}
         ]
-
-
   }
 
     confirmVacation(user, id) {
@@ -46,31 +43,42 @@ this.columnDefs = [
      vacation.status = this.status.CONFIRMED;
       user.vacations.total -= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
      }
-      this.firebaseService.updateUserData(user);
+      this.firebaseService.updateUserData(user).then(
+        () => this.toastr.success('Vacation confirmed', 'Success'),
+        error => this.toastr.error(error.error.message, 'Error confirming vacation')
+        );
     }
+    
     rejectVacation(user, id) {
      var vacation = find(user.vacations.list, { id: id });
       if(vacation.status == this.status.CONFIRMED){
         user.vacations.total += moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
       }
      find(user.vacations.list, { id: id }).status = this.status.REJECTED;
-      this.firebaseService.updateUserData(user);
+      this.firebaseService.updateUserData(user).then(
+        () => this.toastr.success('Vacation rejected', 'Success'),
+        error => this.toastr.error(error.error.message, 'Error rejecting vacation')
+        );
     }
+
     choiceGroup(group) {
       this.filter = { group: group };
       this.groupFilter = { group: group };
       this.setDateInfo();
     }
+
     choiceUser(uid, group, user) {
       this.filter = { uid: uid, group:group };
       this.groupFilter = { group: group };
       this.filtredUser = user;
       this.setDateInfo();
     }
+
     choiceButtonFilter(filter) {
       this.statusFilter.status = filter;
       this.setDateInfo();
     }
+
     openNewUserForm() {
       this.modal.open({
         templateUrl: require('!!file!./modal/addNewUser/newUserForm.html'),
@@ -78,6 +86,7 @@ this.columnDefs = [
         controllerAs: 'user'
       });
     }
+
     userInfo(user) {
       this.modal.open({
         templateUrl: require('!!file!./modal/userInfo/userInfo.html'),
@@ -88,15 +97,18 @@ this.columnDefs = [
         }
       });
     }
+
     isRepeated(obj) {
       for (var i in obj) {
         return false;
       }
       return true;
     }
+    
     changePageState(state) {
       this.pageState = state;
     }
+    
     setDateInfo() {
       let that = this;
       var events = this.events = [];
