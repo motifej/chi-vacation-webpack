@@ -60,11 +60,11 @@
     }
 
     .cal-row-fluid:hover {
-        background-color: rgba(0, 0, 0, .4);
+        background-color: rgba(0, 200, 129, .1);
     }
 
     [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
-        background-color: rgba(255, 255, 255, .2);
+        background-color: $default-color-hover;
     }
 
     .dropdown-menu-right {

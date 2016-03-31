@@ -14,7 +14,7 @@ vac-navbar {
                 font-weight: bold;
 
                 &:hover{
-                    background-color: rgba(100, 34, 13, .6);
+                    background-color: $default-color-hover;
                 }
             }
         }

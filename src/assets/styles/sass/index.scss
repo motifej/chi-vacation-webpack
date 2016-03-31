@@ -1,6 +1,4 @@
-$default-color: rgba(232, 71, 0, 1);
-$bg-color: rgba(0, 0, 0, .6);
-$br-size: 5px;
+@import '../../../assets/styles/sass/variables.scss';
 
 $font-color: white;
 
@@ -40,7 +38,7 @@ a:focus {
   background-color: $default-color;
 }
 .chi-tab--active:hover {
-  border: 2px solid $default-color;
+  background-color: 2px solid $default-color;
 }
 .chi-btn--default {
   font-weight: bold;
@@ -51,7 +49,7 @@ a:focus {
 }
 .chi-btn--default:hover{
   color: white;
-  background-color: rgba(100, 34, 13, .2);
+  background-color: $default-color-hover;
 }
 .chi-glyphicon {
   margin-right: 5px;
