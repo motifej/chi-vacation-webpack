@@ -37,15 +37,7 @@
     .badge-important {
         background-color: #484242;
     }
-    .cal-day-today span[data-cal-date] {
-        color: #fff;
-    }
-
-    /**/
-    .cal-day-today {
-        background-color: $default-color;
-        color: #fff;
-    }
+    
 
     .cal-day-weekend span[data-cal-date] {
         color: #B30000;
@@ -59,13 +51,9 @@
         text-align: right;
     }
 
-    .cal-row-fluid:hover {
-        background-color: rgba(0, 200, 129, .1);
-    }
+    
 
-    [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
-        background-color: $default-color-hover;
-    }
+ 
 
     .dropdown-menu-right {
         right: 0;
@@ -80,3 +68,42 @@
 
 }
 
+.cal-year-box {
+    .cal-before-eventlist:hover {
+        background-color: rgba(0, 200, 129, .1);
+    }
+ 
+    .cal-day-today span[data-cal-date] {
+        color: #fff;
+    }
+
+    
+    .cal-day-today {
+        background-color: $default-color;
+        color: #fff;
+    }
+
+    [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
+        background-color: $default-color-hover;
+    }
+}
+
+.cal-context {
+    .cal-row-fluid:hover {
+        background-color: rgba(0, 200, 129, .1);
+    }
+
+    .cal-day-today span[data-cal-date] {
+        color: #fff;
+    }
+
+    
+    .cal-day-today {
+        background-color: $default-color;
+        color: #fff;
+    }
+
+    [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
+        background-color: $default-color-hover;
+    }
+}
