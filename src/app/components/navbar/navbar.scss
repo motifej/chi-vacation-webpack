@@ -12,10 +12,9 @@ vac-navbar {
             li a{
                 color: #fff;
                 font-weight: bold;
-
-                &:hover{
-                    background-color: $default-color-hover;
-                }
+            }
+            li a:focus {
+                background-color: $default-color;
             }
         }
 

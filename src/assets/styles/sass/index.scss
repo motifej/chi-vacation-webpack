@@ -28,7 +28,7 @@ a:focus {
   color: $default-color !important;
 }
 .chi-tab {
-  border: 2px solid transparent;
+  border: 2px solid $default-color-hover;
 }
 .chi-tab:hover {
   border: 2px solid $default-color;
@@ -38,7 +38,7 @@ a:focus {
   background-color: $default-color;
 }
 .chi-tab--active:hover {
-  background-color: 2px solid $default-color;
+  background-color: $default-color;
 }
 .chi-btn--default {
   font-weight: bold;
