@@ -76,7 +76,6 @@
                       <th class="col-xs-1 text-center">№</th>
                       <th class="col-xs-5 text-center">Start vacation</th>
                       <th class="col-xs-5 text-center">End vacation</th>
-                      <th class="col-xs-1 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -84,7 +83,6 @@
                       <td class="col-xs-1 text-center">{{$index+1}}</td>
                       <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
                       <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)" ng-show="item.startDate > userCtrl.today"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
                     </tr>
                   </tbody>
                 </table>

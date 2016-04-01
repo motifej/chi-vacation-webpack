@@ -38,8 +38,5 @@ import "../../node_modules/angular-bootstrap-calendar/dist/css/angular-bootstrap
 
 import "moment-weekday-calc";
 
-import "angular-ui-grid/ui-grid";
-import "../../node_modules/angular-ui-grid/ui-grid.css"
-
 // local scripts
 //import "../assets/js/...";

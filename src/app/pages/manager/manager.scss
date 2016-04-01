@@ -31,6 +31,48 @@
 .btn {
 	outline: none !important;
 }
+.m-button-orange {
+	color: #fff;
+	margin-bottom: 3px;
+	background-color: #e84700 !important;
+	border: 1px solid #fff;
+}
+.m-button-black {
+	color: #fff;
+	margin-bottom: 3px;
+	background-color: rgba(0, 0, 0, 0.1);
+	border: 1px solid #fff;
+}
+.m-button-gray {
+	color: #fff;
+	margin-bottom: 3px;
+	background-color: rgba(155, 155, 155, 0.3);
+	border: 1px solid #fff;
+}
+.m-button-gray:hover,.m-button-black:hover {
+	color: #fff;
+	border-color: #e84700;
+	background-color: #e84700;
+}
+
+.m-button-user {
+	float: right;
+}
+.m-vacation-group {
+	font-weight: bold;
+}
+.well {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+ .cal-day-today span[data-cal-date] {
+    color: #fff;
+}
+
+}
+.btn {
+	outline: none !important;
+}
 .m-button {
 	color: #fff;
 	margin-bottom: 3px;
