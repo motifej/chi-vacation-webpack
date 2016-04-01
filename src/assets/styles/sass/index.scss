@@ -45,11 +45,24 @@ a:focus {
   letter-spacing: 1px;
   border: 2px solid $default-color;
   background-color: $default-color;
-  outline:0 !important;
+  outline: none !important;
+  color: white;
 }
 .chi-btn--default:hover{
   color: white;
   background-color: $default-color-hover;
+}
+.chi-btn--reversed {
+  font-weight: bold;
+  letter-spacing: 1px;
+  border: 2px solid $default-color;
+  background-color: $default-color-hover;
+  outline: none !important;
+  color: white;
+}
+.chi-btn--reversed:hover{
+  color: white;
+  background-color: $default-color;
 }
 .chi-glyphicon {
   margin-right: 5px;
