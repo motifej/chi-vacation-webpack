@@ -8,220 +8,217 @@
 	background-attachment: fixed;
 	color: white;
 	padding-top: 75px;
-}
-.m-panel {
-	color: white;
-	background-color: rgba(155, 155, 155, 0.1);
-	border: 2px solid #fff;
-	.m-panel-head {
-		background-color: #222;
-	}
-	.m-panel-body {
-		background-color: rgba(0, 0, 0, 0);
-	}
-	.m-well {
-		background-color: #222;
-	}
 
-}
-.btn {
-	outline: none !important;
-}
-.m-button-orange {
-	color: #fff;
-	margin-bottom: 3px;
-	background-color: #e84700 !important;
-	border: 1px solid #fff;
-}
-.m-button-black {
-	color: #fff;
-	margin-bottom: 3px;
-	background-color: rgba(0, 0, 0, 0.1);
-	border: 1px solid #fff;
-}
-.m-button-gray {
-	color: #fff;
-	margin-bottom: 3px;
-	background-color: rgba(155, 155, 155, 0.3);
-	border: 1px solid #fff;
-}
-.m-button-gray:hover,.m-button-black:hover {
-	color: #fff;
-	border-color: #e84700;
-	background-color: #e84700;
-}
+    .m-panel {
+    	color: white;
+    	background-color: rgba(155, 155, 155, 0.1);
+    	border: 2px solid #fff;
+    	.m-panel-head {
+    		background-color: #222;
+    	}
+    	.m-panel-body {
+    		background-color: rgba(0, 0, 0, 0);
+    	}
+    	.m-well {
+    		background-color: #222;
+    	}
 
-.m-button-user {
-	float: right;
-}
-.m-vacation-group {
-	font-weight: bold;
-}
-.well {
-	background-color: rgba(0, 0, 0, 0.3);
-}
-
- .cal-day-today span[data-cal-date] {
-    color: #fff;
-}
-
-.btn {
-	outline: none !important;
-}
-.m-button {
-	color: #fff;
-	margin-bottom: 3px;
-	background-color: rgba(0, 0, 0, 0.1);
-	border: 2px solid #fff;
-}
-.m-button:hover {
-	background-color: $default-color;
-	border: 2px solid $default-color;
-	color: white;
-}
-.m-button--active {
-	background-color: $default-color;
-	border: 2px solid $default-color;
-}
-.m-button-user {
-	float: right;
-}
-.m-vacation-group {
-	font-weight: bold;
-}
-.m-tab--inprogress {
-	background-color: rgba(227, 188, 8, .2);
-	border: 2px solid rgb(227, 188, 8);
-}
-.m-tab--inprogress:hover {
-	background-color: rgb(227, 188, 8);
-	color: white;
-}
-.m-tab--inprogress--active {
-	background-color: rgb(227, 188, 8);
-}
-.m-tab--inprogress--active:hover {
-	background-color: darken(rgb(227, 188, 8), 5%);
-	border-color: darken(rgb(227, 188, 8), 5%);
-} 
-.m-tab--confirmed {
-	background-color: rgba(30, 144, 255, .2);
-	border: 2px solid rgb(30, 144, 255);
-}
-.m-tab--confirmed:hover {
-	background-color: rgb(30, 144, 255);
-	color: white;
-}
-.m-tab--confirmed--active {
-	background-color: rgb(30, 144, 255);		
-}
-.m-tab--confirmed--active:hover {
-	background-color: darken(rgb(30, 144, 255), 5%);
-	border-color: darken(rgb(30, 144, 255), 5%);
-} 
-.m-tab--rejected {
-	background-color: rgba(173, 33, 33, .2);
-	border: 2px solid rgb(173, 33, 33);
-}
-.m-tab--rejected:hover {
-	background-color: rgb(173, 33, 33);
-	color: white;
-}
-.m-tab--rejected--active {
-	background-color: rgb(173, 33, 33);		
-}
-.m-tab--rejected--active:hover {
-	background-color: darken(rgb(173, 33, 33), 5%);
-	border-color: darken(rgb(173, 33, 33), 5%);
-}
-.m-tab--all {
-	background-color: $default-color-hover;
-	border: 2px solid $default-color;
-}
-.m-tab--all:hover {
-	background-color: $default-color;
-	color: white;
-}
-.m-tab--all--active {
-	background-color: $default-color;		
-}
-.m-tab--all--active:hover {
-	background-color: darken($default-color, 5%);
-	border-color: darken($default-color, 5%);
-}
-.m-tab {
-	background-color: $default-color-hover;
-	border: 2px solid $default-color;
-}
-.m-tab:hover {
-	background-color: $default-color;
-	color: white;
-}
-.m-tab--active {
-	background-color: $default-color;
-	color: white;
-}
-.m-tab--active:hover {
-	background-color: darken($default-color, 5%);
-	border-color: darken($default-color, 5%);
-}
-.well {
-	background-color: $bg-color;
-}
-
-.ui-grid-top-panel {
-	background: rgba(255,255,255,0);
-}
-.ui-grid-row:nth-child(odd) .ui-grid-cell {
-	background-color: rgba(255,255,255,0.2);
-}
-.ui-grid-row:nth-child(even) .ui-grid-cell {
-	background-color: rgba(255,255,255,0.1);
-}
-
-#cal-week-box {
-        border: 1px solid white;
-        border-right: 0px;
-        border-radius: 5px 0 0 5px;
-        background-color: #544848;
-        text-align: right;
     }
-.cal-year-box {
-    .cal-before-eventlist:hover {
-        background-color: rgba(0, 200, 129, .1);
+    .btn {
+    	outline: none !important;
     }
- 
-    .cal-day-today span[data-cal-date] {
+    .m-button-black {
+    	color: #fff;
+    	margin-bottom: 3px;
+    	background-color: rgba(0, 0, 0, 0.1);
+    	border: 1px solid #fff;
+    }
+    .m-button-gray {
+    	color: #fff;
+    	margin-bottom: 3px;
+    	background-color: rgba(155, 155, 155, 0.3);
+    	border: 1px solid #fff;
+    }
+    .m-button-gray:hover,.m-button-black:hover {
+    	color: #fff;
+    	border-color: #e84700;
+    	background-color: #e84700;
+    }
+    .m-button {
+        margin-bottom: 5px;
+    }
+    .m-button-user {
+    	float: right;
+    }
+    .m-vacation-group {
+    	font-weight: bold;
+    }
+    .well {
+    	background-color: rgba(0, 0, 0, 0.3);
+    }
+
+     .cal-day-today span[data-cal-date] {
         color: #fff;
     }
 
-    
-    .cal-day-today {
-        background-color: $default-color;
-        color: #fff;
+    .btn {
+    	outline: none !important;
+    }
+    .m-button {
+    	color: #fff;
+    	margin-bottom: 3px;
+    	background-color: rgba(0, 0, 0, 0.1);
+    	border: 2px solid #fff;
+    }
+    .m-button:hover {
+    	background-color: $default-color;
+    	border: 2px solid $default-color;
+    	color: white;
+    }
+    .m-button--active {
+    	background-color: $default-color;
+    	border: 2px solid $default-color;
+    }
+    .m-button-user {
+    	float: right;
+    }
+    .m-vacation-group {
+    	font-weight: bold;
+    }
+    .m-tab--inprogress {
+    	background-color: rgba(227, 188, 8, .2);
+    	border: 2px solid rgb(227, 188, 8);
+    }
+    .m-tab--inprogress:hover {
+    	background-color: rgb(227, 188, 8);
+    	color: white;
+    }
+    .m-tab--inprogress--active {
+    	background-color: rgb(227, 188, 8);
+    }
+    .m-tab--inprogress--active:hover {
+    	background-color: darken(rgb(227, 188, 8), 5%);
+    	border-color: darken(rgb(227, 188, 8), 5%);
+    } 
+    .m-tab--confirmed {
+    	background-color: rgba(30, 144, 255, .2);
+    	border: 2px solid rgb(30, 144, 255);
+    }
+    .m-tab--confirmed:hover {
+    	background-color: rgb(30, 144, 255);
+    	color: white;
+    }
+    .m-tab--confirmed--active {
+    	background-color: rgb(30, 144, 255);		
+    }
+    .m-tab--confirmed--active:hover {
+    	background-color: darken(rgb(30, 144, 255), 5%);
+    	border-color: darken(rgb(30, 144, 255), 5%);
+    } 
+    .m-tab--rejected {
+    	background-color: rgba(173, 33, 33, .2);
+    	border: 2px solid rgb(173, 33, 33);
+    }
+    .m-tab--rejected:hover {
+    	background-color: rgb(173, 33, 33);
+    	color: white;
+    }
+    .m-tab--rejected--active {
+    	background-color: rgb(173, 33, 33);		
+    }
+    .m-tab--rejected--active:hover {
+    	background-color: darken(rgb(173, 33, 33), 5%);
+    	border-color: darken(rgb(173, 33, 33), 5%);
+    }
+    .m-tab--all {
+    	background-color: $default-color-hover;
+    	border: 2px solid $default-color;
+    }
+    .m-tab--all:hover {
+    	background-color: $default-color;
+    	color: white;
+    }
+    .m-tab--all--active {
+    	background-color: $default-color;		
+    }
+    .m-tab--all--active:hover {
+    	background-color: darken($default-color, 5%);
+    	border-color: darken($default-color, 5%);
+    }
+    .m-tab {
+    	background-color: $default-color-hover;
+    	border: 2px solid $default-color;
+    }
+    .m-tab:hover {
+    	background-color: $default-color;
+    	color: white;
+    }
+    .m-tab--active {
+    	background-color: $default-color;
+    	color: white;
+    }
+    .m-tab--active:hover {
+    	background-color: darken($default-color, 5%);
+    	border-color: darken($default-color, 5%);
+    }
+    .well {
+    	background-color: $bg-color;
     }
 
-    [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
-        background-color: $default-color-hover;
+    .ui-grid-top-panel {
+    	background: rgba(255,255,255,0);
     }
-}
-
-.cal-context {
-    .cal-row-fluid:hover {
-        background-color: rgba(0, 200, 129, .1);
+    .ui-grid-row:nth-child(odd) .ui-grid-cell {
+    	background-color: rgba(255,255,255,0.2);
     }
-
-    .cal-day-today span[data-cal-date] {
-        color: #fff;
+    .ui-grid-row:nth-child(even) .ui-grid-cell {
+    	background-color: rgba(255,255,255,0.1);
     }
 
-    
-    .cal-day-today {
-        background-color: $default-color;
-        color: #fff;
+    #cal-week-box {
+            border: 1px solid white;
+            border-right: 0px;
+            border-radius: 5px 0 0 5px;
+            background-color: #544848;
+            text-align: right;
+        }
+    .cal-year-box {
+        .cal-before-eventlist:hover {
+            background-color: rgba(0, 200, 129, .1);
+        }
+     
+        .cal-day-today span[data-cal-date] {
+            color: #fff;
+        }
+
+        
+        .cal-day-today {
+            background-color: $default-color;
+            color: #fff;
+        }
+
+        [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
+            background-color: $default-color-hover;
+        }
     }
 
-    [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
-        background-color: $default-color-hover;
+    .cal-context {
+        .cal-row-fluid:hover {
+            background-color: rgba(0, 200, 129, .1);
+        }
+
+        .cal-day-today span[data-cal-date] {
+            color: #fff;
+        }
+
+        
+        .cal-day-today {
+            background-color: $default-color;
+            color: #fff;
+        }
+
+        [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
+            background-color: $default-color-hover;
+        }
     }
 }
