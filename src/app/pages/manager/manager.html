@@ -11,7 +11,7 @@
           </div>
           <div class="panel-body m-panel-body users">
             <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.groupFilter">
-              <a class="btn btn-sm chi-btn--reversed" ng-click="manager.choiceUser(user.uid, user.group, user)" ng-class="{'m-button-orange': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
+              <a class="btn btn-sm chi-btn--reversed" ng-click="manager.choiceUser(user.uid, user.group, user)" ng-class="{'chi-btn--reversed--active': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
             </span>
           </div>
         </div>
@@ -35,69 +35,66 @@
         </div>
       </div>
       <hr>
-
+      <div class="row">
       <div class="m-calendar well clearfix" ng-show="manager.pageState == 'calendar'">
         <div class="row col-md-12">
 
           <br class="visible-xs visible-sm">
 
-          <h2 class="text-center">{{ manager.calendarTitle }}</h2>
-
+          <!-- <h2 class="text-center">{{ manager.calendarTitle }}</h2> -->
           <div class="row">
-
-            <div class="col-md-6 text-center">
+            <div class="col-md-12 text-right">
+              <div class="btn-group">
+                <label class="btn chi-btn--default" ng-model="manager.calendarView" uib-btn-radio="'year'">Year</label>
+                <label class="btn chi-btn--default" ng-model="manager.calendarView" uib-btn-radio="'month'">Month</label>
+                <!-- <label class="btn chi-btn--default" ng-model="manager.calendarView" uib-btn-radio="'week'">Week</label> -->
+              </div>
+            </div>
+          </div>   
+          <div class="row">
+            <div class="col-md-12 text-center">
               <div class="btn-group">
                 <button
                   class="btn chi-btn--default"
                   mwl-date-modifier
                   date="manager.calendarDay"
                   decrement="manager.calendarView">
-                  Previous
+                  <<
                 </button>
                 <button
                   class="btn chi-btn--default"
                   mwl-date-modifier
                   date="manager.calendarDay"
                   set-to-today>
-                  Today
+                  {{ manager.calendarTitle }}
                 </button>
                 <button
                   class="btn chi-btn--default"
                   mwl-date-modifier
                   date="manager.calendarDay"
                   increment="manager.calendarView">
-                  Next
+                  >>
                 </button>
               </div>
-          </div>
-
-          <br class="visible-xs visible-sm">
-
-          <div class="col-md-6 text-center">
-            <div class="btn-group">
-              <label class="btn chi-btn--default" ng-model="manager.calendarView" uib-btn-radio="'year'">Year</label>
-              <label class="btn chi-btn--default" ng-model="manager.calendarView" uib-btn-radio="'month'">Month</label>
-              <label class="btn chi-btn--default" ng-model="manager.calendarView" uib-btn-radio="'week'">Week</label>
             </div>
+          </div>               
+          <br class="visible-xs visible-sm">
           </div>
-
+          <div class="col-md-12">
+            <mwl-calendar
+              view="manager.calendarView"
+              view-date="manager.calendarDay"
+              events="manager.events"
+              view-title="manager.calendarTitle"
+              auto-open="true"
+              day-view-start="06:00"
+              day-view-end="22:00"
+              day-view-split="30"
+              on-event-click="manager.userInfo(calendarEvent.user)"
+            >
+            </mwl-calendar>
           </div>
-
-        </div>
-        <div class="col-md-12">
-          <mwl-calendar
-          view="manager.calendarView"
-          view-date="manager.calendarDay"
-          events="manager.events"
-          view-title="manager.calendarTitle"
-          auto-open="true"
-          day-view-start="06:00"
-          day-view-end="22:00"
-          day-view-split="30"
-    on-event-click="manager.userInfo(calendarEvent.user)"
-          >
-          </mwl-calendar>
-        </div>
+        </div>        
       </div>
 
 
@@ -109,7 +106,7 @@
         </div>
 
         <div ng-repeat="user in manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status">
-          <h4><span class="btn btn-sm chi-btn--default" ng-click="manager.userInfo(user)">{{user.firstName.charAt(0) + ". " + user.lastName}}</span> <small class="text-warning">{{user.group}}</small></h4>
+          <h4><span class="btn btn-sm chi-btn--reversed" ng-click="manager.userInfo(user)">{{user.firstName.charAt(0) + ". " + user.lastName}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <table class="table table-bordered">
             <colgroup>
               <col class="col-md-4">

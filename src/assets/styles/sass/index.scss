@@ -64,6 +64,9 @@ a:focus {
   color: white;
   background-color: $default-color;
 }
+.chi-btn--reversed--active {
+  background-color: $default-color;
+}
 .chi-glyphicon {
   margin-right: 5px;
 }

@@ -79,12 +79,12 @@
 
     
     .cal-day-today {
-        background-color: $default-color;
+        background-color: $default-color !important;
         color: #fff;
     }
 
     [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
-        background-color: $default-color-hover;
+        background-color: $default-color-hover !important;
     }
 }
 
@@ -99,11 +99,11 @@
 
     
     .cal-day-today {
-        background-color: $default-color;
+        background-color: $default-color !important;
         color: #fff;
     }
 
     [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
-        background-color: $default-color-hover;
+        background-color: $default-color-hover !important;
     }
 }

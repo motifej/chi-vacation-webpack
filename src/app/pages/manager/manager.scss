@@ -8,10 +8,6 @@
 	background-attachment: fixed;
 	color: white;
 	padding-top: 75px;
-
-	button:focus {
-		border: none;
-	}	
 }
 .m-panel {
 	color: white;
@@ -183,39 +179,49 @@
 	background-color: rgba(255,255,255,0.1);
 }
 
-/*
-.cal-day-today span[data-cal-date] {
-	color: #fff;
-}
-
-
-.cal-day-today {
-	background-color: #FF5722;
-	color: #fff;
-}
-
-.cal-day-weekend span[data-cal-date] {
-	color: #B30000;
-}
-
 #cal-week-box {
-	border: 1px solid #CE0000;
-	border-right: 0px;
-	border-radius: 5px 0 0 5px;
-	background-color: #544848;
-	text-align: right;
+        border: 1px solid white;
+        border-right: 0px;
+        border-radius: 5px 0 0 5px;
+        background-color: #544848;
+        text-align: right;
+    }
+.cal-year-box {
+    .cal-before-eventlist:hover {
+        background-color: rgba(0, 200, 129, .1);
+    }
+ 
+    .cal-day-today span[data-cal-date] {
+        color: #fff;
+    }
+
+    
+    .cal-day-today {
+        background-color: $default-color;
+        color: #fff;
+    }
+
+    [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
+        background-color: $default-color-hover;
+    }
 }
 
-.cal-row-fluid:hover {
-	background-color: rgba(0, 0, 0, .4);
-}
+.cal-context {
+    .cal-row-fluid:hover {
+        background-color: rgba(0, 200, 129, .1);
+    }
 
-[class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
-	background-color: rgba(100, 34, 13, 1);
+    .cal-day-today span[data-cal-date] {
+        color: #fff;
+    }
+
+    
+    .cal-day-today {
+        background-color: $default-color;
+        color: #fff;
+    }
+
+    [class*="cal-cell"]:hover, .cell-focus, [class*="cal-cell"] .drop-active, .cal-cell.drop-active, .cal-week-box .cal-cell1.drop-active, .cal-day-hour-part.drop-active {
+        background-color: $default-color-hover;
+    }
 }
-.cal-year-box .row, .cal-month-box .cal-row-fluid {
-	border-bottom: 1px solid #FFFFFF;
-	margin-left: 0px;
-	margin-right: 0px;
-}
-*/
