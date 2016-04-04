@@ -11,7 +11,7 @@
           </div>
           <div class="panel-body m-panel-body users">
             <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.groupFilter">
-              <a class="btn btn-sm chi-btn--reversed" ng-click="manager.choiceUser(user.uid, user.group, user)" ng-class="{'chi-btn--reversed--active': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
+              <a class="btn btn-sm chi-btn--reversed m-button"  ng-click="manager.choiceUser(user.uid, user.group, user)" ng-class="{'chi-btn--reversed--active': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
             </span>
           </div>
         </div>
