@@ -58,7 +58,7 @@ export default class UserController {
       }
     }
 
-    if (this.vacationDays > this.user.vacations.total + this.user.vacations.dayOff) {
+    if (this.vacationDays > this.user.vacations.total/* + this.user.vacations.dayOff*/) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
     }

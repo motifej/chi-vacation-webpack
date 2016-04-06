@@ -17,6 +17,7 @@ export default class ManagerController {
     this.pageState = "vacations";
     let today = new Date();
     today = today.setHours(0,0,0,0);
+    this.order = 'startDate';
     this.oneThing = userList[0];
     this.awesomeThings = userList;
     this.userName = [];
@@ -142,5 +143,18 @@ this.columnDefs = [
         }
       });
     }
+
+
+  calcDays(startDate, endDate) {
+    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5])
+  }
+
+  setOrder(val) {
+    this.order = val;
+  }
+
+  isActive(val) {
+    return val === this.order;
+  }
 
 } 

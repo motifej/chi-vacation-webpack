@@ -161,6 +161,10 @@
     	background-color: darken($default-color, 5%);
     	border-color: darken($default-color, 5%);
     }
+    .m-tab--sort--active {
+        color: $default-color;
+        outline: none;
+    }
     .well {
     	background-color: $bg-color;
     }

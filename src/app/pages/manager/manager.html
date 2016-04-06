@@ -109,21 +109,30 @@
           <h4><span class="btn btn-sm chi-btn--reversed" ng-click="manager.userInfo(user)">{{user.firstName.charAt(0) + ". " + user.lastName}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <table class="table table-bordered">
             <colgroup>
-              <col class="col-md-4">
-              <col class="col-md-4">
-              <col class="col-md-4">
+              <col class="col-xs-3">
+              <col class="col-xs-3">
+              <col class="col-xs-2">
+              <col class="col-xs-4">
             </colgroup>
             <thead>
               <tr>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th>Start Date
+                  <span ng-click="manager.setOrder('startDate')" ng-class="{'m-tab--sort--active': manager.isActive('startDate')}" class="glyphicon glyphicon-arrow-up"></span>
+                  <span ng-click="manager.setOrder('-startDate')" ng-class="{'m-tab--sort--active': manager.isActive('-startDate')}" class="glyphicon glyphicon-arrow-down"></span>
+                </th>
+                <th>End Date
+                  <span ng-click="manager.setOrder('endDate')" ng-class="{'m-tab--sort--active': manager.isActive('endDate')}" class="glyphicon glyphicon-arrow-up"></span>
+                  <span ng-click="manager.setOrder('-endDate')" ng-class="{'m-tab--sort--active': manager.isActive('-endDate')}" class="glyphicon glyphicon-arrow-down"></span>
+                </th>
+                <th>Duration</th>
                 <th ng-hide="manager.statusFilter.status == 'rejected'">Action</th>
               </tr>
             </thead>
             <tbody >
-              <tr ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
+              <tr ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status | orderByObject: manager.order">
                 <td>{{item.startDate | date:'dd MMMM yyyy'}}</td>
                 <td>{{item.endDate | date:'dd MMMM yyyy'}}</td>
+                <td>{{manager.calcDays(item.startDate, item.endDate)}}</td>
                 <td ng-hide="manager.statusFilter.status == 'rejected'">
                   <button ng-hide="item.status!='inprogress'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="manager.confirmVacation(user, item.id)">Confirm</button>
                   <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="manager.rejectVacation(user, item.id)">Reject</button>
