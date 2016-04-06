@@ -14,11 +14,11 @@ body {
   position: relative;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+*:focus {
+  outline: none;
+}
 .app-content{
   height: 100%;
-}
-a:focus {
-  outline: none;
 }
 .chi-link{
   color: white;
