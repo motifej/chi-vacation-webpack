@@ -10,7 +10,10 @@
             <a class="btn btn-xs m-button" ng-class="{'m-button--active': !manager.filter.group}"  ng-click="manager.choiceGroup()">All</a>
           </div>
           <div class="panel-body m-panel-body users">
-            <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.groupFilter">
+            <div class="form-group">
+              <input class="form-control dropdown-toggle ng-pristine ng-valid ng-empty ng-touched" placeholder="choose user..." id="statusinput" type="text" ng-model="manager.search" aria-haspopup="true" aria-expanded="true" aria-invalid="false">
+            </div>
+            <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.groupFilter | filter:manager.search">
               <a class="btn btn-sm chi-btn--reversed m-button"  ng-click="manager.choiceUser(user.uid, user.group, user)" ng-class="{'chi-btn--reversed--active': manager.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
             </span>
           </div>
@@ -20,21 +23,24 @@
     <div class="col-md-9">
       <div class="buttons-panel clearfix">
         <div class="btn-group col-xs-12 col-sm-9 col-md-7">
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--all" ng-class="{'m-tab--all--active': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter('')">All</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': manager.pageState == 'list'}" ng-click="manager.changePageState('list')">Vacations</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': manager.pageState == 'dayOffs'}" ng-click="manager.changePageState('dayOffs')">DaysOff</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': manager.pageState == 'calendar'}" ng-click="manager.changePageState('calendar')">Calendar</label>
         </div>
         <div class="btn-group col-xs-12 col-sm-2 m-button-user"><button class="col-xs-12 btn chi-btn--default" ng-click="manager.openNewUserForm()">Add User</button></div>
       </div>
       <hr>
       <div class="buttons-panel clearfix">
         <div class="btn-group col-xs-12 col-sm-9 col-md-7">
-          <label class="btn col-xs-12 col-sm-6 col-md-6 m-tab" ng-class="{'m-tab--active': manager.pageState == 'vacations'}" ng-click="manager.changePageState('vacations')">Vacations</label>
-          <label class="btn col-xs-12 col-sm-6 col-md-6 m-tab" ng-class="{'m-tab--active': manager.pageState == 'calendar'}" ng-click="manager.changePageState('calendar')">Calendar</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--all" ng-class="{'m-tab--all--active': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter('')">All</label>
         </div>
+        
       </div>
       <hr>
+      
       <div class="row">
       <div class="m-calendar well clearfix" ng-show="manager.pageState == 'calendar'">
         <div class="row col-md-12">
@@ -98,14 +104,14 @@
       </div>
 
 
-      <div class="well" ng-show="manager.pageState == 'vacations'">
+      <div class="well" ng-show="manager.pageState == 'list' || manager.pageState == 'dayOffs'">
 
-        <div ng-show="manager.isRepeated((manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status))">
-          <h4 ng-show="manager.filter.uid"><span class="btn btn-sm chi-btn--reversed" ng-click="manager.userInfo(manager.filtredUser)">{{manager.filtredUser.firstName.charAt(0) + ". " + manager.filtredUser.lastName}}</span> <small class="text-warning">{{manager.filter.group}}</small> doesn't have <span ng-hide="!manager.filtredUser.vacations.list">{{manager.statusFilter.status}}</span> vacations</h4>
+        <div ng-show="manager.isRepeated((manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status:manager.pageState))">
+          <h4 ng-show="manager.filter.uid"><span class="btn btn-sm chi-btn--reversed" ng-click="manager.userInfo(manager.filtredUser)">{{manager.filtredUser.firstName.charAt(0) + ". " + manager.filtredUser.lastName}}</span> <small class="text-warning">{{manager.filter.group}}</small> doesn't have <span ng-hide="!manager.filtredUser.vacations[manager.pageState]">{{manager.statusFilter.status}}</span> vacations</h4>
           <h4 ng-hide="manager.filter.uid">There is no {{manager.statusFilter.status}} vacations<span ng-show="manager.filter.group"> in <small class="text-warning">{{manager.filter.group}}</small></span></h4>
         </div>
 
-        <div ng-repeat="user in manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status">
+        <div ng-repeat="user in manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status:manager.pageState">
           <h4><span class="btn btn-sm chi-btn--reversed" ng-click="manager.userInfo(user)">{{user.firstName.charAt(0) + ". " + user.lastName}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <table class="table table-bordered">
             <colgroup>
@@ -129,7 +135,7 @@
               </tr>
             </thead>
             <tbody >
-              <tr ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status | orderByObject: manager.order">
+              <tr ng-repeat="(key, item) in user.vacations[manager.pageState] | statusFilter:'status':manager.statusFilter.status | orderByObject: manager.order">
                 <td>{{item.startDate | date:'dd MMMM yyyy'}}</td>
                 <td>{{item.endDate | date:'dd MMMM yyyy'}}</td>
                 <td>{{manager.calcDays(item.startDate, item.endDate)}}</td>

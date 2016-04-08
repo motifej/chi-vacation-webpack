@@ -76,7 +76,9 @@ export default class FirebaseService {
 
 	updateUserData(data) {
 		let deferred = this.$q.defer();
-		this.firebaseObj.update({ [data.uid]: this.toJSON(data) }, 
+		let newData = data;
+		delete newData.password;
+		this.firebaseObj.update({ [data.uid]: this.toJSON(newData) }, 
 			error => {
 				if (error === null) {
 					deferred.resolve({status: true})
@@ -88,27 +90,29 @@ export default class FirebaseService {
 		return deferred.promise;
 	}
 
-	createNewVacation(data) {
-		let ref = this.firebaseObj.child(this.authUser.data.uid).child('vacations').child('list');
+	createNewVacation(data, param = 'list') {
+		let ref = this.firebaseObj.child(this.authUser.data.uid).child('vacations').child(param);
 		let refNewVacation = ref.push();
 		let newVacation = angular.extend(data, {id: refNewVacation.key()});
 		refNewVacation.set(newVacation);
 	}
 
-	removeVacation(id) {
+	removeVacation(id, param = 'list') {
 		let deferred = this.$q.defer();
 		let vacationsRef = this.firebaseObj.child(this.authUser.data.uid).child('vacations');
 		this.$firebaseObject(vacationsRef).$loaded(
 			data => {
-				let vacation = this.$parse('list["' + id + '"]')(data);
-				if (data.list[id].status === 'confirmed') {
+				let vacation = this.$parse(param + '["' + id + '"]')(data);
+				if (data[param][id].status === 'confirmed') {
 					let startDate = vacation.startDate;
 					let endDate = vacation.endDate;
-					let retDays = (startDate && endDate) ? moment().isoWeekdayCalc(startDate, endDate, [1,2,3,4,5]) : 0;
+					let retDays = (startDate && endDate) ?
+						moment().isoWeekdayCalc(startDate, endDate, [1,2,3,4,5]) : 
+						0;
 					data.total += retDays;
 					data.$save();
 				}
-				vacationsRef.child('list').child(id).remove();
+				vacationsRef.child(param).child(id).remove();
 				deferred.resolve();
 			},
 			error => deferred.reject(error));

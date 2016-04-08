@@ -20,7 +20,7 @@ export default class UserController {
     this.$log = $log;
     this.firebaseService = firebaseService;
     this.activate($scope);
-    this.vacationState = 'vacation';
+    this.vacationState = 'list';
 
   }
 
@@ -49,23 +49,29 @@ export default class UserController {
     let eDate = new Date(endDate).getTime();
     let toastrOptions = {progressBar: false};
     let vacation;
-    let list = this.user.vacations.list;
+    
+    let listArray = [];
     vm.vacations = [];
+    listArray.push(this.user.vacations['list']);
+    listArray.push(this.user.vacations['dayOffs']);
 
-    if (list) {
-      for (let item in list) {
-        if (list[item].status === 'rejected') continue;
-        vm.vacations.push({startDate: list[item].startDate, endDate: list[item].endDate, status: list[item].status, commentary: list[item].commentary});
+    listArray.forEach( list => {
+      if (list) {
+        for (let item in list) {
+          if (list[item].status === 'rejected') continue;
+          vm.vacations.push({startDate: list[item].startDate, endDate: list[item].endDate, status: list[item].status, commentary: list[item].commentary});
+        }
       }
-    }
+    });
 
-    if (this.vacationDays > this.user.vacations.total/* + this.user.vacations.dayOff*/) {
-      this.toastr.error('You have exceeded the number of available days!', toastrOptions);
+    if (vm.vacations && isCrossingIntervals(vm.vacations)) {
+      this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
       return;
     }
 
-    if (list && isCrossingIntervals(vm.vacations)) {
-      this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
+    let total = this.vacationState === 'list' ? this.user.vacations.total : this.user.vacations.dayOff;
+    if (this.vacationDays > total) {
+      this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
     }
 
@@ -76,7 +82,7 @@ export default class UserController {
       commentary: null
     };
 
-    this.firebaseService.createNewVacation(vacation);
+    this.firebaseService.createNewVacation(vacation, this.vacationState);
 
     this.toastr.success('Vacation request was sent successfully!', toastrOptions);
 
@@ -102,7 +108,11 @@ export default class UserController {
     this.vacationState = state;
   }
 
+  isVacationState(state) {
+    return this.vacationState === state;
+  }
+
   deleteVacation(item) {
-    this.firebaseService.removeVacation(item.id);
+    this.firebaseService.removeVacation(item.id, this.vacationState);
   }
 }
