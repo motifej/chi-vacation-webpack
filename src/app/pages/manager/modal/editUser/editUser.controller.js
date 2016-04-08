@@ -19,7 +19,6 @@ export default class AddNewUserController {
     if (isValid) {
       this.invalidForm = false;
       this.modalInstance.close();
-      this.newUser.password = this.newUser.email;
       this.firebaseService.updateUserData(this.newUser).then(
         () => this.toastr.success('Edit user success', 'Success'),
         error => this.toastr.error(error.error.message, 'Error updating user')
