@@ -14,7 +14,7 @@ export default class ManagerController {
     this.statusFilter = { status: status.INPROGRESS };
     this.groupFilter = {};
     this.modal = $uibModal;
-    this.pageState = "vacations";
+    this.pageState = "list";
     let today = new Date();
     today = today.setHours(0,0,0,0);
     this.order = 'startDate';
@@ -39,23 +39,38 @@ this.columnDefs = [
   }
 
     confirmVacation(user, id) {
-     var vacation = find(user.vacations.list, { id: id });
-     if(user.vacations.total >= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5])){
-     vacation.status = this.status.CONFIRMED;
-      user.vacations.total -= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
+      let total = this.pageState === 'list' ? user.vacations.total : user.vacations.dayOff;      
+      var vacation = find(user.vacations[this.pageState], { id: id });
+      let days = moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
+      if(total >= days){
+        vacation.status = this.status.CONFIRMED;
+        if (this.pageState === 'list') {
+          user.vacations.total -= days
+        } else {
+          user.vacations.dayOff -= days
+        }
+        this.firebaseService.updateUserData(user).then(
+          () => this.toastr.success('Vacation confirmed', 'Success'),
+          error => this.toastr.error(error.error.message, 'Error confirming vacation')
+          );
+      } else {
+        //todo translate message
+        this.toastr.error('Not enough days', 'Error')
      }
-      this.firebaseService.updateUserData(user).then(
-        () => this.toastr.success('Vacation confirmed', 'Success'),
-        error => this.toastr.error(error.error.message, 'Error confirming vacation')
-        );
+      
     }
     
     rejectVacation(user, id) {
-     var vacation = find(user.vacations.list, { id: id });
+     var vacation = find(user.vacations[this.pageState], { id: id });
       if(vacation.status == this.status.CONFIRMED){
-        user.vacations.total += moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
+        let days = moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
+        if (this.pageState === 'list') {
+          user.vacations.total += days
+        } else {
+          user.vacations.dayOff += days
+        }
       }
-     find(user.vacations.list, { id: id }).status = this.status.REJECTED;
+     find(user.vacations[this.pageState], { id: id }).status = this.status.REJECTED;
       this.firebaseService.updateUserData(user).then(
         () => this.toastr.success('Vacation rejected', 'Success'),
         error => this.toastr.error(error.error.message, 'Error rejecting vacation')
@@ -108,9 +123,11 @@ this.columnDefs = [
     
     changePageState(state) {
       this.pageState = state;
+      this.setDateInfo();
     }
     
     setDateInfo() {
+      //todo calendar to dayoffs too
       let that = this;
       var events = this.events = [];
       var {startsAt, endsAt} = this.newEvent;
