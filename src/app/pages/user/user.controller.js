@@ -20,7 +20,7 @@ export default class UserController {
     this.$log = $log;
     this.firebaseService = firebaseService;
     this.activate($scope);
-    this.vacationState = 'vacation';
+    this.vacationState = 'list';
 
   }
 
@@ -76,7 +76,7 @@ export default class UserController {
       commentary: null
     };
 
-    this.firebaseService.createNewVacation(vacation);
+    this.firebaseService.createNewVacation(vacation, this.vacationState);
 
     this.toastr.success('Vacation request was sent successfully!', toastrOptions);
 
@@ -102,7 +102,11 @@ export default class UserController {
     this.vacationState = state;
   }
 
+  isVacationState(state) {
+    return this.vacationState === state;
+  }
+
   deleteVacation(item) {
-    this.firebaseService.removeVacation(item.id);
+    this.firebaseService.removeVacation(item.id, this.vacationState);
   }
 }

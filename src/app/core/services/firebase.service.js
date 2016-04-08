@@ -103,7 +103,7 @@ export default class FirebaseService {
 		this.$firebaseObject(vacationsRef).$loaded(
 			data => {
 				let vacation = this.$parse(param + '["' + id + '"]')(data);
-				if (data.list[id].status === 'confirmed') {
+				if (data[param][id].status === 'confirmed') {
 					let startDate = vacation.startDate;
 					let endDate = vacation.endDate;
 					let retDays = (startDate && endDate) ?
