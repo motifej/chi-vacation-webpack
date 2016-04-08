@@ -20,6 +20,7 @@ export default class UserController {
     this.$log = $log;
     this.firebaseService = firebaseService;
     this.activate($scope);
+    this.vacationState = 'vacation';
 
   }
 
@@ -95,6 +96,10 @@ export default class UserController {
 
   calcDays() {
     this.$timeout(()=> this.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startDate, this.$scope.endDate, [1, 2, 3, 4, 5]));
+  }
+
+  changeVacationState(state) {
+    this.vacationState = state;
   }
 
   deleteVacation(item) {

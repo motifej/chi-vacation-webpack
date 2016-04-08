@@ -1,6 +1,22 @@
 <div class="user-wrapper clearfix">
-  <div id="parent" class="container user__container">
-    <div class="row vcenter">
+  <div class="container user__container">
+    <div class="row">
+      <div class="btn-group col-xs-6 col-xs-offset-6">
+        <label
+          class="btn col-xs-6 vacation-option"
+          ng-class="{'vacation-option-active': userCtrl.vacationState == 'vacation'}"
+          ng-click="userCtrl.changeVacationState('vacation')">
+          Vacation
+        </label>
+        <label
+          class="btn col-xs-6 vacation-option"
+          ng-class="{'vacation-option-active': userCtrl.vacationState == 'dayOff'}"
+          ng-click="userCtrl.changeVacationState('dayOff')">
+          DayOff
+        </label>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
         <div class="panel-group">
           <uib-accordion>
