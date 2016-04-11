@@ -48,22 +48,23 @@
 .table-responsive {
 	max-height: 600px;
 }
-.user__container .vacation-option {
+.user-wrapper .user__container .vacation-option {
 	background-color: $default-color-hover;
 	border: 2px solid $default-color;
 	color: #fff;
 }
-.user__container .vacation-option:hover {
+.user-wrapper .user__container .vacation-option:hover {
 	background-color: $default-color;
 	color: #fff;
 }
-.user__container .vacation-option-active {
+.user-wrapper .user__container .vacation-option-active {
 	background-color: $default-color;
 	color: #fff;
 }
-.user__container .vacation-option-active:hover {
+.user-wrapper .user__container .vacation-option-active:hover {
 	background-color: darken($default-color, 5%);
 	border-color: darken($default-color, 5%);
+	color: #fff;
 }
 .btn {
 	outline: none !important;
