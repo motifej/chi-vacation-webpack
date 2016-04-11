@@ -23,7 +23,7 @@ export default class UserController {
     this.$log = $log;
     this.firebaseService = firebaseService;
     this.activate($scope);
-    this.vacationState = 'list';
+    this.vacationState = 'Vacations';
 
   }
 
@@ -55,8 +55,8 @@ export default class UserController {
     
     let listArray = [];
     vm.vacations = [];
-    listArray.push(this.user.vacations['list']);
-    listArray.push(this.user.vacations['dayOffs']);
+    listArray.push(this.user.vacations['Vacations']);
+    listArray.push(this.user.vacations['DaysOff']);
 
     listArray.forEach( list => {
       if (list) {
@@ -72,7 +72,7 @@ export default class UserController {
       return;
     }
 
-    let total = this.vacationState === 'list' ? this.user.vacations.total : this.user.vacations.dayOff;
+    let total = this.vacationState === 'Vacations' ? this.user.vacations.total : this.user.vacations.dayOff;
     if (this.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;

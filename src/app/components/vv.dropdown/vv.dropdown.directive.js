@@ -25,7 +25,7 @@ export default function dropdownListDirective() {
       var {firstName, lastName} = item;
       var fullName = scope.search = firstName + ' ' + lastName; 
       scope.showEvents = [];
-      angular.forEach(item.vacations.list, function (value) {
+      angular.forEach(item.vacations.Vacations, function (value) {
         let {startDate, endDate, status} = value;
         let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning'};
         var event = 

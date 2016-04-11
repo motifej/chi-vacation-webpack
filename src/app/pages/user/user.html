@@ -8,15 +8,15 @@
             col-xs-12">
         <label
           class="btn col-xs-2 col-md-3 col-sm-4 col-xs-6 vacation-option"
-          ng-class="{'vacation-option-active': userCtrl.vacationState == 'list'}"
-          ng-click="userCtrl.changeVacationState('list')">
+          ng-class="{'vacation-option-active': userCtrl.vacationState == 'Vacations'}"
+          ng-click="userCtrl.changeVacationState('Vacations')">
           Vacations
         </label>
         <label
           class="btn col-xs-2 col-md-3 col-sm-4 col-xs-6 vacation-option"
-          ng-class="{'vacation-option-active': userCtrl.vacationState == 'dayOffs'}"
-          ng-click="userCtrl.changeVacationState('dayOffs')">
-          DaysOff
+          ng-class="{'vacation-option-active': userCtrl.vacationState == 'DaysOff'}"
+          ng-click="userCtrl.changeVacationState('DaysOff')">
+          Days-off
         </label>
       </div>
     </div>
@@ -28,7 +28,10 @@
               <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-folder-open"></span></div>
-                  <div class="col-xs-10 text-center"><span>{{userCtrl.vacationState}} Requests</span></div>
+                  <div class="col-xs-10 text-center">
+                    <span ng-show="userCtrl.isVacationState('Vacations')">Vacation Requests</span>
+                    <span ng-show="userCtrl.isVacationState('DaysOff')">Day-off Requests</span>
+                  </div>
                 </div>
               </uib-accordion-heading>
               <div class="table-responsive">
@@ -36,8 +39,8 @@
                   <thead>
                     <tr>
                       <th class="col-xs-1 text-center">№</th>
-                      <th class="col-xs-5 text-center">Start {{userCtrl.vacationState.toLowerCase()}}</th>
-                      <th class="col-xs-5 text-center">End {{userCtrl.vacationState.toLowerCase()}}</th>
+                      <th class="col-xs-5 text-center">Start date</th>
+                      <th class="col-xs-5 text-center">End date</th>
                       <th class="col-xs-1 text-center">Action</th>
                     </tr>
                   </thead>
@@ -58,7 +61,10 @@
               <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-remove"></span></div>
-                  <div class="col-xs-10 text-center"><span>Rejected {{userCtrl.vacationState}}</span></div>
+                  <div class="col-xs-10 text-center">
+                    <span ng-show="userCtrl.isVacationState('Vacations')">Rejected vacations</span>
+                    <span ng-show="userCtrl.isVacationState('DaysOff')">Rejected days-off</span>
+                  </div>
                 </div>
               </uib-accordion-heading>
               <div class="table-responsive">
@@ -66,8 +72,8 @@
                   <thead>
                     <tr>
                       <th class="col-xs-2 text-center">№</th>
-                      <th class="col-xs-5 text-center">Start {{userCtrl.vacationState.toLowerCase()}}</th>
-                      <th class="col-xs-5 text-center">End {{userCtrl.vacationState.toLowerCase()}}</th>
+                      <th class="col-xs-5 text-center">Start date</th>
+                      <th class="col-xs-5 text-center">End date</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -86,7 +92,10 @@
               <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-ok"></span></div>
-                  <div class="col-xs-10 text-center"><span>Approved {{userCtrl.vacationState}}</span></div>
+                  <div class="col-xs-10 text-center">
+                    <span ng-show="userCtrl.isVacationState('Vacations')">Approved vacations</span>
+                    <span ng-show="userCtrl.isVacationState('DaysOff')">Approved days-off</span>
+                  </div>
                 </div>
               </uib-accordion-heading>
               <div class="table-responsive">
@@ -94,8 +103,8 @@
                   <thead>
                     <tr>
                       <th class="col-xs-1 text-center">№</th>
-                      <th class="col-xs-5 text-center">Start {{userCtrl.vacationState.toLowerCase()}}</th>
-                      <th class="col-xs-5 text-center">End {{userCtrl.vacationState.toLowerCase()}}</th>
+                      <th class="col-xs-5 text-center">Start date</th>
+                      <th class="col-xs-5 text-center">End date</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -114,7 +123,10 @@
               <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-lock"></span></div>
-                  <div class="col-xs-10 text-center"><span>Spent {{userCtrl.vacationState}}</span></div>
+                  <div class="col-xs-10 text-center">
+                    <span ng-show="userCtrl.isVacationState('Vacations')">Spent vacations</span>
+                    <span ng-show="userCtrl.isVacationState('DaysOff')">Spent days-off</span>
+                  </div>
                 </div>
               </uib-accordion-heading>
               <div class="table-responsive">
@@ -122,8 +134,8 @@
                   <thead>
                     <tr>
                       <th class="col-xs-2 text-center">№</th>
-                      <th class="col-xs-5 text-center">Start {{userCtrl.vacationState.toLowerCase()}}</th>
-                      <th class="col-xs-5 text-center">End {{userCtrl.vacationState.toLowerCase()}}</th>
+                      <th class="col-xs-5 text-center">Start date</th>
+                      <th class="col-xs-5 text-center">End date</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -141,7 +153,10 @@
       </div>
       <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
         <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
-          <legend class="user-form__title">{{userCtrl.vacationState}} request</legend>
+          <legend class="user-form__title">
+            <span ng-show="userCtrl.isVacationState('Vacations')">Vacations request</span>
+            <span ng-show="userCtrl.isVacationState('DaysOff')">Days-off request</span>
+          </legend>
           <div class="row">
             <div class="form-group col-md-6">
               <label for="">Start date</label>
@@ -170,14 +185,14 @@
               <input type="text" id="selected" class="form-control user__total-days" readonly
               ng-value="userCtrl.vacationDays">
             </div>
-            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState('list')">
+            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState('Vacations')">
               <label for="available">Available days</label>
               <input type="text" id="available" class="form-control user__left-days" readonly
               ng-value="userCtrl.user.vacations.total || 0">
             </div>
-            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState('dayOffs')">
-              <label for="dayoffs">Available dayoffs</label>
-              <input type="text" id="dayoffs" class="form-control user__left-days" readonly
+            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState('DaysOff')">
+              <label for="DaysOff">Available days-off</label>
+              <input type="text" id="DaysOff" class="form-control user__left-days" readonly
               ng-value="userCtrl.user.vacations.dayOff || 0">
             </div>
           </div>
