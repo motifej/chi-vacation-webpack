@@ -13,6 +13,7 @@ function config($logProvider, $compileProvider, toastrConfig, calendarConfig) {
   toastrConfig.progressBar = true;
 
   calendarConfig.templates.calendarSlideBox = require('!!file!./pages/templates/calendarSlideBox.html');
+  calendarConfig.templates.calendarMonthView = require('!!file!./pages/templates/calendarMonthView.html');
   
 }
 
