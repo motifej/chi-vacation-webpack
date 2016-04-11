@@ -38,16 +38,31 @@ this.columnDefs = [
         ]
   }
 
+    calcNewVacations(group) {
+     var sum = 0;
+     this.users.forEach(item => {
+      if(item.group == group) {
+        angular.forEach(item.vacations.list, el => {
+          if(el.status == this.status.INPROGRESS) {
+            sum++;
+          }
+        })
+      }
+     })
+     return sum; 
+    }
     confirmVacation(user, id) {
      var vacation = find(user.vacations.list, { id: id });
      if(user.vacations.total >= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5])){
      vacation.status = this.status.CONFIRMED;
       user.vacations.total -= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
-     }
       this.firebaseService.updateUserData(user).then(
         () => this.toastr.success('Vacation confirmed', 'Success'),
         error => this.toastr.error(error.error.message, 'Error confirming vacation')
         );
+     } else {
+      this.toastr.error( 'Out of vacation days')
+     }
     }
     
     rejectVacation(user, id) {
