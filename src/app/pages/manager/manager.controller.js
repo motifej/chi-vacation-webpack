@@ -38,7 +38,21 @@ this.columnDefs = [
         ]
   }
 
+    calcNewVacations(group) {
+     var sum = 0;
+     this.users.forEach(item => {
+      if(item.group == group) {
+        angular.forEach(item.vacations.list, el => {
+          if(el.status == this.status.INPROGRESS) {
+            sum++;
+          }
+        })
+      }
+     })
+     return sum; 
+    }
     confirmVacation(user, id) {
+
       let total = this.pageState === 'list' ? user.vacations.total : user.vacations.dayOff;      
       var vacation = find(user.vacations[this.pageState], { id: id });
       let days = moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
@@ -57,7 +71,7 @@ this.columnDefs = [
         //todo translate message
         this.toastr.error('Not enough days', 'Error')
      }
-      
+
     }
     
     rejectVacation(user, id) {

@@ -67,7 +67,6 @@
     .m-button {
     	color: #fff;
     	margin-bottom: 3px;
-    	background-color: rgba(0, 0, 0, 0.1);
     	border: 2px solid #fff;
     }
     .m-button:hover {
@@ -76,8 +75,11 @@
     	color: white;
     }
     .m-button--active {
-    	background-color: $default-color;
+    	background-color: $default-color-active;
     	border: 2px solid $default-color;
+    }
+    .m-button--active:hover {
+        background-color: $default-color;
     }
     .m-button-user {
     	float: right;
