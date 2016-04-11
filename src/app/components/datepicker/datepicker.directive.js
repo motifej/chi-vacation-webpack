@@ -17,7 +17,7 @@ export default function DatepickerDirective() {
     return directive;
 
     function link(scope, element, attrs) {
-        scope.test = function () {alert('test')};
+        //scope.test = function () {alert('test')};
         scope.name = attrs.name;
 
         scope.maxDate = new Date(2020, 5, 22);
