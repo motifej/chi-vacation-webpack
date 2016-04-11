@@ -5,9 +5,9 @@
         <div class="panel m-panel">
           <div class="panel-heading m-panel-head groups">
             <span ng-repeat="group in manager.groups">
-              <a class="btn btn-sm m-button" ng-class="{'m-button--active': manager.filter.group == group}" ng-click="manager.choiceGroup(group)">{{group}} <span class="badge" ng-show="manager.calcNewVacations(group)">{{manager.calcNewVacations(group)}}</span></a>
+              <a class="btn btn-sm m-button" ng-class="{'m-button--active': manager.filter.group == group}" ng-click="manager.choiceGroup(group)">{{group}} <span class="badge progress-bar-danger" ng-show="manager.calcNewVacations(group)">{{manager.calcNewVacations(group)}}</span></a>
             </span>
-            <a class="btn btn-xs m-button" ng-class="{'m-button--active': !manager.filter.group}"  ng-click="manager.choiceGroup()">All</a>
+            <a class="btn btn-sm m-button" ng-class="{'m-button--active': !manager.filter.group}"  ng-click="manager.choiceGroup()">All</a>
           </div>
           <div class="panel-body m-panel-body users">
             <div class="form-group">
