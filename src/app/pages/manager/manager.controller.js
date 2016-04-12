@@ -150,15 +150,17 @@ this.columnDefs = [
           angular.forEach(list, (value) => {
             var {startDate, endDate, status} = value;
               if (value.status == this.statusFilter.status || this.statusFilter.status == "") {
-                let typeEvent = {
-                  rejected: vacation === 'Vacations' ? 'important' : 'vv-dayoff-rejected',
-                  confirmed: vacation === 'Vacations' ? 'info' : 'vv-dayoff-confirmed', 
-                  inprogress: vacation === 'Vacations' ? 'warning' : 'vv-dayoff-warning', 
-                };
+                // let typeEvent = {
+                //   rejected: vacation === 'Vacations' ? 'important' : 'vv-dayoff-rejected',
+                //   confirmed: vacation === 'Vacations' ? 'info' : 'vv-dayoff-confirmed', 
+                //   inprogress: vacation === 'Vacations' ? 'warning' : 'vv-dayoff-warning', 
+                // };
+                let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning'};
                 var event = 
                 {
                   title: firstName + ' '+ lastName,
                   type: typeEvent[status],
+                  cssClass: vacation === 'Vacations' ? '' : 'm-dayoff',
                   startsAt: new Date(startDate),
                   endsAt: new Date(endDate),
                   editable: false,
