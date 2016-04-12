@@ -39,7 +39,6 @@ export default class VvController {
                 editable: false,
                 deletable: false,
                 incrementsBadgeTotal: true,
-                recursOn: 'year'
               };
               this.events.push(event);
             }

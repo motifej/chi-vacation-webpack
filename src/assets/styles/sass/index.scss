@@ -92,7 +92,9 @@ body {
   animation: spin 1s infinite linear;
   -webkit-animation: spin2 1s infinite linear;
 }
-
+.calendar-highlightClass {
+  background-color: rgba(30, 144, 255, 0.2);
+}  
 @keyframes spin {
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
