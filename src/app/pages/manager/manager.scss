@@ -227,6 +227,17 @@
             background-color: $default-color-hover;
         }
     }
+    .m-rejected-action {
+        width: 100%;
+        height: 100%;
+        border-radius: 2px;
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .m-dayoff {
+        border-radius: 0;
+    }
     .event-vv-dayoff-confirmed {
         border-radius: 0;
         background-color: blue;
@@ -239,4 +250,13 @@
         border-radius: 0;
         background-color: yellow;
     }    
+    .m-action-inprogress {
+        background-color: rgba(227, 188, 8, 0.1);
+    }
+    .m-action-confirmed {
+        background-color: rgba(30, 144, 255, 0.1);
+    }
+    .m-action-rejected {
+        background-color: rgba(173, 33, 33, 0.1);
+    }
 }
