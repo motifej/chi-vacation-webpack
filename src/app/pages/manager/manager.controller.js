@@ -140,20 +140,21 @@ this.columnDefs = [
       this.setDateInfo();
     }
     
-    setDateInfo() {
-      let that = this;
-      var events = this.events = [];
-      var {startsAt, endsAt} = this.newEvent;
-      angular.forEach(this.awesomeThings, function (value) {
+
+    _fillEvents(vacation) {
+        angular.forEach(this.awesomeThings, (value) => {
         var user = value;
-        if ( ('Vacations' in value.vacations) && (!that.filter.group || that.filter.group == value.group) && (!that.filter.uid || that.filter.uid == value.uid) ) {
-          let { list } = value.vacations;
+        if ( (vacation in value.vacations) && (!this.filter.group || this.filter.group == value.group) && (!this.filter.uid || this.filter.uid == value.uid) ) {
+          let list = value.vacations[vacation];
           var {firstName, lastName} = value;
-          angular.forEach(list, function (value) {
+          angular.forEach(list, (value) => {
             var {startDate, endDate, status} = value;
-            
-              if (value.status == that.statusFilter.status || that.statusFilter.status == "") {
-                let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning'};
+              if (value.status == this.statusFilter.status || this.statusFilter.status == "") {
+                let typeEvent = {
+                  rejected: vacation === 'Vacations' ? 'important' : 'vv-dayoff-rejected',
+                  confirmed: vacation === 'Vacations' ? 'info' : 'vv-dayoff-confirmed', 
+                  inprogress: vacation === 'Vacations' ? 'warning' : 'vv-dayoff-warning', 
+                };
                 var event = 
                 {
                   title: firstName + ' '+ lastName,
@@ -166,12 +167,19 @@ this.columnDefs = [
                   recursOn: 'year',
                   user: user
                 };
-                events.push(event);
+                this.events.push(event);
               }
             
           });
         }
       });
+    }
+
+    setDateInfo() {
+      var events = this.events = [];
+      this._fillEvents('Vacations');
+      this._fillEvents('DaysOff');
+
     }
 
 
