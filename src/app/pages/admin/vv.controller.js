@@ -1,5 +1,5 @@
 export default class VvController {
-  constructor (firebaseService, userList) {
+  constructor (firebaseService, userList, moment) {
     'ngInject';
     //let today = new Date();
     //today = today.setHours(0,0,0,0);
@@ -19,8 +19,8 @@ export default class VvController {
 
   _fillEvents(vacation) {
     let {startsAt, endsAt} = this.newEvent;
-    startsAt = startsAt.setHours(3,0,0,0);
-    endsAt = endsAt.setHours(3,0,0,0);
+    startsAt = startsAt.setHours(0,0,0,0);
+    endsAt = endsAt.setHours(23,59,59,0);
     angular.forEach(this.awesomeThings, (value) => {
 
       if ( (vacation in value.vacations) ) {
