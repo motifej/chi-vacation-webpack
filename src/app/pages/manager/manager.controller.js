@@ -166,7 +166,6 @@ this.columnDefs = [
                   editable: false,
                   deletable: false,
                   incrementsBadgeTotal: true,
-                  recursOn: 'year',
                   user: user
                 };
                 this.events.push(event);
