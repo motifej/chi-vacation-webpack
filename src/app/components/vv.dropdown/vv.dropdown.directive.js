@@ -20,14 +20,25 @@ export default function dropdownListDirective() {
   function fnLink(scope){
 
     scope.chooseItem = function( item ){
-      
       scope.obj = item;
+      scope.showEvents = [];
+
+      scope._fillEvents("Vacations", item);
+      scope._fillEvents("DaysOff", item);
+
+    }
+
+    scope._fillEvents = function( vacations , item){
       var {firstName, lastName} = item;
       var fullName = scope.search = firstName + ' ' + lastName; 
-      scope.showEvents = [];
-      angular.forEach(item.vacations.list, function (value) {
+      angular.forEach(item.vacations[vacations], function (value) {
         let {startDate, endDate, status} = value;
-        let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning'};
+      //  let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning'};
+        let typeEvent = {
+                  rejected: vacations === 'Vacations' ? 'important' : 'vv-dayoff-rejected',
+                  confirmed: vacations === 'Vacations' ? 'info' : 'vv-dayoff-confirmed', 
+                  inprogress: vacations === 'Vacations' ? 'warning' : 'vv-dayoff-inprogress', 
+                };
         var event = 
         {
           title: fullName, // The title of the event 
@@ -41,7 +52,10 @@ export default function dropdownListDirective() {
         };
         scope.showEvents.push(event);
       });
-    }
+    } 
+
   }
+
+  
 
 }

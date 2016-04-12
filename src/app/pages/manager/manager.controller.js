@@ -14,7 +14,7 @@ export default class ManagerController {
     this.statusFilter = { status: status.INPROGRESS };
     this.groupFilter = {};
     this.modal = $uibModal;
-    this.pageState = "list";
+    this.pageState = "Vacations";
     let today = new Date();
     today = today.setHours(0,0,0,0);
     this.order = 'startDate';
@@ -42,7 +42,7 @@ this.columnDefs = [
      var sum = 0;
      this.users.forEach(item => {
       if(item.group == group) {
-        angular.forEach(item.vacations.list, el => {
+        angular.forEach(item.vacations[this.pageState], el => {
           if(el.status == this.status.INPROGRESS) {
             sum++;
           }
@@ -53,12 +53,12 @@ this.columnDefs = [
     }
     confirmVacation(user, id) {
 
-      let total = this.pageState === 'list' ? user.vacations.total : user.vacations.dayOff;      
+      let total = this.pageState === 'Vacations' ? user.vacations.total : user.vacations.dayOff;      
       var vacation = find(user.vacations[this.pageState], { id: id });
       let days = moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
       if(total >= days){
         vacation.status = this.status.CONFIRMED;
-        if (this.pageState === 'list') {
+        if (this.pageState === 'Vacations') {
           user.vacations.total -= days
         } else {
           user.vacations.dayOff -= days
@@ -78,7 +78,7 @@ this.columnDefs = [
      var vacation = find(user.vacations[this.pageState], { id: id });
       if(vacation.status == this.status.CONFIRMED){
         let days = moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
-        if (this.pageState === 'list') {
+        if (this.pageState === 'Vacations') {
           user.vacations.total += days
         } else {
           user.vacations.dayOff += days
@@ -140,25 +140,27 @@ this.columnDefs = [
       this.setDateInfo();
     }
     
-    setDateInfo() {
-      //todo calendar to dayoffs too
-      let that = this;
-      var events = this.events = [];
-      var {startsAt, endsAt} = this.newEvent;
-      angular.forEach(this.awesomeThings, function (value) {
+
+    _fillEvents(vacation) {
+        angular.forEach(this.awesomeThings, (value) => {
         var user = value;
-        if ( ('list' in value.vacations) && (!that.filter.group || that.filter.group == value.group) && (!that.filter.uid || that.filter.uid == value.uid) ) {
-          let { list } = value.vacations;
+        if ( (vacation in value.vacations) && (!this.filter.group || this.filter.group == value.group) && (!this.filter.uid || this.filter.uid == value.uid) ) {
+          let list = value.vacations[vacation];
           var {firstName, lastName} = value;
-          angular.forEach(list, function (value) {
+          angular.forEach(list, (value) => {
             var {startDate, endDate, status} = value;
-            
-              if (value.status == that.statusFilter.status || that.statusFilter.status == "") {
+              if (value.status == this.statusFilter.status || this.statusFilter.status == "") {
+                // let typeEvent = {
+                //   rejected: vacation === 'Vacations' ? 'important' : 'vv-dayoff-rejected',
+                //   confirmed: vacation === 'Vacations' ? 'info' : 'vv-dayoff-confirmed', 
+                //   inprogress: vacation === 'Vacations' ? 'warning' : 'vv-dayoff-warning', 
+                // };
                 let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning'};
                 var event = 
                 {
                   title: firstName + ' '+ lastName,
                   type: typeEvent[status],
+                  cssClass: vacation === 'Vacations' ? '' : 'm-dayoff',
                   startsAt: new Date(startDate),
                   endsAt: new Date(endDate),
                   editable: false,
@@ -167,12 +169,19 @@ this.columnDefs = [
                   recursOn: 'year',
                   user: user
                 };
-                events.push(event);
+                this.events.push(event);
               }
             
           });
         }
       });
+    }
+
+    setDateInfo() {
+      var events = this.events = [];
+      this._fillEvents('Vacations');
+      this._fillEvents('DaysOff');
+
     }
 
 

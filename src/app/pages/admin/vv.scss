@@ -107,3 +107,18 @@
         background-color: $default-color-hover;
     }
 }
+.event-vv-dayoff {
+    border-radius: 0;
+}
+.event-vv-dayoff-confirmed {
+        border-radius: 0;
+        background-color: blue;
+    }    
+    .event-vv-dayoff-rejected {
+        border-radius: 0;
+        background-color: red;
+    }    
+    .event-vv-dayoff-inprogress {
+        border-radius: 0;
+        background-color: yellow;
+    }    
