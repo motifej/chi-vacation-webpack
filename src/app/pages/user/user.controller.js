@@ -52,7 +52,7 @@ export default class UserController {
     let eDate = new Date(endDate).getTime();
     let toastrOptions = {progressBar: false};
     let vacation;
-    
+
     let listArray = [];
     vm.vacations = [];
     listArray.push(this.user.vacations['Vacations']);

@@ -19,7 +19,9 @@ export default function dropdownListDirective() {
 
   function fnLink(scope){
 
+
     scope.chooseItem = function( item ){
+      
       scope.obj = item;
       scope.showEvents = [];
 

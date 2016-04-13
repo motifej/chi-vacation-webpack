@@ -90,8 +90,8 @@ export default class FirebaseService {
 		return deferred.promise;
 	}
 
-	createNewVacation(data, param = 'list') {
-		let ref = this.firebaseObj.child(this.authUser.data.uid).child('vacations').child(param);
+	createNewVacation(data, param = 'list', uid = this.authUser.data.uid) {
+		let ref = this.firebaseObj.child(uid).child('vacations').child(param);
 		let refNewVacation = ref.push();
 		let newVacation = angular.extend(data, {id: refNewVacation.key()});
 		refNewVacation.set(newVacation);
