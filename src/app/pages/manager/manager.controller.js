@@ -111,16 +111,16 @@ this.columnDefs = [
 
     openNewUserForm() {
       this.modal.open({
-        templateUrl: require('!!file!./modal/addNewUser/newUserForm.html'),
-        controller: require('./modal/addNewUser/addNewUser.controller'),
+        templateUrl: require('!!file!../../components/userTools/modal/addNewUser/newUserForm.html'),
+        controller: require('../../components/userTools/modal/addNewUser/addNewUser.controller'),
         controllerAs: 'user'
       });
     }
 
     userInfo(user) {
       this.modal.open({
-        templateUrl: require('!!file!./modal/userInfo/userInfo.html'),
-        controller: require('./modal/userInfo/userInfo.controller'),
+        templateUrl: require('!!file!../../components/userTools/modal/userInfo/userInfo.html'),
+        controller: require('../../components/userTools/modal/userInfo/userInfo.controller'),
         controllerAs: 'info',
         resolve: {
           user: user
