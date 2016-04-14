@@ -4,7 +4,7 @@
         ng-change="calcDays()"
         ng-model="curDate"
         is-open="popup.opened"
-        datepicker-options="{dateDisabled: disabled, startingDay: 1, minDate: minDate, maxDate: maxDate}"
+        datepicker-options="{dateDisabled: isShowAllDays ? false : disabled, startingDay: 1, minDate: minDate, maxDate: maxDate}"
         template-url="/src/app/components/datepicker/datepicker-popup.html"
         show-button-bar="false"
         alt-input-formats="altInputFormats">

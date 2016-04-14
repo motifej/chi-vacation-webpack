@@ -11,10 +11,12 @@ export default class AddNewUserController {
     this.modalInstance = $uibModalInstance;
     this.group = groups;
     this.role = users;
+    this.employmentDate = new Date();
 
     this.newUser = {
       firstName: '',
       lastName: '',
+      employmentDate: 0,
       role: '',
       group: '',
       phone: '',
@@ -26,11 +28,14 @@ export default class AddNewUserController {
       }
     }
   }
-
+  top1(){
+    console.log(this.newUser.employmentDate);
+  }
   submitForm (isValid) {
     if (isValid) {
       this.invalidForm = false;
       this.modalInstance.close();
+      this.newUser.employmentDate = this.employmentDate.getTime();
       this.newUser.password = this.newUser.email;
       this.firebaseService.createUserByEmail(this.newUser).then(
         () => this.toastr.success('New user created', 'Success'),
