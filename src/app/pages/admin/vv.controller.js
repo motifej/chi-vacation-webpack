@@ -29,27 +29,18 @@ export default class VvController {
     this.newEvent.startsAt = new Date(today); 
     this.newEvent.endsAt = new Date(today);
     this.setDateInfo();
-
-
     //  USERS
     $scope.startDate = new Date();
-
     $scope.minStartDate = new Date($scope.startDate);
     $scope.endDate = new Date($scope.startDate);
     $scope.minEndDate = new Date($scope.startDate);
-
     this.user = user;
-   // this.today = new Date();
     this.$scope = $scope;
     this.$timeout = $timeout;
     this.user = user;
     this.vacationDays = this.calcDays();
-  //  this.toastr = toastr;
     this.moment = moment;
-   // this.modal = $uibModal;
     this.$log = $log;
-   // this.firebaseService = firebaseService;
- //   this.activate($scope);
     this.vacationState = 'Vacations';
 
 
@@ -208,15 +199,7 @@ setDateInfo() {
 
   }
 
- // isVacationState(state) {
-    // debugger
-    // return this.vacationState === state;
- // }
-
-
   submitHandler(startDate, endDate) {
-    console.log('name', this.oneThing);
-   // debugger
     let vm = this;
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
@@ -273,6 +256,14 @@ setDateInfo() {
       return !!result.length;
 
     }
+  }
+
+  changeVacationState(state) {
+    this.vacationState = state;
+  }
+
+  isVacationState(state) {
+    return this.vacationState === state;
   }
 
   calcDaysCalc() {

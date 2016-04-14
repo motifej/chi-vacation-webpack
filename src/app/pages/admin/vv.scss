@@ -247,6 +247,33 @@
     .m-action-rejected {
         background-color: rgba(173, 33, 33, 0.1);
     }
+
+    .vacation-option {
+        background-color: $default-color-hover;
+        border: 2px solid $default-color;
+        color: #fff;
+    }
+     .vacation-option:hover {
+        background-color: $default-color;
+        color: #fff;
+    }
+     .vacation-option-active {
+        background-color: $default-color;
+        color: #fff;
+    }
+    .vacation-option-active:hover {
+        background-color: darken($default-color, 5%);
+        border-color: darken($default-color, 5%);
+        color: #fff;
+    }
+    .btn {
+        outline: none !important;
+    }
+
+
 }
+
+
+
 
 
