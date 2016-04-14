@@ -25,10 +25,10 @@
       </div>
 
       <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.lastName.$invalid && (user.invalidForm || addUserForm.lastName.$dirty)}">
+        <div>
           <label class="col-md-4 control-label" for="lastName">Employment date</label>  
           <div class="col-md-4">
-            <chi-datepicker class="datepicker" name="employmentDate" ng-model="employmentDate"></chi-datepicker>
+            <chi-datepicker class="datepicker" name="employmentDate" ng-model="user.employmentDate" is-show-all-days="true"></chi-datepicker>
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ export default class AddNewUserController {
     this.modalInstance = $uibModalInstance;
     this.group = groups;
     this.role = users;
+    this.employmentDate = new Date(user.employmentDate || 0);
 
     this.newUser = angular.extend({}, user);
   }
@@ -19,6 +20,7 @@ export default class AddNewUserController {
     if (isValid) {
       this.invalidForm = false;
       this.modalInstance.close();
+      this.newUser.employmentDate = this.employmentDate.getTime();
       this.firebaseService.updateUserData(this.newUser).then(
         () => this.toastr.success('Edit user success', 'Success'),
         error => this.toastr.error(error.error.message, 'Error updating user')
