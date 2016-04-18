@@ -8,7 +8,8 @@ export default function DatepickerDirective() {
             curDate: '=ngModel',
             minDate: '=',
             calcDays: '&',
-            isShowAllDays: '@'
+            isShowAllDays: '=',
+            isDisableDate: '='
         },
         restrict: 'E',
         link: link,

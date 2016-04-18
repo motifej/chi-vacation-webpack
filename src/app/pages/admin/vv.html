@@ -213,6 +213,7 @@
               ng-model="startDate"
               calc-days="admin.calcDaysCalc(name, date)"
               is-show-all-days="true"
+              is-disable-date="admin.filtredUser.uid ? false : true"
               >
               </chi-datepicker>
             </div>
@@ -224,6 +225,7 @@
               min-date="startDate"
               calc-days="admin.calcDaysCalc(name)"
               is-show-all-days="true"
+              is-disable-date="admin.filtredUser.uid ? false : true"
               >
               </chi-datepicker>
 
@@ -248,7 +250,7 @@
             </div>
           </div>
           <div class="row">
-            <button type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">Send</button>
+            <button ng-disabled="admin.filtredUser.uid ? false : true" type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">Send</button>
           </div>
         </form>
       </div>
