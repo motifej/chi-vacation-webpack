@@ -111,6 +111,7 @@ this.columnDefs = [
       this.filter = { group: group };
       this.groupFilter = { group: group };
       this.setDateInfo();
+      this.filtredUser = {};
     }
 
     choiceUser(uid, group, user) {
@@ -208,8 +209,8 @@ setDateInfo() {
     
     let listArray = [];
     vm.vacations = [];
-    listArray.push(this.user.vacations['Vacations']);
-    listArray.push(this.user.vacations['DaysOff']);
+    listArray.push(this.filtredUser.vacations['Vacations']);
+    listArray.push(this.filtredUser.vacations['DaysOff']);
 
 
 
@@ -227,7 +228,7 @@ setDateInfo() {
       return;
     }
 
-    let total = this.vacationState === 'Vacations' ? this.user.vacations.total : this.user.vacations.dayOff;
+    let total = this.vacationState === 'Vacations' ? this.filtredUser.vacations.total : this.filtredUser.vacations.dayOff;
     if (this.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
@@ -240,7 +241,7 @@ setDateInfo() {
       commentary: null
     };
 
-    this.firebaseService.createNewVacation(vacation, this.vacationState, this.oneThing.uid);
+    this.firebaseService.createNewVacation(vacation, this.vacationState, this.filtredUser.uid);
 
     this.toastr.success('Vacation request was sent successfully!', toastrOptions);
 

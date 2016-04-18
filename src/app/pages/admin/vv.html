@@ -5,10 +5,10 @@
       <div class="row">
         <div class="panel m-panel">
           <div class="panel-heading m-panel-head groups">
-            <span ng-repeat="group in vv.groups">
-              <a class="btn btn-sm m-button" ng-class="{'m-button--active': vv.filter.group == group}" ng-click="vv.choiceGroup(group)">{{group}} <span class="badge progress-bar-warning" ng-show="vv.calcNewVacations(group)">{{vv.calcNewVacations(group)}}</span></a>
+            <span ng-repeat="group in admin.groups">
+              <a class="btn btn-sm m-button" ng-class="{'m-button--active': admin.filter.group == group}" ng-click="admin.choiceGroup(group)">{{group}} <span class="badge progress-bar-warning" ng-show="admin.calcNewVacations(group)">{{admin.calcNewVacations(group)}}</span></a>
             </span>
-            <a class="btn btn-sm m-button" ng-class="{'m-button--active': !vv.filter.group}"  ng-click="vv.choiceGroup()">All</a>
+            <a class="btn btn-sm m-button" ng-class="{'m-button--active': !admin.filter.group}"  ng-click="admin.choiceGroup()">All</a>
           </div>
           <div class="panel-body m-panel-body users">
             <div class="form-group">
@@ -16,13 +16,13 @@
                       placeholder="choose user..." 
                       id="statusinput" 
                       type="text" 
-                      ng-model="vv.search" 
+                      ng-model="admin.search" 
                       aria-haspopup="true" 
                       aria-expanded="true" 
                       aria-invalid="false">
             </div>
-            <span class="user inline-block" ng-repeat="user in vv.users | filter:vv.groupFilter | filter:vv.search">
-              <a class="btn btn-sm m-button"  ng-click="vv.choiceUser(user.uid, user.group, user)" ng-class="{'m-button--active': vv.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
+            <span class="user inline-block" ng-repeat="user in admin.users | filter:admin.groupFilter | filter:admin.search">
+              <a class="btn btn-sm m-button"  ng-click="admin.choiceUser(user.uid, user.group, user)" ng-class="{'m-button--active': admin.filter.uid == user.uid}">{{user.firstName + " " + user.lastName}}</a>
 
             </span>
           </div>
@@ -32,42 +32,38 @@
     <div class="col-md-9">
       <div class="buttons-panel clearfix">
         <div class="btn-group col-xs-12 col-sm-9 col-md-7">
-          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': vv.pageState == 'Vacations'}" ng-click="vv.changePageState('Vacations')">Vacations</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': vv.pageState == 'DaysOff'}" ng-click="vv.changePageState('DaysOff')">DaysOff</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': vv.pageState == 'calendar'}" ng-click="vv.changePageState('calendar')">Calendar</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'Vacations'}" ng-click="admin.changePageState('Vacations')">Vacations</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'DaysOff'}" ng-click="admin.changePageState('DaysOff')">DaysOff</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
         </div>
-        <div class="btn-group col-xs-12 col-sm-2 col-md-2">
-          <div class="" ng-class="{'m-tab--active': vv.pageState == 'userRequest'}" ng-click="vv.changePageState('userRequest')">
-            <button class="col-xs-12 btn chi-btn--default" >User request</button>
-          </div>   
-        </div>
-        <div class="btn-group col-xs-12 col-sm-2 m-button-user"><button class="col-xs-12 btn chi-btn--default" ng-click="vv.openNewUserForm()">Add User</button></div>
+        <div class="btn-group col-xs-12 col-sm-2 m-button-user"><button class="col-xs-12 btn chi-btn--default" ng-click="admin.openNewUserForm()">Add User</button></div>
       </div>
       <hr>
       <div class="buttons-panel clearfix">
         <div class="btn-group col-xs-12 col-sm-9 col-md-7">
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': vv.statusFilter.status == 'inprogress'}" ng-click="vv.choiceButtonFilter('inprogress')">In progress</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': vv.statusFilter.status == 'confirmed'}" ng-click="vv.choiceButtonFilter('confirmed')">Confirmed</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--rejected" ng-class="{'m-tab--rejected--active': vv.statusFilter.status == 'rejected'}" ng-click="vv.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--all" ng-class="{'m-tab--all--active': !vv.statusFilter.status}" ng-click="vv.choiceButtonFilter('')">All</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': admin.statusFilter.status == 'inprogress'}" ng-click="admin.choiceButtonFilter('inprogress')">In progress</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed'}" ng-click="admin.choiceButtonFilter('confirmed')">Confirmed</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--rejected" ng-class="{'m-tab--rejected--active': admin.statusFilter.status == 'rejected'}" ng-click="admin.choiceButtonFilter('rejected')">Rejected</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--all" ng-class="{'m-tab--all--active': !admin.statusFilter.status}" ng-click="admin.choiceButtonFilter('')">All</label>
         </div>
         
       </div>
       <hr>
       
       <div class="row">
-      <div class="m-calendar well clearfix" ng-show="vv.pageState == 'calendar'">
+      <div class="m-calendar well clearfix" ng-show="admin.pageState == 'calendar'">
         <div class="row col-md-12">
 
           <br class="visible-xs visible-sm">
 
-          <!-- <h2 class="text-center">{{ vv.calendarTitle }}</h2> -->
+          <!-- <h2 class="text-center">{{ admin.calendarTitle }}</h2> -->
           <div class="row">
             <div class="col-md-12 text-right">
               <div class="btn-group">
-                <label class="btn chi-btn--default" ng-model="vv.calendarView" uib-btn-radio="'year'">Year</label>
-                <label class="btn chi-btn--default" ng-model="vv.calendarView" uib-btn-radio="'month'">Month</label>
-                <!-- <label class="btn chi-btn--default" ng-model="vv.calendarView" uib-btn-radio="'week'">Week</label> -->
+                <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'year'">Year</label>
+                <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'month'">Month</label>
+                <!-- <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'week'">Week</label> -->
               </div>
             </div>
           </div>   
@@ -77,22 +73,22 @@
                 <button
                   class="btn chi-btn--default"
                   mwl-date-modifier
-                  date="vv.calendarDay"
-                  decrement="vv.calendarView">
+                  date="admin.calendarDay"
+                  decrement="admin.calendarView">
                   <<
                 </button>
                 <button
                   class="btn chi-btn--default"
                   mwl-date-modifier
-                  date="vv.calendarDay"
+                  date="admin.calendarDay"
                   set-to-today>
-                  {{ vv.calendarTitle }}
+                  {{ admin.calendarTitle }}
                 </button>
                 <button
                   class="btn chi-btn--default"
                   mwl-date-modifier
-                  date="vv.calendarDay"
-                  increment="vv.calendarView">
+                  date="admin.calendarDay"
+                  increment="admin.calendarView">
                   >>
                 </button>
               </div>
@@ -102,16 +98,16 @@
           </div>
           <div class="col-md-12">
             <mwl-calendar
-              view="vv.calendarView"
-              view-date="vv.calendarDay"
-              events="vv.events"
-              view-title="vv.calendarTitle"
+              view="admin.calendarView"
+              view-date="admin.calendarDay"
+              events="admin.events"
+              view-title="admin.calendarTitle"
               auto-open="true"
               slide-box-disabled="true"
               day-view-start="06:00"
               day-view-end="22:00"
               day-view-split="30"
-              on-event-click="vv.userInfo(calendarEvent.user)"
+              on-event-click="admin.userInfo(calendarEvent.user)"
             >
             </mwl-calendar>
           </div>
@@ -119,15 +115,15 @@
       </div>
 
 
-      <div class="well" ng-show="vv.pageState == 'Vacations' || vv.pageState == 'DaysOff'">
+      <div class="well" ng-show="admin.pageState == 'Vacations' || admin.pageState == 'DaysOff'">
 
-        <div ng-show="vv.isRepeated((vv.users | filter:vv.filter | statusUserFilter:'status':vv.statusFilter.status:vv.pageState))">
-          <h4 ng-show="vv.filter.uid"><span class="btn btn-sm chi-btn--reversed" ng-click="vv.userInfo(vv.filtredUser)">{{vv.filtredUser.firstName.charAt(0) + ". " + vv.filtredUser.lastName}}</span> <small class="text-warning">{{vv.filter.group}}</small> doesn't have <span ng-hide="!vv.filtredUser.vacations[vv.pageState]">{{vv.statusFilter.status}}</span> vacations</h4>
-          <h4 ng-hide="vv.filter.uid">There is no {{vv.statusFilter.status}} vacations<span ng-show="vv.filter.group"> in <small class="text-warning">{{vv.filter.group}}</small></span></h4>
+        <div ng-show="admin.isRepeated((admin.users | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState))">
+          <h4 ng-show="admin.filter.uid"><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(admin.filtredUser)">{{admin.filtredUser.firstName.charAt(0) + ". " + admin.filtredUser.lastName}}</span> <small class="text-warning">{{admin.filter.group}}</small> doesn't have <span ng-hide="!admin.filtredUser.vacations[admin.pageState]">{{admin.statusFilter.status}}</span> vacations</h4>
+          <h4 ng-hide="admin.filter.uid">There is no {{admin.statusFilter.status}} vacations<span ng-show="admin.filter.group"> in <small class="text-warning">{{admin.filter.group}}</small></span></h4>
         </div>
 
-        <div ng-repeat="user in vv.users | filter:vv.filter | statusUserFilter:'status':vv.statusFilter.status:vv.pageState">
-          <h4><span class="btn btn-sm chi-btn--reversed" ng-click="vv.userInfo(user)">{{user.firstName.charAt(0) + ". " + user.lastName}}</span> <small class="text-warning">{{user.group}}</small></h4>
+        <div ng-repeat="user in admin.users | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState">
+          <h4><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(user)">{{user.firstName.charAt(0) + ". " + user.lastName}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <table class="table table-bordered">
             <colgroup>
               <col class="col-xs-3">
@@ -138,25 +134,25 @@
             <thead>
               <tr>
                 <th>Start Date
-                  <span ng-click="vv.setOrder('startDate')" ng-class="{'m-tab--sort--active': vv.isActive('startDate')}" class="glyphicon glyphicon-arrow-up"></span>
-                  <span ng-click="vv.setOrder('-startDate')" ng-class="{'m-tab--sort--active': vv.isActive('-startDate')}" class="glyphicon glyphicon-arrow-down"></span>
+                  <span ng-click="admin.setOrder('startDate')" ng-class="{'m-tab--sort--active': admin.isActive('startDate')}" class="glyphicon glyphicon-arrow-up"></span>
+                  <span ng-click="admin.setOrder('-startDate')" ng-class="{'m-tab--sort--active': admin.isActive('-startDate')}" class="glyphicon glyphicon-arrow-down"></span>
                 </th>
                 <th>End Date
-                  <span ng-click="vv.setOrder('endDate')" ng-class="{'m-tab--sort--active': vv.isActive('endDate')}" class="glyphicon glyphicon-arrow-up"></span>
-                  <span ng-click="vv.setOrder('-endDate')" ng-class="{'m-tab--sort--active': vv.isActive('-endDate')}" class="glyphicon glyphicon-arrow-down"></span>
+                  <span ng-click="admin.setOrder('endDate')" ng-class="{'m-tab--sort--active': admin.isActive('endDate')}" class="glyphicon glyphicon-arrow-up"></span>
+                  <span ng-click="admin.setOrder('-endDate')" ng-class="{'m-tab--sort--active': admin.isActive('-endDate')}" class="glyphicon glyphicon-arrow-down"></span>
                 </th>
                 <th>Duration</th>
-                <!-- <th ng-hide="vv.statusFilter.status == 'rejected'">Action</th> -->
+                <!-- <th ng-hide="admin.statusFilter.status == 'rejected'">Action</th> -->
               </tr>
             </thead>
             <tbody >
-              <tr ng-repeat="(key, item) in user.vacations[vv.pageState] | statusFilter:'status':vv.statusFilter.status | orderByObject: vv.order" ng-class="'m-action-' + item.status">
+              <tr ng-repeat="(key, item) in user.vacations[admin.pageState] | statusFilter:'status':admin.statusFilter.status | orderByObject: admin.order" ng-class="'m-action-' + item.status">
                 <td>{{item.startDate | date:'dd MMMM yyyy'}}</td>
                 <td>{{item.endDate | date:'dd MMMM yyyy'}}</td>
-                <td>{{vv.calcDays(item.startDate, item.endDate)}}</td>
-     <!--            <td ng-hide="vv.statusFilter.status == 'rejected'">
-                  <button ng-hide="item.status!='inprogress'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="vv.confirmVacation(user, item.id)">Confirm</button>
-                  <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="vv.rejectVacation(user, item.id)">Reject</button>
+                <td>{{admin.calcDays(item.startDate, item.endDate)}}</td>
+     <!--            <td ng-hide="admin.statusFilter.status == 'rejected'">
+                  <button ng-hide="item.status!='inprogress'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
+                  <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</button>
                  
                 </td> -->
               </tr>
@@ -167,49 +163,47 @@
 
 
 
-      <div class="m-calendar well clearfix" ng-show="vv.pageState == 'userRequest'">
-      <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
+      <div class="m-calendar well clearfix" ng-show="admin.pageState == 'userRequest'">
+        <div class="text-center">
+          <h2 ng-model="admin.filtredUser.name"> {{admin.filtredUser.lastName}} {{admin.filtredUser.firstName}} </h2>
+        </div>
+
+
+      <!-- <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
           
       <dropdown-list-directive 
-          data-items-list="vv.awesomeThings " 
-          data-show-events="vv.events" 
-          data-obj="vv.oneThing"
-          data-search="vv.searching">
+          data-items-list="admin.awesomeThings " 
+          data-show-events="admin.events" 
+          data-obj="admin.oneThing"
+          data-search="admin.searching">
       </dropdown-list-directive> 
 
-      </div>
+      </div> -->
 
 
 <!-- <div class="container user__container"> -->
       <!-- <div class="row"> -->
-        <div class="btn-group
-              col-lg-8 col-lg-offset-4
-              col-md-7 col-md-offset-5
-              col-sm-6 col-sm-offset-6
-              col-xs-12">
+        <div class="btn-group col-xs-12">
           <label
-            class="btn col-xs-2 col-md-3 col-sm-4 col-xs-6 vacation-option"
-            ng-class="{'vacation-option-active': vv.vacationState == 'Vacations'}"
-            ng-click="vv.changeVacationState('Vacations')">
+            class="btn col-xs-6 vacation-option"
+            ng-class="{'vacation-option-active': admin.vacationState == 'Vacations'}"
+            ng-click="admin.changeVacationState('Vacations')">
             Vacations
           </label>
           <label
-            class="btn col-xs-2 col-md-3 col-sm-4 col-xs-6 vacation-option"
-            ng-class="{'vacation-option-active': vv.vacationState == 'DaysOff'}"
-            ng-click="vv.changeVacationState('DaysOff')">
+            class="btn col-xs-6 vacation-option"
+            ng-class="{'vacation-option-active': admin.vacationState == 'DaysOff'}"
+            ng-click="admin.changeVacationState('DaysOff')">
             Days-off
           </label>
         </div>
       <!-- </div> -->
 
-      <div class="col-lg-8 col-lg-offset-4
-              col-md-7 col-md-offset-5
-              col-sm-6 col-sm-offset-6
-              col-xs-12">
-        <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='vv.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
+      <div class="col-xs-12">
+        <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='admin.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
           <legend class="user-form__title">
-            <span ng-show="vv.isVacationState('Vacations')">Vacations request</span>
-            <span ng-show="vv.isVacationState('DaysOff')">Days-off request</span>
+            <span ng-show="admin.isVacationState('Vacations')">Vacations request</span>
+            <span ng-show="admin.isVacationState('DaysOff')">Days-off request</span>
           </legend>
           <div class="row">
             <div class="form-group col-md-6">
@@ -217,8 +211,8 @@
               <chi-datepicker class="datepicker"
               name="startDate"
               ng-model="startDate"
-              min-date="minStartDate"
-              calc-days="vv.calcDaysCalc(name, date)"
+              calc-days="admin.calcDaysCalc(name, date)"
+              is-show-all-days="true"
               >
               </chi-datepicker>
             </div>
@@ -227,8 +221,9 @@
               <chi-datepicker class="datepicker"
               name="endDate"
               ng-model="endDate"
-              min-date="minEndDate"
-              calc-days="vv.calcDaysCalc(name)"
+              min-date="startDate"
+              calc-days="admin.calcDaysCalc(name)"
+              is-show-all-days="true"
               >
               </chi-datepicker>
 
@@ -238,18 +233,18 @@
             <div class="form-group col-md-6">
               <label for="selected">Vacation days</label>
               <input type="text" id="selected" class="form-control user__total-days" readonly
-              ng-value="vv.vacationDays">
+              ng-value="admin.vacationDays">
             </div>
-            <div class="form-group col-md-6" ng-show="vv.isVacationState('Vacations')">
+            <div class="form-group col-md-6" ng-show="admin.isVacationState('Vacations')">
               <label for="available">Available days</label>
               <input type="text" id="available" class="form-control user__left-days" readonly
-              ng-value="vv.oneThing.vacations.total">
+              ng-value="admin.filtredUser.vacations.total">
             </div>
 
-            <div class="form-group col-md-6" ng-show="vv.isVacationState('DaysOff')">
+            <div class="form-group col-md-6" ng-show="admin.isVacationState('DaysOff')">
               <label for="DaysOff">Available days-off</label>
               <input type="text" id="DaysOff" class="form-control user__left-days" readonly
-              ng-value="vv.oneThing.vacations.dayOff">
+              ng-value="admin.filtredUser.vacations.dayOff">
             </div>
           </div>
           <div class="row">
@@ -264,13 +259,13 @@
   
 
       <!-- <div class="row">
-        <div class="vacations" ng-repeat="user in vv.users | filter:vv.filter">
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" ng-repeat="(key, item) in user.vacations.Vacations | statusFilter:'status':vv.statusFilter.status">
+        <div class="vacations" ng-repeat="user in admin.users | filter:admin.filter">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" ng-repeat="(key, item) in user.vacations.Vacations | statusFilter:'status':admin.statusFilter.status">
             <div class="panel m-panel">
               <div class="panel-heading m-panel-head">
                 <div class="row">
                   <div class="col-xs-9"><div>{{user.firstName.charAt(0) + ". " + user.lastName}} </div><span class="m-vacation-group">{{user.group}}</span></div>
-                  <div class="col-xs-3"><span class="btn m-button-user chi-btn--default" ng-click="vv.userInfo(user)">Info</span></div>
+                  <div class="col-xs-3"><span class="btn m-button-user chi-btn--default" ng-click="admin.userInfo(user)">Info</span></div>
                 </div>
               </div>
               <div class="panel-body m-panel-body">
@@ -279,8 +274,8 @@
                   <div>to {{item.endDate | date:'dd MMMM yyyy'}}</div>
                 </div>
                 <div class="buttons-wrapper">
-                  <button ng-disabled="item.status!='inprogress'" class="btn btn-primary col-md-offset-2" ng-click="vv.confirmVacation(user, item.id)">Confirm</button>
-                  <button ng-disabled="item.status=='rejected'" class="btn btn-danger col-md-offset-2" ng-click="vv.rejectVacation(user, item.id)">Reject</button>
+                  <button ng-disabled="item.status!='inprogress'" class="btn btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
+                  <button ng-disabled="item.status=='rejected'" class="btn btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</button>
                 </div>
               </div>
             </div>
@@ -301,13 +296,13 @@
 <div class="wrap">
 <div class="container admin__container">
   <div class="jumbotron text-center">
-    <h2 ng-model="vv.oneThing.name"> {{vv.oneThing.lastName}} {{vv.oneThing.firstName}} </h2>
+    <h2 ng-model="admin.oneThing.name"> {{admin.oneThing.lastName}} {{admin.oneThing.firstName}} </h2>
     <div class="row">
     <div class="form-group col-md-3 col-md-offset-3 ">
-      Total:<input class="form-control text-center" type="text" value="{{vv.oneThing.vacations.total}}" readonly="">
+      Total:<input class="form-control text-center" type="text" value="{{admin.oneThing.vacations.total}}" readonly="">
     </div>
     <div class="form-group col-md-3 ">
-      DayOff: <input class="form-control text-center" type="text" value="{{vv.oneThing.vacations.dayOff}}" readonly="">
+      DayOff: <input class="form-control text-center" type="text" value="{{admin.oneThing.vacations.dayOff}}" readonly="">
     </div>
     </div>
   </div>
@@ -317,10 +312,10 @@
       <div class="col-md-3">
 
         <dropdown-list-directive 
-          data-items-list="vv.awesomeThings " 
-          data-show-events="vv.events" 
-          data-obj="vv.oneThing"
-          data-search="vv.search">
+          data-items-list="admin.awesomeThings " 
+          data-show-events="admin.events" 
+          data-obj="admin.oneThing"
+          data-search="admin.search">
         </dropdown-list-directive> 
 
       </div>
@@ -329,25 +324,25 @@
 
         <div  class="col-sm-4 col-sm-offset-2">
           <chi-datepicker
-          ng-model =  "vv.newEvent.startsAt"
-          ng-click="vv.dateChange()"
+          ng-model =  "admin.newEvent.startsAt"
+          ng-click="admin.dateChange()"
           >
         </chi-datepicker>
         </div>
 
           <div  class="col-sm-4">
             <chi-datepicker
-            ng-model = "vv.newEvent.endsAt"
-            min-date = "vv.newEvent.startsAt"
+            ng-model = "admin.newEvent.endsAt"
+            min-date = "admin.newEvent.startsAt"
             >
           </chi-datepicker>
         </div>
 
         <div class="col-sm-2 add-event-block">
           <button class="btn btn-block chi-btn--default"
-          ng-disabled="!vv.newEvent.startsAt ||
-          !vv.newEvent.endsAt"
-          ng-click="vv.setDateInfo()"
+          ng-disabled="!admin.newEvent.startsAt ||
+          !admin.newEvent.endsAt"
+          ng-click="admin.setDateInfo()"
           >
           OK
         </button>
@@ -362,39 +357,39 @@
     <br class="visible-xs visible-sm">
 
 
-    <!-- <h2 class="text-center">{{ vv.calendarTitle }}</h2> -->
+    <!-- <h2 class="text-center">{{ admin.calendarTitle }}</h2> -->
 
 <!-- 
     <div class="row">
     <div class="col-md-12 text-right">
       <div class="btn-group">
-        <label class="btn chi-btn--default" ng-model="vv.calendarView" uib-btn-radio="'year'">Year</label>
-        <label class="btn chi-btn--default" ng-model="vv.calendarView" uib-btn-radio="'month'">Month</label>
-        <!-- <label class="btn chi-btn--default" ng-model="vv.calendarView" uib-btn-radio="'week'">Week</label> -->
+        <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'year'">Year</label>
+        <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'month'">Month</label>
+        <!-- <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'week'">Week</label> -->
 <!--       </div>
     </div>
-    <h3 class="text-center">{{ vv.calendarTitle }}</h3>
+    <h3 class="text-center">{{ admin.calendarTitle }}</h3>
       <div class="col-md-12 text-center">
         <div class="btn-group">
           <button
             class="btn chi-btn--default"
             mwl-date-modifier
-            date="vv.calendarDay"
-            decrement="vv.calendarView">
+            date="admin.calendarDay"
+            decrement="admin.calendarView">
             <<
           </button>
           <button
             class="btn chi-btn--default"
             mwl-date-modifier
-            date="vv.calendarDay"
+            date="admin.calendarDay"
             set-to-today>
             Today
           </button>
           <button
             class="btn chi-btn--default"
             mwl-date-modifier
-            date="vv.calendarDay"
-            increment="vv.calendarView">
+            date="admin.calendarDay"
+            increment="admin.calendarView">
             >>
           </button>
         </div>
@@ -408,10 +403,10 @@
 
   <div class="col-md-12">
     <mwl-calendar
-    view="vv.calendarView"
-    view-date="vv.calendarDay"
-    events="vv.events"
-    view-title="vv.calendarTitle"
+    view="admin.calendarView"
+    view-date="admin.calendarDay"
+    events="admin.events"
+    view-title="admin.calendarTitle"
     auto-open="true"
     slide-box-disabled="true"
     day-view-start="06:00"

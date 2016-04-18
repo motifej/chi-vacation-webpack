@@ -39,7 +39,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
             'content@': {
               templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/admin/vv.html'),
               controller: 'VvController',
-              controllerAs: 'vv'
+              controllerAs: 'admin'
               }
           }
         })
