@@ -1,12 +1,13 @@
 import { find } from 'lodash';
 
 export default class VvController {
-  constructor ($scope, $timeout, firebaseService, userList, $uibModal, moment, groups, status, toastr, user, $log) {
+  constructor ($scope, $timeout, firebaseService, userData, $uibModal, moment, groups, status, toastr, user, $log, sailsService) {
     'ngInject';
+    
 
     this.firebaseService = firebaseService;
     this.toastr = toastr;
-    this.users = userList;
+    this.users = userData.User;
     this.groups = groups;
     this.status = status;
     this.filter = {};
@@ -19,7 +20,6 @@ export default class VvController {
     today = today.setHours(0,0,0,0);
     this.order = 'startDate';
     this.oneThing = [];
-    this.awesomeThings = userList;
     this.userName = [];
     this.events = [];
     this.newEvent = {};
@@ -44,6 +44,9 @@ export default class VvController {
     this.vacationState = 'Vacations';
 
 
+      console.log(this.users);
+
+
     
 
 this.columnDefs = [
@@ -56,7 +59,7 @@ this.columnDefs = [
 
     calcNewVacations(group) {
      var sum = 0;
-     this.users.forEach(item => {
+     /*this.users.forEach(item => {
       if(item.group == group) {
         angular.forEach(item.vacations[this.pageState], el => {
           if(el.status == this.status.INPROGRESS) {
@@ -64,7 +67,7 @@ this.columnDefs = [
           }
         })
       }
-     })
+     })*/
      return sum; 
     }
     confirmVacation(user, id) {
@@ -128,16 +131,16 @@ this.columnDefs = [
 
     openNewUserForm() {
       this.modal.open({
-        templateUrl: require('!!file!./modal/addNewUser/newUserForm.html'),
-        controller: require('./modal/addNewUser/addNewUser.controller'),
+        templateUrl: require('!!file!../../components/userTools/modal/addNewUser/newUserForm.html'),
+        controller: require('../../components/userTools/modal/addNewUser/addNewUser.controller'),
         controllerAs: 'user'
       });
     }
 
     userInfo(user) {
       this.modal.open({
-        templateUrl: require('!!file!./modal/userInfo/userInfo.html'),
-        controller: require('./modal/userInfo/userInfo.controller'),
+        templateUrl: require('!!file!../../components/userTools/modal/userInfo/userInfo.html'),
+        controller: require('../../components/userTools/modal/userInfo/userInfo.controller'),
         controllerAs: 'info',
         resolve: {
           user: user
@@ -159,7 +162,7 @@ this.columnDefs = [
     
 
     _fillEvents(vacation) {
-        angular.forEach(this.awesomeThings, (value) => {
+        angular.forEach(this.userList, (value) => {
         var user = value;
         if ( (vacation in value.vacations) && (!this.filter.group || this.filter.group == value.group) && (!this.filter.uid || this.filter.uid == value.uid) ) {
           let list = value.vacations[vacation];

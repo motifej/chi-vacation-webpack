@@ -83,7 +83,7 @@
         <div ng-class="{'has-error': addUserForm.totalVacation.$invalid && (user.invalidForm || addUserForm.totalVacation.$dirty)}">
           <label class="col-md-4 control-label" for="totalVacation">Total Vacation</label>  
           <div class="col-md-4">
-            <input id="totalVacation" name="totalVacation" type="number" placeholder="" class="form-control input-md" ng-model="user.newUser.vacations.total" required min="0">
+            <input id="totalVacation" name="totalVacation" type="number" placeholder="" class="form-control input-md" ng-model="user.vacations.total" required min="0">
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
         <div ng-class="{'has-error': addUserForm.dayOff.$invalid && (user.invalidForm || addUserForm.dayOff.$dirty)}">
           <label class="col-md-4 control-label" for="dayOff">Day Off</label>  
           <div class="col-md-4">
-            <input id="dayOff" name="dayOff" type="number" placeholder="" class="form-control input-md" ng-model="user.newUser.vacations.dayOff" required min="0">
+            <input id="dayOff" name="dayOff" type="number" placeholder="" class="form-control input-md" ng-model="user.vacations.dayOff" required min="0">
           </div>
         </div>
       </div>

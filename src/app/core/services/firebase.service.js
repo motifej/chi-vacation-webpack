@@ -1,7 +1,7 @@
 import Firebase from 'firebase';
 
 export default class FirebaseService {
-	constructor ($firebaseArray, $localStorage, $firebaseObject, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout, $state, moment, $parse, API_URL, roles, actions, states) {
+	constructor ($firebaseArray, $localStorage, $firebaseObject, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout, $state, moment, $parse, API_URL, roles, actions, states, $http) {
 		'ngInject';
 		this.$localStorage = $localStorage;
 		this.$firebaseObject = $firebaseObject;
@@ -21,6 +21,7 @@ export default class FirebaseService {
 		this.firebaseObj = new Firebase( API_URL );
 		this.authUser = $localStorage[ this.userStorageKey ] || { status:false, data: false };
 		this.userData = {};
+		this.http = $http;
 	}
 
 	_getCurrentUid() {
@@ -137,6 +138,9 @@ export default class FirebaseService {
 			}
 		});
 		return deferred.promise;
+	}
+	createUserByEmailSails(newUser) {
+		this.http.post("http://localhost:3000/v1/users", newUser);
 	}
 	
 	signInUserByEmail(user) {
