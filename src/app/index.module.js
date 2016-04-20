@@ -22,6 +22,9 @@ const App = angular.module(
     "ngStorage",
 
 
+    require('angular-resource'),
+
+
     // core
     require("./core/core.module").name,
 

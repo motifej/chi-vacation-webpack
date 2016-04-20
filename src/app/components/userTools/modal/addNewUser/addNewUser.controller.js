@@ -21,11 +21,7 @@ export default class AddNewUserController {
       group: '',
       phone: '',
       email: '',
-      password: '',
-      vacations: {
-        total: 0,
-        dayOff: 0
-      }
+      password: ''
     }
   }
   top1(){
@@ -35,12 +31,13 @@ export default class AddNewUserController {
     if (isValid) {
       this.invalidForm = false;
       this.modalInstance.close();
-      this.newUser.employmentDate = this.employmentDate.getTime();
+      this.newUser.employmentDate = this.employmentDate;
       this.newUser.password = this.newUser.email;
-      this.firebaseService.createUserByEmail(this.newUser).then(
+      /*this.firebaseService.createUserByEmail(this.newUser).then(
         () => this.toastr.success('New user created', 'Success'),
         error => this.toastr.error(error.error.message, 'Error creating user')
-        );
+        );*/
+      this.firebaseService.createUserByEmailSails(this.newUser);
     } else {
       this.toastr.error('Not all fields are filled', 'Error');
       this.invalidForm = true;
