@@ -5,7 +5,7 @@ export default function (app) {
         return function(input, filterKey, filterVal, list) {
             var filteredInput = {};
             angular.forEach(input, function(value, key) {
-                var vacationsList = value.vacations[list];
+                var vacationsList = value[list];
                 angular.forEach(vacationsList, function(item) {
                    if ((item[filterKey] && item[filterKey] == filterVal)||!filterVal) {
                     filteredInput[key] = value;
