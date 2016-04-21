@@ -6,16 +6,17 @@ export default class VvController {
     
 
     this.firebaseService = firebaseService;
+    this.sailsService = sailsService;
     this.toastr = toastr;
     this.users = userData.User;
     this.groups = groups;
     this.status = status;
     this.filter = {};
     this.filtredUser;
-    this.statusFilter = { status: status.INPROGRESS };
+    this.statusFilter = { status: status.NEW };
     this.groupFilter = {};
     this.modal = $uibModal;
-    this.pageState = "Vacations";
+    this.pageState = "vacations";
     let today = new Date();
     today = today.setHours(0,0,0,0);
     this.order = 'startDate';
@@ -41,10 +42,14 @@ export default class VvController {
     this.vacationDays = this.calcDays();
     this.moment = moment;
     this.$log = $log;
-    this.vacationState = 'Vacations';
+    this.vacationState = 'vacations';
+    sailsService.userResource.getUserData({id: 7}).$promise.then(item => {
+      console.log(item.User)
+    })
+    
 
 
-      console.log(this.users);
+      console.log(sailsService.userResource.getUserData({id: 7}).User);
 
 
     
@@ -59,15 +64,15 @@ this.columnDefs = [
 
     calcNewVacations(group) {
      var sum = 0;
-     /*this.users.forEach(item => {
+     this.users.forEach(item => {
       if(item.group == group) {
-        angular.forEach(item.vacations[this.pageState], el => {
-          if(el.status == this.status.INPROGRESS) {
+        angular.forEach(item[this.pageState], el => {
+          if(el.status == this.status.NEW) {
             sum++;
           }
         })
       }
-     })*/
+     })
      return sum; 
     }
     confirmVacation(user, id) {
@@ -117,8 +122,8 @@ this.columnDefs = [
       this.filtredUser = {};
     }
 
-    choiceUser(uid, group, user) {
-      this.filter = { uid: uid, group:group };
+    choiceUser(id, group, user) {
+      this.filter = { id: id, group:group };
       this.groupFilter = { group: group };
       this.filtredUser = user;
       this.setDateInfo();
@@ -162,7 +167,7 @@ this.columnDefs = [
     
 
     _fillEvents(vacation) {
-        angular.forEach(this.userList, (value) => {
+        angular.forEach(this.users, (value) => {
         var user = value;
         if ( (vacation in value.vacations) && (!this.filter.group || this.filter.group == value.group) && (!this.filter.uid || this.filter.uid == value.uid) ) {
           let list = value.vacations[vacation];
@@ -212,8 +217,8 @@ setDateInfo() {
     
     let listArray = [];
     vm.vacations = [];
-    listArray.push(this.filtredUser.vacations['Vacations']);
-    listArray.push(this.filtredUser.vacations['DaysOff']);
+    listArray.push(this.filtredUser['vacations']);
+    listArray.push(this.filtredUser['daysOff']);
 
 
 
@@ -231,11 +236,11 @@ setDateInfo() {
       return;
     }
 
-    let total = this.vacationState === 'Vacations' ? this.filtredUser.vacations.total : this.filtredUser.vacations.dayOff;
+    /*let total = this.vacationState === 'Vacations' ? this.filtredUser.vacations.total : this.filtredUser.vacations.dayOff;
     if (this.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
-    }
+    }*/
 
     vacation = {
       startDate: sDate,
@@ -245,6 +250,12 @@ setDateInfo() {
     };
 
     this.firebaseService.createNewVacation(vacation, this.vacationState, this.filtredUser.uid);
+    if(this.vacationState == "vacations") {
+      this.sailsService.vacationRequest.postVacation({uid: this.filtredUser.id, startDate: new Date(sDate), endDate: new Date(eDate), status: "new" });
+    } else {
+      this.sailsService.daysOffRequest.postDaysOff({uid: this.filtredUser.id, startDate: new Date(sDate), endDate: new Date(eDate), status: "new" });
+    }
+    
 
     this.toastr.success('Vacation request was sent successfully!', toastrOptions);
 
@@ -252,7 +263,7 @@ setDateInfo() {
       if(dateIntervals.length === 0) return false;
 
       let result = dateIntervals.filter(function(item) {
-        if  (sDate <= item.endDate && eDate >= item.startDate) {
+        if  (sDate <= new Date(item.endDate).getTime() && eDate >= new Date(item.startDate).getTime()) {
           return true;
         }
       });
