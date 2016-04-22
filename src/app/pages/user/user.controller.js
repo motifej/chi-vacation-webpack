@@ -2,7 +2,6 @@ export default class UserController {
 
   constructor ($scope, $log, $timeout, firebaseService, moment, toastr, user, $uibModal) {
     'ngInject';
-
     if (moment().weekday() === 6) $scope.startDate = new Date(moment().add(2, 'days')); else
     if (moment().weekday() === 0) $scope.startDate = new Date(moment().add(1, 'days')); else
     $scope.startDate = new Date();
@@ -11,11 +10,10 @@ export default class UserController {
     $scope.endDate = new Date($scope.startDate);
     $scope.minEndDate = new Date($scope.startDate);
 
-    this.user = user;
+    this.user = user.data;
     this.today = new Date();
     this.$scope = $scope;
     this.$timeout = $timeout;
-    this.user = user;
     this.vacationDays = this.calcDays();
     this.toastr = toastr;
     this.moment = moment;

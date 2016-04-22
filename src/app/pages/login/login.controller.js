@@ -1,4 +1,4 @@
-function LoginController ($log, $state, $scope, firebaseService,toastr, states) {
+function LoginController ($log, $state, $scope, firebaseService,toastr, states, sailsAuthService) {
   'ngInject';
 
   $scope.sending = false;
@@ -8,20 +8,19 @@ function LoginController ($log, $state, $scope, firebaseService,toastr, states) 
   $scope.resetPassword = resetPassword;
   $scope.changePassword = changePassword;
 
-
   function signin () {
     if($scope.authForm.$invalid) {
       toastr.warning('Fieldes hasn\'t be empty!');
       return
     }
     $scope.sending = true;
-    firebaseService.signInUserByEmail({
+    sailsAuthService.signInUserByEmail({
       email: $scope.email,
       password: $scope.passw || $scope.newPassword
     }).then( () => {
       $state.go(states.HOME);
     }).catch( err => {
-      toastr.error(err.error.message, err.error.code);
+      toastr.error(err.error.data.message, err.error.data.code);
       $log.error(err);
       $scope.sending = false;
     });

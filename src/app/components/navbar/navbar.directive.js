@@ -16,9 +16,9 @@ export default function NavbarDirective() {
 }
 
 class NavbarController {
-  constructor (firebaseService, $rootScope, $scope, toastr, actions, roles, states) {
+  constructor ($rootScope, $scope, toastr, actions, roles, states, sailsAuthService) {
     'ngInject';
-    this.firebaseService = firebaseService;
+    this.sailsAuthService = sailsAuthService;
     this.states = states;
     this.roles = roles;
     this.isCollapsed = false;
@@ -35,7 +35,7 @@ class NavbarController {
   }
 
   logOut() {
-    this.firebaseService.logOut();
+    this.sailsAuthService.logOut();
     this.user = {};
   }
 

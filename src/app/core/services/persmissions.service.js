@@ -2,13 +2,13 @@ export default function (app) {
 
   app.service('permission', PermissionService);
 
-  function PermissionService ($rootScope, $state, firebaseService, toastr, $parse, states, roles) {
+  function PermissionService ($rootScope, $state, toastr, $parse, states, roles, sailsAuthService) {
     'ngInject'
     
     this.init = init;
 
     function init (event, toState, toParams, fromState) {
-      if ( firebaseService.checkExpired() && toState.name !== states.LOGIN) {
+      if ( !sailsAuthService.getUserState() && toState.name !== states.LOGIN) {
         event.preventDefault();
         $state.go(states.LOGIN);
       }
@@ -19,14 +19,14 @@ export default function (app) {
         return;
       }
 
-      if ( firebaseService.checkPersmissions(roles) ) {
+      if ( sailsAuthService.checkPersmissions(roles) ) {
         return;
       }
 
       event.preventDefault();
 
       if( fromState.url === '^' ) {
-        if( firebaseService.getAuthUser() ) {
+        if( sailsAuthService.getAuthUser() ) {
           $state.go(states.HOME);
         } else {
           $state.go(states.LOGIN);
