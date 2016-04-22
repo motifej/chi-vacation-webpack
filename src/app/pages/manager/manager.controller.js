@@ -3,7 +3,6 @@ import { find } from 'lodash';
 export default class ManagerController {
   constructor ($scope, $timeout, firebaseService, userList, $uibModal, moment, groups, status, toastr) {
     'ngInject';
-
     this.firebaseService = firebaseService;
     this.toastr = toastr;
     this.users = userList;

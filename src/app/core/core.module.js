@@ -1,10 +1,12 @@
 'use strict';
 import FirebaseService from '../core/services/firebase.service'
 import SailsService from '../core/services/sails.service'
+import SailsAuthService from '../core/services/sailsAuth.service'
 
 const shared = angular.module('core.shared', []);
 			shared.service('firebaseService', FirebaseService);
 			shared.service('sailsService', SailsService);
+			shared.service('sailsAuthService', SailsAuthService);
 
 //require('./directives/validation-test/validation-test.directive')(shared);
 
