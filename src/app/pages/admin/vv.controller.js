@@ -218,7 +218,7 @@ setDateInfo() {
     let listArray = [];
     vm.vacations = [];
     listArray.push(this.filtredUser['vacations']);
-    listArray.push(this.filtredUser['daysOff']);
+    listArray.push(this.filtredUser['daysoff']);
 
 
 

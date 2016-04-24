@@ -13,6 +13,14 @@ export default class SailsService {
 		this.daysOffRequest = $resource("http://localhost:3000/daysoff", {}, {
 			postDaysOff: {isArray: false, method: "POST"}
 		});
+	
+
+
+	this.createUserByEmail = (newUser) => {
+		this.http.post("http://localhost:3000/users", newUser);
 	}
+	
+	}
+
 
 }

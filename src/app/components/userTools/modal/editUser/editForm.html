@@ -7,28 +7,28 @@
     <fieldset>
 
       <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.firstName.$invalid && (user.invalidForm || addUserForm.firstName.$dirty)}">
-          <label class="col-md-4 control-label" for="firstName">First Name</label>  
+        <div ng-class="{'has-error': addUserForm.firstname.$invalid && (user.invalidForm || addUserForm.firstname.$dirty)}">
+          <label class="col-md-4 control-label" for="firstname">First name</label>  
           <div class="col-md-4">
-            <input id="firstName" name="firstName" type="text" placeholder="first name..." class="form-control input-md" ng-model="user.newUser.firstName" ng-pattern="user.namePattern" required>
+            <input id="firstname" name="firstname" type="text" placeholder="first name..." class="form-control input-md" ng-model="user.newUser.firstname" ng-pattern="user.namePattern" required>
           </div>
         </div>
       </div>
 
       <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.lastName.$invalid && (user.invalidForm || addUserForm.lastName.$dirty)}">
-          <label class="col-md-4 control-label" for="lastName">Last Name</label>  
+        <div ng-class="{'has-error': addUserForm.lastname.$invalid && (user.invalidForm || addUserForm.lastname.$dirty)}">
+          <label class="col-md-4 control-label" for="lastname">Last name</label>  
           <div class="col-md-4">
-            <input id="lastName" name="lastName" type="text" placeholder="last name..." class="form-control input-md" ng-model="user.newUser.lastName" ng-pattern="user.namePattern" required>
+            <input id="lastname" name="lastname" type="text" placeholder="last name..." class="form-control input-md" ng-model="user.newUser.lastname" ng-pattern="user.namePattern" required>
           </div>
         </div>
       </div>
 
       <div class="form-group">
         <div>
-          <label class="col-md-4 control-label" for="lastName">Employment date</label>  
+          <label class="col-md-4 control-label" for="lastname">Employment date</label>  
           <div class="col-md-4">
-            <chi-datepicker class="datepicker" name="employmentDate" ng-model="user.employmentDate" is-show-all-days="true"></chi-datepicker>
+            <chi-datepicker class="datepicker" name="employmentdate" ng-model="user.employmentdate" is-show-all-days="true"></chi-datepicker>
           </div>
         </div>
       </div>

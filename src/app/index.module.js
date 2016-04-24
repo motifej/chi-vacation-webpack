@@ -24,8 +24,6 @@ const App = angular.module(
 
     require('angular-resource'),
 
-
-    // core
     require("./core/core.module").name,
 
     // components
