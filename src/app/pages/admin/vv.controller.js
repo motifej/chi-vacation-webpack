@@ -8,6 +8,7 @@ export default class VvController {
     this.sailsService = sailsService;
     this.toastr = toastr;
     this.users = userData.data;
+    this.sailsService.setUsers(userData);
 console.log(angular.copy(this.users));
     this.groups = groups;
     this.status = status;
@@ -218,7 +219,7 @@ setDateInfo() {
     let listArray = [];
     vm.vacations = [];
     listArray.push(this.filtredUser['vacations']);
-    listArray.push(this.filtredUser['daysOff']);
+    listArray.push(this.filtredUser['daysoff']);
 
 
 

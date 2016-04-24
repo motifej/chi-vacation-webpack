@@ -145,9 +145,6 @@ export default class FirebaseService {
 		});
 		return deferred.promise;
 	}
-	createUserByEmailSails(newUser) {
-		this.http.post("http://localhost:3000/v1/users", newUser);
-	}
 	
 	signInUserByEmail(user) {
 		let _this = this;

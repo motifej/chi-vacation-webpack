@@ -7,15 +7,15 @@ export default function (app) {
 			return function(input, status) {
 				if (input) {
 					switch (status) {
-						case 'requests':
+						case 'new':
 						return filter(input, function(item) {
-							return item.status == 'inprogress';
+							return item.status == 'new';
 						});
 						case 'rejected':
 						return filter(input, function(item) {
 							return item.status == 'rejected';
 						});
-						case 'approved':
+						case 'confirmed':
 						return filter(input, function(item) {
 							return item.endDate > new Date() && item.status == 'confirmed';
 						});

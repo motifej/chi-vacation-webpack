@@ -8,14 +8,14 @@
             col-xs-12">
         <label
           class="btn col-xs-2 col-md-3 col-sm-4 col-xs-6 vacation-option"
-          ng-class="{'vacation-option-active': userCtrl.vacationState == 'Vacations'}"
-          ng-click="userCtrl.changeVacationState('Vacations')">
-          Vacations
+          ng-class="{'vacation-option-active': userCtrl.vacationState == 'vacations'}"
+          ng-click="userCtrl.changeVacationState('vacations')">
+          vacations
         </label>
         <label
           class="btn col-xs-2 col-md-3 col-sm-4 col-xs-6 vacation-option"
-          ng-class="{'vacation-option-active': userCtrl.vacationState == 'DaysOff'}"
-          ng-click="userCtrl.changeVacationState('DaysOff')">
+          ng-class="{'vacation-option-active': userCtrl.vacationState == 'daysoff'}"
+          ng-click="userCtrl.changeVacationState('daysoff')">
           Days-off
         </label>
       </div>
@@ -29,8 +29,8 @@
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-folder-open"></span></div>
                   <div class="col-xs-10 text-center">
-                    <span ng-show="userCtrl.isVacationState('Vacations')">Vacation Requests</span>
-                    <span ng-show="userCtrl.isVacationState('DaysOff')">Day-off Requests</span>
+                    <span ng-show="userCtrl.isVacationState('vacations')">Vacation Requests</span>
+                    <span ng-show="userCtrl.isVacationState('daysoff')">Day-off Requests</span>
                   </div>
                 </div>
               </uib-accordion-heading>
@@ -45,10 +45,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="item in userCtrl.user.vacations[userCtrl.vacationState] | userFilterVacation:'requests' | orderBy:'endDate'">
+                    <tr ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'new' | orderBy:'enddate'">
                       <td class="col-xs-1 text-center">{{$index+1}}</td>
-                      <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.startdate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.enddate | date:'dd-MM-yyyy'}}</td>
                       <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
                     </tr>
                   </tbody>
@@ -62,8 +62,8 @@
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-remove"></span></div>
                   <div class="col-xs-10 text-center">
-                    <span ng-show="userCtrl.isVacationState('Vacations')">Rejected vacations</span>
-                    <span ng-show="userCtrl.isVacationState('DaysOff')">Rejected days-off</span>
+                    <span ng-show="userCtrl.isVacationState('vacations')">Rejected vacations</span>
+                    <span ng-show="userCtrl.isVacationState('daysoff')">Rejected days-off</span>
                   </div>
                 </div>
               </uib-accordion-heading>
@@ -77,10 +77,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="item in userCtrl.user.vacations[userCtrl.vacationState] | userFilterVacation:'rejected' | orderBy:'endDate'">
+                    <tr ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'rejected' | orderBy:'enddate'">
                       <td class="col-xs-1 text-center">{{$index+1}}</td>
-                      <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.startdate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.enddate | date:'dd-MM-yyyy'}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -93,8 +93,8 @@
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-ok"></span></div>
                   <div class="col-xs-10 text-center">
-                    <span ng-show="userCtrl.isVacationState('Vacations')">Approved vacations</span>
-                    <span ng-show="userCtrl.isVacationState('DaysOff')">Approved days-off</span>
+                    <span ng-show="userCtrl.isVacationState('vacations')">Approved vacations</span>
+                    <span ng-show="userCtrl.isVacationState('daysoff')">Approved days-off</span>
                   </div>
                 </div>
               </uib-accordion-heading>
@@ -108,10 +108,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="item in userCtrl.user.vacations[userCtrl.vacationState] | userFilterVacation:'approved' | orderBy:'endDate'">
+                    <tr ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'confirmed' | orderBy:'enddate'">
                       <td class="col-xs-1 text-center">{{$index+1}}</td>
-                      <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.startdate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.enddate | date:'dd-MM-yyyy'}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -124,8 +124,8 @@
                 <div class="row">
                   <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-lock"></span></div>
                   <div class="col-xs-10 text-center">
-                    <span ng-show="userCtrl.isVacationState('Vacations')">Spent vacations</span>
-                    <span ng-show="userCtrl.isVacationState('DaysOff')">Spent days-off</span>
+                    <span ng-show="userCtrl.isVacationState('vacations')">Spent vacations</span>
+                    <span ng-show="userCtrl.isVacationState('daysoff')">Spent days-off</span>
                   </div>
                 </div>
               </uib-accordion-heading>
@@ -139,10 +139,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="item in userCtrl.user.vacations[userCtrl.vacationState] | userFilterVacation:'spent' | orderBy:'endDate'">
+                    <tr ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'spent' | orderBy:'enddate'">
                       <td class="col-xs-1 text-center">{{$index+1}}</td>
-                      <td class="col-xs-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.startdate | date:'dd-MM-yyyy'}}</td>
+                      <td class="col-xs-5 text-center">{{item.enddate | date:'dd-MM-yyyy'}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -152,18 +152,18 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
-        <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
+        <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue)'>
           <legend class="user-form__title">
-            <span ng-show="userCtrl.isVacationState('Vacations')">Vacations request</span>
-            <span ng-show="userCtrl.isVacationState('DaysOff')">Days-off request</span>
+            <span ng-show="userCtrl.isVacationState('vacations')">vacations request</span>
+            <span ng-show="userCtrl.isVacationState('daysoff')">Days-off request</span>
           </legend>
           <div class="row">
             <div class="form-group col-md-6">
               <label for="">Start date</label>
               <chi-datepicker class="datepicker"
-              name="startDate"
-              ng-model="startDate"
-              min-date="minStartDate"
+              name="startdate"
+              ng-model="startdate"
+              min-date="minStartdate"
               calc-days="userCtrl.calcDays(name, date)"
               >
               </chi-datepicker>
@@ -171,9 +171,9 @@
             <div class="form-group col-md-6">
               <label for="">End date</label>
               <chi-datepicker class="datepicker"
-              name="endDate"
-              ng-model="endDate"
-              min-date="minEndDate"
+              name="enddate"
+              ng-model="enddate"
+              min-date="minEnddate"
               calc-days="userCtrl.calcDays(name)"
               >
               </chi-datepicker>
@@ -185,14 +185,14 @@
               <input type="text" id="selected" class="form-control user__total-days" readonly
               ng-value="userCtrl.vacationDays">
             </div>
-            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState('Vacations')">
+            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState('vacations')">
               <label for="available">Available days</label>
               <input type="text" id="available" class="form-control user__left-days" readonly
               ng-value="userCtrl.user.vacations.total || 0">
             </div>
-            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState('DaysOff')">
-              <label for="DaysOff">Available days-off</label>
-              <input type="text" id="DaysOff" class="form-control user__left-days" readonly
+            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState('daysoff')">
+              <label for="daysoff">Available days-off</label>
+              <input type="text" id="daysoff" class="form-control user__left-days" readonly
               ng-value="userCtrl.user.vacations.dayOff || 0">
             </div>
           </div>
