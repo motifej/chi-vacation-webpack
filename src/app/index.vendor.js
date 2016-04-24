@@ -10,7 +10,7 @@ import 'jquery';
 
 import 'ngstorage';
 
-
+//import "angular-sails";
 
 import "oclazyload";
 

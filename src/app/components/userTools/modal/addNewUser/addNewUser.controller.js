@@ -38,7 +38,7 @@ export default class AddNewUserController {
         () => this.toastr.success('New user created', 'Success'),
         error => this.toastr.error(error.error.message, 'Error creating user')
         );*/
-      this.sailsService.createUserByEmail(this.newUser);
+      this.sailsService.userResource.createUser(this.newUser);
     } else {
       this.toastr.error('Not all fields are filled', 'Error');
       this.invalidForm = true;

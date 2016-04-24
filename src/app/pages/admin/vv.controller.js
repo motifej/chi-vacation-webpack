@@ -8,6 +8,7 @@ export default class VvController {
     this.sailsService = sailsService;
     this.toastr = toastr;
     this.users = userData.data;
+    this.sailsService.setUsers(userData);
 console.log(angular.copy(this.users));
     this.groups = groups;
     this.status = status;
