@@ -1,3 +1,5 @@
+import { USERSTORAGEKEY } from '../constants/localstorage.consts';
+
 export default class SailsAuthService {
 	constructor ($localStorage, $q, $rootScope, $state, roles, actions, states, $http) {
 		'ngInject';
@@ -9,8 +11,7 @@ export default class SailsAuthService {
 		this.$q = $q;
 		this.$rootScope = $rootScope;
 		this.$http = $http;
-		this.userStorageKey = 'vacationsUser';
-		this.authUser = $localStorage[ this.userStorageKey ] || { status:false, data: false };
+		this.authUser = $localStorage[ USERSTORAGEKEY ] || { status:false, data: false };
 
 		this.baseUrl = 'http://localhost:3000';
 	}
@@ -22,15 +23,6 @@ export default class SailsAuthService {
 		return this.authUser.data;
 	}
 	getUserState() {
-		/*if (this.authUser.data) {
-			let data = this.firebaseObj.getAuth();
-			this.authUser = {
-				status: data ? true : false,
-				data: (data == null) ? {} : data,
-				role: this.authUser.role
-			};
-			this.$localStorage[ this.userStorageKey ] = this.toJSON(this.authUser);
-		}*/
 		return this.authUser.status;
 	}
 
@@ -52,7 +44,7 @@ export default class SailsAuthService {
 				};
 				this.userData = data.data;
 				deferred.resolve(this.authUser);
-				this.$localStorage[this.userStorageKey ] = this.authUser;
+				this.$localStorage[ USERSTORAGEKEY ] = this.authUser;
 			}, 
 			error => {
 				deferred.reject({
