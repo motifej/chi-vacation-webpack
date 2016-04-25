@@ -35,96 +35,93 @@ export default class SailsService {
 				//this.users = r.data;
 			});
 
-			io.socket.on('users', (obj) => {
-				if(obj.verb === 'created'){
-					$rootScope.$applyAsync(
-						this.users.data.push(obj.data)
-					);
-				}
-				if (obj.verb === 'updated') {
-					angular.extend(_.find(this.users.data, {id: obj.id}), obj.data);
-				}
-				if (obj.verb === 'destroyed') {
-					$rootScope.$applyAsync( () => {
-						let copy = _.filter(this.users.data, 
-							el => el.id !== obj.id
+			io.socket.on('users', socketUserActions);
+			io.socket.on('vacations', socketActions.bind(this, 'vacations'));
+			io.socket.on('daysoff', socketActions.bind(this, 'daysoff'));
+
+			function socketUserActions(obj) {
+				if (obj.attribute) return;
+				let users = this.users.data;
+				let {data, id, verb} = obj;
+
+				switch (verb) {
+					case 'created': {
+						$rootScope.$applyAsync(
+							users.push(data)
 						);
-						this.users.data.length = 0;
-						angular.extend(this.users.data, copy);
-					});
-				}
-			});
+						break;
+					}
 
-			io.socket.on('vacations', (obj) => {
-				if(obj.verb === 'created'){
-					$rootScope.$applyAsync( () => {
-						if (this.users && 'data' in this.users)
-							_.find(this.users.data, {id: obj.data.uid}).vacations.push(obj.data); 
-						else
-						if (this.user.id === obj.data.uid) 
-							this.user.vacations.push(obj.data)
-					});
-				}
-				if (obj.verb === 'updated') {
-					angular.extend(_.find(this.user.vacations, {id: obj.id}), obj.data);
-				}
-				if (obj.verb === 'destroyed') {
-					$rootScope.$applyAsync( () => {
-						let copy = _.filter(this.user.vacations, 
-							el => el.id !== obj.id
-						);
-						this.user.vacations.length = 0;
-						angular.extend(this.user.vacations, copy);
-					});
-				}
-			});
+					case 'updated': {
+						angular.extend(_.find(users, {id: id}), data);
+						break;	
+					}
 
-			io.socket.on('daysoff', (obj) => {
-				if(obj.verb === 'created'){
-					$rootScope.$applyAsync( () => {
-						if (this.users && 'data' in this.users)
-							_.find(this.users.data, {id: obj.data.uid}).daysoff.push(obj.data);
-						else 
-						if (this.user.id === obj.data.uid) 
-							this.user.daysoff.push(obj.data)
-					});
+					case 'destroyed': {
+						$rootScope.$applyAsync( () => {
+							let copy = _.filter(users, 
+								el => el.id !== id
+							);
+							users.length = 0;
+							angular.extend(users, copy);
+						});	
+					}
 				}
-				if (obj.verb === 'updated') {
-					angular.extend(_.find(this.user.daysoff, {id: obj.id}), obj.data);
-				}
-				if (obj.verb === 'destroyed') {
-					$rootScope.$applyAsync( () => {
-						let copy = _.filter(this.user.daysoff, 
-							el => el.id !== obj.id
-						);
-						this.user.daysoff.length = 0;
-						angular.extend(this.user.daysoff, copy);
-					});
-				}
-			});
 
+			};
 
+			function socketActions(params, obj) {
+				let {verb, data, id} = obj;
+
+				switch (verb) {
+					case 'created': {
+						$rootScope.$applyAsync( () => {
+							if (this.users)
+								_.find(this.users.data, {id: data.uid})[params].push(data); 
+							else
+								if (this.user.id === data.uid) 
+									this.user[params].push(data)
+						});
+						break;
+					}
+
+					case 'updated': {
+						angular.extend(_.find(this.user[params], {id}), data);
+						break;
+					}
+
+					case 'destroyed': {
+						$rootScope.$applyAsync( () => {
+							let copy = _.filter(this.user[params], 
+								el => el.id !== id
+							);
+							this.user[params].length = 0;
+							angular.extend(this.user[params], copy);
+						});
+					}
+				}
+				
+			};
+			
 		};
 
 		this.socketInit();
 
-	this.getUsers = (id) => {
-		return this.userResource.getUserData(id).$promise.then(
-			r => {
-				this.users = r; 
-				return r
-			})
-	}
+		this.getUsers = (id) => 
+			this.userResource.getUserData(id).$promise.then(
+				r => {
+					this.users = r; 
+					return r
+				}
+			)
 
-	this.getUser = (id) => {
-		return this.userResource.getUserData(id).$promise.then(
-			r => {
-				this.user = r.data; 
-				return r
-			})
+		this.getUser = (id) => 
+			this.userResource.getUserData(id).$promise.then(
+				r => {
+					this.user = r.data; 
+					return r
+				}
+			)
+			
 	}
-	
-	}
-
-
 }
