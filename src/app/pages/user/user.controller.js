@@ -1,4 +1,8 @@
+import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
+
 export default class UserController {
+
+
 
   constructor ($scope, $log, $timeout, sailsService, moment, toastr, user, $uibModal) {
     'ngInject';
@@ -11,7 +15,8 @@ export default class UserController {
     $scope.minEndDate = new Date($scope.startdate);
 
     this.user = user.data;
-    sailsService.setUser(user.data);
+    this.DAYSOFF = DAYSOFF;
+    this.VACATIONS = VACATIONS;
     this.today = new Date();
     this.$scope = $scope;
     this.$timeout = $timeout;
@@ -22,7 +27,7 @@ export default class UserController {
     this.$log = $log;
     this.sailsService = sailsService;
     this.activate($scope);
-    this.vacationState = 'vacations';
+    this.vacationState = VACATIONS;
 
   }
 
@@ -35,24 +40,15 @@ export default class UserController {
 
   }
 
-/*  openChangePasswordForm() {
-    this.modal.open({
-      templateUrl: require('!!file!./modal/changePassword/changePassword.html'),
-      controller: require('./modal/changePassword/changePassword.controller'),
-      controllerAs: 'user',
-      resolve: {user: this.user}
-    });
-  }
-*/
   submitHandler(startdate, enddate) {
 
     let vm = this;
-    let sDate = new Date(startdate).getTime();
-    let eDate = new Date(enddate).getTime();
+    let sDate = new Date(startdate);
+    let eDate = new Date(enddate);
     let toastrOptions = {progressBar: false};
     let vacation;
 
-    let listArray = [];
+/*    let listArray = [];
     vm.vacations = [];
 
     listArray.push(this.user['vacations']);
@@ -77,19 +73,25 @@ export default class UserController {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
     }
-
+*/
     vacation = {
       startdate: sDate,
       enddate: eDate,
       status: 'new',
-      commentary: null
+      uid: this.user.id
     };
 
-    //this.sailsService.vacationResource.createVacation(vacation, this.vacationState);
+      this.sailsService[this.vacationState + 'Resource'].create(vacation).$promise.then(
+        r => {
+          this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+        },
+        e => {
+          this.toastr.success('Error creating vacation', e, toastrOptions)
+        });
 
-    this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+    
 
-    function isCrossingIntervals(dateIntervals) {
+/*    function isCrossingIntervals(dateIntervals) {
       if(dateIntervals.length === 0) return false;
 
       let result = dateIntervals.filter(function(item) {
@@ -100,7 +102,7 @@ export default class UserController {
 
       return !!result.length;
 
-    }
+    }*/
   }
 
   calcDays() {
@@ -116,8 +118,6 @@ export default class UserController {
   }
 
   deleteVacation(item) {
-    this.vacationState === 'vacations' ? 
-    this.sailsService.vacationResource.deleteVacation( {uid: item.uid, id: item.id} ) :
-    this.sailsService.daysoffResource.deleteDaysOff( {uid: item.uid, id: item.id} );
+    this.sailsService[this.vacationState + 'Resource'].delete( {uid: item.uid, id: item.id} );
   }
 }

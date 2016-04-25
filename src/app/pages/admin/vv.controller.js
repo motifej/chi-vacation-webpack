@@ -8,8 +8,6 @@ export default class VvController {
     this.sailsService = sailsService;
     this.toastr = toastr;
     this.users = userData.data;
-    this.sailsService.setUsers(userData);
-console.log(angular.copy(this.users));
     this.groups = groups;
     this.status = status;
     this.filter = {};
@@ -44,14 +42,6 @@ console.log(angular.copy(this.users));
     this.moment = moment;
     this.$log = $log;
     this.vacationState = 'vacations';
-/*    sailsService.userResource.getUserData({id: 7}).$promise.then(item => {
-      console.log(item.User)
-    })
-    
-
-
-      console.log(user);
-      console.log(sailsService.userResource.getUserData({id: 7}).User);*/
 
 
     
@@ -97,7 +87,6 @@ this.columnDefs = [
         //todo translate message
         this.toastr.error('Not enough days', 'Error')
      }
-
     }
     
     rejectVacation(user, id) {

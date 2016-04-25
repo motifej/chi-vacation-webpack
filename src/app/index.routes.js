@@ -55,7 +55,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
             asyncPreloading: resolverProvider.managerPagePrealoading,
             //userList : firebaseResolverProvider.getUsersList,
             userData : function(sailsService) {
-              return sailsService.userResource.getUserData().$promise
+              return sailsService.getUsers()
             }
           },
 
