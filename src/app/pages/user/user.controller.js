@@ -1,37 +1,36 @@
 export default class UserController {
 
-  constructor ($scope, $log, $timeout, firebaseService, moment, toastr, user, $uibModal) {
+  constructor ($scope, $log, $timeout, sailsService, moment, toastr, user, $uibModal) {
     'ngInject';
+    if (moment().weekday() === 6) $scope.startdate = new Date(moment().add(2, 'days')); else
+    if (moment().weekday() === 0) $scope.startdate = new Date(moment().add(1, 'days')); else
+    $scope.startdate = new Date();
 
-    if (moment().weekday() === 6) $scope.startDate = new Date(moment().add(2, 'days')); else
-    if (moment().weekday() === 0) $scope.startDate = new Date(moment().add(1, 'days')); else
-    $scope.startDate = new Date();
+    $scope.minStartDate = new Date($scope.startdate);
+    $scope.enddate = new Date($scope.startdate);
+    $scope.minEndDate = new Date($scope.startdate);
 
-    $scope.minStartDate = new Date($scope.startDate);
-    $scope.endDate = new Date($scope.startDate);
-    $scope.minEndDate = new Date($scope.startDate);
-
-    this.user = user;
+    this.user = user.data;
+    sailsService.setUser(user.data);
     this.today = new Date();
     this.$scope = $scope;
     this.$timeout = $timeout;
-    this.user = user;
     this.vacationDays = this.calcDays();
     this.toastr = toastr;
     this.moment = moment;
     this.modal = $uibModal;
     this.$log = $log;
-    this.firebaseService = firebaseService;
+    this.sailsService = sailsService;
     this.activate($scope);
-    this.vacationState = 'Vacations';
+    this.vacationState = 'vacations';
 
   }
 
   activate(scope) {
 
-    scope.$watch('startDate', function() {
-      if (scope.endDate <= scope.startDate) scope.endDate = new Date(scope.startDate);
-      scope.minEndDate = new Date(scope.startDate);
+    scope.$watch('startdate', function() {
+      if (scope.enddate <= scope.startdate) scope.enddate = new Date(scope.startdate);
+      scope.minEndDate = new Date(scope.startdate);
     });
 
   }
@@ -45,24 +44,25 @@ export default class UserController {
     });
   }
 */
-  submitHandler(startDate, endDate) {
+  submitHandler(startdate, enddate) {
 
     let vm = this;
-    let sDate = new Date(startDate).getTime();
-    let eDate = new Date(endDate).getTime();
+    let sDate = new Date(startdate).getTime();
+    let eDate = new Date(enddate).getTime();
     let toastrOptions = {progressBar: false};
     let vacation;
 
     let listArray = [];
     vm.vacations = [];
-    listArray.push(this.user.vacations['Vacations']);
-    listArray.push(this.user.vacations['DaysOff']);
+
+    listArray.push(this.user['vacations']);
+    listArray.push(this.user['daysoff']);
 
     listArray.forEach( list => {
       if (list) {
         for (let item in list) {
           if (list[item].status === 'rejected') continue;
-          vm.vacations.push({startDate: list[item].startDate, endDate: list[item].endDate, status: list[item].status, commentary: list[item].commentary});
+          vm.vacations.push({startdate: list[item].startdate, enddate: list[item].enddate, status: list[item].status, commentary: list[item].commentary});
         }
       }
     });
@@ -72,20 +72,20 @@ export default class UserController {
       return;
     }
 
-    let total = this.vacationState === 'Vacations' ? this.user.vacations.total : this.user.vacations.dayOff;
+    let total = this.vacationState === 'vacations' ? this.user.vacations.total : this.user.vacations.dayOff;
     if (this.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
     }
 
     vacation = {
-      startDate: sDate,
-      endDate: eDate,
-      status: 'inprogress',
+      startdate: sDate,
+      enddate: eDate,
+      status: 'new',
       commentary: null
     };
 
-    this.firebaseService.createNewVacation(vacation, this.vacationState);
+    //this.sailsService.vacationResource.createVacation(vacation, this.vacationState);
 
     this.toastr.success('Vacation request was sent successfully!', toastrOptions);
 
@@ -93,7 +93,7 @@ export default class UserController {
       if(dateIntervals.length === 0) return false;
 
       let result = dateIntervals.filter(function(item) {
-        if  (sDate <= item.endDate && eDate >= item.startDate) {
+        if  (sDate <= item.enddate && eDate >= item.startdate) {
           return true;
         }
       });
@@ -104,7 +104,7 @@ export default class UserController {
   }
 
   calcDays() {
-    this.$timeout(()=> this.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startDate, this.$scope.endDate, [1, 2, 3, 4, 5]));
+    this.$timeout(()=> this.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]));
   }
 
   changeVacationState(state) {
@@ -116,6 +116,8 @@ export default class UserController {
   }
 
   deleteVacation(item) {
-    this.firebaseService.removeVacation(item.id, this.vacationState);
+    this.vacationState === 'vacations' ? 
+    this.sailsService.vacationResource.deleteVacation( {uid: item.uid, id: item.id} ) :
+    this.sailsService.daysoffResource.deleteDaysOff( {uid: item.uid, id: item.id} );
   }
 }

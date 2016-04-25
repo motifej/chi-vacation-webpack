@@ -34,7 +34,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
             userData : function(sailsService) {
-              return sailsService.userResource.getUserData().$promise
+              return sailsService.userResource.getUsersData().$promise
             }
           },
           views: {
@@ -53,7 +53,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
           },
           resolve: {
             asyncPreloading: resolverProvider.managerPagePrealoading,
-            userList : firebaseResolverProvider.getUsersList,
+            //userList : firebaseResolverProvider.getUsersList,
             userData : function(sailsService) {
               return sailsService.userResource.getUserData().$promise
             }

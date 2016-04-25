@@ -7,16 +7,25 @@ export default function (app) {
         this.$get = () => this;
     }
 
-        function loadUser (firebaseService, $state, states) {
+        function loadUser (firebaseService, $state, states, sailsService, sailsAuthService, $rootScope, actions) {
             "ngInject";
-            return firebaseService
-                    .loadUser()
+            let user = sailsAuthService.getAuthUser().user;
+            const { USERLOADED } = actions;
+            return sailsService.userResource.getUserData({id: user.id}).$promise.then( e => {
+                $rootScope.$emit(USERLOADED, e.data);
+                return e;
+            })
                     .catch( err =>
                         $state.go(states.ERRLOAD,{err: err}) );
+            /*return firebaseService
+                    .loadUser()
+                    .catch( err =>
+                        $state.go(states.ERRLOAD,{err: err}) );*/
         }
 
         function getUsersList(firebaseService) {
-            'ngInject'
+            'ngInject';
+            debugger;
             return firebaseService.getUsersList();
         }
 

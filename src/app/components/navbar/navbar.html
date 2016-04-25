@@ -24,8 +24,8 @@
           <span class="glyphicon glyphicon-user chi-glyphicon"></span>manager</a>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right" ng-if="vm.user.uid">
-        <li><a href="" class="navbar__user"><span class="glyphicon glyphicon-user chi-glyphicon"></span>{{vm.user.firstName + " " + vm.user.lastName}}</a></li>
+      <ul class="nav navbar-nav navbar-right" ng-if="vm.user.id">
+        <li><a href="" class="navbar__user"><span class="glyphicon glyphicon-user chi-glyphicon"></span>{{vm.user.firstname + " " + vm.user.lastname}}</a></li>
         <li><a ui-sref={{vm.states.LOGIN}} ng-click="vm.logOut()" class="logout"><span class="glyphicon glyphicon-log-out chi-glyphicon"></span>Logout</a>
         </li>
       </ul>

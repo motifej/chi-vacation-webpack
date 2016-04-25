@@ -4,11 +4,15 @@ export default class VvController {
   constructor ($scope, $timeout, firebaseService, userData, $uibModal, moment, groups, status, toastr, user, $log, sailsService) {
     'ngInject';
     
-
     this.firebaseService = firebaseService;
     this.sailsService = sailsService;
     this.toastr = toastr;
     this.users = userData.data;
+<<<<<<< HEAD
+=======
+    this.sailsService.setUsers(userData);
+console.log(angular.copy(this.users));
+>>>>>>> 96846cd9e8286cf9ea751ec7f4996566bae53e4c
     this.groups = groups;
     this.status = status;
     this.filter = {};
@@ -43,13 +47,14 @@ export default class VvController {
     this.moment = moment;
     this.$log = $log;
     this.vacationState = 'vacations';
-    sailsService.userResource.getUserData({id: 7}).$promise.then(item => {
+/*    sailsService.userResource.getUserData({id: 7}).$promise.then(item => {
       console.log(item.User)
     })
     
 
 
       console.log(user);
+      console.log(sailsService.userResource.getUserData({id: 7}).User);*/
 
 
     
@@ -63,7 +68,7 @@ this.columnDefs = [
   }
 
     calcNewVacations(group) {
-     var sum = 0;
+     /*var sum = 0;
      this.users.forEach(item => {
       if(item.group == group) {
         angular.forEach(item[this.pageState], el => {
@@ -73,7 +78,7 @@ this.columnDefs = [
         })
       }
      })
-     return sum; 
+     return sum; */
     }
     confirmVacation(user, id) {
 
@@ -167,7 +172,7 @@ this.columnDefs = [
     
 
     _fillEvents(vacation) {
-        angular.forEach(this.users, (value) => {
+        /*angular.forEach(this.users, (value) => {
         var user = value;
         if ( (vacation in value.vacations) && (!this.filter.group || this.filter.group == value.group) && (!this.filter.uid || this.filter.uid == value.uid) ) {
           let list = value.vacations[vacation];
@@ -198,7 +203,7 @@ this.columnDefs = [
             
           });
         }
-      });
+      });*/
     }
 
 setDateInfo() {
@@ -218,7 +223,7 @@ setDateInfo() {
     let listArray = [];
     vm.vacations = [];
     listArray.push(this.filtredUser['vacations']);
-    listArray.push(this.filtredUser['daysOff']);
+    listArray.push(this.filtredUser['daysoff']);
 
 
 

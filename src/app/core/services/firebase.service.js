@@ -25,14 +25,17 @@ export default class FirebaseService {
 	}
 
 	_getCurrentUid() {
+		debugger;
 		return this.authUser.data.uid;
 	}
 
 	checkPersmissions(arr) {
+		debugger;
 		return !!~arr.indexOf(this.authUser.role || this.roles.GUEST);
 	}
 
 	checkExpired() {
+		debugger;
       let auth = this.firebaseObj.getAuth();
       if (auth) {
         let sessionTimeout = auth.expires * 1000;
@@ -53,6 +56,7 @@ export default class FirebaseService {
     }
 
 	getUsersList() {
+		debugger;
 		let deferred = this.$q.defer();
 		this.$firebaseArray( this.firebaseObj ).$loaded(
 			data =>	deferred.resolve( data ),
@@ -61,6 +65,7 @@ export default class FirebaseService {
 	}
 
 	loadUser() {
+		debugger;
 		let deferred = this.$q.defer();
 		let userRef = this.firebaseObj.child(this.authUser.data.uid);
 		let timeoutLoad = this.$timeout(deferred.reject, 10000);
@@ -76,6 +81,7 @@ export default class FirebaseService {
 	}
 
 	updateUserData(data) {
+		debugger;
 		let deferred = this.$q.defer();
 		let newData = data;
 		delete newData.password;
@@ -139,9 +145,6 @@ export default class FirebaseService {
 		});
 		return deferred.promise;
 	}
-	createUserByEmailSails(newUser) {
-		this.http.post("http://localhost:3000/v1/users", newUser);
-	}
 	
 	signInUserByEmail(user) {
 		let _this = this;
@@ -196,6 +199,7 @@ export default class FirebaseService {
 	}
 
 	getUserState() {
+		debugger;
 		if (this.authUser.data) {
 			let data = this.firebaseObj.getAuth();
 			this.authUser = {
@@ -215,6 +219,7 @@ export default class FirebaseService {
 	}
 
 	getAuthUser() {
+		debugger;
 		return this.authUser.data;
 	}
 
