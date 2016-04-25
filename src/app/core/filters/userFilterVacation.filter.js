@@ -17,11 +17,11 @@ export default function (app) {
 						});
 						case 'confirmed':
 						return filter(input, function(item) {
-							return item.endDate > new Date() && item.status == 'confirmed';
+							return new Date(item.enddate) > new Date() && item.status == 'confirmed';
 						});
 						case 'spent':
 						return filter(input, function(item) {
-							return item.endDate < new Date() && item.status == 'confirmed';
+							return new Date(item.enddate) < new Date() && item.status == 'confirmed';
 						});
 					}
 				}
