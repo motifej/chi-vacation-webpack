@@ -28,7 +28,6 @@ export default class UserController {
     this.sailsService = sailsService;
     this.activate($scope);
     this.vacationState = VACATIONS;
-    debugger;
 
   }
 
@@ -69,7 +68,7 @@ export default class UserController {
           this.toastr.success('Vacation request was sent successfully!', toastrOptions)
         },
         e => {
-          this.toastr.error(e.data.data.raw.error, 'Error creating vacation', toastrOptions)
+          this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
         });
 
   }

@@ -3,7 +3,7 @@ require("script!../../../assets/vendor/sails.io.js");
 io.sails.url = 'http://localhost:3000';
 
 export default class SailsService {
-	constructor ($http, $resource, $rootScope) {
+	constructor ($http, $resource, $rootScope, $parse) {
 		'ngInject';
 		this.http = $http;
 		this.userResource = $resource("http://localhost:3000/users/:id", {id: "@id"}, {
@@ -33,15 +33,15 @@ export default class SailsService {
 
 			io.socket.get(io.sails.url + '/users', null, (r) => {
 				//this.users = r.data;
+				io.socket.on('users', socketUserActions.bind(this));
+				io.socket.on('vacations', socketActions.bind(this, 'vacations'));
+				io.socket.on('daysoff', socketActions.bind(this, 'daysoff'));
 			});
 
-			io.socket.on('users', socketUserActions);
-			io.socket.on('vacations', socketActions.bind(this, 'vacations'));
-			io.socket.on('daysoff', socketActions.bind(this, 'daysoff'));
 
 			function socketUserActions(obj) {
-				if (obj.attribute) return;
-				let users = this.users.data;
+				let users = $parse('users.data')(this);
+				if (obj.attribute || !users) return;
 				let {data, id, verb} = obj;
 
 				switch (verb) {
@@ -53,7 +53,9 @@ export default class SailsService {
 					}
 
 					case 'updated': {
-						angular.extend(_.find(users, {id: id}), data);
+						$rootScope.$applyAsync(
+							angular.extend(_.find(users, {id}), data)
+						);
 						break;	
 					}
 
