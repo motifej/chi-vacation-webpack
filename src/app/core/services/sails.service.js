@@ -12,19 +12,20 @@ export default class SailsService {
 			createUser: {isArray: false, method: "POST"},
 			deleteUser: {isArray: false, method: "DELETE"}
 		});
-		this.vacationResource = $resource("http://localhost:3000/vacations/:id", {uid: "@uid", id: "@id"}, {
-			postVacation: {isArray: false, method: "POST"},
-			updateVacation: {isArray: false, method: "PUT"},
-			createVacation: {isArray: false, method: "POST"},
-			deleteVacation: {isArray: false, method: "DELETE"}
+		this.vacationsResource = $resource("http://localhost:3000/vacations/:id", {id: "@id"}, {
+			get: {isArray: false, method: "GET"},
+			update: {isArray: false, method: "PUT"},
+			create: {isArray: false, method: "POST"},
+			delete: {isArray: false, method: "DELETE"}
 		});
-		this.daysoffResource = $resource("http://localhost:3000/daysoff/:id", {uid: "@uid", id: "@id"}, {
-			postDaysOff: {isArray: false, method: "POST"},
-			updateDaysOff: {isArray: false, method: "PUT"},
-			createDaysOff: {isArray: false, method: "POST"},
-			deleteDaysOff: {isArray: false, method: "DELETE"}
+		this.daysoffResource = $resource("http://localhost:3000/daysoff/:id", {id: "@id"}, {
+			get: {isArray: false, method: "GET"},
+			update: {isArray: false, method: "PUT"},
+			create: {isArray: false, method: "POST"},
+			delete: {isArray: false, method: "DELETE"}
 		});
 
+		
 		
 
 
@@ -107,14 +108,21 @@ export default class SailsService {
 
 		this.socketInit();
 
-	this.setUsers = (data) => {
-		this.users = data;
+	this.getUsers = (id) => {
+		return this.userResource.getUserData(id).$promise.then(
+			r => {
+				this.users = r; 
+				return r
+			})
 	}
 
-	this.setUser = (data) => {
-		this.user = data;
+	this.getUser = (id) => {
+		return this.userResource.getUserData(id).$promise.then(
+			r => {
+				this.user = r.data; 
+				return r
+			})
 	}
-
 	
 	}
 
