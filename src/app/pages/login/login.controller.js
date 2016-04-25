@@ -1,4 +1,4 @@
-function LoginController ($log, $state, $scope, firebaseService,toastr, states, sailsAuthService) {
+function LoginController ($log, $state, $scope, firebaseService,toastr, states, sailsAuthService, sailsService) {
   'ngInject';
 
   $scope.sending = false;
@@ -32,7 +32,7 @@ function LoginController ($log, $state, $scope, firebaseService,toastr, states, 
       return
     }
     $scope.sending = true;
-    firebaseService.resetAndSendPassword($scope.email)
+/*    firebaseService.resetAndSendPassword($scope.email)
     .then( () => {
       toastr.success('Check your email!');
       $state.go(states.LOGIN);
@@ -40,7 +40,7 @@ function LoginController ($log, $state, $scope, firebaseService,toastr, states, 
       toastr.error(err.error.message, err.error.code);
       $log.error(err);
       $scope.sending = false;
-    });
+    });*/
   }
 
    function changePassword () {
@@ -50,18 +50,31 @@ function LoginController ($log, $state, $scope, firebaseService,toastr, states, 
     }
     if ($scope.authForm.$valid) {
       $scope.sending = true;
-      firebaseService
-        .changeUserPass($scope.email, $scope.oldPassword, $scope.newPassword)
+      
+      sailsService.userResource
+      .getUserData({email: $scope.email})
+      .$promise
+      .then(user => {
+        sailsService.userResource
+        .updateUser({id: user.data[0].id}, {
+          email: $scope.email, 
+          oldpassword: $scope.oldPassword, 
+          password: $scope.newPassword
+        })
+        .$promise
         .then(
           () => { 
             toastr.success('Password changed success!', 'Success');
             signin();
-          },
-          error => {
+          }          
+        )
+        .catch(
+        error => {
             $scope.sending = false;
-            toastr.error(error.error.message, 'Error changing password!');
-          }
-        );
+            toastr.error(error.data.data.raw.message, 'Error changing password!');
+          });
+      })
+           
     } else {
       toastr.error('Not all fields are filled', 'Error');
     }

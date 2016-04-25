@@ -1,12 +1,12 @@
 import { USERSTORAGEKEY } from './core/constants/localstorage.consts';
 'use strict';
 
-function runBlock($log, $rootScope, permission, $http, $localStorage) {
+function runBlock($log, $rootScope, permission, $http, $localStorage, $parse) {
 	'ngInject';
 
 	$rootScope.$on("$stateChangeStart", permission.init);
 
-	let token = $localStorage[ USERSTORAGEKEY ].data.token;
+	let token = $parse('data.token')($localStorage[ USERSTORAGEKEY ])
 	if (token) 
 		$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 }
