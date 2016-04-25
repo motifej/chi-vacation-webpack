@@ -20,9 +20,11 @@ const App = angular.module(
     "ui.bootstrap",
     "mwl.calendar",
     "ngStorage",
+    //"ngSails",
 
 
-    // core
+    require('angular-resource'),
+
     require("./core/core.module").name,
 
     // components

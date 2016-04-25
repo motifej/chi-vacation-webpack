@@ -33,13 +33,15 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
           },
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
-            userList : firebaseResolverProvider.getUsersList
+            userData : function(sailsService) {
+              return sailsService.userResource.getUsersData().$promise
+            }
           },
           views: {
             'content@': {
               templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/admin/vv.html'),
               controller: 'VvController',
-              controllerAs: 'vv'
+              controllerAs: 'admin'
               }
           }
         })
@@ -51,7 +53,10 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
           },
           resolve: {
             asyncPreloading: resolverProvider.managerPagePrealoading,
-            userList : firebaseResolverProvider.getUsersList
+            //userList : firebaseResolverProvider.getUsersList,
+            userData : function(sailsService) {
+              return sailsService.userResource.getUserData().$promise
+            }
           },
 
           views: {
