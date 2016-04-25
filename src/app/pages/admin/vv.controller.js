@@ -169,27 +169,27 @@ this.columnDefs = [
     
 
     _fillEvents(vacation) {
-        /*angular.forEach(this.users, (value) => {
+        angular.forEach(this.users, (value) => {
         var user = value;
-        if ( (vacation in value.vacations) && (!this.filter.group || this.filter.group == value.group) && (!this.filter.uid || this.filter.uid == value.uid) ) {
-          let list = value.vacations[vacation];
-          var {firstName, lastName} = value;
+        if ( (vacation in value) && (!this.filter.group || this.filter.group == value.group) && (!this.filter.id || this.filter.id == value.id) ) {
+          let list = value[vacation];
+          var {firstname, lastname} = value;
           angular.forEach(list, (value) => {
-            var {startDate, endDate, status} = value;
+            var {startdate, enddate, status} = value;
               if (value.status == this.statusFilter.status || this.statusFilter.status == "") {
                 // let typeEvent = {
                 //   rejected: vacation === 'Vacations' ? 'important' : 'vv-dayoff-rejected',
                 //   confirmed: vacation === 'Vacations' ? 'info' : 'vv-dayoff-confirmed', 
                 //   inprogress: vacation === 'Vacations' ? 'warning' : 'vv-dayoff-warning', 
                 // };
-                let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning'};
+                let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning', new:'warning'};
                 var event = 
                 {
-                  title: firstName + ' '+ lastName,
+                  title: firstname + ' '+ lastname,
                   type: typeEvent[status],
-                  cssClass: vacation === 'Vacations' ? '' : 'm-dayoff',
-                  startsAt: new Date(startDate),
-                  endsAt: new Date(endDate),
+                  cssClass: vacation === 'vacations' ? '' : 'm-dayoff',
+                  startsAt: new Date(startdate),
+                  endsAt: new Date(enddate),
                   editable: false,
                   deletable: false,
                   incrementsBadgeTotal: true,
@@ -200,13 +200,13 @@ this.columnDefs = [
             
           });
         }
-      });*/
+      });
     }
 
 setDateInfo() {
     var events = this.events = [];
-    this._fillEvents('Vacations');
-    this._fillEvents('DaysOff');
+    this._fillEvents('vacations');
+    this._fillEvents('daysoff');
 
   }
 
