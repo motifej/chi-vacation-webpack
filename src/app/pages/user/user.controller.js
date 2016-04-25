@@ -28,6 +28,7 @@ export default class UserController {
     this.sailsService = sailsService;
     this.activate($scope);
     this.vacationState = VACATIONS;
+    debugger;
 
   }
 
