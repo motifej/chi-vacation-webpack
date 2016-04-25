@@ -8,7 +8,7 @@ export default class VvController {
     this.firebaseService = firebaseService;
     this.sailsService = sailsService;
     this.toastr = toastr;
-    this.users = userData.User;
+    this.users = userData.data;
     this.groups = groups;
     this.status = status;
     this.filter = {};
@@ -49,7 +49,7 @@ export default class VvController {
     
 
 
-      console.log(sailsService.userResource.getUserData({id: 7}).User);
+      console.log(user);
 
 
     
