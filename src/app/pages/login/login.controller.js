@@ -50,18 +50,7 @@ function LoginController ($log, $state, $scope, firebaseService,toastr, states, 
     }
     if ($scope.authForm.$valid) {
       $scope.sending = true;
-      
-      sailsService.userResource
-      .getUserData({email: $scope.email})
-      .$promise
-      .then(user => {
-        sailsService.userResource
-        .updateUser({id: user.data[0].id}, {
-          email: $scope.email, 
-          oldpassword: $scope.oldPassword, 
-          password: $scope.newPassword
-        })
-        .$promise
+      sailsAuthService.changePassword($scope.email, $scope.oldPassword, $scope.newPassword)
         .then(
           () => { 
             toastr.success('Password changed success!', 'Success');
@@ -73,9 +62,7 @@ function LoginController ($log, $state, $scope, firebaseService,toastr, states, 
             $scope.sending = false;
             toastr.error(error.data.data.raw.message, 'Error changing password!');
           });
-      })
-           
-    } else {
+      } else {
       toastr.error('Not all fields are filled', 'Error');
     }
   }  

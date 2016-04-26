@@ -1,10 +1,11 @@
 import { USERSTORAGEKEY } from '../constants/localstorage.consts';
 
 export default class SailsAuthService {
-	constructor ($localStorage, $q, $rootScope, $state, roles, actions, states, $http) {
+	constructor ($localStorage, $q, $rootScope, $state, roles, actions, states, $http, sailsService) {
 		'ngInject';
 		this.$localStorage = $localStorage;
 		this.$state = $state;
+		this.sailsService = sailsService;
 		this.states = states;
 		this.roles = roles;
 		this.actions = actions;
@@ -70,7 +71,19 @@ export default class SailsAuthService {
 		
 	}
 
-	changeUserPass(email, oldPassword, newPassword) {
+	changePassword(email, oldpassword, password) {
+		return this.sailsService.userResource
+      		.getUserData({email})
+      		.$promise
+      		.then(user => 
+      			this.sailsService.userResource
+        		.updateUser({id: user.data[0].id}, {
+          			email, 
+          			oldpassword, 
+          			password
+      			})
+      			.$promise
+      		)
 	}
 	
 	resetAndSendPassword(email) {
