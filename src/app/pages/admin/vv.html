@@ -235,12 +235,12 @@
             <div class="form-group col-md-6">
               <label for="selected">Vacation days</label>
               <input type="text" id="selected" class="form-control user__total-days" readonly
-              ng-value="admin.vacationDays">
+              ng-value="admin.filtredUser.vacationDays">
             </div>
             <div class="form-group col-md-6" ng-show="admin.isVacationState('vacations')">
               <label for="available">Available days</label>
               <input type="text" id="available" class="form-control user__left-days" readonly
-              ng-value="admin.filtredUser.vacations.total">
+              ng-value="admin.filtredUser.enableDays">
             </div>
 
             <div class="form-group col-md-6" ng-show="admin.isVacationState('daysoff')">
