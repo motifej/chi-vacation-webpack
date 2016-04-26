@@ -8,10 +8,12 @@ export default function (app) {
     this.init = init;
 
     function init (event, toState, toParams, fromState) {
-      if ( !sailsAuthService.getUserState() && toState.name !== states.LOGIN) {
+      if ( !sailsAuthService.getUserState() && toState.name !== states.LOGIN 
+        && toState.name !== states.CHANGEPASSWORD && toState.name !== states.RESETPASSWORD) {
         event.preventDefault();
         $state.go(states.LOGIN);
       }
+      
       let roles = $parse('data.roles')(toState) || roles.ANONIM;
       if( !roles.length ){
         toastr.error('can not url fo this state');
@@ -20,7 +22,7 @@ export default function (app) {
       }
 
       if ( sailsAuthService.checkPersmissions(roles) ) {
-        return;
+        return true;
       }
 
       event.preventDefault();

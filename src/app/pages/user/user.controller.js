@@ -48,27 +48,9 @@ export default class UserController {
     let toastrOptions = {progressBar: false};
     let vacation;
 
-/*    let listArray = [];
-    vm.vacations = [];
 
-    listArray.push(this.user['vacations']);
-    listArray.push(this.user['daysoff']);
 
-    listArray.forEach( list => {
-      if (list) {
-        for (let item in list) {
-          if (list[item].status === 'rejected') continue;
-          vm.vacations.push({startdate: list[item].startdate, enddate: list[item].enddate, status: list[item].status, commentary: list[item].commentary});
-        }
-      }
-    });
-
-    if (vm.vacations && isCrossingIntervals(vm.vacations)) {
-      this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
-      return;
-    }
-
-    let total = this.vacationState === 'vacations' ? this.user.vacations.total : this.user.vacations.dayOff;
+/*    let total = this.vacationState === 'vacations' ? this.user.vacations.total : this.user.vacations.dayOff;
     if (this.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
@@ -86,23 +68,9 @@ export default class UserController {
           this.toastr.success('Vacation request was sent successfully!', toastrOptions)
         },
         e => {
-          this.toastr.success('Error creating vacation', e, toastrOptions)
+          this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
         });
 
-    
-
-/*    function isCrossingIntervals(dateIntervals) {
-      if(dateIntervals.length === 0) return false;
-
-      let result = dateIntervals.filter(function(item) {
-        if  (sDate <= item.enddate && eDate >= item.startdate) {
-          return true;
-        }
-      });
-
-      return !!result.length;
-
-    }*/
   }
 
   calcDays() {
