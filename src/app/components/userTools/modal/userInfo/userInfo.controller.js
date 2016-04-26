@@ -1,5 +1,5 @@
 export default class UserInfoController {
-  constructor (user, $uibModal) {
+  constructor (user, $uibModal, moment) {
     'ngInject';
     this.user = user;
     this.modal = $uibModal;
@@ -14,5 +14,9 @@ export default class UserInfoController {
         	user: user
         }
       });
+    }
+    calcDays() {
+        let days = moment().isoWeekdayCalc(this.user.employmentdate, new Date(),[1,2,3,4,5,6,7]);
+        return Math.round((days % 365.25)*20/365.25);
     }
   }
