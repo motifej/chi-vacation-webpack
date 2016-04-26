@@ -15,7 +15,7 @@ export default class UserInfoController {
         }
       });
     }
-    calcDays() {
+    calcEnableDays() {
         let days = moment().isoWeekdayCalc(this.user.employmentdate, new Date(),[1,2,3,4,5,6,7]);
         return Math.round((days % 365.25)*20/365.25);
     }

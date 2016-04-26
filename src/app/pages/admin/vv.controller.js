@@ -42,6 +42,7 @@ export default class VvController {
     this.moment = moment;
     this.$log = $log;
     this.vacationState = 'vacations';
+    this.totalDays = 0;
 
 
     
@@ -118,6 +119,7 @@ this.columnDefs = [
       this.groupFilter = { group: group };
       this.filtredUser = user;
       this.setDateInfo();
+      this.calcEnableDays(new Date());
     }
 
     choiceButtonFilter(filter) {
@@ -200,6 +202,30 @@ setDateInfo() {
 
   }
 
+  calcEnableDays(vacationStartDate) {
+      let days = moment().isoWeekdayCalc(this.filtredUser.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
+      let employmentdate = new Date(this.filtredUser.employmentdate);
+      this.filtredUser.totalDays = 0;
+      this.filtredUser.enableDays = 0;
+      this.filtredUser.enableCurDays = 0;
+      this.filtredUser.enablePrevDays = 0;
+      this.filtredUser.spendVacation = 0;
+      this.filtredUser.spendPrevVacation = 0;
+      this.filtredUser.year = Math.floor(days / 365.25);
+      if(this.filtredUser.year != 0 && ((employmentdate.getMonth() == vacationStartDate.getMonth() && employmentdate.getDate() <= vacationStartDate.getDate()) || (new Date(moment(employmentdate).add(1, 'month')).getMonth() == vacationStartDate.getMonth() && employmentdate.getDate() > vacationStartDate.getDate()))) {
+        console.log(
+          this.calcDays(moment(employmentdate).add(this.filtredUser.year, 'year').add(1, 'month'), vacationStartDate), 
+          this.calcDays(vacationStartDate, moment(employmentdate).add(this.filtredUser.year, 'year').add(1, 'month')))
+        this.filtredUser.vacations.filter( item => item.year == (this.filtredUser.year + 1) ).forEach( item => this.filtredUser.spendPrevVacation += this.calcDays(item.startdate, item.enddate));
+        this.filtredUser.enablePrevDays += (20 - this.filtredUser.spendPrevVacation > this.calcDays(vacationStartDate, moment(employmentdate).add(this.filtredUser.year, 'year').add(1, 'month'))) ? this.calcDays( moment(employmentdate).add(this.filtredUser.year, 'year').add(1, 'month'), vacationStartDate) : 20 - this.filtredUser.spendPrevVacation;
+        this.filtredUser.enableDays += this.filtredUser.enablePrevDays;
+      }
+      this.filtredUser.vacations.filter( item => item.year == this.filtredUser.year ).forEach( item => this.filtredUser.spendVacation += this.calcDays(item.startdate, item.enddate));
+      this.filtredUser.totalDays += Math.round((days % 365.25)*20/365.25);
+      this.filtredUser.enableCurDays += this.filtredUser.totalDays - this.filtredUser.spendVacation;
+      this.filtredUser.enableDays += this.filtredUser.enableCurDays;
+  }
+
   submitHandler(startDate, endDate) {
     let vm = this;
     let sDate = new Date(startDate).getTime();
@@ -241,9 +267,9 @@ setDateInfo() {
       commentary: null
     };
 
-    this.firebaseService.createNewVacation(vacation, this.vacationState, this.filtredUser.uid);
+    // this.firebaseService.createNewVacation(vacation, this.vacationState, this.filtredUser.uid);
     if(this.vacationState == "vacations") {
-      this.sailsService.vacationRequest.postVacation({uid: this.filtredUser.id, startDate: new Date(sDate), endDate: new Date(eDate), status: "new" });
+      this.sailsService.vacationsResource.create({uid: this.filtredUser.id, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year });
     } else {
       this.sailsService.daysOffRequest.postDaysOff({uid: this.filtredUser.id, startDate: new Date(sDate), endDate: new Date(eDate), status: "new" });
     }
@@ -274,7 +300,8 @@ setDateInfo() {
   }
 
   calcDaysCalc() {
-    this.$timeout(()=> this.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startDate, this.$scope.endDate, [1, 2, 3, 4, 5]));
+    this.$timeout(()=> {this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);this.calcEnableDays(this.$scope.startdate)});
+
   }
 
   calcDays(startDate, endDate) {
