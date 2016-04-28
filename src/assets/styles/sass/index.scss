@@ -94,7 +94,10 @@ body {
 }
 .calendar-highlightClass {
   background-color: rgba(30, 144, 255, 0.2);
-}  
+}
+.icon-warning {
+  color: red !important;
+}
 @keyframes spin {
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}

@@ -1,1 +1,1 @@
-export const API_URL = 'https://vivid-fire-3850.firebaseio.com/users';
+export const API_URL = NODE_ENV === 'development' ? 'http://localhost:3000' : 'http://192.168.2.233:3000';
