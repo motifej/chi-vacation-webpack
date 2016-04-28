@@ -18,7 +18,7 @@ export default class FirebaseService {
 		this.$timeout = $timeout;
 		this.$rootScope = $rootScope;
 		this.userStorageKey = 'authUser';
-		this.firebaseObj = new Firebase( API_URL );
+		this.firebaseObj = new Firebase( 'https://vivid-fire-3850.firebaseio.com/users' );
 		this.authUser = $localStorage[ this.userStorageKey ] || { status:false, data: false };
 		this.userData = {};
 		this.http = $http;

@@ -1,10 +1,11 @@
 import { USERSTORAGEKEY } from '../constants/localstorage.consts';
 
 export default class SailsAuthService {
-	constructor ($localStorage, $q, $rootScope, $state, roles, actions, states, $http) {
+	constructor ($localStorage, $q, $rootScope, $state, roles, actions, states, $http, sailsService, API_URL) {
 		'ngInject';
 		this.$localStorage = $localStorage;
 		this.$state = $state;
+		this.sailsService = sailsService;
 		this.states = states;
 		this.roles = roles;
 		this.actions = actions;
@@ -13,7 +14,7 @@ export default class SailsAuthService {
 		this.$http = $http;
 		this.authUser = $localStorage[ USERSTORAGEKEY ] || { status:false, data: false };
 
-		this.baseUrl = 'http://localhost:3000';
+		this.baseUrl = API_URL;
 	}
 
 	checkPersmissions(arr) {
@@ -58,22 +59,21 @@ export default class SailsAuthService {
 	}
 
 	logOut() {
-		this.$http.post(this.baseUrl+'/auth/logout').then( 
-			r => {
-				console.log(r);
-			}, 
-			e => {
-				console.log(e.data.message, e)
-			});
+		this.$http.post(this.baseUrl + '/auth/logout')
 			this.$localStorage.$reset();
 			this.authUser = {status: false, data: false}
-		
 	}
 
-	changeUserPass(email, oldPassword, newPassword) {
+	changePassword(email, oldpassword, password) {
+		return this.$http.post(this.baseUrl + '/users/changePassword', {
+			email,
+			oldpassword,
+			password
+		})
 	}
 	
-	resetAndSendPassword(email) {
+	resetPassword(email) {
+		return this.$http.post(this.baseUrl + '/users/resetPassword', {email})
 	}
 
 }

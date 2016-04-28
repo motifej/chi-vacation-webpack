@@ -1,24 +1,24 @@
 import Firebase from 'firebase';
 require("script!../../../assets/vendor/sails.io.js");
-io.sails.url = 'http://localhost:3000';
 
 export default class SailsService {
-	constructor ($http, $resource, $rootScope, $parse) {
+	constructor ($http, $resource, $rootScope, $parse, API_URL) {
 		'ngInject';
+		io.sails.url = API_URL;
 		this.http = $http;
-		this.userResource = $resource("http://localhost:3000/users/:id", {id: "@id"}, {
+		this.userResource = $resource(API_URL + "/users/:id", {id: "@id"}, {
 			getUserData: {isArray: false, method: "GET"},
 			updateUser: {isArray: false, method: "PUT"},
 			createUser: {isArray: false, method: "POST"},
 			deleteUser: {isArray: false, method: "DELETE"}
 		});
-		this.vacationsResource = $resource("http://localhost:3000/vacations/:id", {id: "@id"}, {
+		this.vacationsResource = $resource(API_URL + "/vacations/:id", {id: "@id"}, {
 			get: {isArray: false, method: "GET"},
 			update: {isArray: false, method: "PUT"},
 			create: {isArray: false, method: "POST"},
 			delete: {isArray: false, method: "DELETE"}
 		});
-		this.daysoffResource = $resource("http://localhost:3000/daysoff/:id", {id: "@id"}, {
+		this.daysoffResource = $resource(API_URL + "/daysoff/:id", {id: "@id"}, {
 			get: {isArray: false, method: "GET"},
 			update: {isArray: false, method: "PUT"},
 			create: {isArray: false, method: "POST"},
@@ -37,7 +37,6 @@ export default class SailsService {
 				io.socket.on('vacations', socketActions.bind(this, 'vacations'));
 				io.socket.on('daysoff', socketActions.bind(this, 'daysoff'));
 			});
-
 
 			function socketUserActions(obj) {
 				let users = $parse('users.data')(this);

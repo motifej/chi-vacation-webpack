@@ -32,11 +32,13 @@
       </div>
       <hr>
       <div class="buttons-panel clearfix">
-        <div class="btn-group col-xs-12 col-sm-9 col-md-7">
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': manager.statusFilter.status == 'new'}" ng-click="manager.choiceButtonFilter('new')">New</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--all" ng-class="{'m-tab--all--active': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter('')">All</label>
+        <div class="btn-group col-xs-12">
+          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': manager.statusFilter.status == 'new'}" ng-click="manager.choiceButtonFilter('new')">New</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('spent')">History</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--all" ng-class="{'m-tab--all--active': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter('')">All</label>
         </div>
         
       </div>
@@ -137,7 +139,7 @@
               </tr>
             </thead>
             <tbody >
-              <tr ng-repeat="(key, item) in user[manager.pageState] | statusFilter:'status':manager.statusFilter.status | orderByObject: manager.order" ng-class="'m-action-' + item.status">
+              <tr ng-repeat="(key, item) in user[manager.pageState] | userFilterVacation:manager.statusFilter.status | orderByObject: manager.order" ng-class="'m-action-' + item.status">
                 <td>{{item.startdate | date:'dd MMMM yyyy'}}</td>
                 <td>{{item.enddate | date:'dd MMMM yyyy'}}</td>
                 <td>{{manager.calcDays(item.startdate, item.enddate)}}</td>

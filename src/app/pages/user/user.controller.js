@@ -41,21 +41,11 @@ export default class UserController {
   }
 
   submitHandler(startdate, enddate) {
-
-    let vm = this;
     let sDate = new Date(startdate);
     let eDate = new Date(enddate);
     let toastrOptions = {progressBar: false};
     let vacation;
 
-
-
-/*    let total = this.vacationState === 'vacations' ? this.user.vacations.total : this.user.vacations.dayOff;
-    if (this.vacationDays > total) {
-      this.toastr.error('You have exceeded the number of available days!', toastrOptions);
-      return;
-    }
-*/
     vacation = {
       startdate: sDate,
       enddate: eDate,
@@ -63,14 +53,20 @@ export default class UserController {
       uid: this.user.id
     };
 
-      this.sailsService[this.vacationState + 'Resource'].create(vacation).$promise.then(
-        r => {
-          this.toastr.success('Vacation request was sent successfully!', toastrOptions)
-        },
-        e => {
-          this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
-        });
+    this.sailsService[this.vacationState + 'Resource'].create(vacation).$promise.then(
+      r => {
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+      },
+      e => {
+        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
+    });
 
+/*    let total = this.vacationState === 'vacations' ? this.user.vacations.total : this.user.vacations.dayOff;
+    if (this.vacationDays > total) {
+      this.toastr.error('You have exceeded the number of available days!', toastrOptions);
+      return;
+    }
+*/
   }
 
   calcDays() {
