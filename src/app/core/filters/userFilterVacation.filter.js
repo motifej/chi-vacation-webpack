@@ -5,7 +5,7 @@ export default function (app) {
 
 		function userFilterVacation() {
 			return function(input, status) {
-				if (input) {
+				if (input.length > 0) {
 					switch (status) {
 						case 'new':
 						return filter(input, function(item) {
@@ -17,12 +17,18 @@ export default function (app) {
 						});
 						case 'confirmed':
 						return filter(input, function(item) {
-							return new Date(item.enddate) > new Date() && item.status == 'confirmed';
+							return new Date(item.startdate) > new Date() && item.status == 'confirmed';
+						});
+						case 'inprogress':
+						return filter(input, function(item) {
+							return new Date(item.startdate) < new Date() && new Date(item.enddate) > new Date() && item.status == 'confirmed';
 						});
 						case 'spent':
 						return filter(input, function(item) {
 							return new Date(item.enddate) < new Date() && item.status == 'confirmed';
 						});
+						default:
+							return input;
 					}
 				}
 			};
