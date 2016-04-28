@@ -248,7 +248,7 @@ setDateInfo() {
       this.filtredUser.totalDays += Math.round((days % 365.25)*20/365.25);
       console.log(this.filtredUser.totalDays)
       this.filtredUser.enableCurDays += this.filtredUser.totalDays - this.filtredUser.spendVacation;
-      this.filtredUser.enableDays += this.filtredUser.enableCurDays;
+      this.filtredUser.enableDays += this.filtredUser.enableCurDays < 0 ? 0 : this.filtredUser.enableCurDays;
       this.filtredUser.daysoff.forEach( item => {
         this.filtredUser.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
