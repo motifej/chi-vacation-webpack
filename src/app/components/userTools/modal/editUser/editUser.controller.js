@@ -1,5 +1,5 @@
 export default class AddNewUserController {
-  constructor ($filter, $uibModalInstance, $uibModal, toastr, sailsService, users, groups, user, sailsAuthService) {
+  constructor ($filter, $uibModalInstance, $uibModal, toastr, sailsService, users, groups, user, sailsAuthService, mailService) {
     'ngInject';
 
     this.invalidForm = false;
@@ -7,6 +7,7 @@ export default class AddNewUserController {
     this.emailPattern = '\\w+.?\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}';
     this.filter = $filter;
     this.sailsService = sailsService;
+    this.mailService = mailService;
     this.sailsAuthService = sailsAuthService;
     this.toastr = toastr;
     this.modal = $uibModal;
@@ -63,14 +64,20 @@ export default class AddNewUserController {
       controller: require('../confirmDialog/confirmDialog.controller'),
       controllerAs: 'confirm',
       size: 'sm'
-    });    
+    }); 
     modalInstance.result.then(
       selectedItem => {
         if (selectedItem) {
           this.sailsAuthService.resetPassword(this.newUser.email)
+            .then( (res) => 
+              this.mailService.sendMailResetPassword({
+                address: this.newUser.email,
+                new_password: res.data.data
+              }))
             .then( () => {
               this.toastr.success('A new password was sent to user');
-            }).catch( err => {
+            })
+            .catch( err => {
               this.toastr.error(err);
             });
         }
