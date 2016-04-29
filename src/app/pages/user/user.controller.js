@@ -176,7 +176,7 @@ export default class UserController {
     });
       }
     } else {
-      create({uid, startDate: new Date(sDate), endDate: new Date(eDate), status: "new", year: this.user.year }).$promise.then(
+      create({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.user.year }).$promise.then(
       r => {
         this.toastr.success('Vacation request was sent successfully!', toastrOptions);
         this.calcEnableDays(this.$scope.startdate);
