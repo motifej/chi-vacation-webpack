@@ -127,7 +127,6 @@ export default class VvController {
     choiceButtonFilter(filter) {
       this.statusFilter.status = filter;
       this.setDateInfo();
-      debugger;
     }
 
     openNewUserForm() {
