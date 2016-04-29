@@ -307,14 +307,16 @@ setDateInfo() {
           let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.enablePrevDays - 1, [1,2,3,4,5]);
           create({uid, startdate: new Date(sDate), enddate: new Date(mDate), status: "new", year: this.filtredUser.year - 1 }).$promise.then(
       r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+        this.calcEnableDays(this.$scope.startdate);
       },
       e => {
         this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
     });
           create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate: new Date(eDate), status: "new", year: this.filtredUser.year }).$promise.then(
       r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+        this.calcEnableDays(this.$scope.startdate);
       },
       e => {
         this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
@@ -322,7 +324,8 @@ setDateInfo() {
         } else {
           create({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year - 1 }).$promise.then(
       r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+        this.calcEnableDays(this.$scope.startdate);
       },
       e => {
         this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
@@ -331,7 +334,8 @@ setDateInfo() {
       } else {
         create({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year }).$promise.then(
       r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+        this.calcEnableDays(this.$scope.startdate);
       },
       e => {
         this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
@@ -340,7 +344,8 @@ setDateInfo() {
     } else {
       create({uid, startDate: new Date(sDate), endDate: new Date(eDate), status: "new", year: this.filtredUser.year }).$promise.then(
       r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+        this.calcEnableDays(this.$scope.startdate);
       },
       e => {
         this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
