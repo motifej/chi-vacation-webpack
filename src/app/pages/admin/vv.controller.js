@@ -206,53 +206,55 @@ setDateInfo() {
 
   calcEnableDays(vacationStartDate) {
 
-      let days = moment().isoWeekdayCalc(this.filtredUser.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
-      let employmentdate = new Date(this.filtredUser.employmentdate);
+      let user = this.filtredUser;
 
-      this.filtredUser.totalDays = 0;
-      this.filtredUser.enableDays = 0;
-      this.filtredUser.enableCurDays = 0;
-      this.filtredUser.enablePrevDays = 0;
-      this.filtredUser.spendVacation = 0;
-      this.filtredUser.spendPrevVacation = 0;
-      this.filtredUser.enableDaysOff = 0;
-      this.filtredUser.spendDaysOff = 0;
-      this.filtredUser.year = Math.floor(days / 365.25);
-      if(this.filtredUser.year != 0 
+      let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
+      let employmentdate = new Date(user.employmentdate);
+
+      user.totalDays = 0;
+      user.enableDays = 0;
+      user.enableCurDays = 0;
+      user.enablePrevDays = 0;
+      user.spendVacation = 0;
+      user.spendPrevVacation = 0;
+      user.enableDaysOff = 0;
+      user.spendDaysOff = 0;
+      user.year = Math.floor(days / 365.25);
+      if(user.year != 0 
         && ((employmentdate.getMonth() == vacationStartDate.getMonth() && employmentdate.getDate() <= vacationStartDate.getDate()) 
           || (new Date(moment(employmentdate).add(1, 'month')).getMonth() == vacationStartDate.getMonth() && employmentdate.getDate() > vacationStartDate.getDate()))) 
       {
         console.log(
           this.calcDays(moment(employmentdate)
-            .add(this.filtredUser.year, 'year')
+            .add(user.year, 'year')
             .add(1, 'month'), vacationStartDate), 
           this.calcDays(vacationStartDate, moment(employmentdate)
-            .add(this.filtredUser.year, 'year')
+            .add(user.year, 'year')
             .add(1, 'month')))
 
-        this.filtredUser.vacations
-          .filter( item => item.year == (this.filtredUser.year - 1) )
-          .forEach( item => this.filtredUser.spendPrevVacation += this.calcDays(item.startdate, item.enddate));
+        user.vacations
+          .filter( item => item.year == (user.year - 1) && item.status != "rejected" )
+          .forEach( item => user.spendPrevVacation += this.calcDays(item.startdate, item.enddate));
 
-        this.filtredUser.enablePrevDays += 
-          (20 - this.filtredUser.spendPrevVacation > this.calcDays(vacationStartDate, moment(employmentdate).add(this.filtredUser.year, 'year').add(1, 'month')) - 1) 
-          ? this.calcDays( vacationStartDate, moment(employmentdate).add(this.filtredUser.year, 'year').add(1, 'month') ) - 1 
-          : 20 - this.filtredUser.spendPrevVacation;
+        user.enablePrevDays += 
+          (20 - user.spendPrevVacation > this.calcDays(vacationStartDate, moment(employmentdate).add(user.year, 'year').add(1, 'month')) - 1) 
+          ? this.calcDays( vacationStartDate, moment(employmentdate).add(user.year, 'year').add(1, 'month') ) - 1 
+          : 20 - user.spendPrevVacation;
 
-        this.filtredUser.enableDays += this.filtredUser.enablePrevDays;
+        user.enableDays += user.enablePrevDays;
       }
-      this.filtredUser.vacations
-      .filter( item => item.year == this.filtredUser.year )
-      .forEach( item => this.filtredUser.spendVacation += this.calcDays(item.startdate, item.enddate));
+      user.vacations
+      .filter( item => item.year == user.year && item.status != "rejected" )
+      .forEach( item => user.spendVacation += this.calcDays(item.startdate, item.enddate));
 
-      this.filtredUser.totalDays += Math.round((days % 365.25)*20/365.25);
-      console.log(this.filtredUser.totalDays)
-      this.filtredUser.enableCurDays += this.filtredUser.totalDays - this.filtredUser.spendVacation;
-      this.filtredUser.enableDays += this.filtredUser.enableCurDays < 0 ? 0 : this.filtredUser.enableCurDays;
-      this.filtredUser.daysoff.forEach( item => {
-        this.filtredUser.spendDaysOff += this.calcDays( item.startdate, item.enddate);
+      user.totalDays += Math.round((days % 365.25)*20/365.25);
+      console.log(user.totalDays)
+      user.enableCurDays += user.totalDays - user.spendVacation;
+      user.enableDays += user.enableCurDays < 0 ? 0 : user.enableCurDays;
+      user.daysoff.forEach( item => {
+        user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
-      this.filtredUser.enableDaysOff = 5 - this.filtredUser.spendDaysOff;
+      user.enableDaysOff = 5 - user.spendDaysOff;
   }
 
   submitHandler(startDate, endDate) {
@@ -295,26 +297,57 @@ setDateInfo() {
       status: 'inprogress',
       commentary: null
     };
+    let {create} = this.sailsService[this.vacationState + 'Resource'];
+    const {id: uid} = this.filtredUser;
 
     // this.firebaseService.createNewVacation(vacation, this.vacationState, this.filtredUser.uid);
     if(this.vacationState == "vacations") {
       if(this.filtredUser.enablePrevDays) {
         if(this.filtredUser.vacationDays > this.filtredUser.enablePrevDays){
           let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.enablePrevDays - 1, [1,2,3,4,5]);
-          this.sailsService.vacationsResource.create({uid: this.filtredUser.id, startdate: new Date(sDate), enddate: new Date(mDate), status: "new", year: this.filtredUser.year - 1 });
-          this.sailsService.vacationsResource.create({uid: this.filtredUser.id, startdate: moment(new Date(mDate)).add(1, 'day'), enddate: new Date(eDate), status: "new", year: this.filtredUser.year });
+          create({uid, startdate: new Date(sDate), enddate: new Date(mDate), status: "new", year: this.filtredUser.year - 1 }).$promise.then(
+      r => {
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+      },
+      e => {
+        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
+    });
+          create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate: new Date(eDate), status: "new", year: this.filtredUser.year }).$promise.then(
+      r => {
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+      },
+      e => {
+        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
+    });
         } else {
-          this.sailsService.vacationsResource.create({uid: this.filtredUser.id, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year - 1 });
+          create({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year - 1 }).$promise.then(
+      r => {
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+      },
+      e => {
+        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
+    });
         }
       } else {
-        this.sailsService.vacationsResource.create({uid: this.filtredUser.id, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year });
+        create({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year }).$promise.then(
+      r => {
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+      },
+      e => {
+        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
+    });
       }
     } else {
-      this.sailsService.daysoffResource.create({uid: this.filtredUser.id, startDate: new Date(sDate), endDate: new Date(eDate), status: "new", year: this.filtredUser.year });
+      create({uid, startDate: new Date(sDate), endDate: new Date(eDate), status: "new", year: this.filtredUser.year }).$promise.then(
+      r => {
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions)
+      },
+      e => {
+        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
+    });
     }
     
 
-    this.toastr.success('Vacation request was sent successfully!', toastrOptions);
 
     function isCrossingIntervals(dateIntervals) {
       if(dateIntervals.length === 0) return false;
