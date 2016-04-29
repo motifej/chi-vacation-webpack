@@ -164,7 +164,7 @@
               name="startdate"
               ng-model="startdate"
               min-date="minStartDate"
-              calc-days="userCtrl.calcDays(name, date)"
+              calc-days="userCtrl.calcDaysCalc()"
               >
               </chi-datepicker>
             </div>
@@ -174,7 +174,7 @@
               name="enddate"
               ng-model="enddate"
               min-date="minEndDate"
-              calc-days="userCtrl.calcDays(name)"
+              calc-days="userCtrl.calcDaysCalc()"
               >
               </chi-datepicker>
             </div>
@@ -183,17 +183,17 @@
             <div class="form-group col-md-6">
               <label for="selected">Vacation days</label>
               <input type="text" id="selected" class="form-control user__total-days" readonly
-              ng-value="userCtrl.vacationDays">
+              ng-value="userCtrl.user.vacationDays">
             </div>
             <div class="form-group col-md-6" ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">
               <label for="available">Available days</label>
               <input type="text" id="available" class="form-control user__left-days" readonly
-              ng-value="userCtrl.user.vacations.total || 0">
+              ng-value="userCtrl.user.enableDays">
             </div>
             <div class="form-group col-md-6" ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">
               <label for="daysoff">Available days-off</label>
               <input type="text" id="daysoff" class="form-control user__left-days" readonly
-              ng-value="userCtrl.user.vacations.dayOff || 0">
+              ng-value="userCtrl.user.enableDaysOff">
             </div>
           </div>
           <div class="row">
