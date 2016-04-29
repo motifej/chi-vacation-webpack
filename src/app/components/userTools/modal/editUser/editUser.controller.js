@@ -72,6 +72,7 @@ export default class AddNewUserController {
             .then( (res) => 
               this.mailService.sendMailResetPassword({
                 address: this.newUser.email,
+                first_name: this.newUser.firstName,
                 new_password: res.data.data
               }))
             .then( () => {

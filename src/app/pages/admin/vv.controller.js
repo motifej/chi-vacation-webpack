@@ -139,6 +139,7 @@ export default class VvController {
 
     userInfo(user) {
       console.log(user);
+      
       this.modal.open({
         templateUrl: require('!!file!../../components/userTools/modal/userInfo/userInfo.html'),
         controller: require('../../components/userTools/modal/userInfo/userInfo.controller'),
