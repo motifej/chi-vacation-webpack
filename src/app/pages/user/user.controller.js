@@ -14,7 +14,7 @@ export default class UserController {
     $scope.enddate = new Date($scope.startdate);
     $scope.minEndDate = new Date($scope.startdate);
 
-    this.user = user.data;
+    this.user = user;
     this.DAYSOFF = DAYSOFF;
     this.VACATIONS = VACATIONS;
     this.today = new Date();

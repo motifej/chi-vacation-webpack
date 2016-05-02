@@ -26,20 +26,21 @@ export default class SailsService {
 		});
 
 		
-		
-
-
 		this.socketInit = () => {
 
-			io.socket.get(io.sails.url + '/users', null, (r) => {
-				//this.users = r.data;
-				io.socket.on('users', socketUserActions.bind(this));
-				io.socket.on('vacations', socketActions.bind(this, 'vacations'));
-				io.socket.on('daysoff', socketActions.bind(this, 'daysoff'));
-			});
+			io.socket.on('connect', () => {
+      			console.log('*** Socket connected');
+      			if (!io.socket.alreadyListeningToModels) {
+    				io.socket.alreadyListeningToModels = true;
+    				io.socket.on('users', socketUserActions.bind(this));
+					io.socket.on('vacations', socketActions.bind(this, 'vacations'));
+					io.socket.on('daysoff', socketActions.bind(this, 'daysoff'));	
+    			}
+      			io.socket.get(io.sails.url + '/users', null, this.updateData);
+  			});
 
 			function socketUserActions(obj) {
-				let users = $parse('users.data')(this);
+				let users = $parse('users')(this);
 				if (obj.attribute || !users) return;
 				let {data, id, verb} = obj;
 
@@ -77,11 +78,10 @@ export default class SailsService {
 				switch (verb) {
 					case 'created': {
 						$rootScope.$applyAsync( () => {
+							if (this.user.id === data.uid) 
+								this.user[params].push(data)
 							if (this.users)
-								_.find(this.users.data, {id: data.uid})[params].push(data); 
-							else
-								if (this.user.id === data.uid) 
-									this.user[params].push(data)
+								_.find(this.users, {id: data.uid})[params].push(data); 
 						});
 						break;
 					}
@@ -111,8 +111,8 @@ export default class SailsService {
 		this.getUsers = (id) => 
 			this.userResource.getUserData(id).$promise.then(
 				r => {
-					this.users = r; 
-					return r
+					this.updateData(r);
+					return this.users
 				}
 			)
 
@@ -120,9 +120,18 @@ export default class SailsService {
 			this.userResource.getUserData(id).$promise.then(
 				r => {
 					this.user = r.data; 
-					return r
+					return this.user
 				}
-			)
+		)
+
+		this.updateData = (r) => {
+      		if (!this.users)
+      			this.users = [];
+   			$rootScope.$applyAsync( () => {
+				this.users.length = 0;
+				this.users = angular.extend(this.users, r.data);	
+			})
+		}
 		
 	}
 }

@@ -11,7 +11,7 @@ export default function (app) {
             let user = sailsAuthService.getAuthUser().user;
             const { USERLOADED } = actions;
             return sailsService.getUser({id: user.id}).then( e => {
-                $rootScope.$emit(USERLOADED, e.data);
+                $rootScope.$emit(USERLOADED, e);
                 return e;
             })
                     .catch( err =>

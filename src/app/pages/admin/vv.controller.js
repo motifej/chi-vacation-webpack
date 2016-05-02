@@ -7,7 +7,7 @@ export default class VvController {
     this.firebaseService = firebaseService;
     this.sailsService = sailsService;
     this.toastr = toastr;
-    this.users = userData.data;
+    this.users = userData;
     this.groups = groups;
     this.status = status;
     this.filter = {};
@@ -71,7 +71,7 @@ export default class VvController {
      return sum; */
     }
     confirmVacation(user, id) {
-      var vacation = find(user[this.pageState], { id: id });
+      let vacation = find(user[this.pageState], { id: id });
         this.sailsService[this.pageState + 'Resource']
           .update({id: vacation.id}, angular.extend(vacation, {status: 'confirmed'})).$promise
           .then(
@@ -81,7 +81,7 @@ export default class VvController {
       }
     
     rejectVacation(user, id) {
-     var vacation = find(user[this.pageState], { id: id });
+     let vacation = find(user[this.pageState], { id: id });
       this.sailsService[this.pageState + 'Resource']
         .update({id: vacation.id}, angular.extend(vacation, {status: 'rejected'})).$promise
         .then(

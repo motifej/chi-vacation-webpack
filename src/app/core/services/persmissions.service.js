@@ -2,7 +2,7 @@ export default function (app) {
 
   app.service('permission', PermissionService);
 
-  function PermissionService ($rootScope, $state, toastr, $parse, states, roles, sailsAuthService) {
+  function PermissionService ($state, toastr, $parse, states, roles, sailsAuthService) {
     'ngInject'
     
     this.init = init;
