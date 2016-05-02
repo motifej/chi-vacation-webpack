@@ -71,41 +71,22 @@ export default class VvController {
      return sum; */
     }
     confirmVacation(user, id) {
-
-      let total = this.pageState === 'Vacations' ? user.vacations.total : user.vacations.dayOff;      
-      var vacation = find(user.vacations[this.pageState], { id: id });
-      let days = moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
-      if(total >= days){
-        vacation.status = this.status.CONFIRMED;
-        if (this.pageState === 'Vacations') {
-          user.vacations.total -= days
-        } else {
-          user.vacations.dayOff -= days
-        }
-        this.firebaseService.updateUserData(user).then(
-          () => this.toastr.success('Vacation confirmed', 'Success'),
-          error => this.toastr.error(error.error.message, 'Error confirming vacation')
+      var vacation = find(user[this.pageState], { id: id });
+        this.sailsService[this.pageState + 'Resource']
+          .update({id: vacation.id}, angular.extend(vacation, {status: 'confirmed'})).$promise
+          .then(
+            () => this.toastr.success('Vacation confirmed', 'Success'),
+            error => this.toastr.error(error.error.message, 'Error confirming vacation')
           );
-      } else {
-        //todo translate message
-        this.toastr.error('Not enough days', 'Error')
-     }
-    }
+      }
     
     rejectVacation(user, id) {
-     var vacation = find(user.vacations[this.pageState], { id: id });
-      if(vacation.status == this.status.CONFIRMED){
-        let days = moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
-        if (this.pageState === 'Vacations') {
-          user.vacations.total += days
-        } else {
-          user.vacations.dayOff += days
-        }
-      }
-     find(user.vacations[this.pageState], { id: id }).status = this.status.REJECTED;
-      this.firebaseService.updateUserData(user).then(
-        () => this.toastr.success('Vacation rejected', 'Success'),
-        error => this.toastr.error(error.error.message, 'Error rejecting vacation')
+     var vacation = find(user[this.pageState], { id: id });
+      this.sailsService[this.pageState + 'Resource']
+        .update({id: vacation.id}, angular.extend(vacation, {status: 'rejected'})).$promise
+        .then(
+          () => this.toastr.success('Vacation rejected', 'Success'),
+          error => this.toastr.error(error.error.message, 'Error rejecting vacation')
         );
     }
 
