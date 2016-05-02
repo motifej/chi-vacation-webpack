@@ -22,7 +22,8 @@ export default class AddNewUserController {
       group: '',
       phone: '',
       email: '',
-      password: ''
+      password: '',
+      added: [0]
     }
   }
   top1(){

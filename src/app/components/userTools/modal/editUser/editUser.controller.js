@@ -71,9 +71,12 @@ export default class AddNewUserController {
           this.sailsAuthService.resetPassword(this.newUser.email)
             .then( (res) => 
               this.mailService.sendMailResetPassword({
-                address: this.newUser.email,
-                first_name: this.newUser.firstName,
-                new_password: res.data.data
+                address: [{
+                  address: this.newUser.email
+                }],
+                user: this.newUser,
+                new_password: res.data.data,
+                template_id: 'chi-password-reset'
               }))
             .then( () => {
               this.toastr.success('A new password was sent to user');
