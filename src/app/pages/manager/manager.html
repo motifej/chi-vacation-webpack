@@ -4,7 +4,7 @@
       <div class="row">
         <div class="panel m-panel">
           <div class="panel-heading m-panel-head groups">
-            <span ng-repeat="group in manager.groups">
+            <span ng-repeat="group in manager.groups track by group">
               <a class="btn btn-sm m-button" ng-class="{'m-button--active': manager.filter.group == group}" ng-click="manager.choiceGroup(group)">{{group}} <span class="badge progress-bar-warning" ng-show="manager.calcNewVacations(group)">{{manager.calcNewVacations(group)}}</span></a>
             </span>
             <a class="btn btn-sm m-button" ng-class="{'m-button--active': !manager.filter.group}"  ng-click="manager.choiceGroup()">All</a>
@@ -13,7 +13,7 @@
             <div class="form-group">
               <input class="form-control dropdown-toggle ng-pristine ng-valid ng-empty ng-touched" placeholder="choose user..." id="statusinput" type="text" ng-model="manager.search" aria-haspopup="true" aria-expanded="true" aria-invalid="false">
             </div>
-            <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.groupFilter | filter:manager.search">
+            <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.groupFilter | filter:manager.search track by user.id">
               <a class="btn btn-sm m-button"  ng-click="manager.choiceUser(user.id, user.group, user)" ng-class="{'m-button--active': manager.filter.id == user.id}">{{user.firstname + " " + user.lastname}}</a>
 
             </span>
@@ -115,7 +115,7 @@
           <h4 ng-hide="manager.filter.id">There is no {{manager.statusFilter.status}} vacations<span ng-show="manager.filter.group"> in <small class="text-warning">{{manager.filter.group}}</small></span></h4>
         </div>
 
-        <div ng-repeat="user in manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status:manager.pageState">
+        <div ng-repeat="user in manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status:manager.pageState track by user.id">
           <h4><span class="btn btn-sm chi-btn--reversed" ng-click="manager.userInfo(user)">{{user.firstname.charAt(0) + ". " + user.lastname}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <table class="table table-bordered">
             <colgroup>
@@ -139,7 +139,7 @@
               </tr>
             </thead>
             <tbody >
-              <tr ng-repeat="(key, item) in user[manager.pageState] | userFilterVacation:manager.statusFilter.status | orderByObject: manager.order" ng-class="'m-action-' + item.status">
+              <tr ng-repeat="(key, item) in user[manager.pageState] | userFilterVacation:manager.statusFilter.status | orderByObject: manager.order track by item.id" ng-class="'m-action-' + item.status">
                 <td>{{item.startdate | date:'dd MMMM yyyy'}}</td>
                 <td>{{item.enddate | date:'dd MMMM yyyy'}}</td>
                 <td>{{manager.calcDays(item.startdate, item.enddate)}}</td>

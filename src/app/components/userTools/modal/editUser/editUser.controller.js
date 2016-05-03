@@ -14,15 +14,18 @@ export default class AddNewUserController {
     this.modalInstance = $uibModalInstance;
     this.group = groups;
     this.role = users;
-    this.employmentdate = new Date(user.employmentdate || 0);
 
-    this.newUser = angular.extend({}, user);
+    this.newUser = angular.copy(user);
+    this.newUser.employmentdate = new Date(this.newUser.employmentdate || 0);
   }
 
   submitForm (isValid) {
     if (isValid) {
       this.invalidForm = false;
       this.modalInstance.close();
+      delete this.newUser.vacations;
+      delete this.newUser.daysoff;
+      console.log(this.newUser);
       this.sailsService.userResource.updateUser({id: this.newUser.id}, this.newUser).$promise.then(
         () => this.toastr.success('Edit user success', 'Success'),
         error => this.toastr.error(error.data.message, 'Error updating user')
