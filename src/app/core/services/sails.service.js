@@ -1,10 +1,15 @@
 import Firebase from 'firebase';
 require("script!../../../assets/vendor/sails.io.js");
+import { API_URL } from '../constants/api.consts';
+
+io.sails.url = API_URL;
 
 export default class SailsService {
-	constructor ($http, $resource, $rootScope, $parse, API_URL) {
+	constructor ($http, $resource, $rootScope, $parse/*, API_URL*/) {
 		'ngInject';
-		io.sails.url = API_URL;
+
+//		io.sails.url = API_URL;
+
 		this.http = $http;
 		this.userResource = $resource(API_URL + "/users/:id", {id: "@id"}, {
 			getUserData: {isArray: false, method: "GET"},
@@ -87,8 +92,10 @@ export default class SailsService {
 					}
 
 					case 'updated': {
-						let user = _.find(this.users, {id: data.uid});
-						angular.extend(_.find(user[params], {id}), data);
+						$rootScope.$applyAsync( () => {
+							let user = _.find(this.users, {id: data.uid});
+							angular.extend(_.find(user[params], {id}), data);
+						});
 						break;
 					}
 
