@@ -188,29 +188,19 @@ setDateInfo() {
 
   calcEnableDays(vacationStartDate) {
 
-      let user = this.filtredUser;
+      let user = this.initUserData(vacationStartDate, this.filtredUser);
 
-      let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
-      let employmentdate = new Date(user.employmentdate);
+      
 
-      user.totalDays = 0;
-      user.enableDays = 0;
-      user.enableCurDays = 0;
-      user.enablePrevDays = 0;
-      user.spendVacation = 0;
-      user.spendPrevVacation = 0;
-      user.enableDaysOff = 0;
-      user.spendDaysOff = 0;
-      user.year = Math.floor(days / 365.25);
       if(user.year != 0 
-        && ((employmentdate.getMonth() == vacationStartDate.getMonth() && employmentdate.getDate() <= vacationStartDate.getDate()) 
-          || (new Date(moment(employmentdate).add(1, 'month')).getMonth() == vacationStartDate.getMonth() && employmentdate.getDate() > vacationStartDate.getDate()))) 
+        && ((user.formatedEmploymentDate.getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() <= vacationStartDate.getDate()) 
+          || (new Date(moment(user.formatedEmploymentDate).add(1, 'month')).getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() > vacationStartDate.getDate()))) 
       {
         console.log(
-          this.calcDays(moment(employmentdate)
+          this.calcDays(moment(user.formatedEmploymentDate)
             .add(user.year, 'year')
             .add(1, 'month'), vacationStartDate), 
-          this.calcDays(vacationStartDate, moment(employmentdate)
+          this.calcDays(vacationStartDate, moment(user.formatedEmploymentDate)
             .add(user.year, 'year')
             .add(1, 'month')))
 
@@ -218,25 +208,46 @@ setDateInfo() {
           .filter( item => item.year == (user.year - 1) && item.status != "rejected" )
           .forEach( item => user.spendPrevVacation += this.calcDays(item.startdate, item.enddate));
 
-        user.enablePrevDays += 
-          (20 - user.spendPrevVacation > this.calcDays(vacationStartDate, moment(employmentdate).add(user.year, 'year').add(1, 'month')) - 1) 
-          ? this.calcDays( vacationStartDate, moment(employmentdate).add(user.year, 'year').add(1, 'month') ) - 1 
-          : 20 - user.spendPrevVacation;
+        user.availablePrevDays += this.calcAvailablePrevDays(vacationStartDate, user);
 
-        user.enableDays += user.enablePrevDays;
+        user.availableDays += user.availablePrevDays;
       }
       user.vacations
       .filter( item => item.year == user.year && item.status != "rejected" )
       .forEach( item => user.spendVacation += this.calcDays(item.startdate, item.enddate));
 
-      user.totalDays += Math.round((days % 365.25)*20/365.25);
       console.log(user.totalDays)
-      user.enableCurDays += user.totalDays - user.spendVacation;
-      user.enableDays += user.enableCurDays < 0 ? 0 : user.enableCurDays;
+      user.availableCurDays += user.totalDays - user.spendVacation;
+      user.availableDays += user.availableCurDays < 0 ? 0 : user.availableCurDays;
       user.daysoff.forEach( item => {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
-      user.enableDaysOff = 5 - user.spendDaysOff;
+      user.availableDaysOff = 5 - user.spendDaysOff;
+  }
+
+  calcAvailablePrevDays (vacationStartDate, user) {
+    return (
+    (user.totalPrevDays - user.spendPrevVacation > this.calcDays(vacationStartDate, moment(user.formatedEmploymentDate).add(user.year, 'year').add(1, 'month')) - 1) 
+    ? this.calcDays( vacationStartDate, moment(user.formatedEmploymentDate).add(user.year, 'year').add(1, 'month') ) - 1 
+    : user.totalPrevDays - user.spendPrevVacation);
+  }
+
+  initUserData(vacationStartDate, user) {
+    let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
+    user.formatedEmploymentDate = new Date(user.employmentdate);
+    user.year = Math.floor(days / 365.25);
+    user.addedCur = user.added[user.year] || 0;
+    user.addedPrev = user.added[user.year - 1] || 0;
+    user.totalDays = Math.round((days % 365.25)*20/365.25) + user.addedCur;
+    user.totalPrevDays = 20 + user.addedPrev;
+    user.availableDays = 0;
+    user.availableCurDays = 0;
+    user.availablePrevDays = 0;
+    user.spendVacation = 0;
+    user.spendPrevVacation = 0;
+    user.availableDaysOff = 0;
+    user.spendDaysOff = 0;
+    return user;
   }
 
   submitHandler(startDate, endDate) {
@@ -267,7 +278,7 @@ setDateInfo() {
       return;
     }
 
-    let total = this.vacationState === 'vacations' ? this.filtredUser.enableDays : this.filtredUser.enableDaysOff;
+    let total = this.vacationState === 'vacations' ? this.filtredUser.availableDays : this.filtredUser.availableDaysOff;
     if (this.filtredUser.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
@@ -296,14 +307,14 @@ setDateInfo() {
       return;
     }
 
-    if(this.filtredUser.enablePrevDays <= 0) {
+    if(this.filtredUser.availablePrevDays <= 0) {
       create({uid, startdate, enddate, status, year })
        .$promise.then(createSuccess, createError);
       return;
     }
 
-    if(this.filtredUser.vacationDays > this.filtredUser.enablePrevDays){
-      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.enablePrevDays - 1, [1,2,3,4,5]);
+    if(this.filtredUser.vacationDays > this.filtredUser.availablePrevDays){
+      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.availablePrevDays - 1, [1,2,3,4,5]);
       create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
        .$promise.then(createSuccess, createError);
       create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
