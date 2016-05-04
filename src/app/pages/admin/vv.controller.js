@@ -74,7 +74,7 @@ export default class VvController {
     confirmVacation(user, id) {
       let vacation = find(user[this.pageState], { id: id });
         this.sailsService[this.pageState + 'Resource']
-          .update({id: vacation.id}, angular.extend(vacation, {status: 'confirmed'})).$promise
+          .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
           .then(
             () => this.toastr.success('Vacation confirmed', 'Success'),
             error => this.toastr.error(error.data.data.raw.message, 'Error confirming vacation')
@@ -84,7 +84,7 @@ export default class VvController {
     rejectVacation(user, id) {
      let vacation = find(user[this.pageState], { id: id });
       this.sailsService[this.pageState + 'Resource']
-        .update({id: vacation.id}, angular.extend(vacation, {status: 'rejected'})).$promise
+        .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
         .then(
           () => this.toastr.success('Vacation rejected', 'Success'),
           error => this.toastr.error(error.data.data.raw.message, 'Error rejecting vacation')
