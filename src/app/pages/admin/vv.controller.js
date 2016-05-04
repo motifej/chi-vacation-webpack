@@ -244,7 +244,7 @@ setDateInfo() {
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
     let toastrOptions = {progressBar: false};
-    let vacation;
+    /*let vacation;*/
     
     let listArray = [];
     vm.vacations = [];
@@ -273,65 +273,44 @@ setDateInfo() {
       return;
     }
 
-    vacation = {
-      startDate: sDate,
-      endDate: eDate,
+    let vacation = {
+      startdate: new Date(sDate),
+      enddate: new Date(eDate),
       status: 'inprogress',
-      commentary: null
+      commentary: null,
+      status: "new"
     };
-    let {create} = this.sailsService[this.vacationState + 'Resource'];
-    const {id: uid} = this.filtredUser;
+    const {create} = this.sailsService[this.vacationState + 'Resource'];
+    const {id: uid, year} = this.filtredUser;
+    const {startdate, enddate, status} = vacation;
+    const createError = ({data: data}) => this.toastr.error(data.raw.message, 'Error creating vacation', toastrOptions);
+    const createSuccess = res => {
+      this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+      this.calcEnableDays(this.$scope.startdate);
+    }
 
-    // this.firebaseService.createNewVacation(vacation, this.vacationState, this.filtredUser.uid);
-    if(this.vacationState == "vacations") {
-      if(this.filtredUser.enablePrevDays) {
-        if(this.filtredUser.vacationDays > this.filtredUser.enablePrevDays){
-          let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.enablePrevDays - 1, [1,2,3,4,5]);
-          create({uid, startdate: new Date(sDate), enddate: new Date(mDate), status: "new", year: this.filtredUser.year - 1 }).$promise.then(
-      r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
-        this.calcEnableDays(this.$scope.startdate);
-      },
-      e => {
-        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
-    });
-          create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate: new Date(eDate), status: "new", year: this.filtredUser.year }).$promise.then(
-      r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
-        this.calcEnableDays(this.$scope.startdate);
-      },
-      e => {
-        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
-    });
-        } else {
-          create({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year - 1 }).$promise.then(
-      r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
-        this.calcEnableDays(this.$scope.startdate);
-      },
-      e => {
-        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
-    });
-        }
-      } else {
-        create({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year }).$promise.then(
-      r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
-        this.calcEnableDays(this.$scope.startdate);
-      },
-      e => {
-        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
-    });
-      }
+
+    if(this.vacationState == "daysoff") {
+      create({uid, startdate, enddate, status, year })
+       .$promise.then(createSuccess, createError);
+      return;
+    }
+
+    if(this.filtredUser.enablePrevDays <= 0) {
+      create({uid, startdate, enddate, status, year })
+       .$promise.then(createSuccess, createError);
+      return;
+    }
+
+    if(this.filtredUser.vacationDays > this.filtredUser.enablePrevDays){
+      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.enablePrevDays - 1, [1,2,3,4,5]);
+      create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
+       .$promise.then(createSuccess, createError);
+      create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
+       .$promise.then(createSuccess, createError);
     } else {
-      create({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.filtredUser.year }).$promise.then(
-      r => {
-        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
-        this.calcEnableDays(this.$scope.startdate);
-      },
-      e => {
-        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
-    });
+      create({uid, startdate, enddate, status, year: year - 1 })
+       .$promise.then(createSuccess, createError);
     }
     
 
