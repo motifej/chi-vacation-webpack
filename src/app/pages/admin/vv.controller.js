@@ -58,7 +58,7 @@ export default class VvController {
   }
 
     calcNewVacations(group) {
-     /*var sum = 0;
+     var sum = 0;
      this.users.forEach(item => {
       if(item.group == group) {
         angular.forEach(item[this.pageState], el => {
@@ -68,15 +68,16 @@ export default class VvController {
         })
       }
      })
-     return sum; */
+     return sum; 
     }
+    
     confirmVacation(user, id) {
       let vacation = find(user[this.pageState], { id: id });
         this.sailsService[this.pageState + 'Resource']
           .update({id: vacation.id}, angular.extend(vacation, {status: 'confirmed'})).$promise
           .then(
             () => this.toastr.success('Vacation confirmed', 'Success'),
-            error => this.toastr.error(error.error.message, 'Error confirming vacation')
+            error => this.toastr.error(error.data.data.raw.message, 'Error confirming vacation')
           );
       }
     
@@ -86,7 +87,7 @@ export default class VvController {
         .update({id: vacation.id}, angular.extend(vacation, {status: 'rejected'})).$promise
         .then(
           () => this.toastr.success('Vacation rejected', 'Success'),
-          error => this.toastr.error(error.error.message, 'Error rejecting vacation')
+          error => this.toastr.error(error.data.data.raw.message, 'Error rejecting vacation')
         );
     }
 
