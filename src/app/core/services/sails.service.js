@@ -87,7 +87,8 @@ export default class SailsService {
 					}
 
 					case 'updated': {
-						angular.extend(_.find(this.user[params], {id}), data);
+						let user = _.find(this.users, {id: data.uid});
+						angular.extend(_.find(user[params], {id}), data);
 						break;
 					}
 
