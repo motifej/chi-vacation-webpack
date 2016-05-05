@@ -44,8 +44,8 @@ export default class SailsAuthService {
 					id: user.id
 				};
 				this.userData = data.data;
-				deferred.resolve(this.authUser);
 				this.$localStorage[ USERSTORAGEKEY ] = this.authUser;
+				deferred.resolve(this.authUser);
 			}, 
 			error => {
 				deferred.reject({

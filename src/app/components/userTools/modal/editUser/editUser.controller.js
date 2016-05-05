@@ -17,7 +17,9 @@ export default class AddNewUserController {
 
     this.newUser = angular.copy(user);
     this.newUser.employmentdate = new Date(this.newUser.employmentdate || 0);
+    this.updateUser = this.sailsService.userResource.updateUser;
   }
+
 
   submitForm (isValid) {
     if (isValid) {
@@ -25,8 +27,7 @@ export default class AddNewUserController {
       this.modalInstance.close();
       delete this.newUser.vacations;
       delete this.newUser.daysoff;
-      console.log(this.newUser);
-      this.sailsService.userResource.updateUser({id: this.newUser.id}, this.newUser).$promise.then(
+      this.updateUser({id: this.newUser.id}, this.newUser).$promise.then(
         () => this.toastr.success('Edit user success', 'Success'),
         error => this.toastr.error(error.data.message, 'Error updating user')
         );
@@ -52,10 +53,15 @@ export default class AddNewUserController {
         if (selectedItem) {
           this.invalidForm = false;
           this.modalInstance.close();
-          this.sailsService.userResource.deleteUser({id: this.newUser.id}, this.newUser).$promise.then(
-            () => this.toastr.success('Deleting user success', 'Success'),
-            error => this.toastr.error(error.data.message, 'Error deleting user')
-            );  
+          delete this.newUser.vacations;
+          delete this.newUser.daysoff;
+          this.updateUser({id: this.newUser.id}, angular.extend(this.newUser, {
+            deleted: true
+          })).$promise
+            .then(
+              () => this.toastr.success('Deleting user success', 'Success'),
+              error => this.toastr.error(error.data.message, 'Error updating user')
+            );
         }
       }
     )

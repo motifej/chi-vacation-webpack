@@ -1,13 +1,8 @@
-require("script!../../../assets/vendor/sails.io.js");
-import { API_URL } from '../constants/api.consts';
-
-io.sails.url = API_URL;
-
 export default class SailsService {
-	constructor ($http, $resource, $rootScope, $parse/*, API_URL*/) {
+	constructor ($http, $resource, $rootScope, $parse, API_URL) {
 		'ngInject';
 
-//		io.sails.url = API_URL;
+
 
 		this.http = $http;
 		this.userResource = $resource(API_URL + "/users/:id", {id: "@id"}, {
@@ -132,6 +127,7 @@ export default class SailsService {
 		)
 
 		this.updateData = (r) => {
+			if (!r) return;
       		if (!this.users)
       			this.users = [];
    			$rootScope.$applyAsync( () => {
