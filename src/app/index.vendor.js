@@ -38,5 +38,7 @@ import "../../node_modules/angular-bootstrap-calendar/dist/css/angular-bootstrap
 
 import "moment-weekday-calc";
 
+import "../assets/vendor/sails.io.config";
+
 // local scripts
 //import "../assets/js/...";
