@@ -144,7 +144,7 @@
                   <span ng-click="admin.setOrder('-enddate')" ng-class="{'m-tab--sort--active': admin.isActive('-enddate')}" class="glyphicon glyphicon-arrow-down"></span>
                 </th>
                 <th>Duration</th>
-                <!-- <th ng-hide="admin.statusFilter.status == 'rejected'">Action</th> -->
+                <th ng-hide="admin.statusFilter.status == 'rejected'">Action</th>
               </tr>
             </thead>
             <tbody >
@@ -152,11 +152,11 @@
                 <td>{{item.startdate | date:'dd MMMM yyyy'}}</td>
                 <td>{{item.enddate | date:'dd MMMM yyyy'}}</td>
                 <td>{{admin.calcDays(item.startdate, item.enddate)}}</td>
-     <!--            <td ng-hide="admin.statusFilter.status == 'rejected'">
-                  <button ng-hide="item.status!='inprogress'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
+                <td ng-hide="admin.statusFilter.status == 'rejected'">
+                  <button ng-hide="item.status!='new'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
                   <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</button>
                  
-                </td> -->
+                </td>
               </tr>
             </tbody>
           </table>
@@ -255,6 +255,18 @@
             <button ng-disabled="admin.filtredUser.id ? false : true" type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">Send</button>
           </div>
         </form>
+      </div>
+      <div class="col-xs-12">
+        <div class="well clearfix">
+          <legend class="user-form__title">Aditional vacation days</legend>
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="admin.filtredUser.addedDays" restrict-pattern="[^\d]+">
+          </div>
+          <div class="form-group">
+            <button class="btn col-xs-4 col-xs-offset-1 chi-btn--default" ng-click="admin.pushAddedDays(true)">Add</button>
+            <button class="btn col-xs-4 col-xs-offset-1 chi-btn--default" ng-click="admin.pushAddedDays(false)">Deduct</button>
+          </div>
+        </div>
       </div>
     </div>
       </div>  
