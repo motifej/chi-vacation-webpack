@@ -1,4 +1,3 @@
-import Firebase from 'firebase';
 require("script!../../../assets/vendor/sails.io.js");
 import { API_URL } from '../constants/api.consts';
 

@@ -1,4 +1,4 @@
-function LoginController ($log, $state, $scope, firebaseService,toastr, states, sailsAuthService, sailsService) {
+function LoginController ($log, $state, $scope, toastr, states, sailsAuthService, sailsService) {
   'ngInject';
 
   $scope.sending = false;

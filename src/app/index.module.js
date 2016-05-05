@@ -16,7 +16,6 @@ const App = angular.module(
   	"ngAria", 
   	"oc.lazyLoad",
     'toastr',
-    "firebase",
     "ui.bootstrap",
     "mwl.calendar",
     "ngStorage",

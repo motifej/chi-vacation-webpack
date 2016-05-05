@@ -1,6 +1,6 @@
 'use strict';
 
-function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, firebaseResolverProvider, roles, states) {
+function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sailsResolverProvider, roles, states) {
   'ngInject';
 
     $stateProvider
@@ -22,7 +22,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
         .state(states.SITE, {
           'abstract': true,
           resolve: {
-            user : firebaseResolverProvider.loadUser
+            user : sailsResolverProvider.loadUser
           }
         })
         .state(states.ADMIN, {
@@ -53,7 +53,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, fireb
           },
           resolve: {
             asyncPreloading: resolverProvider.managerPagePrealoading,
-            //userList : firebaseResolverProvider.getUsersList,
+            //userList : sailsResolverProvider.getUsersList,
             userData : function(sailsService) {
               return sailsService.getUsers()
             }
