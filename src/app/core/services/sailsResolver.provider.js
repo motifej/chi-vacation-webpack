@@ -1,7 +1,7 @@
 export default function (app) {
-    app.provider('firebaseResolver', FirebaseResolverProvider);
+    app.provider('sailsResolver', SailsResolverProvider);
 
-    function FirebaseResolverProvider () {
+    function SailsResolverProvider () {
         this.loadUser = loadUser;
         this.$get = () => this;
     }

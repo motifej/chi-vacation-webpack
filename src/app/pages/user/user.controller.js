@@ -147,7 +147,6 @@ export default class UserController {
     let {create} = this.sailsService[this.vacationState + 'Resource'];
     const {id: uid} = this.user;
 
-    // this.firebaseService.createNewVacation(vacation, this.vacationState, this.user.uid);
     if(this.vacationState == "vacations") {
       if(this.user.enablePrevDays) {
         if(this.user.vacationDays > this.user.enablePrevDays){

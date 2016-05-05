@@ -1,12 +1,11 @@
 export default class AddNewUserController {
-  constructor ($filter, $uibModalInstance, toastr, firebaseService, users, groups, sailsService) {
+  constructor ($filter, $uibModalInstance, toastr, users, groups, sailsService) {
     'ngInject';
 
     this.invalidForm = false;
     this.namePattern = '[a-zA-Zа-яА-Я]+';
     this.emailPattern = '\\w+.?\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}';
     this.filter = $filter;
-    this.firebaseService = firebaseService;
     this.sailsService = sailsService;
     this.toastr = toastr;
     this.modalInstance = $uibModalInstance;
@@ -35,10 +34,6 @@ export default class AddNewUserController {
       this.modalInstance.close();
       this.newUser.employmentdate = this.employmentdate;
       this.newUser.password = this.newUser.email;
-      /*this.firebaseService.createUserByEmail(this.newUser).then(
-        () => this.toastr.success('New user created', 'Success'),
-        error => this.toastr.error(error.error.message, 'Error creating user')
-        );*/
       this.sailsService.userResource.createUser(this.newUser);
     } else {
       this.toastr.error('Not all fields are filled', 'Error');
