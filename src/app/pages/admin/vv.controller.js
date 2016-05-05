@@ -88,6 +88,15 @@ export default class VvController {
         );
     }
 
+    pushAddedDays(isAdd) {
+      let added = angular.copy(this.filtredUser.added);
+      added[this.filtredUser.year] = (this.filtredUser.added[this.filtredUser.year] || 0) + (isAdd ? this.filtredUser.addedDays : 0 - this.filtredUser.addedDays);
+      this.sailsService.userResource.updateUser({id: this.filtredUser.id}, {added: added}).$promise.then(
+        () => this.toastr.success('Edit user success', 'Success'),
+        error => this.toastr.error(error.data.message, 'Error updating user')
+        );
+    }
+
     choiceGroup(group) {
       this.filter = { group: group };
       this.groupFilter = { group: group };
@@ -99,6 +108,7 @@ export default class VvController {
       this.filter = { id: id, group:group };
       this.groupFilter = { group: group };
       this.filtredUser = user;
+      this.filtredUser.addedDays = 0;
       this.setDateInfo();
       this.calcEnableDays(this.$scope.startdate);
     }
@@ -208,7 +218,7 @@ setDateInfo() {
 
         user.availablePrevDays += this.calcAvailablePrevDays(vacationStartDate, user);
 
-        user.availableDays += user.availablePrevDays;
+        user.availableDays += user.availablePrevDays < 0 ? 0 : user.availablePrevDays;
       }
       user.vacations
       .filter( item => item.year == user.year && item.status != "rejected" )
