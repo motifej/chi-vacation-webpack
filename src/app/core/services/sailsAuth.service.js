@@ -44,6 +44,7 @@ export default class SailsAuthService {
 					id: user.id
 				};
 				this.userData = data.data;
+				this.$http.defaults.headers.common['Authorization'] = "Bearer " + this.userData.token;
 				this.$localStorage[ USERSTORAGEKEY ] = this.authUser;
 				deferred.resolve(this.authUser);
 			}, 
