@@ -21,7 +21,7 @@
                       aria-expanded="true" 
                       aria-invalid="false">
             </div>
-            <span class="user inline-block" ng-repeat="user in admin.users | filter:admin.groupFilter | filter:admin.search">
+            <span class="user inline-block" ng-repeat="user in admin.users | filter:admin.groupFilter | filter:admin.search | filter:!!user.deleted">
               <a class="btn btn-sm m-button"  ng-click="admin.choiceUser(user.id, user.group, user)" ng-class="{'m-button--active': admin.filter.id == user.id}">{{user.firstname + " " + user.lastname}}</a>
 
             </span>
@@ -44,6 +44,16 @@
         <div class="btn-group col-xs-12">
           <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': admin.statusFilter.status == 'new'}" ng-click="admin.choiceButtonFilter('new')">New</label>
           <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed'}" ng-click="admin.choiceButtonFilter('confirmed')">Confirmed</label>
+          <label class="btn-group btn col-xs-12 col-sm-4 col-md-2 m-tab--confirmed" uib-dropdown uib-dropdown-toggle ng-disabled="disabled" is-open="status.isopen">
+            Confirmed
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+              <li role="menuitem"><a href="#">Action</a></li>
+              <li role="menuitem"><a href="#">Another action</a></li>
+              <li role="menuitem"><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li role="menuitem"><a href="#">Separated link</a></li>
+            </ul>
+          </label>
           <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': admin.statusFilter.status == 'rejected'}" ng-click="admin.choiceButtonFilter('inprogress')">In progress</label>
           <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': admin.statusFilter.status == 'rejected'}" ng-click="admin.choiceButtonFilter('rejected')">Rejected</label>
           <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': admin.statusFilter.status == 'rejected'}" ng-click="admin.choiceButtonFilter('spent')">History</label> 
