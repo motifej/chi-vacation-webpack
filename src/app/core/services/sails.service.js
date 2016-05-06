@@ -31,6 +31,8 @@ export default class SailsService {
 		this['create' + VACATIONS] = (vacation) => this.http.post(API_URL + '/vacations/create2', vacation);
 		this['create' + DAYSOFF] = (vacation) => this.http.post(API_URL + '/daysoff/create2', vacation);
 		
+		this.getSettings = () => this.http.get(API_URL + '/settings/1');
+		this.saveSettings = (email) => this.http.put(API_URL + '/settings/1', {email});
 
 		this.socketInit = () => {
 

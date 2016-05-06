@@ -66,6 +66,26 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
               controllerAs: 'manager'
               }
           }
+        })
+        .state(states.SETTINGS, {
+          parent: states.SITE,
+          url: '/settings',
+          data: {
+              roles: roles.MANAGER
+          },
+          resolve: {
+            asyncPreloading: resolverProvider.adminPagePrealoading,
+            userData : function(sailsService) {
+              return sailsService.getUsers()
+            }
+          },
+          views: {
+            'content@': {
+              templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/admin/vv.html'),
+              controller: 'VvController',
+              controllerAs: 'admin'
+              }
+          }
         });
 
 
