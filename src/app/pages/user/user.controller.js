@@ -77,6 +77,7 @@ export default class UserController {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
       user.availableDaysOff = 5 - user.spendDaysOff;
+      console.log(user);
   }
 
   calcAvailablePrevDays (vacationStartDate, user) {
@@ -111,7 +112,7 @@ export default class UserController {
     let toastrOptions = {progressBar: false};
     let vacation;
     
-    let listArray = [];
+/*    let listArray = [];
     vm.vacations = [];
     listArray.push(this.user['vacations']);
     listArray.push(this.user['daysoff']);
@@ -137,7 +138,7 @@ export default class UserController {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
     }
-
+*/
     vacation = {
       startDate: sDate,
       endDate: eDate,
@@ -146,7 +147,17 @@ export default class UserController {
     };
     let {create} = this.sailsService[this.vacationState + 'Resource'];
     const {id: uid} = this.user;
-
+    /*************/
+this.sailsService.create2({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.user.year }).then(
+      r => {
+        this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+        this.calcEnableDays(this.$scope.startdate);
+      },
+      e => {
+        this.toastr.error(e.data.data.raw.message, 'Error creating vacation', toastrOptions)
+    });
+return;
+/*****************/
     if(this.vacationState == "vacations") {
       if(this.user.enablePrevDays) {
         if(this.user.vacationDays > this.user.enablePrevDays){
