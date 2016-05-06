@@ -1,3 +1,5 @@
+import {DAYSOFF, VACATIONS} from '../constants/vacations.consts';
+
 export default class SailsService {
 	constructor ($http, $resource, $rootScope, $parse, API_URL) {
 		'ngInject';
@@ -25,8 +27,9 @@ export default class SailsService {
 		});
 
 		
-		this.update2 = (vacation) => this.http.post(API_URL + '/vacations/update2', vacation);
-		this.create2 = (vacation) => this.http.post(API_URL + '/vacations/create2', vacation);
+		//this.update2 = (vacation) => this.http.post(API_URL + '/vacations/update2', vacation);
+		this['create' + VACATIONS] = (vacation) => this.http.post(API_URL + '/vacations/create2', vacation);
+		this['create' + DAYSOFF] = (vacation) => this.http.post(API_URL + '/daysoff/create2', vacation);
 		
 
 		this.socketInit = () => {

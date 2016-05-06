@@ -148,7 +148,7 @@ export default class UserController {
     let {create} = this.sailsService[this.vacationState + 'Resource'];
     const {id: uid} = this.user;
     /*************/
-this.sailsService.create2({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.user.year }).then(
+this.sailsService['create' + this.vacationState]({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.user.year }).then(
       r => {
         this.toastr.success('Vacation request was sent successfully!', toastrOptions);
         this.calcEnableDays(this.$scope.startdate);
@@ -243,6 +243,10 @@ return;
   }
 
   deleteVacation(item) {
-    this.sailsService[this.vacationState + 'Resource'].delete( {uid: item.uid, id: item.id} );
+    this.sailsService[this.vacationState + 'Resource'].delete( { id: item.id} ).$promise
+    .then(
+      r => this.toastr.success('Vacation was deleted successfully!'),
+      e => this.toastr.error(e.data.data.raw.message, 'Error deleting vacation')
+    );
   }
 }
