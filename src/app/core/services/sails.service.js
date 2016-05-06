@@ -25,6 +25,10 @@ export default class SailsService {
 		});
 
 		
+		this.update2 = (vacation) => this.http.post(API_URL + '/vacations/update2', vacation);
+		this.create2 = (vacation) => this.http.post(API_URL + '/vacations/create2', vacation);
+		
+
 		this.socketInit = () => {
 
 			io.socket.on('connect', () => {
