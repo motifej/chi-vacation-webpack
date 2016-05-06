@@ -90,9 +90,9 @@ export default class VvController {
 
     pushAddedDays(isAdd) {
       let added = angular.copy(this.filtredUser.added);
-      added[this.filtredUser.year] = (this.filtredUser.added[this.filtredUser.year] || 0) + (isAdd ? this.filtredUser.addedDays : 0 - this.filtredUser.addedDays);
+      added[this.filtredUser.year] = (this.filtredUser.added[this.filtredUser.year] || 0) + (isAdd ? parseInt(this.filtredUser.addedDays) : 0 - parseInt(this.filtredUser.addedDays));
       this.sailsService.userResource.updateUser({id: this.filtredUser.id}, {added: added}).$promise.then(
-        () => this.toastr.success('Edit user success', 'Success'),
+        () => this.toastr.success('Changed added days', 'Success'),
         error => this.toastr.error(error.data.message, 'Error updating user')
         );
     }
