@@ -3,22 +3,64 @@
 </div>
 
 <div class="modal-body">
-  <form class="form-horizontal" name="addUserForm"  ng-submit="user.submitForm(addUserForm.$valid)" novalidate>
-    <fieldset>
 
-      <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.firstname.$invalid && (user.invalidForm || addUserForm.firstname.$dirty)}">
-          <label class="col-md-4 control-label" for="firstname">Emails for info about creating vacations</label>  
-          <div class="col-md-6">
-            <ul ng-repeat="item in user.settings.email">
-                <li>{{item}}<span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteEmail(item)"></span></li>
-            </ul>
-            <input id="newEmail" name="newEmail" type="text" placeholder="Add email" class="" ng-model="user.newEmail">
-            <a href="" ng-click="user.addEmail()" class="logout">
-            <span class="glyphicon glyphicon-ok chi-glyphicon"></span></a>
-          </div>
-        </div>
-      </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <form class="form-horizontal" name="SettingsForm"  ng-submit="user.submitForm()" novalidate>
+
+            <div class="form-group">
+              <div class="checkbox">
+                <label>
+                  <input id="emailCreate" name="emailCreate" type="checkbox" ng-model="user.settings.emailCreate">
+                  Send email when new vacations were created
+                </label>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="newEmail">Recipients:</label>
+              <ul class="list-group" >
+                <li ng-repeat="item in user.settings.email track by $index" class="list-group-item">
+                  <span class="glyphicon glyphicon-envelope"></span> {{item}}
+                  <span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteEmail(item)"></span>
+                </li>
+              </ul>
+
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                <input id="newEmail" name="newEmail" type="text" class="form-control" ng-model="user.newEmail" placeholder="Add email" ng-pattern="user.emailPattern">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button" ng-click="user.addEmail()">Add</button>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox">
+                <label>
+                  <input id="emailCreate" name="emailCreate" type="checkbox" ng-model="user.settings.emailChanged">
+                  Send email to user when status of vacation was changed
+                </label>
+              </div>
+            </div>            
+
+
+<!-- 
+              <div class="form-group">
+
+                <label class="col-md-4 control-label" for="firstname">Emails for info about creating vacations</label>  
+
+                <ul ng-repeat="item in user.settings.email">
+                  <li>{{item}}<span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteEmail(item)"></span></li>
+                </ul>
+                <input id="newEmail" name="newEmail" type="text" placeholder="Add email" class="" ng-model="user.newEmail">
+                <a href="" ng-click="user.addEmail()" class="logout">
+                  <span class="glyphicon glyphicon-ok chi-glyphicon"></span></a>
+                </div> -->
+
 <!-- 
       <div class="form-group">
         <div ng-class="{'has-error': addUserForm.lastname.$invalid && (user.invalidForm || addUserForm.lastname.$dirty)}">
@@ -37,7 +79,7 @@
           </div>
         </div>
       </div>
- -->
+    -->
       <!-- <div class="form-group">
         <div ng-class="{'has-error': addUserForm.phone.$invalid && (user.invalidForm || addUserForm.phone.$dirty)}">
           <label class="col-md-4 control-label" for="phone">Phone Number</label>
