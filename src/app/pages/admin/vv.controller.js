@@ -40,6 +40,7 @@ export default class VvController {
     this.moment = moment;
     this.vacationState = 'vacations';
     this.activate($scope);
+    this.dropdownFilter = "Confirmed";
 
 
     
@@ -116,6 +117,10 @@ export default class VvController {
     choiceButtonFilter(filter) {
       this.statusFilter.status = filter;
       this.setDateInfo();
+    }
+
+    choiceDropdownFilter(filter) {
+      this.dropdownFilter = filter;
     }
 
     openNewUserForm() {
