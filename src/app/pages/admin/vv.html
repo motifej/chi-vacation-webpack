@@ -41,23 +41,24 @@
       </div>
       <hr>
       <div class="buttons-panel clearfix">
-        <div class="btn-group col-xs-12">
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': admin.statusFilter.status == 'new'}" ng-click="admin.choiceButtonFilter('new')">New</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed'}" ng-click="admin.choiceButtonFilter('confirmed')">Confirmed</label>
-          <label class="btn-group btn col-xs-12 col-sm-4 col-md-2 m-tab--confirmed" uib-dropdown uib-dropdown-toggle ng-disabled="disabled" is-open="status.isopen">
-            Confirmed
-            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-              <li role="menuitem"><a href="#">Action</a></li>
-              <li role="menuitem"><a href="#">Another action</a></li>
-              <li role="menuitem"><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li role="menuitem"><a href="#">Separated link</a></li>
+        <div class="btn-group col-xs-12 col-sm-9 col-md-7">
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': admin.statusFilter.status == 'new'}" ng-click="admin.choiceButtonFilter('new')">New</label>
+          <label class="btn-group btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" uib-dropdown uib-dropdown-toggle ng-disabled="disabled" is-open="status.isopen" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed' || admin.statusFilter.status == 'inprogress' || admin.statusFilter.status == 'spent'}">
+            {{admin.dropdownFilter}}
+            <ul class="m-dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+              <li role="menuitem">
+                <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed'}" ng-click="admin.choiceButtonFilter('confirmed'); admin.choiceDropdownFilter('Confirmed')">Confirmed</label>
+              </li>
+              <li role="menuitem">
+                <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'inprogress'}" ng-click="admin.choiceButtonFilter('inprogress'); admin.choiceDropdownFilter('In progress')">In progress</label>
+              </li>
+              <li role="menuitem">
+                <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'spent'}" ng-click="admin.choiceButtonFilter('spent'); admin.choiceDropdownFilter('History')">History</label>
+              </li>
             </ul>
           </label>
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': admin.statusFilter.status == 'rejected'}" ng-click="admin.choiceButtonFilter('inprogress')">In progress</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': admin.statusFilter.status == 'rejected'}" ng-click="admin.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': admin.statusFilter.status == 'rejected'}" ng-click="admin.choiceButtonFilter('spent')">History</label> 
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--all" ng-class="{'m-tab--all--active': !admin.statusFilter.status}" ng-click="admin.choiceButtonFilter('')">All</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--rejected" ng-class="{'m-tab--rejected--active': admin.statusFilter.status == 'rejected'}" ng-click="admin.choiceButtonFilter('rejected')">Rejected</label> 
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--all" ng-class="{'m-tab--all--active': !admin.statusFilter.status}" ng-click="admin.choiceButtonFilter('')">All</label>
         </div>
         
       </div>
