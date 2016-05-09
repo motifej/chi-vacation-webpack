@@ -4,11 +4,16 @@ export default function (app) {
     app.filter('statusUserFilter', statusUserFilter);
 
     function statusUserFilter() {
-        return function(input, filterKey, filterVal, list) {
+        return function(input, filterKey, filterVal, list, date) {
             var filteredInput = {};
             angular.forEach(input, function(value, key) {
                 var vacationsList = (list == 'vacations' || list == 'daysoff') ? value[list] : [];
                 if (vacationsList.length > 0) {
+                    if(date.startdate){
+                        if(!some(vacationsList, item => item.status == filterVal && ((date.enddate) ? !(new Date(item.startdate) > date.enddate) && new Date(item.enddate) > date.startdate : new Date(item.enddate) > date.startdate))){
+                            return filteredInput;
+                        }
+                    }
                     switch (filterVal) {
                         case 'new':
                             if(some(vacationsList,(item)=>item.status=='new')){

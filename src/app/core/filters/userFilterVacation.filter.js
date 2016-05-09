@@ -4,8 +4,11 @@ export default function (app) {
     app.filter('userFilterVacation', userFilterVacation);
 
 		function userFilterVacation() {
-			return function(input, status) {
+			return function(input, status, date) {
 				if (input.length > 0) {
+					if(date.startdate){
+                        input = filter(input, item => (date.enddate) ? new Date(item.startdate) <= date.enddate && new Date(item.enddate) >= date.startdate : new Date(item.enddate) >= date.startdate);
+                    }
 					switch (status) {
 						case 'new':
 						return filter(input, function(item) {
