@@ -130,12 +130,34 @@
 
       <div class="well" ng-show="admin.pageState == 'vacations' || admin.pageState == 'daysoff'">
 
-        <div ng-show="admin.isRepeated((admin.users | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState))">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="">Start date</label>
+            <chi-datepicker class="datepicker"
+              name="startdate"
+              ng-model="admin.dateFilter.startdate"
+              is-show-all-days="true"
+              >
+              </chi-datepicker>
+          </div>
+          <div class="col-md-6">
+            <label for="">End date</label>
+            <chi-datepicker class="datepicker"
+              name="enddate"
+              ng-model="admin.dateFilter.enddate"
+              min-date="admin.dateFilter.startdate"
+              is-show-all-days="true"
+              >
+              </chi-datepicker>
+          </div>
+        </div>
+
+        <div ng-show="admin.isRepeated((admin.users | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:admin.dateFilter))">
           <h4 ng-show="admin.filter.id"><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(admin.filtredUser)">{{admin.filtredUser.firstname.charAt(0) + ". " + admin.filtredUser.lastname}}</span> <small class="text-warning">{{admin.filter.group}}</small> doesn't have <span ng-hide="!admin.filtredUser[admin.pageState]">{{admin.statusFilter.status}}</span> vacations</h4>
           <h4 ng-hide="admin.filter.id">There is no {{admin.statusFilter.status}} vacations<span ng-show="admin.filter.group"> in <small class="text-warning">{{admin.filter.group}}</small></span></h4>
         </div>
 
-        <div ng-repeat="user in admin.users | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState">
+        <div ng-repeat="user in admin.users | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:admin.dateFilter">
           <h4><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(user)">{{user.firstname.charAt(0) + ". " + user.lastname}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <table class="table table-bordered">
             <colgroup>
@@ -159,7 +181,7 @@
               </tr>
             </thead>
             <tbody >
-              <tr ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status | orderByObject: admin.order" ng-class="'m-action-' + item.status">
+              <tr ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:admin.dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
                 <td>{{item.startdate | date:'dd MMMM yyyy'}}</td>
                 <td>{{item.enddate | date:'dd MMMM yyyy'}}</td>
                 <td>{{admin.calcDays(item.startdate, item.enddate)}}</td>

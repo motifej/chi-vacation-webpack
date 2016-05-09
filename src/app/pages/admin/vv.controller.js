@@ -33,6 +33,7 @@ export default class VvController {
     $scope.minStartDate = new Date($scope.startdate);
     $scope.enddate = new Date($scope.startdate);
     $scope.minEndDate = new Date($scope.startdate);
+    this.dateFilter = {};
     this.user = user;
     this.$scope = $scope;
     this.$timeout = $timeout;
