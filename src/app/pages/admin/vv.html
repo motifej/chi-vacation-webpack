@@ -150,7 +150,7 @@
               >
               </chi-datepicker>
           </div>
-          <div class="col-md-offset-1 col-md-2">
+          <div class="col-md-offset-1 col-md-2" style="padding-top: 22px">
             <div class="btn btn-primary" ng-click="dateFilter = {}">Clear date</div>
           </div>
           
@@ -296,12 +296,12 @@
       <div class="col-xs-12">
         <div class="well clearfix">
           <legend class="user-form__title">Aditional vacation days</legend>
-          <div class="form-group col-md-12">
+          <div class="form-group col-md-6">
             <label for="selected">Cur year added</label>
             <input type="text" id="selected" class="form-control user__total-days" readonly
             ng-value="admin.filtredUser.addedCur">
           </div>
-          <div class="form-group col-md-12" ng-show="admin.filtredUser.isCrossingYear">
+          <div class="form-group col-md-6" ng-show="admin.filtredUser.isCrossingYear">
             <label for="available">Prev year added</label>
             <input type="text" id="available" class="form-control user__left-days" readonly
             ng-value="admin.filtredUser.addedPrev">
