@@ -4,7 +4,7 @@ export default function (app) {
     app.filter('statusUserFilter', statusUserFilter);
 
     function statusUserFilter() {
-        return function(input, filterKey, filterVal, list, date) {
+        return function(input, filterKey, filterVal, list, date = 0) {
             var filteredInput = {};
             angular.forEach(input, function(value, key) {
                 var vacationsList = (list == 'vacations' || list == 'daysoff') ? value[list] : [];
