@@ -89,7 +89,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
         });
 
 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/login');
 
 }
 
