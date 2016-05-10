@@ -33,7 +33,7 @@ export default class VvController {
     $scope.minStartDate = new Date($scope.startdate);
     $scope.enddate = new Date($scope.startdate);
     $scope.minEndDate = new Date($scope.startdate);
-    this.dateFilter = {};
+    $scope.dateFilter = {};
     this.user = user;
     this.$scope = $scope;
     this.$timeout = $timeout;
@@ -53,6 +53,10 @@ export default class VvController {
       if (scope.enddate <= scope.startdate) scope.enddate = new Date(scope.startdate);
       scope.minEndDate = new Date(scope.startdate);
     });
+    scope.$watch('dateFilter', function() {
+      if (scope.dateFilter.enddate <= scope.dateFilter.startdate) scope.dateFilter.enddate = new Date(scope.dateFilter.startdate);
+      scope.dateFilter.minEndDate = new Date(scope.dateFilter.startdate);
+    }, true);
 
   }
 
@@ -94,7 +98,7 @@ export default class VvController {
       let added = angular.copy(this.filtredUser.added);
       added[this.filtredUser.year] = (this.filtredUser.added[this.filtredUser.year] || 0) + (isAdd ? parseInt(this.filtredUser.addedDays) : 0 - parseInt(this.filtredUser.addedDays));
       this.sailsService.userResource.updateUser({id: this.filtredUser.id}, {added: added}).$promise.then(
-        () => this.toastr.success('Changed added days', 'Success'),
+        () => {this.calcEnableDays(this.$scope.startdate); this.toastr.success('Changed added days', 'Success');},
         error => this.toastr.error(error.data.message, 'Error updating user')
         );
     }
@@ -210,6 +214,7 @@ setDateInfo() {
         && ((user.formatedEmploymentDate.getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() <= vacationStartDate.getDate()) 
           || (new Date(moment(user.formatedEmploymentDate).add(1, 'month')).getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() > vacationStartDate.getDate()))) 
       {
+        user.isCrossingYear = true;
         console.log(
           this.calcDays(moment(user.formatedEmploymentDate)
             .add(user.year, 'year')
@@ -261,6 +266,7 @@ setDateInfo() {
     user.spendPrevVacation = 0;
     user.availableDaysOff = 0;
     user.spendDaysOff = 0;
+    user.isCrossingYear = false;
     return user;
   }
 
