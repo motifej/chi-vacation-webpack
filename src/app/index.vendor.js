@@ -26,8 +26,6 @@ import "angular-messages";
 
 import "angular-aria";
 
-import "angularfire";
-
 import "angular-toastr";
 import "../../node_modules/angular-toastr/dist/angular-toastr.css"
 
