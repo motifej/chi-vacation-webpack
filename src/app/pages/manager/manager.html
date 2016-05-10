@@ -32,13 +32,24 @@
       </div>
       <hr>
       <div class="buttons-panel clearfix">
-        <div class="btn-group col-xs-12">
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': manager.statusFilter.status == 'new'}" ng-click="manager.choiceButtonFilter('new')">New</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('spent')">History</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-2 m-tab--all" ng-class="{'m-tab--all--active': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter('')">All</label>
+        <div class="btn-group col-xs-12 col-sm-9 col-md-7">
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': manager.statusFilter.status == 'new'}" ng-click="manager.choiceButtonFilter('new')">New</label>
+          <label class="btn-group btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" uib-dropdown uib-dropdown-toggle ng-disabled="disabled" is-open="status.isopen" ng-class="{'m-tab--confirmed--active': manager.statusFilter.status == 'confirmed' || manager.statusFilter.status == 'inprogress' || manager.statusFilter.status == 'spent'}">
+            {{manager.dropdownFilter}}
+            <ul class="m-dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+              <li role="menuitem">
+                <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed'); manager.choiceDropdownFilter('Confirmed')">Confirmed</label>
+              </li>
+              <li role="menuitem">
+                <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress'); manager.choiceDropdownFilter('In progress')">In progress</label>
+              </li>
+              <li role="menuitem">
+                <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': manager.statusFilter.status == 'spent'}" ng-click="manager.choiceButtonFilter('spent'); manager.choiceDropdownFilter('History')">History</label>
+              </li>
+            </ul>
+          </label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--rejected" ng-class="{'m-tab--rejected--active': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label> 
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--all" ng-class="{'m-tab--all--active': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter('')">All</label>
         </div>
         
       </div>
@@ -109,6 +120,32 @@
 
 
       <div class="well" ng-show="manager.pageState == 'vacations' || manager.pageState == 'daysoff'">
+
+        <div class="row">
+          <div class="col-md-4">
+            <label for="">Start date</label>
+            <chi-datepicker class="datepicker"
+              name="startdate"
+              ng-model="dateFilter.startdate"
+              is-show-all-days="true"
+              >
+              </chi-datepicker>
+          </div>
+          <div class="col-md-4">
+            <label for="">End date</label>
+            <chi-datepicker class="datepicker"
+              name="enddate"
+              ng-model="dateFilter.enddate"
+              min-date="dateFilter.startdate"
+              is-show-all-days="true"
+              >
+              </chi-datepicker>
+          </div>
+          <div class="col-md-offset-1 col-md-2" style="padding-top: 22px">
+            <div class="btn btn-primary" ng-click="dateFilter = {}">Clear date</div>
+          </div>
+          
+        </div>
 
         <div ng-show="manager.isRepeated((manager.users | filter:manager.filter | statusUserFilter:'status':manager.statusFilter.status:manager.pageState))">
           <h4 ng-show="manager.filter.id"><span class="btn btn-sm chi-btn--reversed" ng-click="manager.userInfo(manager.filtredUser)">{{manager.filtredUser.firstname.charAt(0) + ". " + manager.filtredUser.lastname}}</span> <small class="text-warning">{{manager.filter.group}}</small> doesn't have <span ng-hide="!manager.filtredUser[manager.pageState]">{{manager.statusFilter.status}}</span> vacations</h4>
