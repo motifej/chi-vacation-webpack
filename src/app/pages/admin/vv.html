@@ -44,7 +44,7 @@
         <div class="btn-group col-xs-12 col-sm-9 col-md-7">
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': admin.statusFilter.status == 'new'}" ng-click="admin.choiceButtonFilter('new')">New</label>
           <label class="btn-group btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" uib-dropdown uib-dropdown-toggle ng-disabled="disabled" is-open="status.isopen" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed' || admin.statusFilter.status == 'inprogress' || admin.statusFilter.status == 'spent'}">
-            {{admin.dropdownFilter}}
+            {{admin.dropdownFilter}} <span class="caret"></span>
             <ul class="m-dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
               <li role="menuitem">
                 <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed'}" ng-click="admin.choiceButtonFilter('confirmed'); admin.choiceDropdownFilter('Confirmed')">Confirmed</label>
