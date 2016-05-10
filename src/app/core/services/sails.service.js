@@ -64,7 +64,7 @@ export default class SailsService {
 				switch (verb) {
 					case 'created': {
 						$rootScope.$applyAsync(
-							users.push(data)
+							users.push(angular.extend(data, {vacations: [], daysoff: []}))
 						);
 						break;
 					}
