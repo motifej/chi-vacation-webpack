@@ -4,7 +4,7 @@ export default function (app) {
     app.filter('userFilterVacation', userFilterVacation);
 
 		function userFilterVacation() {
-			return function(input, status, date) {
+			return function(input, status, date = 0) {
 				if (input.length > 0) {
 					if(date.startdate){
                         input = filter(input, item => (date.enddate) ? new Date(item.startdate) <= date.enddate && new Date(item.enddate) >= date.startdate : new Date(item.enddate) >= date.startdate);
