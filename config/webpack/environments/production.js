@@ -8,6 +8,11 @@ module.exports = function(_path) {
     output: {
       publicPath: '/',
       filename: '[name].[chunkhash].js'
+    },
+    devServer: {
+      host: '0.0.0.0',
+      port: '8080'
     }
+
   }
 }

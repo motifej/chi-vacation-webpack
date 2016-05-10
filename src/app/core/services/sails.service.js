@@ -1,11 +1,11 @@
-import {DAYSOFF, VACATIONS} from '../constants/vacations.consts';
+import { DAYSOFF, VACATIONS } from '../constants/vacations.consts';
+import { SETTINGS_KEY } from '../constants/settings.consts';
 
 export default class SailsService {
 	constructor ($http, $resource, $rootScope, $parse, API_URL) {
 		'ngInject';
 
-
-
+		//http resources
 		this.http = $http;
 		this.userResource = $resource(API_URL + "/users/:id", {id: "@id"}, {
 			getUserData: {isArray: false, method: "GET"},
@@ -26,21 +26,23 @@ export default class SailsService {
 			delete: {isArray: false, method: "DELETE"}
 		});
 
-		
-		//this.update2 = (vacation) => this.http.post(API_URL + '/vacations/update2', vacation);
+		//http vacation create
 		this['create' + VACATIONS] = (vacation) => this.http.post(API_URL + '/vacations/create2', vacation);
 		this['create' + DAYSOFF] = (vacation) => this.http.post(API_URL + '/daysoff/create2', vacation);
 		
-		this.getSettings = () => this.http.get(API_URL + '/settings/1');
+		//http settings
 		this.saveSettings = (settings) => {
 			let { email, emailCreate, emailChanged } = settings;
-			return this.http.put(API_URL + '/settings/1', {
+			return this.http.put(API_URL + '/settings/' + SETTINGS_KEY, {
 				email,
 				emailCreate,
 				emailChanged
 			})
 		}
+		this.createSettings = () => this.http.post(API_URL + '/settings/create', { id:SETTINGS_KEY });
+		this.getSettings = () => this.http.get(API_URL + '/settings/' + SETTINGS_KEY).catch(this.createSettings);
 
+		//sockets
 		this.socketInit = () => {
 
 			io.socket.on('connect', () => {
