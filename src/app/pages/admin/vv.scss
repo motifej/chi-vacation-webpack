@@ -115,7 +115,7 @@
     .m-tab--confirmed:hover {
         background-color: rgb(30, 144, 255);
         color: white;
-        z-index: 99;
+        z-index: 99 !important;
     }
     .m-tab--confirmed--active {
         background-color: rgb(30, 144, 255); 
