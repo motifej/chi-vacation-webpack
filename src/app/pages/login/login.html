@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="login-page-wrapper page-wrapper clearfix">
 
   <div class="login-form-wrap  col-md-6 col-xs-10 col-sm-6 col-xs-offset-1">
@@ -69,3 +70,76 @@
   </div>
 
 </div>
+=======
+<div class="login-page-wrapper page-wrapper clearfix">
+
+  <div class="login-form-wrap  col-md-6 col-xs-10 col-sm-6 col-xs-offset-1">
+    <form class="login-form form-horizontal text-center" name="authForm" novalidate="novalidate" ng-submit='signin()'>
+      <fieldset>
+
+        <!-- Form Name -->
+        <legend>
+          <h1 class="login-form-legend">
+            Login
+          </h1>
+        </legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class=" col-md-3 control-label " for="Email">Email</label>
+          <div class="col-xs-12 col-md-6">
+            <div class="input-group">
+              <span class="input-group-addon "><i class="glyphicon glyphicon-envelope"></i></span>
+              <input  name="Email"
+              type="email"
+              required
+              placeholder="Enter Your Email"
+              class="form-control input-md"
+              ng-model='email'>
+            </div>
+          </div>
+        </div>
+
+        <!-- Password input-->
+        <div class="form-group">
+          <label class=" col-md-3 control-label " for="Password">Password</label>
+          <div class="col-xs-12 col-md-6">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input  name="password"
+              ng-pattern="passwordPattern"
+              required
+              type="password"
+              placeholder="Enter Your Password"
+              class="form-control input-md"
+              ng-model='passw'>
+            </div>
+          </div>
+        </div>
+
+         <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="Submit"></label>
+          <div class="col-md-4">
+            <button class="btn btn-block chi-btn--default"  ng-disabled="sending" type="Submit">
+              <span ng-show="sending"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+              Login
+            </button>
+          </div>
+        </div>
+
+          <!-- link -->
+        <div class="form-group">
+          <div class="row">
+            <!-- <a class="password-link chi-link col-xs-12 col-sm-3" ui-sref={{states.RESETPASSWORD}}>Reset password</a> -->
+            <a class="password-link chi-link" ui-sref={{states.CHANGEPASSWORD}}>Change password</a>
+          </div>
+        </div>
+
+
+      </fieldset>
+    </form>
+  </div>
+
+</div>
+>>>>>>> master

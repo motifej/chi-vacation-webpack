@@ -7,24 +7,33 @@
     <fieldset>
 
       <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.firstName.$invalid && (user.invalidForm || addUserForm.firstName.$dirty)}">
-          <label class="col-md-4 control-label" for="firstName">First Name</label>  
-          <div class="col-md-4">
-            <input id="firstName" name="firstName" type="text" placeholder="first name..." class="form-control input-md" ng-model="user.newUser.firstName" ng-pattern="user.namePattern" required>
+        <div ng-class="{'has-error': addUserForm.firstname.$invalid && (user.invalidForm || addUserForm.firstname.$dirty)}">
+          <label class="col-md-4 control-label" for="firstname">First name</label>  
+          <div class="col-md-5">
+            <input id="firstname" name="firstname" type="text" placeholder="first name..." class="form-control input-md" ng-model="user.newUser.firstname" ng-pattern="user.namePattern" required>
           </div>
         </div>
       </div>
 
       <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.lastName.$invalid && (user.invalidForm || addUserForm.lastName.$dirty)}">
-          <label class="col-md-4 control-label" for="lastName">Last Name</label>  
-          <div class="col-md-4">
-            <input id="lastName" name="lastName" type="text" placeholder="last name..." class="form-control input-md" ng-model="user.newUser.lastName" ng-pattern="user.namePattern" required>
+        <div ng-class="{'has-error': addUserForm.lastname.$invalid && (user.invalidForm || addUserForm.lastname.$dirty)}">
+          <label class="col-md-4 control-label" for="lastname">Last name</label>  
+          <div class="col-md-5">
+            <input id="lastname" name="lastname" type="text" placeholder="last name..." class="form-control input-md" ng-model="user.newUser.lastname" ng-pattern="user.namePattern" required>
           </div>
         </div>
       </div>
 
       <div class="form-group">
+        <div>
+          <label class="col-md-4 control-label" for="lastname">Employment date</label>  
+          <div class="col-md-5">
+            <chi-datepicker class="datepicker" name="employmentdate" ng-model="user.employmentdate" is-show-all-days="true"></chi-datepicker>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="form-group">
         <div ng-class="{'has-error': addUserForm.phone.$invalid && (user.invalidForm || addUserForm.phone.$dirty)}">
           <label class="col-md-4 control-label" for="phone">Phone Number</label>
           <div class="col-md-4">
@@ -34,12 +43,12 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="form-group">
         <div ng-class="{'has-error': addUserForm.email.$invalid && (user.invalidForm || addUserForm.email.$dirty)}">
           <label class="col-md-4 control-label" for="email">Email</label>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <div class="input-group">
               <input id="email" name="email" class="form-control" placeholder="email..." type="text" ng-model="user.newUser.email" ng-pattern="user.emailPattern" required>
               <span class="input-group-addon">@</span>
@@ -51,7 +60,7 @@
       <div class="form-group">
         <div ng-class="{'has-error': addUserForm.userRole.$invalid && (user.invalidForm || addUserForm.userRole.$dirty)}">
           <label class="col-md-4 control-label" for="userRole">User's role</label>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <select id="userRole" name="userRole" class="form-control" ng-model="user.newUser.role" ng-options="role as role for role in user.role" required>
               <option value="">-- chose user's role --</option>
             </select>
@@ -62,7 +71,7 @@
       <div class="form-group">
         <div ng-class="{'has-error': addUserForm.userGroup.$invalid && (user.invalidForm || addUserForm.userGroup.$dirty)}">
           <label class="col-md-4 control-label" for="userGroup">User's group</label>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <select id="userGroup" name="userGroup" class="form-control" ng-model="user.newUser.group" ng-options="group as group for group in user.group" required>
               <option value="">-- chose user's group --</option>
             </select>
@@ -70,11 +79,11 @@
         </div>
       </div>
 
-      <div class="form-group">
+<!--       <div class="form-group">
         <div ng-class="{'has-error': addUserForm.totalVacation.$invalid && (user.invalidForm || addUserForm.totalVacation.$dirty)}">
           <label class="col-md-4 control-label" for="totalVacation">Total Vacation</label>  
           <div class="col-md-4">
-            <input id="totalVacation" name="totalVacation" type="number" placeholder="" class="form-control input-md" ng-model="user.newUser.vacations.total" required min="0">
+            <input id="totalVacation" name="totalVacation" type="number" placeholder="" class="form-control input-md" ng-model="user.vacations.total" required min="0">
           </div>
         </div>
       </div>
@@ -83,10 +92,10 @@
         <div ng-class="{'has-error': addUserForm.dayOff.$invalid && (user.invalidForm || addUserForm.dayOff.$dirty)}">
           <label class="col-md-4 control-label" for="dayOff">Day Off</label>  
           <div class="col-md-4">
-            <input id="dayOff" name="dayOff" type="number" placeholder="" class="form-control input-md" ng-model="user.newUser.vacations.dayOff" required min="0">
+            <input id="dayOff" name="dayOff" type="number" placeholder="" class="form-control input-md" ng-model="user.vacations.dayOff" required min="0">
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="modal-footer">
         <div class="form-group">

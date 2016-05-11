@@ -1,7 +1,7 @@
 import Firebase from 'firebase';
 
 export default class FirebaseService {
-	constructor ($firebaseArray, $localStorage, $firebaseObject, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout, $state, moment, $parse, API_URL, roles, actions, states) {
+	constructor ($firebaseArray, $localStorage, $firebaseObject, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout, $state, moment, $parse, API_URL, roles, actions, states, $http) {
 		'ngInject';
 		this.$localStorage = $localStorage;
 		this.$firebaseObject = $firebaseObject;
@@ -18,20 +18,24 @@ export default class FirebaseService {
 		this.$timeout = $timeout;
 		this.$rootScope = $rootScope;
 		this.userStorageKey = 'authUser';
-		this.firebaseObj = new Firebase( API_URL );
+		this.firebaseObj = new Firebase( 'https://vivid-fire-3850.firebaseio.com/users' );
 		this.authUser = $localStorage[ this.userStorageKey ] || { status:false, data: false };
 		this.userData = {};
+		this.http = $http;
 	}
 
 	_getCurrentUid() {
+		debugger;
 		return this.authUser.data.uid;
 	}
 
 	checkPersmissions(arr) {
+		debugger;
 		return !!~arr.indexOf(this.authUser.role || this.roles.GUEST);
 	}
 
 	checkExpired() {
+		debugger;
       let auth = this.firebaseObj.getAuth();
       if (auth) {
         let sessionTimeout = auth.expires * 1000;
@@ -52,6 +56,7 @@ export default class FirebaseService {
     }
 
 	getUsersList() {
+		debugger;
 		let deferred = this.$q.defer();
 		this.$firebaseArray( this.firebaseObj ).$loaded(
 			data =>	deferred.resolve( data ),
@@ -60,6 +65,7 @@ export default class FirebaseService {
 	}
 
 	loadUser() {
+		debugger;
 		let deferred = this.$q.defer();
 		let userRef = this.firebaseObj.child(this.authUser.data.uid);
 		let timeoutLoad = this.$timeout(deferred.reject, 10000);
@@ -75,6 +81,7 @@ export default class FirebaseService {
 	}
 
 	updateUserData(data) {
+		debugger;
 		let deferred = this.$q.defer();
 		let newData = data;
 		delete newData.password;
@@ -192,6 +199,7 @@ export default class FirebaseService {
 	}
 
 	getUserState() {
+		debugger;
 		if (this.authUser.data) {
 			let data = this.firebaseObj.getAuth();
 			this.authUser = {
@@ -211,6 +219,7 @@ export default class FirebaseService {
 	}
 
 	getAuthUser() {
+		debugger;
 		return this.authUser.data;
 	}
 

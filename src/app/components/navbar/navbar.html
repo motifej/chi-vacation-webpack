@@ -17,15 +17,19 @@
         </li>
         <li ng-if='vm.isAdmin()'>
           <a ui-sref-active="chi-tab--active" ui-sref={{vm.states.ADMIN}} class="chi-tab">
-          <span class="glyphicon glyphicon-user chi-glyphicon"></span>admin</a>
+          <span class="glyphicon glyphicon-user chi-glyphicon"></span>Admin</a>
         </li>
         <li ng-if='vm.isManager()'>
           <a ui-sref-active="chi-tab--active" ui-sref={{vm.states.MANAGER}} class="chi-tab">
-          <span class="glyphicon glyphicon-user chi-glyphicon"></span>manager</a>
+          <span class="glyphicon glyphicon-user chi-glyphicon"></span>Manager</a>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right" ng-if="vm.user.uid">
-        <li><a href="" class="navbar__user"><span class="glyphicon glyphicon-user chi-glyphicon"></span>{{vm.user.firstName + " " + vm.user.lastName}}</a></li>
+      <ul class="nav navbar-nav navbar-right" ng-if="vm.user.id">
+        <li><a href="" class="navbar__user"><span class="glyphicon glyphicon-user chi-glyphicon"></span>{{vm.user.firstname + " " + vm.user.lastname}}</a></li>
+        <li ng-if='vm.isManager() || vm.isAdmin()'>
+          <a href="" ng-click="vm.settings()" class="logout">
+          <span class="glyphicon glyphicon-cog chi-glyphicon"></span>Settings</a>
+        </li>
         <li><a ui-sref={{vm.states.LOGIN}} ng-click="vm.logOut()" class="logout"><span class="glyphicon glyphicon-log-out chi-glyphicon"></span>Logout</a>
         </li>
       </ul>

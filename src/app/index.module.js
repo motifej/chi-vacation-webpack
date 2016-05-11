@@ -16,13 +16,14 @@ const App = angular.module(
   	"ngAria", 
   	"oc.lazyLoad",
     'toastr',
-    "firebase",
     "ui.bootstrap",
     "mwl.calendar",
     "ngStorage",
+    //"ngSails",
 
 
-    // core
+    require('angular-resource'),
+
     require("./core/core.module").name,
 
     // components

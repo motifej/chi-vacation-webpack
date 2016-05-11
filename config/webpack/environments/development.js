@@ -9,7 +9,9 @@ module.exports = function(_path) {
       contentBase: './dist',
       info: true,
       hot: false,
-      inline: true
+      inline: true,
+      host: '0.0.0.0',
+      port: '8080'
     }
   }
 };

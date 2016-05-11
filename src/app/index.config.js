@@ -1,6 +1,6 @@
 'use strict';
 var DEVELOPMENT = false;
-function config($logProvider, $compileProvider, toastrConfig, calendarConfig) {
+function config($logProvider, $compileProvider, toastrConfig, calendarConfig/*, $sailsProvider*/) {
 	'ngInject';
 
   // Enable log
@@ -16,6 +16,8 @@ function config($logProvider, $compileProvider, toastrConfig, calendarConfig) {
   calendarConfig.templates.calendarMonthView = require('!!file!./pages/templates/calendarMonthView.html');
   calendarConfig.templates.calendarMonthCellEvents = require('!!file!./pages/templates/calendarMonthCellEvents.html');
   
+  //$sailsProvider.url = 'http://localhost:3000';
+
 }
 
 export default config;

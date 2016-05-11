@@ -16,15 +16,17 @@ export default function NavbarDirective() {
 }
 
 class NavbarController {
-  constructor (firebaseService, $rootScope, $scope, toastr, actions, roles, states) {
+  constructor ($rootScope, $scope, toastr, actions, roles, states, sailsService, sailsAuthService, $uibModal) {
     'ngInject';
-    this.firebaseService = firebaseService;
+    this.sailsAuthService = sailsAuthService;
+    this.sailsService = sailsService;
     this.states = states;
     this.roles = roles;
     this.isCollapsed = false;
     this.user = {};
     this.actions = actions;
     this.toastr = toastr;
+    this.$uibModal = $uibModal;
     this.activate($rootScope, $scope);
   }
 
@@ -35,7 +37,7 @@ class NavbarController {
   }
 
   logOut() {
-    this.firebaseService.logOut();
+    this.sailsAuthService.logOut();
     this.user = {};
   }
 
@@ -53,5 +55,16 @@ class NavbarController {
 
   editProfile() {
     this.toastr.info('this feature in development state');
+  }
+
+  settings() {
+    this.$uibModal.open({
+        templateUrl: require('!!file!../userTools/modal/settings/settingsForm.html'),
+        controller: require('../userTools/modal/settings/settings.controller'),
+        controllerAs: 'user',
+        resolve: {
+          settings: this.sailsService.getSettings
+        }
+      });
   }
 }

@@ -10,7 +10,7 @@ import 'jquery';
 
 import 'ngstorage';
 
-
+//import "angular-sails";
 
 import "oclazyload";
 
@@ -26,8 +26,6 @@ import "angular-messages";
 
 import "angular-aria";
 
-import "angularfire";
-
 import "angular-toastr";
 import "../../node_modules/angular-toastr/dist/angular-toastr.css"
 
@@ -37,6 +35,8 @@ import "angular-bootstrap-calendar";
 import "../../node_modules/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css"
 
 import "moment-weekday-calc";
+
+import "../assets/vendor/sails.io.config";
 
 // local scripts
 //import "../assets/js/...";

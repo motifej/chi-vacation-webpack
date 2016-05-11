@@ -7,7 +7,9 @@ export default function DatepickerDirective() {
         scope: {
             curDate: '=ngModel',
             minDate: '=',
-            calcDays: '&'
+            calcDays: '&',
+            isShowAllDays: '=',
+            isDisableDate: '='
         },
         restrict: 'E',
         link: link,

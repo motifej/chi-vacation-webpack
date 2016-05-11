@@ -2,7 +2,7 @@
 
 import './manager.scss';
 
-import ManagerController from './manager.controller';
+import ManagerController from '../admin/vv.controller';
 
 const managerModule = angular.module('manager-module', []);
 

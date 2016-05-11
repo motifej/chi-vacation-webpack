@@ -1,30 +1,86 @@
 <div class="modal-header">
-  <h3 class="modal-title">Edit user form</h3>
+  <h3 class="modal-title">Settings</h3>
 </div>
 
 <div class="modal-body">
-  <form class="form-horizontal" name="addUserForm"  ng-submit="user.submitForm(addUserForm.$valid)" novalidate>
-    <fieldset>
 
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <form class="form-horizontal" name="SettingsForm"  ng-submit="user.submitForm()" novalidate>
+
+            <div class="form-group">
+              <div class="checkbox">
+                <label>
+                  <input id="emailCreate" name="emailCreate" type="checkbox" ng-model="user.settings.emailCreate">
+                  Send email when new vacations were created
+                </label>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="newEmail">Recipients:</label>
+              <ul class="list-group" >
+                <li ng-repeat="item in user.settings.email track by $index" class="list-group-item">
+                  <span class="glyphicon glyphicon-envelope"></span> {{item}}
+                  <span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteEmail(item)"></span>
+                </li>
+              </ul>
+
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                <input id="newEmail" name="newEmail" type="text" class="form-control" ng-model="user.newEmail" placeholder="Add email" ng-pattern="user.emailPattern">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button" ng-click="user.addEmail()">Add</button>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox">
+                <label>
+                  <input id="emailCreate" name="emailCreate" type="checkbox" ng-model="user.settings.emailChanged">
+                  Send email to user when status of vacation was changed
+                </label>
+              </div>
+            </div>            
+
+
+<!-- 
+              <div class="form-group">
+
+                <label class="col-md-4 control-label" for="firstname">Emails for info about creating vacations</label>  
+
+                <ul ng-repeat="item in user.settings.email">
+                  <li>{{item}}<span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteEmail(item)"></span></li>
+                </ul>
+                <input id="newEmail" name="newEmail" type="text" placeholder="Add email" class="" ng-model="user.newEmail">
+                <a href="" ng-click="user.addEmail()" class="logout">
+                  <span class="glyphicon glyphicon-ok chi-glyphicon"></span></a>
+                </div> -->
+
+<!-- 
       <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.firstName.$invalid && (user.invalidForm || addUserForm.firstName.$dirty)}">
-          <label class="col-md-4 control-label" for="firstName">First Name</label>  
+        <div ng-class="{'has-error': addUserForm.lastname.$invalid && (user.invalidForm || addUserForm.lastname.$dirty)}">
+          <label class="col-md-4 control-label" for="lastname">Last name</label>  
           <div class="col-md-4">
-            <input id="firstName" name="firstName" type="text" placeholder="first name..." class="form-control input-md" ng-model="user.newUser.firstName" ng-pattern="user.namePattern" required>
+            <input id="lastname" name="lastname" type="text" placeholder="last name..." class="form-control input-md" ng-model="user.newUser.lastname" ng-pattern="user.namePattern" required>
           </div>
         </div>
       </div>
 
       <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.lastName.$invalid && (user.invalidForm || addUserForm.lastName.$dirty)}">
-          <label class="col-md-4 control-label" for="lastName">Last Name</label>  
+        <div>
+          <label class="col-md-4 control-label" for="lastname">Employment date</label>  
           <div class="col-md-4">
-            <input id="lastName" name="lastName" type="text" placeholder="last name..." class="form-control input-md" ng-model="user.newUser.lastName" ng-pattern="user.namePattern" required>
+            <chi-datepicker class="datepicker" name="employmentdate" ng-model="user.newUser.employmentdate" is-show-all-days="true"></chi-datepicker>
           </div>
         </div>
       </div>
-
-      <div class="form-group">
+    -->
+      <!-- <div class="form-group">
         <div ng-class="{'has-error': addUserForm.phone.$invalid && (user.invalidForm || addUserForm.phone.$dirty)}">
           <label class="col-md-4 control-label" for="phone">Phone Number</label>
           <div class="col-md-4">
@@ -34,9 +90,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="form-group">
+     <!--  <div class="form-group">
         <div ng-class="{'has-error': addUserForm.email.$invalid && (user.invalidForm || addUserForm.email.$dirty)}">
           <label class="col-md-4 control-label" for="email">Email</label>
           <div class="col-md-4">
@@ -68,9 +124,9 @@
             </select>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="form-group">
+<!--       <div class="form-group">
         <div ng-class="{'has-error': addUserForm.totalVacation.$invalid && (user.invalidForm || addUserForm.totalVacation.$dirty)}">
           <label class="col-md-4 control-label" for="totalVacation">Total Vacation</label>  
           <div class="col-md-4">
@@ -86,12 +142,12 @@
             <input id="dayOff" name="dayOff" type="number" placeholder="" class="form-control input-md" ng-model="user.newUser.vacations.dayOff" required min="0">
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="modal-footer">
         <div class="form-group">
           <div class="col-md-8 col-md-offset-4">
-            <button class="btn btn-warning" type="button" ng-click="user.cancelNewUser()">Cancel</button>
+            <button class="btn btn-warning" type="button" ng-click="user.cancel()">Cancel</button>
             <button type="submit" class="btn btn-primary">Save</button>
           </div>
         </div>
