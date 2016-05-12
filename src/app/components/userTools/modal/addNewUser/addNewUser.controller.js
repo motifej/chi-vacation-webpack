@@ -31,10 +31,19 @@ export default class AddNewUserController {
   submitForm (isValid) {
     if (isValid) {
       this.invalidForm = false;
-      this.modalInstance.close();
       this.newUser.employmentdate = this.employmentdate;
       this.newUser.password = this.newUser.email;
-      this.sailsService.userResource.createUser(this.newUser);
+      this.sailsService.userResource.createUser(this.newUser).$promise
+      .then(
+        () => {
+          this.toastr.success('User was created successfully', 'Success');
+          this.modalInstance.close();
+        },
+        error => {
+          this.toastr.error(error.data.data.raw.message, 'Error');
+        }
+      )
+
     } else {
       this.toastr.error('Not all fields are filled', 'Error');
       this.invalidForm = true;
