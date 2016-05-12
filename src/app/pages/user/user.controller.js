@@ -152,6 +152,7 @@ export default class UserController {
     /*************/
 this.sailsService['create' + this.vacationState]({uid, startdate: new Date(sDate), enddate: new Date(eDate), status: "new", year: this.user.year }).then(
       r => {
+        console.log(1);
         this.toastr.success('Vacation request was sent successfully!', toastrOptions);
         this.calcEnableDays(this.$scope.startdate);
       },
