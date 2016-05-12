@@ -24,11 +24,11 @@ export default function (app) {
 						});
 						case 'inprogress':
 						return filter(input, function(item) {
-							return new Date(item.startdate) < new Date() && new Date(item.enddate) > new Date() && item.status == 'confirmed';
+							return new Date(item.startdate) < new Date() && new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) > new Date() && item.status == 'confirmed';
 						});
 						case 'spent':
 						return filter(input, function(item) {
-							return new Date(item.enddate) < new Date() && item.status == 'confirmed';
+							return new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) < new Date() && item.status == 'confirmed';
 						});
 						default:
 							return input;
