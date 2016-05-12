@@ -21,7 +21,7 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
       console.log(r);
       $state.go(states.HOME);
     }).catch( err => {
-      toastr.error(err.error.data.message);
+      toastr.error(err.error.data.message, 'Error');
       $log.error(err);
       $scope.sending = false;
     });
