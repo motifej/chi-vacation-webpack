@@ -13,7 +13,7 @@
         <div ng-class="{'has-error': addUserForm.firstname.$invalid && (user.invalidForm || addUserForm.firstname.$dirty)}">
           <label class="col-md-4 control-label" for="firstname">First name</label>  
           <div class="col-md-4">
-            <input id="firstname" name="firstname" type="text" placeholder="first name..." class="form-control input-md" ng-model="user.newUser.firstname" ng-pattern="user.namePattern" required>
+            <input id="firstname" name="firstname" type="text" placeholder="First name..." class="form-control input-md" ng-model="user.newUser.firstname" ng-pattern="user.namePattern" required>
           </div>
         </div>
       </div>
@@ -22,7 +22,7 @@
         <div ng-class="{'has-error': addUserForm.lastname.$invalid && (user.invalidForm || addUserForm.lastname.$dirty)}">
           <label class="col-md-4 control-label" for="lastname">Last name</label>  
           <div class="col-md-4">
-            <input id="lastname" name="lastname" type="text" placeholder="last name..." class="form-control input-md" ng-model="user.newUser.lastname" ng-pattern="user.namePattern" required>
+            <input id="lastname" name="lastname" type="text" placeholder="Last name..." class="form-control input-md" ng-model="user.newUser.lastname" ng-pattern="user.namePattern" required>
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@
           <label class="col-md-4 control-label" for="email">Email</label>
           <div class="col-md-4">
             <div class="input-group">
-              <input id="email" name="email" class="form-control" placeholder="email..." type="text" ng-model="user.newUser.email" ng-pattern="user.emailPattern" required>
+              <input id="email" name="email" class="form-control" placeholder="Email..." type="text" ng-model="user.newUser.email" ng-pattern="user.emailPattern" required>
               <span class="input-group-addon">@</span>
             </div>
           </div>
@@ -65,7 +65,7 @@
           <label class="col-md-4 control-label" for="userRole">User's role</label>
           <div class="col-md-4">
             <select id="userRole" name="userRole" class="form-control" ng-model="user.newUser.role" ng-options="role as role for role in user.role" required>
-              <option value="">-- chose user's role --</option>
+              <option value="">-- Chose user's role --</option>
             </select>
           </div>
         </div>
@@ -76,7 +76,7 @@
           <label class="col-md-4 control-label" for="userGroup">User's group</label>
           <div class="col-md-4">
             <select id="userGroup" name="userGroup" class="form-control" ng-model="user.newUser.group" ng-options="group as group for group in user.group" required>
-              <option value="">-- chose user's group --</option>
+              <option value="">-- Chose user's group --</option>
             </select>
           </div>
         </div>
