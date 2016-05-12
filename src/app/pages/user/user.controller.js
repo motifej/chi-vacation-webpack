@@ -29,6 +29,8 @@ export default class UserController {
     this.activate($scope);
     this.vacationState = VACATIONS;
 
+    this.calcEnableDays(this.$scope.startdate);
+    this.calcDaysCalc();
   }
 
   activate(scope) {
