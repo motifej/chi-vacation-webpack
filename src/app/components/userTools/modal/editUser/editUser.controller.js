@@ -50,6 +50,7 @@ export default class AddNewUserController {
     });
     modalInstance.result.then(
       selectedItem => {
+        debugger;
         if (selectedItem) {
           this.invalidForm = false;
           this.modalInstance.close();
