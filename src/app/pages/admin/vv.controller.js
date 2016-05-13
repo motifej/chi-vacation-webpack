@@ -75,23 +75,45 @@ export default class VvController {
     }
     
     confirmVacation(user, id) {
-      let vacation = find(user[this.pageState], { id: id });
-        this.sailsService[this.pageState + 'Resource']
-          .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
-          .then(
-            () => this.toastr.success('Vacation confirmed', 'Success'),
-            error => this.toastr.error(error.data.data.raw.message, 'Error confirming vacation')
-          );
-      }
+      let modalInstance = this.modal.open({
+        templateUrl: require('!!file!../../components/userTools/modal/confirmVacationAction/confirmVacationAction.html'),
+        controller: require('../../components/userTools/modal/confirmVacationAction/confirmVacationAction.controller'),
+        controllerAs: 'confirm'
+      });
+      modalInstance.result.then(
+        selectedItem => {
+          if (selectedItem) {
+            let vacation = find(user[this.pageState], { id: id });
+            this.sailsService[this.pageState + 'Resource']
+            .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
+            .then(
+              () => this.toastr.success('Vacation confirmed', 'Success'),
+              error => this.toastr.error(error.data.data.raw.message, 'Error confirming vacation')
+            );
+          }
+        }
+      )
+    }
     
     rejectVacation(user, id) {
-     let vacation = find(user[this.pageState], { id: id });
-      this.sailsService[this.pageState + 'Resource']
-        .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
-        .then(
-          () => this.toastr.success('Vacation rejected', 'Success'),
-          error => this.toastr.error(error.data.data.raw.message, 'Error rejecting vacation')
-        );
+      let modalInstance = this.modal.open({
+        templateUrl: require('!!file!../../components/userTools/modal/confirmVacationAction/confirmVacationAction.html'),
+        controller: require('../../components/userTools/modal/confirmVacationAction/confirmVacationAction.controller'),
+        controllerAs: 'confirm'
+      });
+      modalInstance.result.then(
+        selectedItem => {
+          if (selectedItem) {
+            let vacation = find(user[this.pageState], { id: id });
+            this.sailsService[this.pageState + 'Resource']
+            .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
+            .then(
+              () => this.toastr.success('Vacation rejected', 'Success'),
+              error => this.toastr.error(error.data.data.raw.message, 'Error rejecting vacation')
+            );
+          }
+        }
+      )
     }
 
     pushAddedDays(isAdd) {
