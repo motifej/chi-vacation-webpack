@@ -21,7 +21,7 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
       console.log(r);
       $state.go(states.HOME);
     }).catch( err => {
-      toastr.error(err.error.data.message);
+      toastr.error(err.error.data.message, 'Error');
       $log.error(err);
       $scope.sending = false;
     });
@@ -62,7 +62,7 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
         .catch(
         error => {
             $scope.sending = false;
-            toastr.error(error.data.message, 'Error changing password!');
+            toastr.error(error.data.data.raw.message, 'Error changing password!');
           });
       } else {
       toastr.error('Not all fields are filled', 'Error');
