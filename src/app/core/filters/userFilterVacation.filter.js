@@ -7,8 +7,8 @@ export default function (app) {
 			return function(input, status, date = 0) {
 				if (input.length > 0) {
 					if(date.startdate){
-                        input = filter(input, item => (date.enddate) ? new Date(item.startdate) <= date.enddate && new Date(item.enddate) >= date.startdate : new Date(item.enddate) >= date.startdate);
-                    }
+            input = filter(input, item => (date.enddate) ? new Date(item.startdate) <= date.enddate && new Date(item.enddate) >= date.startdate : new Date(item.enddate) >= date.startdate);
+          }
 					switch (status) {
 						case 'new':
 						return filter(input, function(item) {

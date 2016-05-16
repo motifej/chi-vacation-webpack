@@ -137,6 +137,7 @@
               name="startdate"
               ng-model="dateFilter.startdate"
               is-show-all-days="true"
+              ng-model-options="{timezone:'UTC'}"
               >
               </chi-datepicker>
           </div>
@@ -147,6 +148,7 @@
               ng-model="dateFilter.enddate"
               min-date="dateFilter.startdate"
               is-show-all-days="true"
+              ng-model-options="{timezone:'UTC'}"
               >
               </chi-datepicker>
           </div>
