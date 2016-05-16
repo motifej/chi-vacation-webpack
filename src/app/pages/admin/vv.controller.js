@@ -169,7 +169,7 @@ export default class VvController {
         controllerAs: 'info',
         resolve: {
           user: user,
-          isDelShow: user.role == "admin" ? true : false
+          isDelShow: this.user.role == "admin" ? true : false
         }
       });
     }
