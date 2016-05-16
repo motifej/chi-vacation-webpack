@@ -1,8 +1,9 @@
 export default class UserInfoController {
-  constructor (user, $uibModal, moment) {
+  constructor (user, isDelShow, $uibModal, moment) {
     'ngInject';
     this.user = user;
     this.modal = $uibModal;
+    this.isDelShow = isDelShow;
     
     }
     editUser(user) {
@@ -11,7 +12,8 @@ export default class UserInfoController {
         controller: require('../editUser/editUser.controller'),
         controllerAs: 'user',
         resolve: {
-        	user: user
+        	user: user,
+            isDelShow: this.isDelShow
         }
       });
     }
