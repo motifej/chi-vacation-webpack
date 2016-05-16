@@ -1,5 +1,5 @@
 export default class AddNewUserController {
-  constructor ($filter, $uibModalInstance, $uibModal, toastr, sailsService, users, groups, user, sailsAuthService, mailService) {
+  constructor ($filter, $uibModalInstance, $uibModal, toastr, sailsService, users, groups, user, isDelShow, sailsAuthService, mailService) {
     'ngInject';
 
     this.invalidForm = false;
@@ -14,6 +14,7 @@ export default class AddNewUserController {
     this.modalInstance = $uibModalInstance;
     this.group = groups;
     this.role = users;
+    this.isDelShow = isDelShow;
 
     this.newUser = angular.copy(user);
     this.newUser.employmentdate = new Date(this.newUser.employmentdate || 0);
