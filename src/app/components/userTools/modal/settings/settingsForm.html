@@ -21,7 +21,7 @@
 
 
             <div class="form-group">
-              <label for="newEmail">Recipients:</label>
+              <label for="newEmail">General recipients:</label>
               <ul class="list-group" >
                 <li ng-repeat="item in user.settings.email track by $index" class="list-group-item">
                   <span class="glyphicon glyphicon-envelope"></span> {{item}}
@@ -37,6 +37,41 @@
                 </span>
               </div>
             </div>
+
+
+<hr>
+            <div class="form-group">
+              <label for="newGroupEmail">Recipients by groups:</label>
+
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
+
+                <select class="form-control" placeholder="Select group"
+                      ng-options="value.name for value in user.groups"
+                      ng-model="user.group"
+                ></select>
+
+              </div>
+<br>              
+              <ul class="list-group" >
+                  <li ng-repeat="item in user.group.emails track by $index" class="list-group-item">
+                    <span class="glyphicon glyphicon-envelope"></span> {{item}}
+                    <span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteGroupEmail(item)"></span>
+                  </li>
+              </ul>
+
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                <input id="newGroupEmail" name="newGroupEmail" type="text" class="form-control" ng-model="user.newGroupEmail" placeholder="Add email for {{user.group.name}} group" ng-pattern="user.emailPattern">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button" ng-click="user.addGroupEmail()">Add</button>
+                </span>
+              </div>
+            </div>
+
+<hr>
+
+
 
             <div class="form-group">
               <div class="checkbox">
