@@ -243,8 +243,8 @@
       <div class="col-xs-12">
         <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='admin.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue)'>
           <legend class="user-form__title">
-            <span ng-show="admin.isVacationState('vacations')">Vacations request</span>
-            <span ng-show="admin.isVacationState('daysoff')">Days-off request</span>
+            <span ng-show="admin.isVacationState(admin.VACATIONS)">Vacations request</span>
+            <span ng-show="admin.isVacationState(admin.DAYSOFF)">Days-off request</span>
           </legend>
           <div class="row">
             <div class="form-group col-md-6">
