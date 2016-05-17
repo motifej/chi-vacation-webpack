@@ -36,7 +36,9 @@ export default function (app) {
                             };
                             break;
                         default:
-                            filteredInput[key] = value;
+                            if(some(vacationsList,(item)=>filterDate(date, item))){
+                                filteredInput[key] = value;
+                            };
                     }
                 }
             });
