@@ -1,4 +1,5 @@
 import { find } from 'lodash';
+import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
 
 export default class VvController {
   constructor ($scope, $timeout, userData, $uibModal, moment, groups, status, toastr, user, sailsService) {
@@ -39,7 +40,9 @@ export default class VvController {
     this.$timeout = $timeout;
     this.vacationDays = this.calcDays();
     this.moment = moment;
-    this.vacationState = 'vacations';
+    this.DAYSOFF = DAYSOFF;
+    this.VACATIONS = VACATIONS;
+    this.vacationState = VACATIONS;
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
     this.sending = false;
@@ -325,7 +328,7 @@ setDateInfo() {
       return;
     }
 
-    let total = this.vacationState === 'vacations' ? this.filtredUser.availableDays : this.filtredUser.availableDaysOff;
+    let total = this.vacationState === this.VACATIONS ? this.filtredUser.availableDays : this.filtredUser.availableDaysOff;
     if (this.filtredUser.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
       return;
