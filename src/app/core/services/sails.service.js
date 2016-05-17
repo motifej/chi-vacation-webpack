@@ -32,11 +32,12 @@ export default class SailsService {
 		
 		//http settings
 		this.saveSettings = (settings) => {
-			let { email, emailCreate, emailChanged } = settings;
+			let { email, emailCreate, emailChanged, groups } = settings;
 			return this.http.put(API_URL + '/settings/' + SETTINGS_KEY, {
 				email,
 				emailCreate,
-				emailChanged
+				emailChanged,
+				groups
 			})
 		}
 		this.createSettings = () => this.http.post(API_URL + '/settings/create', { id:SETTINGS_KEY });
