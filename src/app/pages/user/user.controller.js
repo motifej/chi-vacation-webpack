@@ -75,7 +75,9 @@ export default class UserController {
       console.log(user.totalDays)
       user.availableCurDays += user.totalDays - user.spendVacation;
       user.availableDays += user.availableCurDays < 0 ? 0 : user.availableCurDays;
-      user.daysoff.forEach( item => {
+      user.daysoff
+      .filter( item => item.year == user.year && item.status != "rejected" )
+      .forEach( item => {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
       user.availableDaysOff = 5 - user.spendDaysOff;
