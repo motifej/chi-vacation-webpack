@@ -344,7 +344,8 @@ setDateInfo() {
     const createError = ({data: data}) => this.toastr.error(data.raw.message, 'Error creating vacation', toastrOptions);
     const createSuccess = res => {
       this.toastr.success('Vacation request was sent successfully!', toastrOptions);
-      this.filtredUser.vacations.push(res.data);
+      if (!_.find(this.filtredUser[this.vacationState], {id:res.data.id}))
+                  this.filtredUser[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
     }
 
