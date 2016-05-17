@@ -44,7 +44,7 @@ export default function (app) {
         }
         function filterDate(date, item) {
             if(date.startdate){
-                if(date.enddate ? !(new Date(item.startdate) > date.enddate) && new Date(item.enddate) > date.startdate : new Date(item.enddate) > date.startdate){
+                if(date.enddate ? new Date(item.startdate) <= date.enddate && new Date(item.enddate) >= date.startdate : new Date(item.enddate) >= date.startdate){
                     return true;
                 } else {
                     return false;

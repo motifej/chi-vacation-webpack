@@ -42,6 +42,7 @@ export default class VvController {
     this.vacationState = 'vacations';
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
+    this.sending = false;
 
 
     
@@ -119,9 +120,10 @@ export default class VvController {
     pushAddedDays(isAdd) {
       let added = angular.copy(this.filtredUser.added);
       added[this.filtredUser.year] = (this.filtredUser.added[this.filtredUser.year] || 0) + (isAdd ? parseInt(this.filtredUser.addedDays) : 0 - parseInt(this.filtredUser.addedDays));
+      this.sending = true;
       this.sailsService.userResource.updateUser({id: this.filtredUser.id}, {added: added}).$promise.then(
-        () => {this.calcEnableDays(this.$scope.startdate); this.toastr.success('Changed added days', 'Success');},
-        error => this.toastr.error(error.data.message, 'Error updating user')
+        () => {this.calcEnableDays(this.$scope.startdate); this.toastr.success('Changed added days', 'Success'); this.sending = false;},
+        error => {this.toastr.error(error.data.message, 'Error updating user'); this.sending = false;}
         );
     }
 
@@ -166,7 +168,8 @@ export default class VvController {
         controller: require('../../components/userTools/modal/userInfo/userInfo.controller'),
         controllerAs: 'info',
         resolve: {
-          user: user
+          user: user,
+          isDelShow: this.user.role == "admin" ? true : false
         }
       });
     }
@@ -341,7 +344,8 @@ setDateInfo() {
     const createError = ({data: data}) => this.toastr.error(data.raw.message, 'Error creating vacation', toastrOptions);
     const createSuccess = res => {
       this.toastr.success('Vacation request was sent successfully!', toastrOptions);
-      this.filtredUser.vacations.push(res.data);
+      if (!_.find(this.filtredUser[this.vacationState], {id:res.data.id}))
+                  this.filtredUser[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
     }
 
@@ -410,6 +414,4 @@ setDateInfo() {
     return val === this.order;
   }
 
-} 
-
-
+}
