@@ -102,7 +102,8 @@ export default class SailsService {
 						console.log('vacation created', obj);
 						$rootScope.$applyAsync( () => {
 							if (this.user.id === data.uid) 
-								this.user[params].push(data)
+								if (!_.find(this.user[params], {id: data.id}))
+									this.user[params].push(data)
 							if (this.users) {
 								let u = _.find(this.users, {id: data.uid});
 								if (!_.find(u[params], {id: data.id}))
