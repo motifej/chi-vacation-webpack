@@ -154,6 +154,8 @@ this.sailsService['create' + this.vacationState]({uid, startdate: new Date(sDate
       r => {
         console.log(1);
         this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+        if (!_.find(this.user[this.vacationState], {id:r.data.result.id}))
+            this.user[this.vacationState].push(res.data.result);
         this.calcEnableDays(this.$scope.startdate);
       },
       e => {
