@@ -226,7 +226,13 @@ export default class UserController {
   deleteVacation(item) {
     this.sailsService[this.vacationState + 'Resource'].delete( { id: item.id} ).$promise
     .then(
-      r => this.toastr.success('Vacation was deleted successfully!'),
+      r => {
+        if(_.findIndex(this.user[this.vacationState], {id: item.id}) != -1) {
+          this.user[this.vacationState].splice(_.findIndex(this.user[this.vacationState], {id: item.id}), 1);
+        }
+        this.calcEnableDays(this.$scope.startdate);
+        this.toastr.success('Vacation was deleted successfully!')
+      },
       e => this.toastr.error(e.data.data.raw.message, 'Error deleting vacation')
     );
   }
