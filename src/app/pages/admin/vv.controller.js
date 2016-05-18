@@ -2,10 +2,11 @@ import { find } from 'lodash';
 import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
 
 export default class VvController {
-  constructor ($scope, $timeout, userData, $uibModal, moment, groups, status, toastr, user, sailsService) {
+  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, sailsService) {
     'ngInject';
     
     this.sailsService = sailsService;
+    this.$parse = $parse;
     this.toastr = toastr;
     this.users = userData;
     this.groups = groups;
@@ -344,7 +345,9 @@ setDateInfo() {
     const {create} = this.sailsService[this.vacationState + 'Resource'];
     const {id: uid, year} = this.filtredUser;
     const {startdate, enddate, status} = vacation;
-    const createError = ({data: data}) => this.toastr.error(data.raw.message, 'Error creating vacation', toastrOptions);
+    const createError = ({data: data}) => {
+      this.toastr.error(this.$parse('raw.message')(data) || '', 'Error creating vacation', toastrOptions);
+    }
     const createSuccess = res => {
       this.toastr.success('Vacation request was sent successfully!', toastrOptions);
       if (!_.find(this.filtredUser[this.vacationState], {id:res.data.id}))

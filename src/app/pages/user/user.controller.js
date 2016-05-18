@@ -4,7 +4,7 @@ export default class UserController {
 
 
 
-  constructor ($scope, $log, $timeout, sailsService, moment, toastr, user, $uibModal) {
+  constructor ($scope, $parse, $log, $timeout, sailsService, moment, toastr, user, $uibModal) {
     'ngInject';
     if (moment().weekday() === 6) $scope.startdate = new Date(moment().add(2, 'days')); else
     if (moment().weekday() === 0) $scope.startdate = new Date(moment().add(1, 'days')); else
@@ -19,6 +19,7 @@ export default class UserController {
     this.VACATIONS = VACATIONS;
     this.today = new Date();
     this.$scope = $scope;
+    this.$parse = $parse;
     this.$timeout = $timeout;
     this.vacationDays = this.calcDays();
     this.toastr = toastr;
@@ -154,14 +155,17 @@ export default class UserController {
       commentary: null,
       status: "new"
     };
-    const {create} = this.sailsService[this.vacationState + 'Resource'];
-    const {id: uid, year} = this.user;
-    const {startdate, enddate, status} = vacation;
-    const createError = ({data}) => {this.toastr.error(data.raw.message, 'Error creating vacation', toastrOptions); this.sending = false;};
+    const { create } = this.sailsService[this.vacationState + 'Resource'];
+    const { id: uid, year } = this.user;
+    const { startdate, enddate, status } = vacation;
+    const createError = ({data}) => {
+      this.sending = false; 
+      this.toastr.error(this.$parse('raw.message')(data) || '', 'Error creating vacation', toastrOptions)
+    };
     const createSuccess = res => {
       this.toastr.success('Vacation request was sent successfully!', toastrOptions);
       if (!_.find(this.user[this.vacationState], {id:res.data.id}))
-                  this.user[this.vacationState].push(res.data);
+        this.user[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
       this.sending = false;
     }
