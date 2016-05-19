@@ -200,7 +200,10 @@
             </div>
           </div>
           <div class="row">
-            <button type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">Send</button>
+            <button type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default" ng-disabled="userCtrl.sending">
+              <span ng-show="userCtrl.sending"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+              Send
+            </button>
           </div>
         </form>
       </div>

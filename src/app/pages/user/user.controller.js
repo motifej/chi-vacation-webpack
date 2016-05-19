@@ -4,7 +4,7 @@ export default class UserController {
 
 
 
-  constructor ($scope, $log, $timeout, sailsService, moment, toastr, user, $uibModal) {
+  constructor ($scope, $parse, $log, $timeout, sailsService, moment, toastr, user, $uibModal) {
     'ngInject';
     if (moment().weekday() === 6) $scope.startdate = new Date(moment().add(2, 'days')); else
     if (moment().weekday() === 0) $scope.startdate = new Date(moment().add(1, 'days')); else
@@ -19,6 +19,7 @@ export default class UserController {
     this.VACATIONS = VACATIONS;
     this.today = new Date();
     this.$scope = $scope;
+    this.$parse = $parse;
     this.$timeout = $timeout;
     this.vacationDays = this.calcDays();
     this.toastr = toastr;
@@ -28,6 +29,7 @@ export default class UserController {
     this.sailsService = sailsService;
     this.activate($scope);
     this.vacationState = VACATIONS;
+    this.sending = false;
 
     this.calcEnableDays(this.$scope.startdate);
     this.calcDaysCalc();
@@ -110,6 +112,7 @@ export default class UserController {
   }
 
   submitHandler(startDate, endDate) {
+    this.sending = true;
     let vm = this;
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
@@ -134,12 +137,14 @@ export default class UserController {
 
     if (vm.vacations && isCrossingIntervals(vm.vacations)) {
       this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
+      this.sending = false;
       return;
     }
 
     let total = this.vacationState === this.VACATIONS ? this.user.availableDays : this.user.availableDaysOff;
     if (this.user.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
+      this.sending = false;
       return;
     }
 
@@ -150,15 +155,19 @@ export default class UserController {
       commentary: null,
       status: "new"
     };
-    const {create} = this.sailsService[this.vacationState + 'Resource'];
-    const {id: uid, year} = this.user;
-    const {startdate, enddate, status} = vacation;
-    const createError = ({data: data}) => this.toastr.error(data.raw.message, 'Error creating vacation', toastrOptions);
+    const { create } = this.sailsService[this.vacationState + 'Resource'];
+    const { id: uid, year } = this.user;
+    const { startdate, enddate, status } = vacation;
+    const createError = ({data}) => {
+      this.sending = false; 
+      this.toastr.error(this.$parse('raw.message')(data) || '', 'Error creating vacation', toastrOptions)
+    };
     const createSuccess = res => {
       this.toastr.success('Vacation request was sent successfully!', toastrOptions);
       if (!_.find(this.user[this.vacationState], {id:res.data.id}))
-                  this.user[this.vacationState].push(res.data);
+        this.user[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
+      this.sending = false;
     }
 
 
@@ -221,7 +230,13 @@ export default class UserController {
   deleteVacation(item) {
     this.sailsService[this.vacationState + 'Resource'].delete( { id: item.id} ).$promise
     .then(
-      r => this.toastr.success('Vacation was deleted successfully!'),
+      r => {
+        if(_.findIndex(this.user[this.vacationState], {id: item.id}) != -1) {
+          this.user[this.vacationState].splice(_.findIndex(this.user[this.vacationState], {id: item.id}), 1);
+        }
+        this.calcEnableDays(this.$scope.startdate);
+        this.toastr.success('Vacation was deleted successfully!')
+      },
       e => this.toastr.error(e.data.data.raw.message, 'Error deleting vacation')
     );
   }

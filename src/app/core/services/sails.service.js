@@ -32,11 +32,12 @@ export default class SailsService {
 		
 		//http settings
 		this.saveSettings = (settings) => {
-			let { email, emailCreate, emailChanged } = settings;
+			let { email, emailCreate, emailChanged, groups } = settings;
 			return this.http.put(API_URL + '/settings/' + SETTINGS_KEY, {
 				email,
 				emailCreate,
-				emailChanged
+				emailChanged,
+				groups
 			})
 		}
 		this.createSettings = () => this.http.post(API_URL + '/settings/create', { id:SETTINGS_KEY });
@@ -101,7 +102,8 @@ export default class SailsService {
 						console.log('vacation created', obj);
 						$rootScope.$applyAsync( () => {
 							if (this.user.id === data.uid) 
-								this.user[params].push(data)
+								if (!_.find(this.user[params], {id: data.id}))
+									this.user[params].push(data)
 							if (this.users) {
 								let u = _.find(this.users, {id: data.uid});
 								if (!_.find(u[params], {id: data.id}))
