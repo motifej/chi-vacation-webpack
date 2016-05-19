@@ -68,6 +68,32 @@ export default class AddNewUserController {
     )
   }
 
+  restoreUser () {
+    let modalInstance = this.modal.open({
+      templateUrl: require('!!file!../confirmDialog/confirmDialog.html'),
+      controller: require('../confirmDialog/confirmDialog.controller'),
+      controllerAs: 'confirm',
+      size: 'sm'
+    });
+    modalInstance.result.then(
+      selectedItem => {
+        if (selectedItem) {
+          this.invalidForm = false;
+          this.modalInstance.close();
+          delete this.newUser.vacations;
+          delete this.newUser.daysoff;
+          this.updateUser({id: this.newUser.id}, angular.extend(this.newUser, {
+            deleted: false
+          })).$promise
+            .then(
+              () => this.toastr.success('Restoring user success', 'Success'),
+              error => this.toastr.error(error.data.message, 'Error restoring user')
+            );
+        }
+      }
+    )
+  }
+
   resetPassword () {
     let modalInstance = this.modal.open({
       templateUrl: require('!!file!../confirmDialog/confirmDialog.html'),
