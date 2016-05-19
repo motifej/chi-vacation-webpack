@@ -30,7 +30,7 @@
                       aria-expanded="true" 
                       aria-invalid="false">
             </div>
-            <span class="user inline-block" ng-repeat="user in admin.users | filter:admin.groupFilter | filter:admin.search | filter:!!user.deleted != admin.showDeletedUsers">
+            <span class="user inline-block" ng-repeat="user in admin.users | filter:admin.groupFilter | filter:admin.search | filter:{deleted: admin.showDeletedUsers}">
               <a class="btn btn-sm m-button"  ng-click="admin.choiceUser(user.id, user.group, user)" ng-class="{'m-button--active': admin.filter.id == user.id}">{{user.firstname + " " + user.lastname}}</a>
             </span>
           </div>
@@ -166,12 +166,12 @@
           
         </div>
 
-        <div ng-show="admin.isRepeated((admin.users | filter: !!user.deleted != admin.showDeletedUsers | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter))">
+        <div ng-show="admin.isRepeated((admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter))">
           <h4 ng-show="admin.filter.id"><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(admin.filtredUser)">{{admin.filtredUser.firstname.charAt(0) + ". " + admin.filtredUser.lastname}}</span> <small class="text-warning">{{admin.filter.group}}</small> doesn't have <span ng-hide="!admin.filtredUser[admin.pageState]">{{admin.statusFilter.status}}</span> vacations</h4>
           <h4 ng-hide="admin.filter.id">There is no {{admin.statusFilter.status}} vacations<span ng-show="admin.filter.group"> in <small class="text-warning">{{admin.filter.group}}</small></span></h4>
         </div>
 
-        <div ng-repeat="user in admin.users | filter: !!user.deleted != admin.showDeletedUsers | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
+        <div ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
           <h4><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(user)">{{user.firstname.charAt(0) + ". " + user.lastname}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <table class="table table-bordered">
             <colgroup>
