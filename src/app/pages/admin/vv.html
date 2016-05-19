@@ -291,7 +291,10 @@
             </div>
           </div>
           <div class="row">
-            <button ng-disabled="admin.filtredUser.id ? false : true" type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">Send</button>
+            <button ng-disabled="(admin.filtredUser.id && !admin.sendingRequest) ? false : true" type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">
+              <span ng-show="admin.sendingRequest"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+              Send
+            </button>
           </div>
         </form>
       </div>
@@ -312,12 +315,12 @@
             <input type="text" class="form-control" ng-model="admin.filtredUser.addedDays" restrict-pattern="[^\d]+">
           </div>
           <div class="form-group">
-            <button ng-disabled="admin.sending" class="btn col-xs-4 col-xs-offset-1 chi-btn--default" ng-click="admin.pushAddedDays(true)">
-              <span ng-show="admin.sending"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            <button ng-disabled="admin.sendingAdditional" class="btn col-xs-4 col-xs-offset-1 chi-btn--default" ng-click="admin.pushAddedDays(true)">
+              <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
               Add
             </button>
-            <button ng-disabled="admin.sending" class="btn col-xs-4 col-xs-offset-1 chi-btn--default" ng-click="admin.pushAddedDays(false)">
-              <span ng-show="admin.sending"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            <button ng-disabled="admin.sendingAdditional" class="btn col-xs-4 col-xs-offset-1 chi-btn--default" ng-click="admin.pushAddedDays(false)">
+              <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
               Deduct
             </button>
           </div>
