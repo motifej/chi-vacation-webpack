@@ -46,6 +46,7 @@ export default class VvController {
     this.vacationState = VACATIONS;
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
+    this.showDeletedUsers = false;
     this.sendingAdditional = false;
     this.sendingRequest = false;
 
