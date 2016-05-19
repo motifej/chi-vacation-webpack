@@ -46,7 +46,8 @@ export default class VvController {
     this.vacationState = VACATIONS;
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
-    this.sending = false;
+    this.sendingAdditional = false;
+    this.sendingRequest = false;
 
 
     
@@ -124,10 +125,10 @@ export default class VvController {
     pushAddedDays(isAdd) {
       let added = angular.copy(this.filtredUser.added);
       added[this.filtredUser.year] = (this.filtredUser.added[this.filtredUser.year] || 0) + (isAdd ? parseInt(this.filtredUser.addedDays) : 0 - parseInt(this.filtredUser.addedDays));
-      this.sending = true;
+      this.sendingAdditional = true;
       this.sailsService.userResource.updateUser({id: this.filtredUser.id}, {added: added}).$promise.then(
-        () => {this.calcEnableDays(this.$scope.startdate); this.toastr.success('Changed added days', 'Success'); this.sending = false;},
-        error => {this.toastr.error(error.data.message, 'Error updating user'); this.sending = false;}
+        () => {this.calcEnableDays(this.$scope.startdate); this.toastr.success('Changed added days', 'Success'); this.sendingAdditional = false;},
+        error => {this.toastr.error(error.data.message, 'Error updating user'); this.sendingAdditional = false;}
         );
     }
 
@@ -310,6 +311,7 @@ setDateInfo() {
   }
 
   submitHandler(startDate, endDate) {
+    this.sendingRequest = true;
     let vm = this;
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
@@ -334,12 +336,14 @@ setDateInfo() {
 
     if (vm.vacations && isCrossingIntervals(vm.vacations)) {
       this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
+      this.sendingRequest = false;
       return;
     }
 
     let total = this.vacationState === this.VACATIONS ? this.filtredUser.availableDays : this.filtredUser.availableDaysOff;
     if (this.filtredUser.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!', toastrOptions);
+      this.sendingRequest = false;
       return;
     }
 
@@ -354,6 +358,7 @@ setDateInfo() {
     const {id: uid, year} = this.filtredUser;
     const {startdate, enddate, status} = vacation;
     const createError = ({data: data}) => {
+      this.sendingRequest = false;
       this.toastr.error(this.$parse('raw.message')(data) || '', 'Error creating vacation', toastrOptions);
     }
     const createSuccess = res => {
@@ -361,6 +366,7 @@ setDateInfo() {
       if (!_.find(this.filtredUser[this.vacationState], {id:res.data.id}))
                   this.filtredUser[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
+      this.sendingRequest = false;
     }
 
 
