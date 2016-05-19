@@ -47,6 +47,7 @@ export default class VvController {
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
     this.sending = false;
+    this.showDeletedUsers = false;
 
 
     
