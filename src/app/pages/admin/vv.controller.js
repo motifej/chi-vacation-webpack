@@ -135,7 +135,7 @@ export default class VvController {
     choiceGroup(group) {
       this.filter = { group: group };
       this.groupFilter = { group: group };
-      this.setDateInfo();
+     // this.setDateInfo();
       this.filtredUser = {};
     }
 
@@ -205,8 +205,10 @@ export default class VvController {
 
             let vs = new Date(value.startdate).setHours(0,0,0,0);
             let ve = new Date(value.enddate).setHours(0,0,0,0);
+              console.log('st',this.statusFilter.status);
 
-               if ( (((value.status == this.statusFilter.status || this.statusFilter.status == "") && (nd < vs) ) ) ||  
+               if ( (this.statusFilter.status == "") ||
+                    (((value.status == this.statusFilter.status ) && (nd < vs) ) )  ||
                     ((this.statusFilter.status == 'inprogress') && (vs <= nd) && (ve >= nd) ) || 
                     (((this.statusFilter.status == 'spent') && (value.status == 'confirmed')) && (nd > ve)  ) ) {
 
