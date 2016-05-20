@@ -46,6 +46,7 @@ export default class VvController {
     this.vacationState = VACATIONS;
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
+    this.showDeletedUsers = false;
     this.sendingAdditional = false;
     this.sendingRequest = false;
 
@@ -166,8 +167,6 @@ export default class VvController {
     }
 
     userInfo(user) {
-      console.log(user);
-      
       this.modal.open({
         templateUrl: require('!!file!../../components/userTools/modal/userInfo/userInfo.html'),
         controller: require('../../components/userTools/modal/userInfo/userInfo.controller'),
@@ -311,102 +310,116 @@ setDateInfo() {
   }
 
   submitHandler(startDate, endDate) {
-    this.sendingRequest = true;
-    let vm = this;
-    let sDate = new Date(startDate).getTime();
-    let eDate = new Date(endDate).getTime();
-    let toastrOptions = {progressBar: false};
-    /*let vacation;*/
-    
-    let listArray = [];
-    vm.vacations = [];
-    listArray.push(this.filtredUser['vacations']);
-    listArray.push(this.filtredUser['daysoff']);
+    let modalInstance = this.modal.open({
+      templateUrl: require('!!file!../../components/userTools/modal/confirmAdminCreateVacation/confirmAdminCreateVacation.html'),
+      controller: require('../../components/userTools/modal/confirmAdminCreateVacation/confirmAdminCreateVacation.controller'),
+      controllerAs: 'confirm'
+    });
+    modalInstance.result.then(
+      selectedItem => {
+        if (selectedItem) {
+
+          this.sendingRequest = true;
+          let vm = this;
+          let sDate = new Date(startDate).getTime();
+          let eDate = new Date(endDate).getTime();
+          let toastrOptions = {progressBar: false};
+          /*let vacation;*/
+
+          let listArray = [];
+          vm.vacations = [];
+          listArray.push(this.filtredUser['vacations']);
+          listArray.push(this.filtredUser['daysoff']);
 
 
 
-    listArray.forEach( list => {
-      if (list) {
-        for (let item in list) {
-          if (list[item].status === 'rejected') continue;
-          vm.vacations.push({startDate: list[item].startdate, endDate: list[item].enddate, status: list[item].status, commentary: list[item].commentary});
+          listArray.forEach( list => {
+            if (list) {
+              for (let item in list) {
+                if (list[item].status === 'rejected') continue;
+                vm.vacations.push({startDate: list[item].startdate, endDate: list[item].enddate, status: list[item].status, commentary: list[item].commentary});
+              }
+            }
+          });
+
+          if (vm.vacations && isCrossingIntervals(vm.vacations)) {
+            this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
+            this.sendingRequest = false;
+            return;
+          }
+
+          let total = this.vacationState === this.VACATIONS ? this.filtredUser.availableDays : this.filtredUser.availableDaysOff;
+          if (this.filtredUser.vacationDays > total) {
+            this.toastr.error('You have exceeded the number of available days!', toastrOptions);
+            this.sendingRequest = false;
+            return;
+          }
+
+          let vacation = {
+            startdate: new Date(sDate),
+            enddate: new Date(eDate),
+            status: 'inprogress',
+            commentary: null,
+            status: "new"
+          };
+          const {create} = this.sailsService[this.vacationState + 'Resource'];
+          const {id: uid, year} = this.filtredUser;
+          const {startdate, enddate, status} = vacation;
+          const createError = ({data: data}) => {
+            this.sendingRequest = false;
+            this.toastr.error(this.$parse('raw.message')(data) || '', 'Error creating vacation', toastrOptions);
+          }
+          const createSuccess = res => {
+            this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+            if (!_.find(this.filtredUser[this.vacationState], {id:res.data.id}))
+              this.filtredUser[this.vacationState].push(res.data);
+            this.calcEnableDays(this.$scope.startdate);
+            this.sendingRequest = false;
+          }
+
+
+          if(this.vacationState == "daysoff") {
+            create({uid, startdate, enddate, status, year })
+            .$promise.then(createSuccess, createError);
+            return;
+          }
+
+          if(this.filtredUser.availablePrevDays <= 0) {
+            create({uid, startdate, enddate, status, year })
+            .$promise.then(createSuccess, createError);
+            return;
+          }
+
+          if(this.filtredUser.vacationDays > this.filtredUser.availablePrevDays){
+            let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.availablePrevDays - 1, [1,2,3,4,5]);
+            create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
+            .$promise.then(createSuccess, createError);
+            create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
+            .$promise.then(createSuccess, createError);
+          } else {
+            create({uid, startdate, enddate, status, year: year - 1 })
+            .$promise.then(createSuccess, createError);
+          }
+
+
+
+          function isCrossingIntervals(dateIntervals) {
+            if(dateIntervals.length === 0) return false;
+
+            let result = dateIntervals.filter(function(item) {
+              if  (sDate <= new Date(item.endDate).getTime() && eDate >= new Date(item.startDate).getTime()) {
+                return true;
+              }
+            });
+
+            return !!result.length;
+
+          }
+
         }
       }
-    });
+    )
 
-    if (vm.vacations && isCrossingIntervals(vm.vacations)) {
-      this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
-      this.sendingRequest = false;
-      return;
-    }
-
-    let total = this.vacationState === this.VACATIONS ? this.filtredUser.availableDays : this.filtredUser.availableDaysOff;
-    if (this.filtredUser.vacationDays > total) {
-      this.toastr.error('You have exceeded the number of available days!', toastrOptions);
-      this.sendingRequest = false;
-      return;
-    }
-
-    let vacation = {
-      startdate: new Date(sDate),
-      enddate: new Date(eDate),
-      status: 'inprogress',
-      commentary: null,
-      status: "new"
-    };
-    const {create} = this.sailsService[this.vacationState + 'Resource'];
-    const {id: uid, year} = this.filtredUser;
-    const {startdate, enddate, status} = vacation;
-    const createError = ({data: data}) => {
-      this.sendingRequest = false;
-      this.toastr.error(this.$parse('raw.message')(data) || '', 'Error creating vacation', toastrOptions);
-    }
-    const createSuccess = res => {
-      this.toastr.success('Vacation request was sent successfully!', toastrOptions);
-      if (!_.find(this.filtredUser[this.vacationState], {id:res.data.id}))
-                  this.filtredUser[this.vacationState].push(res.data);
-      this.calcEnableDays(this.$scope.startdate);
-      this.sendingRequest = false;
-    }
-
-
-    if(this.vacationState == "daysoff") {
-      create({uid, startdate, enddate, status, year })
-       .$promise.then(createSuccess, createError);
-      return;
-    }
-
-    if(this.filtredUser.availablePrevDays <= 0) {
-      create({uid, startdate, enddate, status, year })
-       .$promise.then(createSuccess, createError);
-      return;
-    }
-
-    if(this.filtredUser.vacationDays > this.filtredUser.availablePrevDays){
-      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.availablePrevDays - 1, [1,2,3,4,5]);
-      create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
-       .$promise.then(createSuccess, createError);
-      create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
-       .$promise.then(createSuccess, createError);
-    } else {
-      create({uid, startdate, enddate, status, year: year - 1 })
-       .$promise.then(createSuccess, createError);
-    }
-    
-
-
-    function isCrossingIntervals(dateIntervals) {
-      if(dateIntervals.length === 0) return false;
-
-      let result = dateIntervals.filter(function(item) {
-        if  (sDate <= new Date(item.endDate).getTime() && eDate >= new Date(item.startDate).getTime()) {
-          return true;
-        }
-      });
-
-      return !!result.length;
-
-    }
   }
 
   changeVacationState(state) {

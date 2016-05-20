@@ -1,6 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title">Edit user form
-    <span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteUser()" ng-show="user.isDelShow"></span>
+    <span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteUser()" ng-show="user.isDelShow && !user.newUser.deleted"></span>
+    <span title="Restore User" class="close icon-warning glyphicon glyphicon-exclamation-sign" ng-click="user.restoreUser()" ng-show="user.newUser.deleted"></span>
     <span title="Generate New Password" class="close icon-warning glyphicon glyphicon-lock" ng-click="user.resetPassword()"></span>
   </h3>
 </div>
