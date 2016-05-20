@@ -27,6 +27,7 @@ export default class ManagerController {
     this.calendarDay = new Date(today);
     this.newEvent.startsAt = new Date(today); 
     this.newEvent.endsAt = new Date(today);
+    this.showDeletedUsers = false;
     this.setDateInfo();
 
 this.columnDefs = [
