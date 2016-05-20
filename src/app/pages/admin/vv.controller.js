@@ -244,7 +244,7 @@ setDateInfo() {
   calcEnableDays(vacationStartDate) {
 
       let user = this.initUserData(vacationStartDate, this.filtredUser);
-
+      if (!user) return 0;
       
 
       if(user.year != 0 
@@ -281,6 +281,7 @@ setDateInfo() {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
       user.availableDaysOff = 5 - user.spendDaysOff;
+      return user.availableDays
   }
 
   calcAvailablePrevDays (vacationStartDate, user) {
@@ -291,6 +292,7 @@ setDateInfo() {
   }
 
   initUserData(vacationStartDate, user) {
+    if (! (user && user.added)) return 0;
     let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
     user.formatedEmploymentDate = new Date(user.employmentdate);
     user.year = Math.floor(days / 365.25);
