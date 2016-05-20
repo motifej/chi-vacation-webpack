@@ -206,9 +206,9 @@ export default class VvController {
             let ve = new Date(value.enddate).setHours(0,0,0,0);
               console.log('st',this.statusFilter.status);
 
-               if ( (this.statusFilter.status == "") ||
-                    (((value.status == this.statusFilter.status ) && (nd < vs) ) )  ||
-                    ((this.statusFilter.status == 'inprogress') && (vs <= nd) && (ve >= nd) ) || 
+               if ( (this.statusFilter.status == "" || (value.status == this.statusFilter.status && value.status != 'confirmed')) ||
+                    (((this.statusFilter.status == 'confirmed' ) && (value.status == 'confirmed') && (nd < vs) ) )  ||
+                    ((this.statusFilter.status == 'inprogress') && (value.status == 'confirmed') && (vs <= nd) && (ve >= nd) ) || 
                     (((this.statusFilter.status == 'spent') && (value.status == 'confirmed')) && (nd > ve)  ) ) {
 
                   let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning', new:'warning'};
