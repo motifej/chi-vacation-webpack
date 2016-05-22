@@ -19,6 +19,15 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <div class="checkbox">
+                <label>
+                  <input id="emailCreate" name="emailCreate" type="checkbox" ng-model="user.settings.emailChanged">
+                  Send email to user when status of vacation was changed
+                </label>
+              </div>
+            </div>      
+
 
             <div class="form-group">
               <label for="newEmail">General recipients:</label>
@@ -52,7 +61,7 @@
                 ></select>
 
               </div>
-<br>              
+            
               <ul class="list-group" >
                   <li ng-repeat="item in user.group.emails track by $index" class="list-group-item">
                     <span class="glyphicon glyphicon-envelope"></span> {{item}}
@@ -73,14 +82,7 @@
 
 
 
-            <div class="form-group">
-              <div class="checkbox">
-                <label>
-                  <input id="emailCreate" name="emailCreate" type="checkbox" ng-model="user.settings.emailChanged">
-                  Send email to user when status of vacation was changed
-                </label>
-              </div>
-            </div>            
+      
 
 
 <!-- 

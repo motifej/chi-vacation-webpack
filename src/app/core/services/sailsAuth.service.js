@@ -24,6 +24,7 @@ export default class SailsAuthService {
 		return this.authUser.data;
 	}
 	getUserState() {
+		this.authUser = this.$localStorage[ USERSTORAGEKEY ] || { status:false, data: false };
 		return this.authUser.status;
 	}
 
