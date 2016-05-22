@@ -31,6 +31,7 @@ export default function dropdownListDirective() {
     }
 
     scope._fillEvents = function( vacations , item){
+      console.log('dfgsdfg');
       var {firstName, lastName} = item;
       var fullName = scope.search = firstName + ' ' + lastName; 
       angular.forEach(item.vacations[vacations], function (value) {

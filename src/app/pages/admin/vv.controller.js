@@ -197,29 +197,35 @@ export default class VvController {
         if ( (vacation in value) && (!this.filter.group || this.filter.group == value.group) && (!this.filter.id || this.filter.id == value.id) ) {
           let list = value[vacation];
           var {firstname, lastname} = value;
+          var nd = new Date().setHours(0,0,0,0);
+
           angular.forEach(list, (value) => {
             var {startdate, enddate, status} = value;
-              if (value.status == this.statusFilter.status || this.statusFilter.status == "") {
-                // let typeEvent = {
-                //   rejected: vacation === 'Vacations' ? 'important' : 'vv-dayoff-rejected',
-                //   confirmed: vacation === 'Vacations' ? 'info' : 'vv-dayoff-confirmed', 
-                //   inprogress: vacation === 'Vacations' ? 'warning' : 'vv-dayoff-warning', 
-                // };
-                let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning', new:'warning'};
-                var event = 
-                {
-                  title: firstname + ' '+ lastname,
-                  type: typeEvent[status],
-                  cssClass: vacation === 'vacations' ? '' : 'm-dayoff',
-                  startsAt: new Date(startdate),
-                  endsAt: new Date(enddate),
-                  editable: false,
-                  deletable: false,
-                  incrementsBadgeTotal: true,
-                  user: user
-                };
-                this.events.push(event);
-              }
+
+            let vs = new Date(value.startdate).setHours(0,0,0,0);
+            let ve = new Date(value.enddate).setHours(0,0,0,0);
+
+               if ( (((value.status == this.statusFilter.status || this.statusFilter.status == "") && (nd < vs) ) ) ||  
+                    ((this.statusFilter.status == 'inprogress') && (vs <= nd) && (ve >= nd) ) || 
+                    (((this.statusFilter.status == 'spent') && (value.status == 'confirmed')) && (nd > ve)  ) ) {
+
+                  let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning', new:'warning'};
+                  var event = 
+                  {
+                    title: firstname + ' '+ lastname,
+                    type: typeEvent[status],
+                    cssClass: vacation === 'vacations' ? '' : 'm-dayoff',
+                    startsAt: new Date(startdate),
+                    endsAt: new Date(enddate),
+                    editable: false,
+                    deletable: false,
+                    incrementsBadgeTotal: true,
+                    user: user
+                  };
+                  this.events.push(event);
+                // }
+               
+               } 
             
           });
         }
