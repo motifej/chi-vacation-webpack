@@ -360,7 +360,7 @@ setDateInfo() {
           let vacation = {
             startdate: new Date(sDate),
             enddate: new Date(eDate),
-            status: 'inprogress',
+            //status: 'inprogress',
             commentary: null,
             status: "new"
           };
