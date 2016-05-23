@@ -112,7 +112,8 @@ export default class AddNewUserController {
                 }],
                 user: this.newUser,
                 new_password: res.data.data,
-                template_id: 'chi-password-reset'
+                template_id: 'chi-password-reset',
+                host_addr: location.origin + '/#/login' 
               }))
             .then( () => {
               this.toastr.success('A new password was sent to user');
