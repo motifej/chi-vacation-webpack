@@ -117,7 +117,6 @@ export default class UserController {
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
     let toastrOptions = {progressBar: false};
-    /*let vacation;*/
     
     let listArray = [];
     vm.vacations = [];
@@ -151,7 +150,7 @@ export default class UserController {
     let vacation = {
       startdate: new Date(sDate),
       enddate: new Date(eDate),
-      status: 'inprogress',
+      //status: 'inprogress',
       commentary: null,
       status: "new"
     };
