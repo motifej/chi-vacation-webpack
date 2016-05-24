@@ -41,7 +41,7 @@
       <div class="buttons-panel clearfix">
         <div class="btn-group col-xs-12 col-sm-9 col-md-7">
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">DaysOff</label>
+          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">Days-Off</label>
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
         </div>
@@ -214,6 +214,7 @@
         <div class="text-center">
           <h2 ng-model="admin.filtredUser.name"> {{admin.filtredUser.lastname}} {{admin.filtredUser.firstname}} </h2>
         </div>
+        <h2 class="text-center" ng-hide="admin.filtredUser.firstname">Please, select user.</h2>
 
 
       <!-- <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
