@@ -30,7 +30,7 @@ export default class AddNewUserController {
   }
   submitForm (form) {
     if (form.firstname.$invalid || form.lastname.$invalid) {
-      this.toastr.error('Not able to save incorrect value', 'Error');
+      this.toastr.error('Not able to save incorrect value. Allowed symbols: a-z, A-Z, а-я, А-Я', 'Error');
       this.invalidForm = true;
       return
     }
