@@ -3,7 +3,7 @@ export default class AddNewUserController {
     'ngInject';
 
     this.invalidForm = false;
-    this.namePattern = '[a-zA-Zа-яА-Я]+';
+    this.namePattern = '[a-zA-Zа-яА-Я\-]+';
     this.emailPattern = '\\w+.?\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}';
     this.filter = $filter;
     this.sailsService = sailsService;
@@ -28,8 +28,13 @@ export default class AddNewUserController {
   top1(){
     console.log(this.newUser.employmentDate);
   }
-  submitForm (isValid) {
-    if (isValid) {
+  submitForm (form) {
+    if (form.firstname.$invalid || form.lastname.$invalid) {
+      this.toastr.error('Not able to save incorrect value', 'Error');
+      this.invalidForm = true;
+      return
+    }
+    if (form.$valid) {
       this.invalidForm = false;
       this.newUser.employmentdate = this.employmentdate;
       this.newUser.password = this.newUser.email;

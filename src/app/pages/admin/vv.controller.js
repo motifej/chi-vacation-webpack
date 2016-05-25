@@ -206,9 +206,9 @@ export default class VvController {
             let ve = new Date(value.enddate).setHours(0,0,0,0);
               console.log('st',this.statusFilter.status);
 
-               if ( (this.statusFilter.status == "") ||
-                    (((value.status == this.statusFilter.status ) && (nd < vs) ) )  ||
-                    ((this.statusFilter.status == 'inprogress') && (vs <= nd) && (ve >= nd) ) || 
+               if ( (this.statusFilter.status == "" || (value.status == this.statusFilter.status && value.status != 'confirmed')) ||
+                    (((this.statusFilter.status == 'confirmed' ) && (value.status == 'confirmed') && (nd < vs) ) )  ||
+                    ((this.statusFilter.status == 'inprogress') && (value.status == 'confirmed') && (vs <= nd) && (ve >= nd) ) || 
                     (((this.statusFilter.status == 'spent') && (value.status == 'confirmed')) && (nd > ve)  ) ) {
 
                   let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning', new:'warning'};
@@ -244,7 +244,7 @@ setDateInfo() {
   calcEnableDays(vacationStartDate) {
 
       let user = this.initUserData(vacationStartDate, this.filtredUser);
-
+      if (!user) return 0;
       
 
       if(user.year != 0 
@@ -281,6 +281,7 @@ setDateInfo() {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
       user.availableDaysOff = 5 - user.spendDaysOff;
+      return user.availableDays
   }
 
   calcAvailablePrevDays (vacationStartDate, user) {
@@ -291,6 +292,7 @@ setDateInfo() {
   }
 
   initUserData(vacationStartDate, user) {
+    if (! (user && user.added)) return 0;
     let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
     user.formatedEmploymentDate = new Date(user.employmentdate);
     user.year = Math.floor(days / 365.25);
@@ -358,7 +360,7 @@ setDateInfo() {
           let vacation = {
             startdate: new Date(sDate),
             enddate: new Date(eDate),
-            status: 'inprogress',
+            //status: 'inprogress',
             commentary: null,
             status: "new"
           };

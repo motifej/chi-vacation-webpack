@@ -184,7 +184,8 @@
           </div>
           <div class="row user-form__last-row">
             <div class="form-group col-md-6">
-              <label for="selected">Vacation days</label>
+              <label for="selected" ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation days</label>
+              <label for="selected" ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Days-off</label>
               <input type="text" id="selected" class="form-control user__total-days" readonly
               ng-value="userCtrl.user.vacationDays">
             </div>
