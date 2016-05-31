@@ -1,6 +1,6 @@
 <div class="input-group">
-    <input ng-disabled="isDisableDate" name="{{name}}" type="date" class="form-control datepicker__input" readonly
-        uib-datepicker-popup
+    <input ng-disabled="isDisableDate" name="{{name}}" type="text" class="form-control datepicker__input" readonly
+        uib-datepicker-popup="{{format}}"
         ng-change="calcDays()"
         ng-model="curDate"
         is-open="popup.opened"
