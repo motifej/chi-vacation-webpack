@@ -1,1 +1,1 @@
-export const API_URL = NODE_ENV === 'development' ? 'http://localhost:3001' : 'http://vacation-srv.chisw.us';
+export const API_URL = NODE_ENV === 'development' ? 'http://192.168.2.233:3001' : 'http://vacation-srv.chisw.us';
