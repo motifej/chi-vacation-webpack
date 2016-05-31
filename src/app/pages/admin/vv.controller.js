@@ -57,10 +57,12 @@ export default class VvController {
   activate(scope) {
 
     scope.$watch('startdate', function() {
+      if (!scope.startdate) return;
       if (scope.enddate <= scope.startdate) scope.enddate = new Date(scope.startdate);
       scope.minEndDate = new Date(scope.startdate);
     });
     scope.$watch('dateFilter', function() {
+      if (!scope.dateFilter.startdate) return;
       if (scope.dateFilter.enddate <= scope.dateFilter.startdate) scope.dateFilter.enddate = new Date(scope.dateFilter.startdate);
       scope.dateFilter.minEndDate = new Date(scope.dateFilter.startdate);
     }, true);
@@ -433,11 +435,19 @@ setDateInfo() {
   }
 
   calcDaysCalc() {
-    this.$timeout(()=> {this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);this.calcEnableDays(this.$scope.startdate)});
+    this.$timeout(()=> {
+      if (this.$scope.startdate && this.$scope.enddate) {
+        this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);
+        this.filtredUser.vacationDays = 0;
+        this.calcEnableDays(this.$scope.startdate)
+      } else {
+      }
+    });
 
   }
 
   calcDays(startDate, endDate) {
+    if (!startDate || !endDate) return 0;
     return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5])
   }
 

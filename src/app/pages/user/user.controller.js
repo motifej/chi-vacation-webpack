@@ -38,6 +38,7 @@ export default class UserController {
   activate(scope) {
 
     scope.$watch('startdate', function() {
+      if (!scope.startdate) return;
       if (scope.enddate <= scope.startdate) scope.enddate = new Date(scope.startdate);
       scope.minEndDate = new Date(scope.startdate);
     });
@@ -210,7 +211,14 @@ export default class UserController {
   }
 
   calcDaysCalc() {
-    this.$timeout(()=> {this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);this.calcEnableDays(this.$scope.startdate)});
+    this.$timeout(()=> {
+      if (this.$scope.startdate && this.$scope.enddate) {
+        this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);
+        this.calcEnableDays(this.$scope.startdate)
+      } else {
+        this.user.vacationDays = 0;
+      }
+    });
 
   }
 
