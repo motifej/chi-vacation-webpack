@@ -172,39 +172,41 @@
 
         <div ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
           <h4><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(user)">{{user.firstname.charAt(0) + ". " + user.lastname}}</span> <small class="text-warning">{{user.group}}</small></h4>
-          <table class="table table-bordered">
-            <colgroup>
-              <col class="col-xs-3">
-              <col class="col-xs-3">
-              <col class="col-xs-2">
-              <col class="col-xs-4">
-            </colgroup>
-            <thead>
-              <tr>
-                <th>Start date
-                  <span ng-click="admin.setOrder('startdate')" ng-class="{'m-tab--sort--active': admin.isActive('startdate')}" class="glyphicon glyphicon-arrow-up"></span>
-                  <span ng-click="admin.setOrder('-startdate')" ng-class="{'m-tab--sort--active': admin.isActive('-startdate')}" class="glyphicon glyphicon-arrow-down"></span>
-                </th>
-                <th>End date
-                  <span ng-click="admin.setOrder('enddate')" ng-class="{'m-tab--sort--active': admin.isActive('enddate')}" class="glyphicon glyphicon-arrow-up"></span>
-                  <span ng-click="admin.setOrder('-enddate')" ng-class="{'m-tab--sort--active': admin.isActive('-enddate')}" class="glyphicon glyphicon-arrow-down"></span>
-                </th>
-                <th>Duration</th>
-                <th ng-hide="admin.statusFilter.status == 'rejected'">Action</th>
-              </tr>
-            </thead>
-            <tbody >
-              <tr ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
-                <td>{{item.startdate | date:'dd MMMM yyyy'}}</td>
-                <td>{{item.enddate | date:'dd MMMM yyyy'}}</td>
-                <td>{{admin.calcDays(item.startdate, item.enddate)}}</td>
-                <td ng-hide="admin.statusFilter.status == 'rejected'">
-                  <button ng-hide="item.status!='new'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
-                  <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <colgroup>
+                <col class="col-xs-3">
+                <col class="col-xs-3">
+                <col class="col-xs-2">
+                <col class="col-xs-4">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Start date
+                    <span ng-click="admin.setOrder('startdate')" ng-class="{'m-tab--sort--active': admin.isActive('startdate')}" class="glyphicon glyphicon-arrow-up"></span>
+                    <span ng-click="admin.setOrder('-startdate')" ng-class="{'m-tab--sort--active': admin.isActive('-startdate')}" class="glyphicon glyphicon-arrow-down"></span>
+                  </th>
+                  <th>End date
+                    <span ng-click="admin.setOrder('enddate')" ng-class="{'m-tab--sort--active': admin.isActive('enddate')}" class="glyphicon glyphicon-arrow-up"></span>
+                    <span ng-click="admin.setOrder('-enddate')" ng-class="{'m-tab--sort--active': admin.isActive('-enddate')}" class="glyphicon glyphicon-arrow-down"></span>
+                  </th>
+                  <th>Duration</th>
+                  <th ng-hide="admin.statusFilter.status == 'rejected'">Action</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
+                  <td>{{item.startdate | date:'dd MMMM yyyy'}}</td>
+                  <td>{{item.enddate | date:'dd MMMM yyyy'}}</td>
+                  <td>{{admin.calcDays(item.startdate, item.enddate)}}</td>
+                  <td ng-hide="admin.statusFilter.status == 'rejected'">
+                    <button ng-hide="item.status!='new'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
+                    <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
