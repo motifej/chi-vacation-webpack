@@ -37,6 +37,7 @@ class NavbarController {
   }
 
   logOut() {
+    this.isCollapsed = false;
     this.sailsAuthService.logOut();
     this.user = {};
   }
@@ -53,11 +54,17 @@ class NavbarController {
     this.isCollapsed = val || !this.isCollapsed;
   }
 
+  selected() {
+    this.isCollapsed = false;
+  }
+
   editProfile() {
     this.toastr.info('this feature in development state');
+    this.isCollapsed = false;
   }
 
   settings() {
+    this.isCollapsed = false;
     this.$uibModal.open({
         templateUrl: require('!!file!../userTools/modal/settings/settingsForm.html'),
         controller: require('../userTools/modal/settings/settings.controller'),
