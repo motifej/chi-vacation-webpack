@@ -10,7 +10,7 @@
         <img src="../../../assets/images/logo.png" class="text centr">
       </a>
     </div>
-    <div class="navbar-collapse collapse in navbar__collapse" id="myNavbar" aria-expanded="true" uib-collapse="!vm.isCollapsed">
+    <div class="navbar-collapse collapse in navbar__collapse" id="myNavbar" aria-expanded="true" uib-collapse="!vm.isCollapsed" ng-click="vm.collapsed()" ng-blur="vm.collapsed()">
       <ul class="nav navbar-nav main-navbar__menu">
         <li ng-if='vm.user.role'>
           <a ui-sref-active="chi-tab--active" ui-sref={{vm.states.HOME}} class="chi-tab"><span class="glyphicon glyphicon-home chi-glyphicon"></span>Home</a>
