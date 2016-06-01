@@ -132,6 +132,12 @@ export default class SailsService {
 							);
 							this.user[params].length = 0;
 							angular.extend(this.user[params], copy);
+							
+							if (this.users) {
+								let user = _.find(this.users, {id: obj.previous.uid.id});
+								user[params].length = 0;
+								angular.extend(user[params], copy);
+							}
 						});
 					}
 				}
