@@ -359,12 +359,12 @@ setDateInfo() {
             return;
           }
 
-          let total = this.vacationState === this.VACATIONS ? this.filtredUser.availableDays : this.filtredUser.availableDaysOff;
+          /*let total = this.vacationState === this.VACATIONS ? this.filtredUser.availableDays : this.filtredUser.availableDaysOff;
           if (this.filtredUser.vacationDays > total) {
             this.toastr.error('You have exceeded the number of available days!', toastrOptions);
             this.sendingRequest = false;
             return;
-          }
+          }*/
 
           let vacation = {
             startdate: new Date(sDate),
