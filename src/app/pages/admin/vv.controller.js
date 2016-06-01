@@ -96,7 +96,10 @@ export default class VvController {
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
             .then(
-              () => this.toastr.success('Vacation confirmed', 'Success'),
+              data => {
+                this.toastr.success('Vacation confirmed', 'Success');
+                vacation.status = data.data.status;
+              },
               error => this.toastr.error(error.data.data.raw.message, 'Error confirming vacation')
             );
           }
@@ -117,7 +120,10 @@ export default class VvController {
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
             .then(
-              () => this.toastr.success('Vacation rejected', 'Success'),
+              data => {
+                this.toastr.success('Vacation rejected', 'Success');
+                vacation.status = data.data.status;
+              },
               error => this.toastr.error(error.data.data.raw.message, 'Error rejecting vacation')
             );
           }

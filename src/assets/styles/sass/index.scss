@@ -107,3 +107,22 @@ body {
     from { -webkit-transform: rotate(0deg);}
     to { -webkit-transform: rotate(360deg);}
 }
+.cal-month-box .cal-day-today span[data-cal-date] {
+  font-size: 1.2em;
+}
+.mWl-calendar-options {
+  text-align: right;
+  margin: 0 0 10px;
+}
+@media screen and (max-width: 767px) {
+  ul li label.btn.m-tab--confirmed {
+    background-color: rgba(30, 144, 255, 1);
+    border: 1px solid #fff;
+  }
+  .mWl-calendar-options {
+    text-align: center;
+  }
+  .table-responsive {
+    max-height: 100%;
+  }
+}
