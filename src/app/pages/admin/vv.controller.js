@@ -175,6 +175,7 @@ export default class VvController {
     }
 
     userInfo(user) {
+      console.log(user);
       this.modal.open({
         templateUrl: require('!!file!../../components/userTools/modal/userInfo/userInfo.html'),
         controller: require('../../components/userTools/modal/userInfo/userInfo.controller'),
@@ -444,9 +445,9 @@ setDateInfo() {
     this.$timeout(()=> {
       if (this.$scope.startdate && this.$scope.enddate) {
         this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);
-        this.filtredUser.vacationDays = 0;
         this.calcEnableDays(this.$scope.startdate)
       } else {
+        this.filtredUser.vacationDays = 0;
       }
     });
 
