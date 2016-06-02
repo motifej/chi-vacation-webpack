@@ -223,7 +223,7 @@ export default class VvController {
                   let typeEvent = {rejected:'important',confirmed:'info', inprogress:'warning', new:'warning'};
                   var event = 
                   {
-                    title: firstname + ' '+ lastname,
+                    title: (firstname.length > 15 ? firstname.slice(0, 1) + '.' : firstname) + ' '+ (lastname.length > 20 ? lastname.slice(0, 20) + '...' : lastname),
                     type: typeEvent[status],
                     cssClass: vacation === 'vacations' ? '' : 'm-dayoff',
                     startsAt: new Date(startdate),
