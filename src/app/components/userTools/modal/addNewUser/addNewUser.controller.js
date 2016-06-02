@@ -1,11 +1,12 @@
 export default class AddNewUserController {
-  constructor ($filter, $uibModalInstance, toastr, users, groups, sailsService) {
+  constructor ($filter, $parse, $uibModalInstance, toastr, users, groups, sailsService) {
     'ngInject';
 
     this.invalidForm = false;
     this.namePattern = '[a-zA-Zа-яА-Я\-]+';
     this.emailPattern = '\\w+.?\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}';
     this.filter = $filter;
+    this.$parse = $parse;
     this.sailsService = sailsService;
     this.toastr = toastr;
     this.modalInstance = $uibModalInstance;
@@ -45,7 +46,7 @@ export default class AddNewUserController {
           this.modalInstance.close();
         },
         error => {
-          this.toastr.error(error.data.data.raw.message, 'Error');
+          this.toastr.error(this.$parse('data.data.raw.message')(error) || 'Not able to save incorrect value', 'Error');
         }
       )
 
