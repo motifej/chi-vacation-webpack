@@ -15,6 +15,7 @@ function config($logProvider, $compileProvider, toastrConfig, calendarConfig/*, 
   calendarConfig.templates.calendarSlideBox = require('!!file!./pages/templates/calendarSlideBox.html');
   calendarConfig.templates.calendarMonthView = require('!!file!./pages/templates/calendarMonthView.html');
   calendarConfig.templates.calendarMonthCellEvents = require('!!file!./pages/templates/calendarMonthCellEvents.html');
+  calendarConfig.templates.calendarMonthCell = require('!!file!./pages/templates/calendarMonthCell.html');
   
   //$sailsProvider.url = 'http://localhost:3000';
 
