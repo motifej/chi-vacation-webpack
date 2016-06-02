@@ -163,8 +163,8 @@
         </div>
 
         <div ng-show="admin.isRepeated((admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter))">
-          <h4 ng-show="admin.filter.id"><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(admin.filtredUser)">{{admin.filtredUser.firstname.charAt(0) + ". " + admin.filtredUser.lastname}}</span> <small class="text-warning">{{admin.filter.group}}</small> doesn't have <span ng-hide="!admin.filtredUser[admin.pageState]">{{admin.statusFilter.status}}</span> vacations</h4>
-          <h4 ng-hide="admin.filter.id">There is no {{admin.statusFilter.status}} vacations<span ng-show="admin.filter.group"> in <small class="text-warning">{{admin.filter.group}}</small></span></h4>
+          <h4 ng-show="admin.filter.id"><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(admin.filtredUser)">{{admin.filtredUser.firstname.charAt(0) + ". " + admin.filtredUser.lastname}}</span> <small class="text-warning">{{admin.filter.group}}</small> doesn't have <span ng-hide="!admin.filtredUser[admin.pageState]">{{admin.statusFilter.status}}</span> {{admin.pageState == admin.VACATIONS ? 'vacations' : 'days-off'}}</h4>
+          <h4 ng-hide="admin.filter.id">There is no {{admin.statusFilter.status}} {{admin.pageState == admin.VACATIONS ? 'vacations' : 'days-off'}}<span ng-show="admin.filter.group"> in <small class="text-warning">{{admin.filter.group}}</small></span></h4>
         </div>
 
         <div ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
