@@ -67,10 +67,6 @@
      .cal-day-today span[data-cal-date] {
         color: #fff;
     }
-
-    .btn {
-        outline: none !important;
-    }
     .m-button {
         color: #fff;
         margin-bottom: 3px;
@@ -278,8 +274,10 @@
         border-color: darken($default-color, 5%);
         color: #fff;
     }
-    .btn {
-        outline: none !important;
+    .m-button-user-list {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
 
