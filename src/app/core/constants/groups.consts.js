@@ -10,7 +10,7 @@ export const groups = [
    'Java',
    'JavaScript',
    'Managers',
-   'Marketing Manager',
+   'Marketing Managers',
    'Markup',
    'NodeJS',
    'Operations',
