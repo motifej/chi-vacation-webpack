@@ -168,7 +168,7 @@
         </div>
 
         <div ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
-          <h4><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(user)">{{user.firstname.charAt(0) + ". " + user.lastname}}</span> <small class="text-warning">{{user.group}}</small></h4>
+          <h4><span class="btn btn-sm chi-btn--reversed m-button-user-list" ng-click="admin.userInfo(user)">{{user.firstname.charAt(0) + ". " + user.lastname}}</span> <small class="text-warning">{{user.group}}</small></h4>
           <div class="table-responsive">
             <table class="table table-bordered">
               <colgroup>

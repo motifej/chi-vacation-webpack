@@ -2,28 +2,30 @@
   <h3 class="modal-title">User Info<span title="Edit User" class="close glyphicon glyphicon-pencil" ng-click="info.editUser(info.user)"></span></h3>
 </div>
 <div class="modal-body">
-	<table class="table table-striped">
-		<tbody>
-			<tr>
-				<td>FirstName</td>
-				<td>{{info.user.firstname}}</td>
-			</tr>
-			<tr>
-				<td>LastName</td>
-				<td>{{info.user.lastname}}</td>
-			</tr>
-			<tr>
-				<td>Department</td>
-				<td>{{info.user.group}}</td>
-			</tr>
-<!-- 			<tr>
-				<td>Phone</td>
-				<td>{{info.user.phone}}</td>
-			</tr> -->
-			<tr>
-				<td>Mail</td>
-				<td>{{info.user.email}}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td>FirstName</td>
+					<td>{{info.user.firstname}}</td>
+				</tr>
+				<tr>
+					<td>LastName</td>
+					<td>{{info.user.lastname}}</td>
+				</tr>
+				<tr>
+					<td>Department</td>
+					<td>{{info.user.group}}</td>
+				</tr>
+	<!-- 			<tr>
+					<td>Phone</td>
+					<td>{{info.user.phone}}</td>
+				</tr> -->
+				<tr>
+					<td>Mail</td>
+					<td>{{info.user.email}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

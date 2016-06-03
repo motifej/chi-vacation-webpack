@@ -125,4 +125,7 @@ body {
   .table-responsive {
     max-height: 100%;
   }
+  span[data-cal-date] {
+    margin-right: 5px;
+  }
 }
