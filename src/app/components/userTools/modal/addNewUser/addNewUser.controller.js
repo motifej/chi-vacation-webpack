@@ -35,6 +35,11 @@ export default class AddNewUserController {
       this.invalidForm = true;
       return
     }
+    if (form.email.$invalid) {
+      this.toastr.error('Invalid email address format', 'Error');
+      this.invalidForm = true;
+      return
+    }
     if (form.$valid) {
       this.invalidForm = false;
       this.newUser.employmentdate = this.employmentdate;
