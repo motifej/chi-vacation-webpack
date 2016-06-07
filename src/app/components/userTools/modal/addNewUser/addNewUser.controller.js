@@ -23,7 +23,8 @@ export default class AddNewUserController {
       phone: '',
       email: '',
       password: '',
-      added: [0]
+      added: [0],
+      addedDaysOff: [0]
     }
   }
   top1(){
