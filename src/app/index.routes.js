@@ -52,7 +52,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
               roles: roles.MANAGER
           },
           resolve: {
-            asyncPreloading: resolverProvider.managerPagePrealoading,
+            asyncPreloading: resolverProvider.adminPagePrealoading,
             //userList : sailsResolverProvider.getUsersList,
             userData : function(sailsService) {
               return sailsService.getUsers()
@@ -61,9 +61,9 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
 
           views: {
             'content@': {
-              templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/manager/manager.html'),
-              controller: 'ManagerController',
-              controllerAs: 'manager'
+              templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/admin/vv.html'),
+              controller: 'VvController',
+              controllerAs: 'admin'
               }
           }
         })

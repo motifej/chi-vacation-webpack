@@ -39,13 +39,18 @@
     </div>
     <div class="col-md-9">
       <div class="buttons-panel clearfix">
-        <div class="btn-group col-xs-12 col-sm-9 col-md-7 m-button-margin">
+        <div class="btn-group col-xs-12 col-sm-9 col-md-7 m-button-margin" ng-show="admin.user.role == 'admin'">
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">Days-Off</label>
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
         </div>
-        <div class="btn-group col-xs-12 col-sm-2 m-button-user"><button class="col-xs-12 btn chi-btn--default" ng-click="admin.openNewUserForm()">Add User</button></div>
+        <div class="btn-group col-xs-12 col-sm-9 col-md-7" ng-show="admin.user.role == 'manager'">
+          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">DaysOff</label>
+          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
+        </div>
+        <div class="btn-group col-xs-12 col-sm-2 m-button-user"><button class="col-xs-12 btn chi-btn--default" ng-click="admin.openNewUserForm()" ng-show="admin.user.role == 'admin'">Add User</button></div>
       </div>
       <div class="buttons-panel clearfix" ng-hide="admin.pageState == 'userRequest'">
       <hr>
@@ -211,7 +216,7 @@
 
       <div class="m-calendar well clearfix" ng-show="admin.pageState == 'userRequest'">
         <div class="text-center">
-          <h2 ng-model="admin.filtredUser.name"> {{admin.filtredUser.lastname}} {{admin.filtredUser.firstname}} </h2>
+          <h2 ng-model="admin.filtredUser.name" class="m-button-user-list"> {{admin.filtredUser.lastname}} {{admin.filtredUser.firstname}} </h2>
         </div>
         <h2 class="text-center" ng-hide="admin.filtredUser.firstname">Please, select user.</h2>
 
@@ -280,7 +285,8 @@
           </div>
           <div class="row user-form__last-row">
             <div class="form-group col-md-6">
-              <label for="selected">Vacation days</label>
+              <label for="selected" ng-show="admin.isVacationState('vacations')">Vacation days</label>
+              <label for="selected" ng-show="admin.isVacationState('daysoff')">Days-off</label>
               <div id="selected" class="form-control user__total-days text-center"
               ng-bind="admin.calcDays(startdate, enddate)"></div>
             </div>
@@ -324,11 +330,11 @@
             </div>
           </div>
           <div class="form-group">
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-4 col-xs-offset-1 chi-btn--default" ng-click="admin.pushAddedDays(true)">
+            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-5 chi-btn--default" ng-click="admin.pushAddedDays(true)">
               <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
               Add
             </button>
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-4 col-xs-offset-2 chi-btn--default" ng-click="admin.pushAddedDays(false)">
+            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-5 col-xs-offset-2 chi-btn--default" ng-click="admin.pushAddedDays(false)">
               <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
               Deduct
             </button>
