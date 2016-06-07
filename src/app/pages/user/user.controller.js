@@ -155,7 +155,8 @@ export default class UserController {
       commentary: null,
       status: "new"
     };
-    const { create } = this.sailsService[this.vacationState + 'Resource'];
+    const create = this.sailsService['create' + this.vacationState];
+
     const { id: uid, year } = this.user;
     const { startdate, enddate, status } = vacation;
     const createError = ({data}) => {
@@ -173,25 +174,25 @@ export default class UserController {
 
     if(this.vacationState == "daysoff") {
       create({uid, startdate, enddate, status, year })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
       return;
     }
 
     if(this.user.availablePrevDays <= 0) {
       create({uid, startdate, enddate, status, year })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
       return;
     }
 
     if(this.user.vacationDays > this.user.availablePrevDays){
       let mDate = moment(sDate).isoAddWeekdaysFromSet(this.user.availablePrevDays - 1, [1,2,3,4,5]);
       create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
       create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
     } else {
       create({uid, startdate, enddate, status, year: year - 1 })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
     }
     
 
