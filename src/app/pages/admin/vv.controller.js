@@ -141,6 +141,16 @@ export default class VvController {
         );
     }
 
+    pushAddedDaysOff(isAdd) {
+      let added = angular.copy(this.filtredUser.addedDaysOff);
+      added[this.filtredUser.year] = (this.filtredUser.addedDaysOff[this.filtredUser.year] || 0) + (isAdd ? parseInt(this.filtredUser.added) : 0 - parseInt(this.filtredUser.added));
+      this.sendingAdditional = true;
+      this.sailsService.userResource.updateUser({id: this.filtredUser.id}, {addedDaysOff: added}).$promise.then(
+        () => {this.calcEnableDays(this.$scope.startdate); this.toastr.success('Changed added days', 'Success'); this.sendingAdditional = false;},
+        error => {this.toastr.error(error.data.message, 'Error updating user'); this.sendingAdditional = false;}
+        );
+    }
+
     choiceGroup(group) {
       this.filter = { group: group };
       this.groupFilter = { group: group };
@@ -289,7 +299,7 @@ setDateInfo() {
       .forEach( item => {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
-      user.availableDaysOff = 5 - user.spendDaysOff;
+      user.availableDaysOff = 5 - user.spendDaysOff + user.addedCurDaysOff;
       return user.availableDays
   }
 
@@ -307,6 +317,7 @@ setDateInfo() {
     user.year = Math.floor(days / 365.25);
     user.addedCur = user.added[user.year] || 0;
     user.addedPrev = user.added[user.year - 1] || 0;
+    user.addedCurDaysOff = user.addedDaysOff[user.year] || 0;
     user.totalDays = Math.round((days % 365.25)*20/365.25) + user.addedCur;
     user.totalPrevDays = 20 + user.addedPrev;
     user.availableDays = 0;

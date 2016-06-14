@@ -341,6 +341,37 @@
           </div>
         </div>
       </div>
+      <div class="col-xs-12" ng-show="admin.isVacationState('daysoff')">
+        <div class="well clearfix">
+          <legend class="user-form__title">Additional days-off</legend>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="selected">Cur year added</label>
+              <input type="text" id="selected" class="form-control user__total-days text-center" readonly
+              ng-value="admin.filtredUser.addedDaysOff[admin.filtredUser.year]">
+            </div>
+            <!-- <div class="form-group col-md-6" ng-show="admin.filtredUser.isCrossingYear">
+              <label for="available">Prev year added</label>
+              <input type="text" id="available" class="form-control user__left-days text-center" readonly
+              ng-value="admin.filtredUser.addedPrev">
+            </div> -->
+            <div class="form-group col-md-12">
+              <label for="added">Change count of days-off</label>
+              <input type="text" id="added" class="form-control text-center" ng-model="admin.filtredUser.added" restrict-pattern="[^\d]+">
+            </div>
+          </div>
+          <div class="form-group">
+            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-5 chi-btn--default" ng-click="admin.pushAddedDaysOff(true)">
+              <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+              Add
+            </button>
+            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-5 col-xs-offset-2 chi-btn--default" ng-click="admin.pushAddedDaysOff(false)">
+              <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+              Deduct
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
       </div>  
    <!-- </div>    -->
