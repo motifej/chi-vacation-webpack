@@ -83,7 +83,7 @@ export default class UserController {
       .forEach( item => {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
-      user.availableDaysOff = 5 - user.spendDaysOff;
+      user.availableDaysOff = 5 - user.spendDaysOff + user.addedCurDaysOff;
       console.log(user);
   }
 
@@ -102,6 +102,7 @@ export default class UserController {
     user.addedPrev = user.added[user.year - 1] || 0;
     user.totalDays = Math.round((days % 365.25)*20/365.25) + user.addedCur;
     user.totalPrevDays = 20 + user.addedPrev;
+    user.addedCurDaysOff = user.addedDaysOff[user.year] || 0;
     user.availableDays = 0;
     user.availableCurDays = 0;
     user.availablePrevDays = 0;
