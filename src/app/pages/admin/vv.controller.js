@@ -143,7 +143,7 @@ export default class VvController {
 
     pushAddedDaysOff(isAdd) {
       let added = angular.copy(this.filtredUser.addedDaysOff);
-      added[this.filtredUser.year] = (this.filtredUser.addedDaysOff[this.filtredUser.year] || 0) + (isAdd ? parseInt(this.filtredUser.added) : 0 - parseInt(this.filtredUser.added));
+      added[this.filtredUser.year] = (this.filtredUser.addedDaysOff[this.filtredUser.year] || 0) + (isAdd ? parseInt(this.filtredUser.newDaysOff) : 0 - parseInt(this.filtredUser.newDaysOff));
       this.sendingAdditional = true;
       this.sailsService.userResource.updateUser({id: this.filtredUser.id}, {addedDaysOff: added}).$promise.then(
         () => {this.calcEnableDays(this.$scope.startdate); this.toastr.success('Changed added days', 'Success'); this.sendingAdditional = false;},
@@ -163,6 +163,7 @@ export default class VvController {
       this.groupFilter = { group: group };
       this.filtredUser = user;
       this.filtredUser.addedDays = 0;
+      this.filtredUser.newDaysOff = 0;
       this.setDateInfo();
       this.calcEnableDays(this.$scope.startdate);
     }

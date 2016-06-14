@@ -348,7 +348,7 @@
             <div class="form-group col-md-6">
               <label for="selected">Cur year added</label>
               <input type="text" id="selected" class="form-control user__total-days text-center" readonly
-              ng-value="admin.filtredUser.addedDaysOff[admin.filtredUser.year]">
+              ng-value="admin.filtredUser.addedCurDaysOff">
             </div>
             <!-- <div class="form-group col-md-6" ng-show="admin.filtredUser.isCrossingYear">
               <label for="available">Prev year added</label>
@@ -356,8 +356,8 @@
               ng-value="admin.filtredUser.addedPrev">
             </div> -->
             <div class="form-group col-md-12">
-              <label for="added">Change count of days-off</label>
-              <input type="text" id="added" class="form-control text-center" ng-model="admin.filtredUser.added" restrict-pattern="[^\d]+">
+              <label for="addeDaysOff">Change count of days-off</label>
+              <input type="text" id="addedDaysOff" class="form-control text-center" ng-model="admin.filtredUser.newDaysOff" restrict-pattern="[^\d]+">
             </div>
           </div>
           <div class="form-group">
