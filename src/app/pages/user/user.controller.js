@@ -83,7 +83,7 @@ export default class UserController {
       .forEach( item => {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
-      user.availableDaysOff = 5 - user.spendDaysOff;
+      user.availableDaysOff = 5 - user.spendDaysOff + user.addedCurDaysOff;
       console.log(user);
   }
 
@@ -102,6 +102,7 @@ export default class UserController {
     user.addedPrev = user.added[user.year - 1] || 0;
     user.totalDays = Math.round((days % 365.25)*20/365.25) + user.addedCur;
     user.totalPrevDays = 20 + user.addedPrev;
+    user.addedCurDaysOff = user.addedDaysOff[user.year] || 0;
     user.availableDays = 0;
     user.availableCurDays = 0;
     user.availablePrevDays = 0;
@@ -155,7 +156,8 @@ export default class UserController {
       commentary: null,
       status: "new"
     };
-    const { create } = this.sailsService[this.vacationState + 'Resource'];
+    const create = this.sailsService['create' + this.vacationState];
+
     const { id: uid, year } = this.user;
     const { startdate, enddate, status } = vacation;
     const createError = ({data}) => {
@@ -173,25 +175,25 @@ export default class UserController {
 
     if(this.vacationState == "daysoff") {
       create({uid, startdate, enddate, status, year })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
       return;
     }
 
     if(this.user.availablePrevDays <= 0) {
       create({uid, startdate, enddate, status, year })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
       return;
     }
 
     if(this.user.vacationDays > this.user.availablePrevDays){
       let mDate = moment(sDate).isoAddWeekdaysFromSet(this.user.availablePrevDays - 1, [1,2,3,4,5]);
       create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
       create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
     } else {
       create({uid, startdate, enddate, status, year: year - 1 })
-       .$promise.then(createSuccess, createError);
+       .then(createSuccess, createError);
     }
     
 
