@@ -50,6 +50,10 @@ export default class VvController {
     this.sendingAdditional = false;
     this.sendingRequest = false;
 
+    $scope.$watch('newUser.role', function() {
+      debugger;
+    });
+
 
     
   }
