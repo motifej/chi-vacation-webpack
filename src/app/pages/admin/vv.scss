@@ -280,15 +280,18 @@
         text-overflow: ellipsis;
     }
 
-
 }
 @media (max-width: 767px) {
     .m-button-margin {
         margin-bottom: 20px;
     }
+    .btn-group label.btn, .btn {
+        border-radius: 0;
+    }
+    .btn-group .btn + .btn, 
+    .btn-group .btn + .btn-group, 
+    .btn-group .btn-group + .btn, 
+    .btn-group .btn-group + .btn-group {
+        margin-left: 0;
+    }
 }
-
-
-
-
-
