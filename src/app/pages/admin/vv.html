@@ -310,7 +310,7 @@
           </div>
         </form>
       </div>
-      <div class="col-xs-12" ng-show="admin.isVacationState('vacations')">
+      <div class="col-xs-12 additional-form" ng-show="admin.isVacationState('vacations')">
         <div class="well clearfix">
           <legend class="user-form__title">Additional vacation days</legend>
           <div class="row">
@@ -330,18 +330,18 @@
             </div>
           </div>
           <div class="form-group">
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-5 chi-btn--default" ng-click="admin.pushAddedDays(true)">
+            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-12 col-sm-5 chi-btn--default" ng-click="admin.pushAddedDays(true)">
               <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
               Add
             </button>
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-5 col-xs-offset-2 chi-btn--default" ng-click="admin.pushAddedDays(false)">
+            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-12 col-sm-5 col-sm-offset-2 chi-btn--default" ng-click="admin.pushAddedDays(false)">
               <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
               Deduct
             </button>
           </div>
         </div>
       </div>
-      <div class="col-xs-12" ng-show="admin.isVacationState('daysoff')">
+      <div class="col-xs-12 additional-form" ng-show="admin.isVacationState('daysoff')">
         <div class="well clearfix">
           <legend class="user-form__title">Additional days-off</legend>
           <div class="row">
@@ -361,11 +361,11 @@
             </div>
           </div>
           <div class="form-group">
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-5 chi-btn--default" ng-click="admin.pushAddedDaysOff(true)">
+            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-12 col-sm-5 chi-btn--default" ng-click="admin.pushAddedDaysOff(true)">
               <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
               Add
             </button>
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-5 col-xs-offset-2 chi-btn--default" ng-click="admin.pushAddedDaysOff(false)">
+            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-12 col-sm-5 col-sm-offset-2 chi-btn--default" ng-click="admin.pushAddedDaysOff(false)">
               <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
               Deduct
             </button>
