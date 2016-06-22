@@ -6,7 +6,6 @@ $font-color: white;
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
-
 html { height: 100%; }
 body {
   cursor: default;
@@ -14,8 +13,8 @@ body {
   position: relative;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-*:focus {
-  outline: none;
+*, *:focus {
+  outline: none !important;
 }
 .app-content{
   height: 100%;
@@ -45,7 +44,6 @@ body {
   letter-spacing: 1px;
   border: 2px solid $default-color;
   background-color: $default-color;
-  outline: none !important;
   color: white;
 }
 .chi-btn--default:hover{
@@ -57,7 +55,6 @@ body {
   letter-spacing: 1px;
   border: 2px solid $default-color;
   background-color: $default-color-hover;
-  outline: none !important;
   color: white;
 }
 .chi-btn--reversed:hover{
