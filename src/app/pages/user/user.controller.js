@@ -30,6 +30,7 @@ export default class UserController {
     this.activate($scope);
     this.vacationState = VACATIONS;
     this.sending = false;
+    this.allVacations = this.combineVacations();
 
     this.calcEnableDays(this.$scope.startdate);
     this.calcDaysCalc();
@@ -249,4 +250,9 @@ export default class UserController {
       e => this.toastr.error(e.data.data.raw.message, 'Error deleting vacation')
     );
   }
+
+  combineVacations() {
+    return this.user.vacations.concat(this.user.daysoff);
+  }
+
 }

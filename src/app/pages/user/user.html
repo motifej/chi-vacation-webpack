@@ -1,7 +1,7 @@
 <div class="user-wrapper clearfix">
   <div class="container user__container">
     <div class="row">
-      <div class="row" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'inprogress'">
+      <div class="row" ng-repeat="item in userCtrl.allVacations | userFilterVacation:'inprogress'">
         <h2 class="col-md-12 inprogress-header-info">You are on vacation from {{item.startdate | date:'dd.MM'}} to {{item.enddate | date:'dd.MM'}}</h2>
       </div>
       <div class="btn-group
