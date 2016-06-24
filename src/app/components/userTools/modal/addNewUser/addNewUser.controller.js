@@ -27,9 +27,6 @@ export default class AddNewUserController {
       addedDaysOff: [0]
     }
   }
-  top1(){
-    console.log(this.newUser.employmentDate);
-  }
   submitForm (form) {
     if (form.firstname.$invalid || form.lastname.$invalid) {
       this.toastr.error('Not able to save incorrect value. Allowed symbols: a-z, A-Z, а-я, А-Я', 'Error');

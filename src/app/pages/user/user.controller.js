@@ -56,13 +56,13 @@ export default class UserController {
         && ((user.formatedEmploymentDate.getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() <= vacationStartDate.getDate()) 
           || (new Date(moment(user.formatedEmploymentDate).add(1, 'month')).getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() > vacationStartDate.getDate()))) 
       {
-        console.log(
+        /*console.log(
           this.calcDays(moment(user.formatedEmploymentDate)
             .add(user.year, 'year')
             .add(1, 'month'), vacationStartDate), 
           this.calcDays(vacationStartDate, moment(user.formatedEmploymentDate)
             .add(user.year, 'year')
-            .add(1, 'month')))
+            .add(1, 'month')))*/
 
         user.vacations
           .filter( item => item.year == (user.year - 1) && item.status != "rejected" )
@@ -76,7 +76,7 @@ export default class UserController {
       .filter( item => item.year == user.year && item.status != "rejected" )
       .forEach( item => user.spendVacation += this.calcDays(item.startdate, item.enddate));
 
-      console.log(user.totalDays)
+      /*console.log(user.totalDays)*/
       user.availableCurDays += user.totalDays - user.spendVacation;
       user.availableDays += user.availableCurDays < 0 ? 0 : user.availableCurDays;
       user.daysoff
@@ -85,7 +85,7 @@ export default class UserController {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
       user.availableDaysOff = 5 - user.spendDaysOff + user.addedCurDaysOff;
-      console.log(user);
+      /*console.log(user);*/
   }
 
   calcAvailablePrevDays (vacationStartDate, user) {

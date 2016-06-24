@@ -18,7 +18,7 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
       email: $scope.email,
       password: $scope.passw || $scope.newPassword
     }).then( (r) => {
-      console.log(r);
+      /*console.log(r);*/
       $state.go(states.HOME);
     }).catch( err => {
       toastr.error(err.error.data.message, 'Error');
