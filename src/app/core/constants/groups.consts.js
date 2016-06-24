@@ -8,7 +8,7 @@ export const groups = [
    'iOS',
    'IT',
    'Java',
-   'JavaScript',
+   'JS',
    'Managers',
    'Marketing Managers',
    'Markup',
