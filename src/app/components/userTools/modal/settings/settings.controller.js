@@ -54,7 +54,7 @@ export default class SettingsController {
     }
     else
       this.toastr.error('Incorrect email')
-    console.log(this.settings);
+    /*console.log(this.settings);*/
   }
 
   deleteGroupEmail(email) {
