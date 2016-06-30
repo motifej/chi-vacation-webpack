@@ -75,7 +75,7 @@ export default class SailsService {
 					case 'updated': {
 						/*console.log('user updated', obj);*/
 						$rootScope.$applyAsync(
-							angular.extend(_.find(users, {id}), data)
+							angular.extend(_.find(users, {id}) || {}, data)
 						);
 						break;	
 					}
@@ -117,8 +117,8 @@ export default class SailsService {
 						/*console.log('vacation updated', obj);*/
 						$rootScope.$applyAsync( () => {
 							let user = _.find(this.users, {id: data.uid});
-							angular.extend(_.find(user[params], {id}), data);
-							angular.extend(_.find(this.user[params], {id}), data);
+							angular.extend(_.find(user[params], {id}) || {}, data);
+							angular.extend(_.find(this.user[params], {id}) || {}, data);
 						});
 						/*console.log('vacation updated, new status:', this.users);*/
 						break;
