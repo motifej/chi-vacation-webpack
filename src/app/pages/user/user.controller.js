@@ -116,6 +116,7 @@ export default class UserController {
 
   submitHandler(startDate, endDate) {
     this.sending = true;
+    let vac_type = this.vacationState === this.VACATIONS ? 'Vacation' : 'Day-off';
     let vm = this;
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
@@ -138,7 +139,7 @@ export default class UserController {
     });
 
     if (vm.vacations && isCrossingIntervals(vm.vacations)) {
-      this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
+      this.toastr.error(vac_type + ' intervals are crossing! Please, choose correct date.', toastrOptions);
       this.sending = false;
       return;
     }
@@ -163,10 +164,10 @@ export default class UserController {
     const { startdate, enddate, status } = vacation;
     const createError = ({data}) => {
       this.sending = false; 
-      this.toastr.error(this.$parse('raw.message')(data) || '', 'Error creating vacation', toastrOptions)
+      this.toastr.error(this.$parse('raw.message')(data) || this.$parse('data.raw.message')(data) || '', 'Error creating ' + vac_type.toLowerCase(), toastrOptions)
     };
     const createSuccess = res => {
-      this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+      this.toastr.success(vac_type + ' request was sent successfully!', toastrOptions);
       if (!_.find(this.user[this.vacationState], {id:res.data.id}))
         this.user[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
