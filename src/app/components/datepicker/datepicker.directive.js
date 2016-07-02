@@ -22,7 +22,7 @@ export default function DatepickerDirective() {
         //scope.test = function () {alert('test')};
         scope.name = attrs.name;
 
-        scope.maxDate = new Date(2030, 5, 22);
+        scope.maxDate = moment().add(1, 'year').add(1, 'month');
 
         // scope.disabled = function() {
         //     var data = new Date();
