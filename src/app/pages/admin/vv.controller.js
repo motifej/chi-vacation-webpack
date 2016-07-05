@@ -209,7 +209,6 @@ export default class VvController {
       this.pageState = state;
       this.setDateInfo();
     }
-    
 
     _fillEvents(vacation) {
         angular.forEach(this.users, (value) => {
@@ -238,7 +237,7 @@ export default class VvController {
                     type: typeEvent[status],
                     cssClass: vacation === 'vacations' ? '' : 'm-dayoff',
                     startsAt: new Date(startdate),
-                    endsAt: new Date(enddate),
+                    endsAt: new Date(moment(enddate).add(12, 'hour')),
                     editable: false,
                     deletable: false,
                     incrementsBadgeTotal: true,

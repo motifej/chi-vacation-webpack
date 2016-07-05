@@ -8,7 +8,7 @@
     ng-mouseenter="vm.highlightEvent(event, true)"
     ng-mouseleave="vm.highlightEvent(event, false)"
     tooltip-append-to-body="true"
-    uib-tooltip-html="(event.title + '<br />' + (event.startsAt | calendarDate:'date':true) + ' - ' + (event.endsAt | calendarDate:'date':true)) | calendarTrustAsHtml"
+    uib-tooltip-html="(event.title + '<br />' + (event.startsAt | calendarDate:'day':true) + ' - ' + (event.endsAt | calendarDate:'day':true)) | calendarTrustAsHtml"
     mwl-draggable="event.draggable === true"
     drop-data="{event: event, draggedFromDate: day.date.toDate()}">
   </a>
