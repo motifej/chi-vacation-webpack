@@ -19,8 +19,15 @@ function config($logProvider, $compileProvider, toastrConfig, calendarConfig/*, 
   calendarConfig.templates.calendarYearView = require('!!file!./pages/templates/calendarYearView.html');
   calendarConfig.dateFormatter = 'moment';
   calendarConfig.allDateFormats.moment.title.day = 'ddd D MMM YY';
+  calendarConfig.allDateFormats.moment.date.day = 'D MMM YY';
   
   //$sailsProvider.url = 'http://localhost:3000';
+
+moment.locale('ua', {
+  week : {
+    dow : 1 // Monday is the first day of the week
+  }
+});
 
 }
 
