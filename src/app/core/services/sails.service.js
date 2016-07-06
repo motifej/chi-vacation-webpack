@@ -31,15 +31,7 @@ export default class SailsService {
 		this['create' + DAYSOFF] = (vacation) => this.http.post(API_URL + '/daysoff/create2', vacation);
 		
 		//http settings
-		this.saveSettings = (settings) => {
-			let { email, emailCreate, emailChanged, groups } = settings;
-			return this.http.put(API_URL + '/settings/' + SETTINGS_KEY, {
-				email,
-				emailCreate,
-				emailChanged,
-				groups
-			})
-		}
+		this.saveSettings = (settings) => this.http.put(API_URL + '/settings/' + SETTINGS_KEY, settings);
 		this.createSettings = () => this.http.post(API_URL + '/settings/create', { id:SETTINGS_KEY });
 		this.getSettings = () => this.http.get(API_URL + '/settings/' + SETTINGS_KEY).catch(this.createSettings);
 
