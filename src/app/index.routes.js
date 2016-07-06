@@ -33,9 +33,8 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           },
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
-            userData : function(sailsService) {
-              return sailsService.getUsers()
-            }
+            userData : sailsService => sailsService.getUsers(),
+            settings: sailsService => sailsService.getSettings()
           },
           views: {
             'content@': {
@@ -53,10 +52,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           },
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
-            //userList : sailsResolverProvider.getUsersList,
-            userData : function(sailsService) {
-              return sailsService.getUsers()
-            }
+            userData : sailsService => sailsService.getUsers()
           },
 
           views: {
@@ -75,9 +71,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           },
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
-            userData : function(sailsService) {
-              return sailsService.getUsers()
-            }
+            userData : sailsService => sailsService.getUsers()
           },
           views: {
             'content@': {

@@ -18,7 +18,10 @@ function route($stateProvider, roles, states) {
           controller: require('./user.controller'),
           controllerAs: 'userCtrl'
         }
-      }
+      },
+      resolve: {
+        settings: sailsService => sailsService.getSettings()
+      },
     })
 
 }
