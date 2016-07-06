@@ -1,3 +1,5 @@
+const holidays = ["2016-07-06", "2016-07-07"];
+
 import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
 
 export default class UserController {
@@ -96,7 +98,7 @@ export default class UserController {
   }
 
   initUserData(vacationStartDate, user) {
-    let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
+    let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate, [1,2,3,4,5,6,7]) - 1;
     user.formatedEmploymentDate = new Date(user.employmentdate);
     user.year = Math.floor(days / 365.25);
     user.addedCur = user.added[user.year] || 0;
@@ -188,7 +190,7 @@ export default class UserController {
     }
 
     if(this.user.vacationDays > this.user.availablePrevDays){
-      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.user.availablePrevDays - 1, [1,2,3,4,5]);
+      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.user.availablePrevDays - 1, [1,2,3,4,5], holidays);
       create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
        .then(createSuccess, createError);
       create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
@@ -217,7 +219,7 @@ export default class UserController {
   calcDaysCalc() {
     this.$timeout(()=> {
       if (this.$scope.startdate && this.$scope.enddate) {
-        this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);
+        this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], holidays);
         this.calcEnableDays(this.$scope.startdate)
       } else {
         this.user.vacationDays = 0;

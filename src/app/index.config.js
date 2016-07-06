@@ -17,9 +17,11 @@ function config($logProvider, $compileProvider, toastrConfig, calendarConfig/*, 
   calendarConfig.templates.calendarMonthCellEvents = require('!!file!./pages/templates/calendarMonthCellEvents.html');
   calendarConfig.templates.calendarMonthCell = require('!!file!./pages/templates/calendarMonthCell.html');
   calendarConfig.templates.calendarYearView = require('!!file!./pages/templates/calendarYearView.html');
+  calendarConfig.templates.calendarDayView = require('!!file!./pages/templates/calendarDayView.html');
+  calendarConfig.templates.calendarHourList = require('!!file!./pages/templates/calendarHourList.html');
   calendarConfig.dateFormatter = 'moment';
-  calendarConfig.allDateFormats.moment.title.day = 'ddd D MMM YY';
-  calendarConfig.allDateFormats.moment.date.day = 'D MMM YY';
+  calendarConfig.allDateFormats.moment.title.day = 'ddd D MMM YYYY';
+  calendarConfig.allDateFormats.moment.date.day = 'D MMM YYYY';
   
   //$sailsProvider.url = 'http://localhost:3000';
 
