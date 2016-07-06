@@ -1,3 +1,5 @@
+const holidays = ["2016-07-06", "2016-07-07"];
+
 import { find } from 'lodash';
 import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
 
@@ -312,7 +314,7 @@ setDateInfo() {
 
   initUserData(vacationStartDate, user) {
     if (! (user && user.added)) return 0;
-    let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
+    let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate, [1,2,3,4,5,6,7]) - 1;
     user.formatedEmploymentDate = new Date(user.employmentdate);
     user.year = Math.floor(days / 365.25);
     user.addedCur = user.added[user.year] || 0;
@@ -414,7 +416,7 @@ setDateInfo() {
           }
 
           if(this.filtredUser.vacationDays > this.filtredUser.availablePrevDays){
-            let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.availablePrevDays - 1, [1,2,3,4,5]);
+            let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.availablePrevDays - 1, [1,2,3,4,5], holidays);
             create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
             .$promise.then(createSuccess, createError);
             create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
@@ -456,7 +458,7 @@ setDateInfo() {
   calcDaysCalc() {
     this.$timeout(()=> {
       if (this.$scope.startdate && this.$scope.enddate) {
-        this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);
+        this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], holidays);
         this.calcEnableDays(this.$scope.startdate)
       } else {
         this.filtredUser.vacationDays = 0;
@@ -467,7 +469,7 @@ setDateInfo() {
 
   calcDays(startDate, endDate) {
     if (!startDate || !endDate) return 0;
-    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5])
+    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5], holidays)
   }
 
   setOrder(val) {
