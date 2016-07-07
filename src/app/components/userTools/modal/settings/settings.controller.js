@@ -1,5 +1,5 @@
 export default class SettingsController {
-  constructor ($uibModalInstance, settings, toastr, sailsService, groups, moment) {
+  constructor ($uibModalInstance, settings, toastr, sailsService, groups, moment, $state, states) {
     'ngInject';
 
     this.invalidForm = false;
@@ -8,6 +8,8 @@ export default class SettingsController {
     this.toastr = toastr;
     this.modalInstance = $uibModalInstance;
     this.moment = moment;
+    this.$state = $state;
+    this.states = states;
 
     this.settings = settings.data.data;
     this.settings.holidays = this.settings.holidays || [];
@@ -72,6 +74,7 @@ export default class SettingsController {
         data => {
           this.toastr.success('Settings were saved');
           this.modalInstance.dismiss('cancel');
+          this.$state.reload();
         },
         e => this.toastr.error(e.message, 'Error saving settings'))
   }

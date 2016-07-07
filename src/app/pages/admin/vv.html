@@ -131,6 +131,7 @@
               day-view-end="00:00"
               day-view-split="30"
               on-event-click="admin.userInfo(calendarEvent.user)"
+              cell-modifier="admin.cellModifier(calendarCell)">
             >
             </mwl-calendar>
           </div>
@@ -147,6 +148,7 @@
               ng-model="dateFilter.startdate"
               is-show-all-days="true"
               ng-model-options="{timezone:'UTC'}"
+              holidays="{{admin.holidays}}"
               >
               </chi-datepicker>
           </div>
@@ -158,6 +160,7 @@
               min-date="dateFilter.startdate"
               is-show-all-days="true"
               ng-model-options="{timezone:'UTC'}"
+              holidays="{{admin.holidays}}"
               >
               </chi-datepicker>
           </div>
@@ -266,6 +269,7 @@
               calc-days="admin.calcDaysCalc(name, date)"
               is-show-all-days="true"
               is-disable-date="admin.filtredUser.id ? false : true"
+              holidays="{{admin.holidays}}"
               >
               </chi-datepicker>
             </div>
@@ -278,6 +282,7 @@
               calc-days="admin.calcDaysCalc(name)"
               is-show-all-days="true"
               is-disable-date="admin.filtredUser.id ? false : true"
+              holidays="{{admin.holidays}}"
               >
               </chi-datepicker>
 
