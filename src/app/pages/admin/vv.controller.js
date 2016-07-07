@@ -210,6 +210,12 @@ export default class VvController {
       this.pageState = state;
       this.setDateInfo();
     }
+    
+    cellModifier(cell) {
+      let date = moment(cell.date).format('YYYY-MM-DD');
+      if (~this.holidays.indexOf(date)) 
+        cell.cssClass = 'cal-holiday';
+    }
 
     _fillEvents(vacation) {
         angular.forEach(this.users, (value) => {

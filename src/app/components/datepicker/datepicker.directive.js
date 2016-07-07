@@ -9,7 +9,8 @@ export default function DatepickerDirective() {
             minDate: '=',
             calcDays: '&',
             isShowAllDays: '=',
-            isDisableDate: '='
+            isDisableDate: '=',
+            holidays: '@'
         },
         restrict: 'E',
         link: link,
@@ -24,13 +25,6 @@ export default function DatepickerDirective() {
 
         scope.maxDate = moment().add(1, 'year').add(1, 'month');
 
-        // scope.disabled = function() {
-        //     var data = new Date();
-        //     var date = data.date,
-        //       mode = data.mode;
-        //     return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-        // }
-
         scope.open= function() {
             scope.popup.opened = true;
         };
@@ -39,7 +33,7 @@ export default function DatepickerDirective() {
             scope.curDate = new Date(year, month, day);
         };
 
-        scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        scope.formats = ['dd-MM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         scope.format = scope.formats[1];
         scope.altInputFormats = ['M!/d!/yyyy'];
 
@@ -47,7 +41,7 @@ export default function DatepickerDirective() {
             opened: false
         };
 
-        let tomorrow = new Date();
+/*        let tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
         let afterTomorrow = new Date();
         afterTomorrow.setDate(tomorrow.getDate() + 1);
@@ -61,27 +55,21 @@ export default function DatepickerDirective() {
             date: afterTomorrow,
             status: 'partially'
         }
-        ];
+        ];*/
 
-        scope.disabled = function(data) {
-            let date = data.date,
-            mode = data.mode;
-            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+        scope.disabled = function({date, mode}) {
+            let iDate = moment(date).format('YYYY-MM-DD');
+            return mode === 'day' && 
+                (date.getDay() === 0 || date.getDay() === 6 || 
+                    (scope.holidays && ~scope.holidays.indexOf(iDate)));
         }
 
-        scope.getDayClass = function(date, mode) {
+        scope.getDayClass = function({date, mode}) {
             if (mode === 'day') {
-                var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-                for (var i = 0; i < scope.events.length; i++) {
-                    var currentDay = new Date(scope.events[i].date).setHours(0,0,0,0);
-
-                    if (dayToCheck === currentDay) {
-                        return scope.events[i].status;
-                    }
-                }
+                let iDate = moment(date).format('YYYY-MM-DD');
+                if ((scope.holidays && ~scope.holidays.indexOf(iDate)) || date.getDay() === 0 || date.getDay() === 6) 
+                    return 'datepicker-holidays';
             }
-
             return '';
         };
     }

@@ -100,6 +100,7 @@
                   <chi-datepicker class="datepicker col-md-10 col-xs-9 row"
                     name="user.holdayDate"
                     ng-model="user.holidayDate"
+                    holidays="{{user.settings.holidays}}"
                   >
                   </chi-datepicker>
                   <button class="btn btn-secondary pull-right col-md-2 col-xs-3" type="button" ng-click="user.addHoliday()">Add</button>

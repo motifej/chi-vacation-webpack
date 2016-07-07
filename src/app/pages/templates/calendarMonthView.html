@@ -15,10 +15,10 @@
         class="cal-cell1 cal-cell {{ day.highlightClass ? 'calendar-highlightClass' : ''}}"
         ng-click="vm.dayClicked(day, false, $event)"
         ng-class="{pointer: day.events.length > 0}">
+
         <ng-include src="vm.calendarConfig.templates.calendarMonthCell"></ng-include>
       </div>
     </div>
-
     <mwl-calendar-slide-box
       is-open="vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0 && !vm.slideBoxDisabled"
       events="vm.view[vm.openDayIndex].events"
