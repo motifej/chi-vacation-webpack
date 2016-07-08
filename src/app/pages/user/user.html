@@ -159,7 +159,7 @@
           <legend class="user-form__title">
             <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation request</span>
             <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Days-off request</span>
-            <span ng-show="userCtrl.showNotification" class="pull-right"><i class="text-danger glyphicon glyphicon-exclamation-sign" title="Your vacations expire {{userCtrl.vacationExpire}}"></i></span> 
+            <span ng-show="userCtrl.showNotification" class="pull-right"><i class="text-danger glyphicon glyphicon-exclamation-sign" title="Your {{userCtrl.vacationState === userCtrl.VACATIONS ? 'vacations' : 'days-off'}} expire {{userCtrl.vacationExpire}}"></i></span> 
           </legend>
           <div class="row">
             <div class="form-group col-md-6">

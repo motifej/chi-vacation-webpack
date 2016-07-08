@@ -45,19 +45,29 @@ export default class UserController {
       scope.minEndDate = new Date(scope.startdate);
     });
 
-    let destr = this.$rootScope.$on( this.actions.MONTHCHANGED, this.montChanged.bind(this) );
+    let destr = this.$rootScope.$on( this.actions.MONTHCHANGED, this.monthChanged.bind(this) );
     scope.$on('destroy', destr);
   }
 
-  montChanged(event, datepickerDate) {
-    let minExpireDate = moment(this.user.employmentdate).add(1 + this.user.year, 'year').format('YYYY-MM');
-    let maxExpireDate = moment(this.user.employmentdate).add(1 + this.user.year, 'year').add(1, 'month').format('YYYY-MM');
-    this.vacationExpire = moment(this.user.employmentdate).add(13, 'month').add(this.user.year, 'year').format('YYYY-MM-DD');
-    this.showNotification = (datepickerDate === minExpireDate) || (datepickerDate === maxExpireDate);
+  monthChanged(event, datepickerDate) {
+    let days = moment().isoWeekdayCalc(this.user.employmentdate, moment(datepickerDate), [1,2,3,4,5,6,7]) - 1;
+    let year = Math.floor(days / (365.25 + 30));
+    let eDate = this.user.employmentdate;
+    let minExpireDate, maxExpireDate;
+    if (this.vacationState === this.VACATIONS) {
+      minExpireDate = moment(eDate).add(1 + year, 'year').format('YYYY-MM');
+      maxExpireDate = moment(eDate).add(1 + year, 'year').add(1, 'month').format('YYYY-MM');
+    } else {
+      minExpireDate = moment(eDate).add(1 + year, 'year').subtract(1, 'month').format('YYYY-MM');
+      maxExpireDate = moment(eDate).add(1 + year, 'year').format('YYYY-MM');
+    }
+      this.vacationExpire = moment(eDate).add(12, 'month').add(year, 'year').format('YYYY-MM-DD');
+      this.showNotification = datepickerDate === minExpireDate || datepickerDate === maxExpireDate;
   }
 
   calcEnableDays(vacationStartDate) {
       let user = this.initUserData(vacationStartDate, this.user);
+      this.monthChanged(null, moment(vacationStartDate).format('YYYY-MM'));
 
       if(user.year != 0 
         && ((user.formatedEmploymentDate.getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() <= vacationStartDate.getDate()) 
