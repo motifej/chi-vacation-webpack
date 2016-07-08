@@ -57,11 +57,12 @@ export default class UserController {
     if (this.vacationState === this.VACATIONS) {
       minExpireDate = moment(eDate).add(1 + year, 'year').format('YYYY-MM');
       maxExpireDate = moment(eDate).add(1 + year, 'year').add(1, 'month').format('YYYY-MM');
+      this.vacationExpire = moment(eDate).add(12, 'month').add(year, 'year').add(1, 'month').format('YYYY-MM-DD');
     } else {
       minExpireDate = moment(eDate).add(1 + year, 'year').subtract(1, 'month').format('YYYY-MM');
       maxExpireDate = moment(eDate).add(1 + year, 'year').format('YYYY-MM');
-    }
       this.vacationExpire = moment(eDate).add(12, 'month').add(year, 'year').format('YYYY-MM-DD');
+    }
       this.showNotification = datepickerDate === minExpireDate || datepickerDate === maxExpireDate;
   }
 
@@ -245,6 +246,7 @@ export default class UserController {
 
   changeVacationState(state) {
     this.vacationState = state;
+    this.calcEnableDays(this.$scope.startdate);
   }
 
   isVacationState(state) {
