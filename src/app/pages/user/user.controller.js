@@ -2,9 +2,7 @@ import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
 
 export default class UserController {
 
-
-
-  constructor ($scope, $parse, $log, $timeout, sailsService, moment, toastr, user, $uibModal, settings) {
+  constructor ($scope, $parse, $log, $timeout, sailsService, moment, toastr, user, $uibModal, settings, $rootScope, actions) {
     'ngInject';
     if (moment().weekday() === 6) $scope.startdate = new Date(moment().add(2, 'days')); else
     if (moment().weekday() === 0) $scope.startdate = new Date(moment().add(1, 'days')); else
@@ -19,12 +17,14 @@ export default class UserController {
     this.VACATIONS = VACATIONS;
     this.today = new Date();
     this.$scope = $scope;
+    this.actions = actions;
     this.$parse = $parse;
     this.$timeout = $timeout;
     this.vacationDays = this.calcDays();
     this.toastr = toastr;
     this.moment = moment;
     this.modal = $uibModal;
+    this.$rootScope = $rootScope;
     this.$log = $log;
     this.sailsService = sailsService;
     this.activate($scope);
@@ -32,7 +32,7 @@ export default class UserController {
     this.sending = false;
     this.allVacations = this.combineVacations();
     this.holidays = settings.data.data.holidays;
-
+    this.showNotification = false;
     this.calcEnableDays(this.$scope.startdate);
     this.calcDaysCalc();
   }
@@ -45,13 +45,19 @@ export default class UserController {
       scope.minEndDate = new Date(scope.startdate);
     });
 
+    let destr = this.$rootScope.$on( this.actions.MONTHCHANGED, this.montChanged.bind(this) );
+    scope.$on('destroy', destr);
+  }
+
+  montChanged(event, datepickerDate) {
+    let minExpireDate = moment(this.user.employmentdate).add(1 + this.user.year, 'year').format('YYYY-MM');
+    let maxExpireDate = moment(this.user.employmentdate).add(1 + this.user.year, 'year').add(1, 'month').format('YYYY-MM');
+    this.vacationExpire = moment(this.user.employmentdate).add(13, 'month').add(this.user.year, 'year').format('YYYY-MM-DD');
+    this.showNotification = (datepickerDate === minExpireDate) || (datepickerDate === maxExpireDate);
   }
 
   calcEnableDays(vacationStartDate) {
-
       let user = this.initUserData(vacationStartDate, this.user);
-
-      
 
       if(user.year != 0 
         && ((user.formatedEmploymentDate.getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() <= vacationStartDate.getDate()) 
@@ -121,14 +127,12 @@ export default class UserController {
     let vm = this;
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
-    let toastrOptions = {progressBar: false};
+    //let toastrOptions = {progressBar: false};
     
     let listArray = [];
     vm.vacations = [];
     listArray.push(this.user['vacations']);
     listArray.push(this.user['daysoff']);
-
-
 
     listArray.forEach( list => {
       if (list) {
@@ -140,14 +144,14 @@ export default class UserController {
     });
 
     if (vm.vacations && isCrossingIntervals(vm.vacations)) {
-      this.toastr.error(vac_type + ' intervals are crossing! Please, choose correct date.', toastrOptions);
+      this.toastr.error(vac_type + ' intervals are crossing! Please, choose correct date.');
       this.sending = false;
       return;
     }
 
     let total = this.vacationState === this.VACATIONS ? this.user.availableDays : this.user.availableDaysOff;
     if (this.user.vacationDays > total) {
-      this.toastr.error('You have exceeded the number of available days!', toastrOptions);
+      this.toastr.error('You have exceeded the number of available days!');
       this.sending = false;
       return;
     }
@@ -165,10 +169,10 @@ export default class UserController {
     const { startdate, enddate, status } = vacation;
     const createError = ({data}) => {
       this.sending = false; 
-      this.toastr.error(this.$parse('raw.message')(data) || this.$parse('data.raw.message')(data) || '', 'Error creating ' + vac_type.toLowerCase(), toastrOptions)
+      this.toastr.error(this.$parse('raw.message')(data) || this.$parse('data.raw.message')(data) || '', 'Error creating ' + vac_type.toLowerCase())
     };
     const createSuccess = res => {
-      this.toastr.success(vac_type + ' request was sent successfully!', toastrOptions);
+      this.toastr.success(vac_type + ' request was sent successfully!');
       if (!_.find(this.user[this.vacationState], {id:res.data.id}))
         this.user[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
@@ -198,8 +202,6 @@ export default class UserController {
       create({uid, startdate, enddate, status, year: year - 1 })
        .then(createSuccess, createError);
     }
-    
-
 
     function isCrossingIntervals(dateIntervals) {
       if(dateIntervals.length === 0) return false;
