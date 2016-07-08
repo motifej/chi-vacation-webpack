@@ -10,7 +10,8 @@ export default function DatepickerDirective() {
             calcDays: '&',
             isShowAllDays: '=',
             isDisableDate: '=',
-            holidays: '@'
+            holidays: '@',
+            changeMonth: '&'
         },
         restrict: 'E',
         link: link,
@@ -40,22 +41,6 @@ export default function DatepickerDirective() {
         scope.popup = {
             opened: false
         };
-
-/*        let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        let afterTomorrow = new Date();
-        afterTomorrow.setDate(tomorrow.getDate() + 1);
-        scope.events =
-        [
-        {
-            date: tomorrow,
-            status: 'full'
-        },
-        {
-            date: afterTomorrow,
-            status: 'partially'
-        }
-        ];*/
 
         scope.disabled = function({date, mode}) {
             let iDate = moment(date).format('YYYY-MM-DD');

@@ -25,6 +25,7 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right" ng-if="vm.user.id">
+        <li><a href="" >Employment date: {{vm.user.employmentdate | date}}</a></li>
         <li><a href="" class="navbar__user"><span class="glyphicon glyphicon-user chi-glyphicon"></span>{{vm.user.firstname + " " + vm.user.lastname}}</a></li>
         <li ng-if='vm.isManager() || vm.isAdmin()'>
           <a href="" ng-click="vm.settings()" class="logout">
