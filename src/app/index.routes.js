@@ -52,7 +52,8 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           },
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
-            userData : sailsService => sailsService.getUsers()
+            userData : sailsService => sailsService.getUsers(),
+            settings: sailsService => sailsService.getSettings()
           },
 
           views: {
