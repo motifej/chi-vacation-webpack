@@ -1,19 +1,14 @@
 import { USERSTORAGEKEY } from '../constants/localstorage.consts';
 
 export default class SailsAuthService {
-	constructor ($localStorage, $q, $rootScope, $state, roles, actions, states, $http, sailsService, API_URL) {
+	constructor ($localStorage, $q, roles, $http, sailsService, API_URL) {
 		'ngInject';
 		this.$localStorage = $localStorage;
-		this.$state = $state;
 		this.sailsService = sailsService;
-		this.states = states;
-		this.roles = roles;
-		this.actions = actions;
-		this.$q = $q;
-		this.$rootScope = $rootScope;
 		this.$http = $http;
+		this.$q = $q;
+		this.roles = roles;
 		this.authUser = $localStorage[ USERSTORAGEKEY ] || { status:false, data: false };
-
 		this.baseUrl = API_URL;
 	}
 
@@ -28,11 +23,11 @@ export default class SailsAuthService {
 		return this.authUser.status;
 	}
 
-	signInUserByEmail(user) {
+	signInUserByEmail({email, password}) {
 		let deferred = this.$q.defer();
 		let userForm = JSON.stringify({
-                email: user.email,
-				password: user.password
+                email,
+				password
         	});
 			
 		this.$http.post(this.baseUrl+'/auth/signin', userForm).then( 

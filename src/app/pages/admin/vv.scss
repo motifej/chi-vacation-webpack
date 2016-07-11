@@ -8,7 +8,6 @@
     background-attachment: fixed;
     color: white;
     padding-top: 75px;
-
     .m-panel {
         color: white;
         background-color: rgba(155, 155, 155, 0.1);
@@ -196,6 +195,13 @@
             background-color: #544848;
             text-align: right;
         }
+    .cal-holiday {
+        background-color: rgba(255,0,0,0.3) !important;
+    }
+    .cal-hours-color {
+        color: black;
+        top: 0 !important;
+    }
     .cal-year-box {
         .cal-before-eventlist:hover {
             background-color: rgba(0, 200, 129, .1);

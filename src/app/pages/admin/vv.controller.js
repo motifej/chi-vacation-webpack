@@ -2,7 +2,7 @@ import { find } from 'lodash';
 import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
 
 export default class VvController {
-  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, sailsService) {
+  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, settings, sailsService) {
     'ngInject';
     
     this.sailsService = sailsService;
@@ -30,6 +30,7 @@ export default class VvController {
     this.newEvent.startsAt = new Date(today); 
     this.newEvent.endsAt = new Date(today);
     this.setDateInfo();
+    this.holidays = settings.data.data.holidays;
     //  USERS
     $scope.startdate = new Date();
     $scope.minStartDate = new Date($scope.startdate);
@@ -90,15 +91,16 @@ export default class VvController {
       modalInstance.result.then(
         selectedItem => {
           if (selectedItem) {
+            let vac_type = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
             let vacation = find(user[this.pageState], { id: id });
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
             .then(
               data => {
-                this.toastr.success('Vacation confirmed', 'Success');
+                this.toastr.success(vac_type + ' confirmed', 'Success');
                 vacation.status = data.data.status;
               },
-              error => this.toastr.error(error.data.data.raw.message, 'Error confirming vacation')
+              error => this.toastr.error(error.data.data.raw.message, 'Error confirming ' + vac_type.toLowerCase())
             );
           }
         }
@@ -114,15 +116,16 @@ export default class VvController {
       modalInstance.result.then(
         selectedItem => {
           if (selectedItem) {
+            let vac_type = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
             let vacation = find(user[this.pageState], { id: id });
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
             .then(
               data => {
-                this.toastr.success('Vacation rejected', 'Success');
+                this.toastr.success(vac_type + ' rejected', 'Success');
                 vacation.status = data.data.status;
               },
-              error => this.toastr.error(error.data.data.raw.message, 'Error rejecting vacation')
+              error => this.toastr.error(error.data.data.raw.message, 'Error rejecting ' + vac_type.toLowerCase())
             );
           }
         }
@@ -208,6 +211,11 @@ export default class VvController {
       this.setDateInfo();
     }
     
+    cellModifier(cell) {
+      let date = moment(cell.date).format('YYYY-MM-DD');
+      if (~this.holidays.indexOf(date)) 
+        cell.cssClass = 'cal-holiday';
+    }
 
     _fillEvents(vacation) {
         angular.forEach(this.users, (value) => {
@@ -222,7 +230,7 @@ export default class VvController {
 
             let vs = new Date(value.startdate).setHours(0,0,0,0);
             let ve = new Date(value.enddate).setHours(0,0,0,0);
-              console.log('st',this.statusFilter.status);
+              //console.log('st',this.statusFilter.status);
 
                if ( (this.statusFilter.status == "" || (value.status == this.statusFilter.status && value.status != 'confirmed')) ||
                     (((this.statusFilter.status == 'confirmed' ) && (value.status == 'confirmed') && (nd < vs) ) )  ||
@@ -236,7 +244,7 @@ export default class VvController {
                     type: typeEvent[status],
                     cssClass: vacation === 'vacations' ? '' : 'm-dayoff',
                     startsAt: new Date(startdate),
-                    endsAt: new Date(enddate),
+                    endsAt: new Date(moment(enddate).add(12, 'hour')),
                     editable: false,
                     deletable: false,
                     incrementsBadgeTotal: true,
@@ -311,7 +319,7 @@ setDateInfo() {
 
   initUserData(vacationStartDate, user) {
     if (! (user && user.added)) return 0;
-    let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
+    let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate, [1,2,3,4,5,6,7]) - 1;
     user.formatedEmploymentDate = new Date(user.employmentdate);
     user.year = Math.floor(days / 365.25);
     user.addedCur = user.added[user.year] || 0;
@@ -341,6 +349,7 @@ setDateInfo() {
         if (selectedItem) {
 
           this.sendingRequest = true;
+          let vac_type = this.vacationState === this.VACATIONS ? 'Vacation' : 'Day-off';
           let vm = this;
           let sDate = new Date(startDate).getTime();
           let eDate = new Date(endDate).getTime();
@@ -364,7 +373,7 @@ setDateInfo() {
           });
 
           if (vm.vacations && isCrossingIntervals(vm.vacations)) {
-            this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
+            this.toastr.error(vac_type + ' intervals are crossing! Please, choose correct date.', toastrOptions);
             this.sendingRequest = false;
             return;
           }
@@ -388,10 +397,10 @@ setDateInfo() {
           const {startdate, enddate, status} = vacation;
           const createError = ({data: data}) => {
             this.sendingRequest = false;
-            this.toastr.error(this.$parse('raw.message')(data) || '', 'Error creating vacation', toastrOptions);
+            this.toastr.error(this.$parse('raw.message')(data) || this.$parse('data.raw.message')(data) || '', 'Error creating ' + vac_type.toLowerCase(), toastrOptions);
           }
           const createSuccess = res => {
-            this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+            this.toastr.success(vac_type + ' request was sent successfully!', toastrOptions);
             if (!_.find(this.filtredUser[this.vacationState], {id:res.data.id}))
               this.filtredUser[this.vacationState].push(res.data);
             this.calcEnableDays(this.$scope.startdate);
@@ -412,7 +421,7 @@ setDateInfo() {
           }
 
           if(this.filtredUser.vacationDays > this.filtredUser.availablePrevDays){
-            let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.availablePrevDays - 1, [1,2,3,4,5]);
+            let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.availablePrevDays - 1, [1,2,3,4,5], this.holidays);
             create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
             .$promise.then(createSuccess, createError);
             create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
@@ -454,7 +463,7 @@ setDateInfo() {
   calcDaysCalc() {
     this.$timeout(()=> {
       if (this.$scope.startdate && this.$scope.enddate) {
-        this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);
+        this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], this.holidays);
         this.calcEnableDays(this.$scope.startdate)
       } else {
         this.filtredUser.vacationDays = 0;
@@ -465,7 +474,7 @@ setDateInfo() {
 
   calcDays(startDate, endDate) {
     if (!startDate || !endDate) return 0;
-    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5])
+    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5], this.holidays)
   }
 
   setOrder(val) {

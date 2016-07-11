@@ -2,9 +2,7 @@ import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
 
 export default class UserController {
 
-
-
-  constructor ($scope, $parse, $log, $timeout, sailsService, moment, toastr, user, $uibModal) {
+  constructor ($scope, $parse, $log, $timeout, sailsService, moment, toastr, user, $uibModal, settings, $rootScope, actions) {
     'ngInject';
     if (moment().weekday() === 6) $scope.startdate = new Date(moment().add(2, 'days')); else
     if (moment().weekday() === 0) $scope.startdate = new Date(moment().add(1, 'days')); else
@@ -19,19 +17,22 @@ export default class UserController {
     this.VACATIONS = VACATIONS;
     this.today = new Date();
     this.$scope = $scope;
+    this.actions = actions;
     this.$parse = $parse;
     this.$timeout = $timeout;
     this.vacationDays = this.calcDays();
     this.toastr = toastr;
     this.moment = moment;
     this.modal = $uibModal;
+    this.$rootScope = $rootScope;
     this.$log = $log;
     this.sailsService = sailsService;
     this.activate($scope);
     this.vacationState = VACATIONS;
     this.sending = false;
     this.allVacations = this.combineVacations();
-
+    this.holidays = settings.data.data.holidays;
+    this.showNotification = false;
     this.calcEnableDays(this.$scope.startdate);
     this.calcDaysCalc();
   }
@@ -44,13 +45,30 @@ export default class UserController {
       scope.minEndDate = new Date(scope.startdate);
     });
 
+    let destr = this.$rootScope.$on( this.actions.MONTHCHANGED, this.monthChanged.bind(this) );
+    scope.$on('destroy', destr);
+  }
+
+  monthChanged(event, datepickerDate) {
+    let days = moment().isoWeekdayCalc(this.user.employmentdate, moment(datepickerDate), [1,2,3,4,5,6,7]) - 1;
+    let year = Math.floor(days / (365.25 + 30));
+    let eDate = this.user.employmentdate;
+    let minExpireDate, maxExpireDate;
+    if (this.vacationState === this.VACATIONS) {
+      minExpireDate = moment(eDate).add(1 + year, 'year').format('YYYY-MM');
+      maxExpireDate = moment(eDate).add(1 + year, 'year').add(1, 'month').format('YYYY-MM');
+      this.vacationExpire = moment(eDate).add(12, 'month').add(year, 'year').add(1, 'month').format('YYYY-MM-DD');
+    } else {
+      minExpireDate = moment(eDate).add(1 + year, 'year').subtract(1, 'month').format('YYYY-MM');
+      maxExpireDate = moment(eDate).add(1 + year, 'year').format('YYYY-MM');
+      this.vacationExpire = moment(eDate).add(12, 'month').add(year, 'year').format('YYYY-MM-DD');
+    }
+      this.showNotification = datepickerDate === minExpireDate || datepickerDate === maxExpireDate;
   }
 
   calcEnableDays(vacationStartDate) {
-
       let user = this.initUserData(vacationStartDate, this.user);
-
-      
+      this.monthChanged(null, moment(vacationStartDate).format('YYYY-MM'));
 
       if(user.year != 0 
         && ((user.formatedEmploymentDate.getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() <= vacationStartDate.getDate()) 
@@ -96,7 +114,7 @@ export default class UserController {
   }
 
   initUserData(vacationStartDate, user) {
-    let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate,[1,2,3,4,5,6,7]) - 1;
+    let days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDate, [1,2,3,4,5,6,7]) - 1;
     user.formatedEmploymentDate = new Date(user.employmentdate);
     user.year = Math.floor(days / 365.25);
     user.addedCur = user.added[user.year] || 0;
@@ -116,17 +134,16 @@ export default class UserController {
 
   submitHandler(startDate, endDate) {
     this.sending = true;
+    let vac_type = this.vacationState === this.VACATIONS ? 'Vacation' : 'Day-off';
     let vm = this;
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
-    let toastrOptions = {progressBar: false};
+    //let toastrOptions = {progressBar: false};
     
     let listArray = [];
     vm.vacations = [];
     listArray.push(this.user['vacations']);
     listArray.push(this.user['daysoff']);
-
-
 
     listArray.forEach( list => {
       if (list) {
@@ -138,14 +155,14 @@ export default class UserController {
     });
 
     if (vm.vacations && isCrossingIntervals(vm.vacations)) {
-      this.toastr.error('Vacation intervals are crossing! Please, choose correct date.', toastrOptions);
+      this.toastr.error(vac_type + ' intervals are crossing! Please, choose correct date.');
       this.sending = false;
       return;
     }
 
     let total = this.vacationState === this.VACATIONS ? this.user.availableDays : this.user.availableDaysOff;
     if (this.user.vacationDays > total) {
-      this.toastr.error('You have exceeded the number of available days!', toastrOptions);
+      this.toastr.error('You have exceeded the number of available days!');
       this.sending = false;
       return;
     }
@@ -163,10 +180,10 @@ export default class UserController {
     const { startdate, enddate, status } = vacation;
     const createError = ({data}) => {
       this.sending = false; 
-      this.toastr.error(this.$parse('raw.message')(data) || '', 'Error creating vacation', toastrOptions)
+      this.toastr.error(this.$parse('raw.message')(data) || this.$parse('data.raw.message')(data) || '', 'Error creating ' + vac_type.toLowerCase())
     };
     const createSuccess = res => {
-      this.toastr.success('Vacation request was sent successfully!', toastrOptions);
+      this.toastr.success(vac_type + ' request was sent successfully!');
       if (!_.find(this.user[this.vacationState], {id:res.data.id}))
         this.user[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
@@ -187,7 +204,7 @@ export default class UserController {
     }
 
     if(this.user.vacationDays > this.user.availablePrevDays){
-      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.user.availablePrevDays - 1, [1,2,3,4,5]);
+      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.user.availablePrevDays - 1, [1,2,3,4,5], this.holidays);
       create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
        .then(createSuccess, createError);
       create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
@@ -196,8 +213,6 @@ export default class UserController {
       create({uid, startdate, enddate, status, year: year - 1 })
        .then(createSuccess, createError);
     }
-    
-
 
     function isCrossingIntervals(dateIntervals) {
       if(dateIntervals.length === 0) return false;
@@ -216,7 +231,7 @@ export default class UserController {
   calcDaysCalc() {
     this.$timeout(()=> {
       if (this.$scope.startdate && this.$scope.enddate) {
-        this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5]);
+        this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], this.holidays);
         this.calcEnableDays(this.$scope.startdate)
       } else {
         this.user.vacationDays = 0;
@@ -226,11 +241,12 @@ export default class UserController {
   }
 
   calcDays(startDate, endDate) {
-    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5])
+    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5], this.holidays)
   }
 
   changeVacationState(state) {
     this.vacationState = state;
+    this.calcEnableDays(this.$scope.startdate);
   }
 
   isVacationState(state) {

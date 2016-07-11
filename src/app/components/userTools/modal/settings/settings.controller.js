@@ -1,5 +1,5 @@
 export default class SettingsController {
-  constructor ($uibModalInstance, settings, toastr, sailsService, groups) {
+  constructor ($uibModalInstance, settings, toastr, sailsService, groups, moment, $state, states) {
     'ngInject';
 
     this.invalidForm = false;
@@ -7,19 +7,21 @@ export default class SettingsController {
     this.sailsService = sailsService;
     this.toastr = toastr;
     this.modalInstance = $uibModalInstance;
+    this.moment = moment;
+    this.$state = $state;
+    this.states = states;
 
     this.settings = settings.data.data;
+    this.settings.holidays = this.settings.holidays || [];
     if (!this.settings.groups) 
       this.settings.groups = [];
     this.settings.groups = _.unionWith(this.settings.groups, groups.map( el => ({emails: [], name: el})), (el,vl) => el.name == vl.name);
     this.groups = this.settings.groups;
-    //debugger
-    
-    //let copyGroups = angular.copy(this.groups);
-    //this.groups.length = 0;
 
     this.group = this.groups[0];
 
+    this.holidayDate = new Date();
+    this.holidayFilter = this.holidayDate.getFullYear();
   }
 
   addEmail() {
@@ -72,16 +74,32 @@ export default class SettingsController {
         data => {
           this.toastr.success('Settings were saved');
           this.modalInstance.dismiss('cancel');
+          this.$state.reload();
         },
         e => this.toastr.error(e.message, 'Error saving settings'))
-
   }
 
   cancel() {
     this.modalInstance.dismiss('cancel');
   }
 
+  addHoliday() {
+    let newHoliday = moment(this.holidayDate).format('YYYY-MM-DD');
+    if (newHoliday)
+      if (~this.settings.holidays.indexOf(newHoliday))
+        this.toastr.error('Duplicate date');
+      else {
+        this.settings.holidays.push(newHoliday); 
+      }
+    else
+      this.toastr.error('Incorrect date')
+  }
 
+  deleteHoliday(holiday) {
+    this.settings.holidays = this.settings.holidays.filter(
+      el => el !== holiday
+    );
+  }
 
 }
 

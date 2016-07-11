@@ -6,21 +6,22 @@ export default function (app) {
         this.$get = () => this;
     }
 
-        function loadUser ($localStorage, $state, states, sailsService, sailsAuthService, $rootScope, actions) {
-            "ngInject";
-            let user = sailsAuthService.getAuthUser().user;
-            const { USERLOADED } = actions;
-            return sailsService.getUser({id: user.id}).then( e => {
-                $rootScope.$emit(USERLOADED, e);
-                return e;
+    function loadUser ($localStorage, $state, states, sailsService, sailsAuthService, $rootScope, actions) {
+        "ngInject";
+        let user = sailsAuthService.getAuthUser().user;
+        return sailsService.getUser({id: user.id})
+            .then( data => {
+                $rootScope.$emit(actions.USERLOADED, data);
+                return data;
             })
-                    .catch( err => {
-                        if (err.data.message === 'invalid token' || err.data.message === 'jwt expired') {
-                            $localStorage.$reset();
-                            $state.go(states.LOGIN,{err: err}); 
-                        } else
-                        $state.go(states.ERRLOAD,{err: err}) 
-                    });
-        }
+            .catch( err => {
+                if (err.data.message === 'invalid token' || err.data.message === 'jwt expired') {
+                    $localStorage.$reset();
+                    $state.go(states.LOGIN, {err: err}); 
+                } else
+                $state.go(states.ERRLOAD, {err: err}) 
+            }
+        );
+    }
 
 }
