@@ -30,7 +30,7 @@ export default class VvController {
     this.newEvent.startsAt = new Date(today); 
     this.newEvent.endsAt = new Date(today);
     this.setDateInfo();
-    this.holidays = settings.data.data.holidays;
+    this.holidays = angular.copy(settings.data.data.holidays);
     //  USERS
     $scope.startdate = new Date();
     $scope.minStartDate = new Date($scope.startdate);
@@ -421,7 +421,7 @@ setDateInfo() {
           }
 
           if(this.filtredUser.vacationDays > this.filtredUser.availablePrevDays){
-            let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.availablePrevDays - 1, [1,2,3,4,5], this.holidays);
+            let mDate = moment(sDate).isoAddWeekdaysFromSet(this.filtredUser.availablePrevDays - 1, [1,2,3,4,5], angular.copy(this.holidays));
             create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
             .$promise.then(createSuccess, createError);
             create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
@@ -463,7 +463,7 @@ setDateInfo() {
   calcDaysCalc() {
     this.$timeout(()=> {
       if (this.$scope.startdate && this.$scope.enddate) {
-        this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], this.holidays);
+        this.filtredUser.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], angular.copy(this.holidays));
         this.calcEnableDays(this.$scope.startdate)
       } else {
         this.filtredUser.vacationDays = 0;
@@ -474,7 +474,7 @@ setDateInfo() {
 
   calcDays(startDate, endDate) {
     if (!startDate || !endDate) return 0;
-    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5], this.holidays)
+    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5], angular.copy(this.holidays))
   }
 
   setOrder(val) {

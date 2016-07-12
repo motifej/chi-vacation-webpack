@@ -31,7 +31,7 @@ export default class UserController {
     this.vacationState = VACATIONS;
     this.sending = false;
     this.allVacations = this.combineVacations();
-    this.holidays = settings.data.data.holidays;
+    this.holidays = angular.copy(settings.data.data.holidays);
     this.showNotification = false;
     this.calcEnableDays(this.$scope.startdate);
     this.calcDaysCalc();
@@ -204,7 +204,7 @@ export default class UserController {
     }
 
     if(this.user.vacationDays > this.user.availablePrevDays){
-      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.user.availablePrevDays - 1, [1,2,3,4,5], this.holidays);
+      let mDate = moment(sDate).isoAddWeekdaysFromSet(this.user.availablePrevDays - 1, [1,2,3,4,5], angular.copy(this.holidays));
       create({uid, startdate, enddate: new Date(mDate), status, year: year - 1 })
        .then(createSuccess, createError);
       create({uid, startdate: moment(new Date(mDate)).add(1, 'day'), enddate, status, year })
@@ -231,7 +231,7 @@ export default class UserController {
   calcDaysCalc() {
     this.$timeout(()=> {
       if (this.$scope.startdate && this.$scope.enddate) {
-        this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], this.holidays);
+        this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], angular.copy(this.holidays));
         this.calcEnableDays(this.$scope.startdate)
       } else {
         this.user.vacationDays = 0;
@@ -241,7 +241,7 @@ export default class UserController {
   }
 
   calcDays(startDate, endDate) {
-    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5], this.holidays)
+    return moment().isoWeekdayCalc(startDate, endDate, [1, 2, 3, 4, 5], angular.copy(this.holidays))
   }
 
   changeVacationState(state) {
