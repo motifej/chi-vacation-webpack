@@ -2,11 +2,12 @@ import { find } from 'lodash';
 import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
 
 export default class VvController {
-  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, settings, sailsService) {
+  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, settings, sailsService, $stateParams) {
     'ngInject';
     
     this.sailsService = sailsService;
     this.$parse = $parse;
+    this.$stateParams = $stateParams;
     this.toastr = toastr;
     this.users = userData;
     this.groups = groups;
@@ -65,6 +66,15 @@ export default class VvController {
       if (scope.dateFilter.enddate <= scope.dateFilter.startdate) scope.dateFilter.enddate = new Date(scope.dateFilter.startdate);
       scope.dateFilter.minEndDate = new Date(scope.dateFilter.startdate);
     }, true);
+
+    let { type, id } = this.$stateParams;
+    if ( type && id ) {
+      let curUser = _.find(this.users, { id });
+      if ( curUser ) {
+        this.pageState = type.toLowerCase() === VACATIONS ? VACATIONS : DAYSOFF; 
+        this.choiceUser(id, curUser.group, curUser)
+      }
+    }
 
   }
 

@@ -27,7 +27,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
         })
         .state(states.ADMIN, {
           parent: states.SITE,
-          url: '/admin',
+          url: '/admin?id?type',
           data: {
               roles: roles.ADMIN
           },
@@ -46,7 +46,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
         })
         .state(states.MANAGER, {
           parent: states.SITE,
-          url: '/manager',
+          url: '/manager?id?type',
           data: {
               roles: roles.MANAGER
           },
