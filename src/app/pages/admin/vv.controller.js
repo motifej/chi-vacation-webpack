@@ -71,7 +71,7 @@ export default class VvController {
     if ( type && id ) {
       let curUser = _.find(this.users, { id });
       if ( curUser ) {
-        this.pageState = type.toLowerCase() === VACATIONS ? VACATIONS : DAYSOFF; 
+        this.pageState = type === 'Vacation' ? VACATIONS : DAYSOFF; 
         this.choiceUser(id, curUser.group, curUser)
       }
     }
