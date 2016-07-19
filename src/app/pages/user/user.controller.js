@@ -1,4 +1,4 @@
-import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
+import {DAYSOFF, VACATIONS, WORKFROMHOME} from '../../core/constants/vacations.consts';
 
 export default class UserController {
 
@@ -15,6 +15,7 @@ export default class UserController {
     this.user = user;
     this.DAYSOFF = DAYSOFF;
     this.VACATIONS = VACATIONS;
+    this.WORKFROMHOME = WORKFROMHOME;
     this.today = new Date();
     this.$scope = $scope;
     this.actions = actions;
