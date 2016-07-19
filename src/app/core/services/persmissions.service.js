@@ -34,7 +34,7 @@ export default function (app) {
         let { user } = sailsAuthService.getAuthUser();
         let { type, id } = toParams;
         if( user ) {
-          if ( type && id && (user.role === states.ADMIN || user.role === states.MANAGER ) ) {
+          if ( type && id && (user.role === states.ADMIN || user.role === states.MANAGER || user.role === states.TEAMLEAD) ) {
             $state.go(user.role, toParams);
           } else {
             $state.go(states.HOME);
