@@ -18,7 +18,6 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
       email: $scope.email,
       password: $scope.passw || $scope.newPassword
     }).then( (user) => {
-      /*console.log(user);*/
       if ($rootScope.prevState && 
         user && 
          (user.role === states.ADMIN || 
