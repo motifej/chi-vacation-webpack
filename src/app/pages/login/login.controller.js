@@ -19,8 +19,12 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
       password: $scope.passw || $scope.newPassword
     }).then( (user) => {
       /*console.log(user);*/
-      if ($rootScope.prevState && user && (user.role === states.ADMIN || user.role === states.MANAGER) ) {
-        $state.go(user.role, $rootScope.prevParams);
+      if ($rootScope.prevState && 
+        user && 
+         (user.role === states.ADMIN || 
+          user.role === states.MANAGER || 
+          user.role === states.TEAMLEAD) ) {
+            $state.go(user.role, $rootScope.prevParams);
       } else {
         $state.go(states.HOME);
       }
