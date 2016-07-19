@@ -66,7 +66,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
         })
         .state(states.TEAMLEAD, {
           parent: states.SITE,
-          url: '/teamlead?id?type',
+          url: '/team-lead?id?type',
           data: {
               roles: roles.TEAMLEAD
           },
