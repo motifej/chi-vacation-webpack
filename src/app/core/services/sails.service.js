@@ -1,4 +1,4 @@
-import { DAYSOFF, VACATIONS } from '../constants/vacations.consts';
+import { DAYSOFF, VACATIONS, WORKFROMHOME } from '../constants/vacations.consts';
 import { SETTINGS_KEY } from '../constants/settings.consts';
 
 export default class SailsService {
@@ -30,6 +30,7 @@ export default class SailsService {
 		//http vacation create
 		this['create' + VACATIONS] = (vacation) => this.http.post(API_URL + '/vacations/create2', vacation);
 		this['create' + DAYSOFF] = (vacation) => this.http.post(API_URL + '/daysoff/create2', vacation);
+		this['create' + WORKFROMHOME] = (vacation) => this.http.post(API_URL + '/workfromhome/create2', vacation);
 		
 		//http settings
 		this.saveSettings = (settings) => this.http.put(API_URL + '/settings/' + SETTINGS_KEY, settings);
