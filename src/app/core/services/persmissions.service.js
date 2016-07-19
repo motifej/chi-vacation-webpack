@@ -2,15 +2,18 @@ export default function (app) {
 
   app.service('permission', PermissionService);
 
-  function PermissionService ($state, toastr, $parse, states, roles, sailsAuthService) {
+  function PermissionService ($state, toastr, $parse, states, roles, sailsAuthService, $rootScope) {
     'ngInject'
     
     this.init = init;
+    this.$rootScope = $rootScope;
 
     function init (event, toState, toParams, fromState) {
       if ( !sailsAuthService.getUserState() && toState.name !== states.LOGIN 
         && toState.name !== states.CHANGEPASSWORD && toState.name !== states.RESETPASSWORD) {
         event.preventDefault();
+        $rootScope.prevParams = toParams;
+        $rootScope.prevState = toState;
         $state.go(states.LOGIN);
       }
       

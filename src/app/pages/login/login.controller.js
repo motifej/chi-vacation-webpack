@@ -1,4 +1,4 @@
-function LoginController ($log, $state, $scope, toastr, states, sailsAuthService, sailsService) {
+function LoginController ($log, $state, $scope, toastr, states, sailsAuthService, sailsService, $rootScope) {
   'ngInject';
 
   $scope.sending = false;
@@ -19,7 +19,11 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
       password: $scope.passw || $scope.newPassword
     }).then( (r) => {
       /*console.log(r);*/
-      $state.go(states.HOME);
+      if ($rootScope.prevState) {
+        $state.go($rootScope.prevState, $rootScope.prevParams);
+      } else {
+        $state.go(states.HOME);
+      }
     }).catch( err => {
       toastr.error(err.error.data.message, 'Error');
       $log.error(err);
