@@ -52,8 +52,7 @@ export default class VvController {
     this.showDeletedUsers = false;
     this.sendingAdditional = false;
     this.sendingRequest = false;
-    
-  }
+}
 
   activate(scope) {
 
