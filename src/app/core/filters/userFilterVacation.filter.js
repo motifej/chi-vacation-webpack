@@ -7,7 +7,10 @@ export default function (app) {
 			return function(input, status, date = 0) {
 				if (input.length > 0) {
 					if(date.startdate){
-            input = filter(input, item => (date.enddate) ? new Date(item.startdate) <= date.enddate && new Date(item.enddate) >= date.startdate : new Date(item.enddate) >= date.startdate);
+            input = filter(input, item => (date.enddate) ? 
+            new Date(item.startdate) <= date.enddate && 
+            new Date(item.enddate) >= date.startdate : 
+            new Date(item.enddate) >= date.startdate);
           }
 					switch (status) {
 						case 'new':
@@ -20,15 +23,19 @@ export default function (app) {
 						});
 						case 'confirmed':
 						return filter(input, function(item) {
-							return new Date(item.startdate) > new Date() && item.status == 'confirmed';
+							return new Date(item.startdate) > 
+							new Date() && item.status == 'confirmed';
 						});
 						case 'inprogress':
 						return filter(input, function(item) {
-							return new Date(item.startdate) < new Date() && new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) > new Date() && item.status == 'confirmed';
+							return new Date(item.startdate) < new Date() && 
+							new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) > 
+							new Date() && item.status == 'confirmed';
 						});
 						case 'spent':
 						return filter(input, function(item) {
-							return new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) < new Date() && item.status == 'confirmed';
+							return new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) < 
+							new Date() && item.status == 'confirmed';
 						});
 						default:
 							return input;
