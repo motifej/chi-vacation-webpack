@@ -23,6 +23,10 @@
           <a ui-sref-active="chi-tab--active" ui-sref={{vm.states.MANAGER}} ng-click="vm.selected()" class="chi-tab">
           <span class="glyphicon glyphicon-user chi-glyphicon"></span>Manager</a>
         </li>
+        <li ng-if='vm.isTeamLead()'>
+          <a ui-sref-active="chi-tab--active" ui-sref={{vm.states.TEAMLEAD}} ng-click="vm.selected()" class="chi-tab">
+          <span class="glyphicon glyphicon-user chi-glyphicon"></span>Team-lead</a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right" ng-if="vm.user.id">
         <li><a href="" class="navbar__user">Employment date: {{vm.user.employmentdate | date}}</a></li>

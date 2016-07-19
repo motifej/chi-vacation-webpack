@@ -49,7 +49,11 @@ class NavbarController {
   isManager() {
     return this.user.role == this.roles.MANAGER;
   }
-
+  
+  isTeamLead() {
+    return this.user.role == this.roles.TEAMLEAD;
+  }
+  
   collapsed(val) {
     this.isCollapsed = val || !this.isCollapsed;
   }
