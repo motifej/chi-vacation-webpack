@@ -31,8 +31,14 @@ export default function (app) {
       event.preventDefault();
 
       if( fromState.url === '^' ) {
-        if( sailsAuthService.getAuthUser() ) {
-          $state.go(states.HOME);
+        let { user } = sailsAuthService.getAuthUser();
+        let { type, id } = toParams;
+        if( user ) {
+          if ( type && id && (user.role === states.ADMIN || user.role === states.MANAGER ) ) {
+            $state.go(user.role, toParams);
+          } else {
+            $state.go(states.HOME);
+          }
         } else {
           $state.go(states.LOGIN);
         }
