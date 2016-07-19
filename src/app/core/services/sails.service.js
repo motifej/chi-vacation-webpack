@@ -13,6 +13,7 @@ export default class SailsService {
 			createUser: {isArray: false, method: "POST"},
 			deleteUser: {isArray: false, method: "DELETE"}
 		});
+		//http://localhost:3001/users/users/a18588f1-5177-45b3-b422-72dc1ea795c6 work
 		this.vacationsResource = $resource(API_URL + "/vacations/:id", {id: "@id"}, {
 			get: {isArray: false, method: "GET"},
 			update: {isArray: false, method: "PUT"},
