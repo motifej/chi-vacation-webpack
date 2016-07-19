@@ -38,23 +38,30 @@
       </div>
     </div>
     <div class="col-md-9">
+      <div class="buttons-panel clearfix" ng-show="admin.user.role == 'admin'">
+        <div class="col-xs-12 new-user-wrapper">
+          <button class="col-5 btn chi-btn--default" ng-click="admin.openNewUserForm()">Add User</button>
+        </div>
+      </div>
+      <hr ng-show="admin.user.role == 'admin'">
       <div class="buttons-panel clearfix">
-        <div class="btn-group col-xs-12 col-sm-9 col-md-7 m-button-margin" ng-show="admin.user.role == 'admin'">
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">Days-Off</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
+        <div class="btn-group col-xs-12" ng-show="admin.user.role == 'admin'">
+          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
+          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">Days-Off</label>
+          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
+          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
+          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
         </div>
-        <div class="btn-group col-xs-12 col-sm-9 col-md-7" ng-show="admin.user.role == 'manager'">
-          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">DaysOff</label>
-          <label class="btn col-xs-12 col-sm-4 col-md-4 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
+        <div class="btn-group col-xs-12" ng-show="admin.user.role == 'manager'">
+          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
+          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">DaysOff</label>
+          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
+          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
         </div>
-        <div class="btn-group col-xs-12 col-sm-3 col-md-2 m-button-user"><button class="col-xs-12 btn chi-btn--default" ng-click="admin.openNewUserForm()" ng-show="admin.user.role == 'admin'">Add User</button></div>
       </div>
       <div class="buttons-panel clearfix" ng-hide="admin.pageState == 'userRequest'">
       <hr>
-        <div class="btn-group col-xs-12 col-sm-9 col-md-7">
+        <div class="btn-group col-xs-12">
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': admin.statusFilter.status == 'new'}" ng-click="admin.choiceButtonFilter('new')">New</label>
           <label class="btn-group btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" uib-dropdown uib-dropdown-toggle ng-disabled="disabled" is-open="status.isopen" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed' || admin.statusFilter.status == 'inprogress' || admin.statusFilter.status == 'spent'}">
             {{admin.dropdownFilter}} <span class="caret"></span>
@@ -138,7 +145,7 @@
         </div>        
 
 
-      <div class="well" ng-show="admin.pageState == 'vacations' || admin.pageState == 'daysoff'">
+      <div class="well" ng-show="admin.pageState == 'vacations' || admin.pageState == 'daysoff' || admin.pageState == 'workfromhome'">
 
         <div class="row">
           <div class="col-md-4">
@@ -196,7 +203,7 @@
                     <span ng-click="admin.setOrder('-enddate')" ng-class="{'m-tab--sort--active': admin.isActive('-enddate')}" class="glyphicon glyphicon-arrow-down"></span>
                   </th>
                   <th>Duration</th>
-                  <th ng-hide="admin.statusFilter.status == 'rejected' || admin.user.role == 'team-lead' ">Action</th>
+                  <th ng-hide="admin.statusFilter.status == 'rejected'">Action</th>
                 </tr>
               </thead>
               <tbody >
@@ -204,7 +211,7 @@
                   <td>{{item.startdate | date:'dd MMMM yyyy'}}</td>
                   <td>{{item.enddate | date:'dd MMMM yyyy'}}</td>
                   <td>{{admin.calcDays(item.startdate, item.enddate)}}</td>
-                  <td ng-hide="admin.statusFilter.status == 'rejected' || admin.user.role == 'team-lead' ">
+                  <td ng-hide="admin.statusFilter.status == 'rejected'">
                     <button ng-hide="item.status!='new'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
                     <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</button>
                   </td>
@@ -240,16 +247,22 @@
       <!-- <div class="row"> -->
         <div class="btn-group col-xs-12">
           <label
-            class="btn col-xs-6 vacation-option"
+            class="btn col-xs-4 vacation-option"
             ng-class="{'vacation-option-active': admin.vacationState == 'vacations'}"
             ng-click="admin.changeVacationState('vacations')">
             Vacations
           </label>
           <label
-            class="btn col-xs-6 vacation-option"
+            class="btn col-xs-4 vacation-option"
             ng-class="{'vacation-option-active': admin.vacationState == 'daysoff'}"
             ng-click="admin.changeVacationState('daysoff')">
             Days-off
+          </label>
+          <label
+            class="btn col-xs-4 vacation-option"
+            ng-class="{'vacation-option-active': admin.vacationState == 'workfromhome'}"
+            ng-click="admin.changeVacationState('workfromhome')">
+            Work from home
           </label>
         </div>
       <!-- </div> -->
@@ -259,6 +272,7 @@
           <legend class="user-form__title">
             <span ng-show="admin.isVacationState(admin.VACATIONS)">Vacations request</span>
             <span ng-show="admin.isVacationState(admin.DAYSOFF)">Days-off request</span>
+            <span ng-show="admin.isVacationState(admin.WORKFROMHOME)">Work from home request</span>
           </legend>
           <div class="row">
             <div class="form-group col-md-6">
@@ -292,6 +306,7 @@
             <div class="form-group col-md-6">
               <label for="selected" ng-show="admin.isVacationState('vacations')">Vacation days</label>
               <label for="selected" ng-show="admin.isVacationState('daysoff')">Days-off</label>
+              <label for="selected" ng-show="admin.isVacationState('workfromhome')">Work from home</label>
               <div id="selected" class="form-control user__total-days text-center"
               ng-bind="admin.calcDays(startdate, enddate)"></div>
             </div>
@@ -300,12 +315,16 @@
               <div id="available" class="form-control user__left-days text-center"
                ng-bind="admin.calcEnableDays(startdate)"></div>
             </div>
-
             <div class="form-group col-md-6" ng-show="admin.isVacationState('daysoff')">
               <label for="DaysOff">Available days-off</label>
               <input type="text" id="DaysOff" class="form-control user__left-days" readonly
               ng-value="admin.filtredUser.availableDaysOff">
             </div>
+            <div class="form-group col-md-6" ng-show="admin.isVacationState('workfromhome')">
+              <label for="workfromhome">Available work from home</label>
+              <input type="text" id="workfromhome" class="form-control user__left-days" readonly
+              value="5">
+            </div>            
           </div>
           <div class="row">
             <button ng-disabled="(admin.filtredUser.id && !admin.sendingRequest) ? false : true" type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">
