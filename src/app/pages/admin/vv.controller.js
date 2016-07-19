@@ -1,5 +1,5 @@
 import { find } from 'lodash';
-import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
+import {DAYSOFF, VACATIONS, WORKFROMHOME} from '../../core/constants/vacations.consts';
 
 export default class VvController {
   constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, settings, sailsService, $stateParams) {
@@ -45,6 +45,7 @@ export default class VvController {
     this.moment = moment;
     this.DAYSOFF = DAYSOFF;
     this.VACATIONS = VACATIONS;
+    this.WORKFROMHOME = WORKFROMHOME;
     this.vacationState = VACATIONS;
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
