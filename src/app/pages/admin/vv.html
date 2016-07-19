@@ -8,7 +8,7 @@
             <div class="row">
               <div class="form-group col-md-12">
                 <div class="checkbox">
-                  <label>
+                  <label ng-hide="admin.user.role == 'team-lead'">
                     <input type="checkbox" ng-model="admin.showDeletedUsers"> <u>Show deleted users</u>
                   </label>
                 </div>
