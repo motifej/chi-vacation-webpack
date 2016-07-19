@@ -52,7 +52,7 @@
           <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
           <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
         </div>
-        <div class="btn-group col-xs-12" ng-show="admin.user.role == 'manager'">
+        <div class="btn-group col-xs-12" ng-show="admin.user.role == 'manager' || admin.user.role == 'team-lead'">
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">DaysOff</label>
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
@@ -203,7 +203,7 @@
                     <span ng-click="admin.setOrder('-enddate')" ng-class="{'m-tab--sort--active': admin.isActive('-enddate')}" class="glyphicon glyphicon-arrow-down"></span>
                   </th>
                   <th>Duration</th>
-                  <th ng-hide="admin.statusFilter.status == 'rejected'">Action</th>
+                  <th ng-hide="admin.statusFilter.status == 'rejected' || admin.user.role == 'team-lead'">Action</th>
                 </tr>
               </thead>
               <tbody >
@@ -211,7 +211,7 @@
                   <td>{{item.startdate | date:'dd MMMM yyyy'}}</td>
                   <td>{{item.enddate | date:'dd MMMM yyyy'}}</td>
                   <td>{{admin.calcDays(item.startdate, item.enddate)}}</td>
-                  <td ng-hide="admin.statusFilter.status == 'rejected'">
+                  <td ng-hide="admin.statusFilter.status == 'rejected' || admin.user.role == 'team-lead'">
                     <button ng-hide="item.status!='new'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
                     <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</button>
                   </td>
