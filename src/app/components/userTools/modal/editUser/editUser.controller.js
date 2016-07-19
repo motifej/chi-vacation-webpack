@@ -28,6 +28,8 @@ export default class AddNewUserController {
       this.modalInstance.close();
       delete this.newUser.vacations;
       delete this.newUser.daysoff;
+      delete this.newUser.workfromhome;
+      //this.newUser.responsibleFor = ['JS', 'QA'];
       this.updateUser({id: this.newUser.id}, this.newUser).$promise.then(
         () => this.toastr.success('Edit user success', 'Success'),
         error => this.toastr.error(error.data.message, 'Error updating user')
@@ -56,6 +58,7 @@ export default class AddNewUserController {
           this.modalInstance.close();
           delete this.newUser.vacations;
           delete this.newUser.daysoff;
+          delete this.newUser.workfromhome;
           this.updateUser({id: this.newUser.id}, angular.extend(this.newUser, {
             deleted: true
           })).$promise
@@ -82,6 +85,7 @@ export default class AddNewUserController {
           this.modalInstance.close();
           delete this.newUser.vacations;
           delete this.newUser.daysoff;
+          delete this.newUser.workfromhome;
           this.updateUser({id: this.newUser.id}, angular.extend(this.newUser, {
             deleted: false
           })).$promise
