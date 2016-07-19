@@ -2,13 +2,14 @@ import { find } from 'lodash';
 import {DAYSOFF, VACATIONS, WORKFROMHOME} from '../../core/constants/vacations.consts';
 
 export default class VvController {
-  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, settings, sailsService, $stateParams) {
+  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams) {
     'ngInject';
     
     this.sailsService = sailsService;
     this.$parse = $parse;
     this.$stateParams = $stateParams;
     this.toastr = toastr;
+    this.roles = users;
     this.users = userData;
     this.groups = groups;
     this.status = status;
@@ -74,6 +75,12 @@ export default class VvController {
         this.pageState = type === 'Vacation' ? VACATIONS : DAYSOFF; 
         this.choiceUser(id, curUser.group, curUser)
       }
+    }
+    
+    //this.user.responsibleFor = ['JS', 'QA'];
+    if (this.user.role === this.roles.TEAMLEAD) {
+      let filterGroups = this.user.responsibleFor ? this.user.responsibleFor : [this.user.group];
+      this.groups = this.groups.filter( group => ~filterGroups.indexOf(group) )
     }
 
   }
