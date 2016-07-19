@@ -17,10 +17,10 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
     sailsAuthService.signInUserByEmail({
       email: $scope.email,
       password: $scope.passw || $scope.newPassword
-    }).then( (r) => {
-      /*console.log(r);*/
-      if ($rootScope.prevState) {
-        $state.go($rootScope.prevState, $rootScope.prevParams);
+    }).then( (user) => {
+      /*console.log(user);*/
+      if ($rootScope.prevState && user && (user.role === states.ADMIN || user.role === states.MANAGER) ) {
+        $state.go(user.role, $rootScope.prevParams);
       } else {
         $state.go(states.HOME);
       }
