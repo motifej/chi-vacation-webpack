@@ -14,6 +14,7 @@
     "angular-animate": "^1.5.0",
     "angular-aria": "^1.5.0",
     "angular-bootstrap-calendar": "^0.19.1",
+    "angular-bootstrap-multiselect": "^1.1.2",
     "angular-cookies": "^1.5.0",
     "angular-messages": "^1.5.0",
     "angular-resource": "^1.5.5",
