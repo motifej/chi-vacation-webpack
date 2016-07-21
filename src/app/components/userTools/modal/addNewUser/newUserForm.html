@@ -58,6 +58,17 @@
       </div>
 
       <div class="form-group">
+        <div ng-class="{'has-error': addUserForm.userGroup.$invalid && (user.invalidForm || addUserForm.userGroup.$dirty)}">
+          <label class="col-md-4 control-label" for="userGroup">User's group</label>
+          <div class="col-md-5">
+            <select id="userGroup" name="userGroup" class="form-control" ng-model="user.newUser.group" ng-options="group as group for group in user.group" required>
+              <option value="">-- Chose user's group --</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
         <div ng-class="{'has-error': addUserForm.userRole.$invalid && (user.invalidForm || addUserForm.userRole.$dirty)}">
           <label class="col-md-4 control-label" for="userRole">User's role</label>
           <div class="col-md-5">
@@ -68,16 +79,12 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.userGroup.$invalid && (user.invalidForm || addUserForm.userGroup.$dirty)}">
-          <label class="col-md-4 control-label" for="userGroup">User's group</label>
-          <div class="col-md-5">
-            <select id="userGroup" name="userGroup" class="form-control" ng-model="user.newUser.group" ng-options="group as group for group in user.group" required>
-              <option value="">-- Chose user's group --</option>
-            </select>
-          </div>
+      <div class="form-group" ng-if="user.newUser.role === 'team-lead'">
+        <div>
+          <label class="col-md-4 control-label" for="groups">Responsible for</label>
+          <multiselect class="col-md-4" id="groups" ng-model="user.newUser.responsibleFor" options="user.group"></multiselect>
         </div>
-      </div>
+      </div>      
 
 <!--       <div class="form-group">
         <div ng-class="{'has-error': addUserForm.totalVacation.$invalid && (user.invalidForm || addUserForm.totalVacation.$dirty)}">
