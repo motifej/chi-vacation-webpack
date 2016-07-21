@@ -77,12 +77,11 @@ export default class VvController {
       }
     }
     
-    //this.user.responsibleFor = ['JS', 'QA'];
-    if (this.user.role === this.roles.TEAMLEAD) {
-      let filterGroups = this.user.responsibleFor ? this.user.responsibleFor : [this.user.group];
+    if ( this.user.role === this.roles.TEAMLEAD ) {
+      let { responsibleFor, group } = this.user;
+      let filterGroups = ( responsibleFor && responsibleFor.length ) ? responsibleFor : [ group ];
       this.groups = this.groups.filter( group => ~filterGroups.indexOf(group) )
     }
-
   }
 
     calcNewVacations(group) {
@@ -211,8 +210,8 @@ export default class VvController {
         controllerAs: 'info',
         resolve: {
           user: user,
-          isDelShow: this.user.role == "admin" ? true : false,
-          isEditShow: this.user.role == "admin" ? true : false
+          isDelShow: this.user.role == this.roles.ADMIN ? true : false,
+          isEditShow: this.user.role == this.roles.ADMIN ? true : false
         }
       });
     }

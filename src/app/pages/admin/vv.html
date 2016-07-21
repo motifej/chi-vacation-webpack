@@ -8,7 +8,7 @@
             <div class="row">
               <div class="form-group col-md-12">
                 <div class="checkbox">
-                  <label ng-hide="admin.user.role == 'team-lead'">
+                  <label ng-hide="admin.user.role == admin.roles.TEAMLEAD">
                     <input type="checkbox" ng-model="admin.showDeletedUsers"> <u>Show deleted users</u>
                   </label>
                 </div>
@@ -38,21 +38,21 @@
       </div>
     </div>
     <div class="col-md-9">
-      <div class="buttons-panel clearfix" ng-if="admin.user.role == 'admin'">
+      <div class="buttons-panel clearfix" ng-if="admin.user.role == admin.roles.ADMIN">
         <div class="col-xs-12 new-user-wrapper">
           <button class="col-5 btn chi-btn--default" ng-click="admin.openNewUserForm()">Add User</button>
         </div>
       </div>
-      <hr ng-show="admin.user.role == 'admin'">
+      <hr ng-show="admin.user.role == admin.roles.ADMIN">
       <div class="buttons-panel clearfix">
-        <div class="btn-group col-xs-12" ng-show="admin.user.role == 'admin'">
+        <div class="btn-group col-xs-12" ng-show="admin.user.role == admin.roles.ADMIN">
           <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
           <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">Days-Off</label>
           <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
           <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
           <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
         </div>
-        <div class="btn-group col-xs-12" ng-show="admin.user.role == 'manager' || admin.user.role == 'team-lead'">
+        <div class="btn-group col-xs-12" ng-show="admin.user.role == admin.roles.MANAGER || admin.user.role == admin.roles.TEAMLEAD">
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">DaysOff</label>
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
