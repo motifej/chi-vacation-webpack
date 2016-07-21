@@ -377,6 +377,7 @@ setDateInfo() {
           vm.vacations = [];
           listArray.push(this.filtredUser['vacations']);
           listArray.push(this.filtredUser['daysoff']);
+          listArray.push(this.filtredUser['workfromhome']);
 
 
 

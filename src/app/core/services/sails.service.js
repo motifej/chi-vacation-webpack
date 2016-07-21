@@ -25,6 +25,12 @@ export default class SailsService {
 			create: {isArray: false, method: "POST"},
 			delete: {isArray: false, method: "DELETE"}
 		});
+		this.workfromhomeResource = $resource(API_URL + "/workfromhome/:id", {id: "@id"}, {
+			get: {isArray: false, method: "GET"},
+			update: {isArray: false, method: "PUT"},
+			create: {isArray: false, method: "POST"},
+			delete: {isArray: false, method: "DELETE"}
+		});		
 
 		//http vacation create
 		this['create' + VACATIONS] = (vacation) => this.http.post(API_URL + '/vacations/create2', vacation);
@@ -46,6 +52,7 @@ export default class SailsService {
     				io.socket.on('users', socketUserActions.bind(this));
 					io.socket.on('vacations', socketActions.bind(this, 'vacations'));
 					io.socket.on('daysoff', socketActions.bind(this, 'daysoff'));	
+					io.socket.on('workfromhome', socketActions.bind(this, 'workfromhome'));	
     			}
       			io.socket.get(io.sails.url + '/users', null, this.updateData);
   			});
