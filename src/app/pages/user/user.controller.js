@@ -104,6 +104,7 @@ export default class UserController {
         user.spendDaysOff += this.calcDays( item.startdate, item.enddate);
       });
       user.availableDaysOff = 5 - user.spendDaysOff + user.addedCurDaysOff;
+      user.availableWorkFromHome = 5;
       /*console.log(user);*/
   }
 
@@ -129,13 +130,18 @@ export default class UserController {
     user.spendVacation = 0;
     user.spendPrevVacation = 0;
     user.availableDaysOff = 0;
+    user.availableWorkFromHome = 0;
     user.spendDaysOff = 0;
     return user;
   }
 
   submitHandler(startDate, endDate) {
     this.sending = true;
-    let vac_type = this.vacationState === this.VACATIONS ? 'Vacation' : 'Day-off';
+    let vac_type;
+    if (this.vacationState === this.VACATIONS) vac_type = 'Vacation';
+    if (this.vacationState === this.DAYSOFF) vac_type = 'Day-off';
+    if (this.vacationState === this.WORKFROMHOME) vac_type = 'Work from home';
+    //let vac_type = this.vacationState === this.VACATIONS ? 'Vacation' : 'Day-off';
     let vm = this;
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
@@ -145,6 +151,7 @@ export default class UserController {
     vm.vacations = [];
     listArray.push(this.user['vacations']);
     listArray.push(this.user['daysoff']);
+    listArray.push(this.user['workfromhome']);
 
     listArray.forEach( list => {
       if (list) {
@@ -161,7 +168,11 @@ export default class UserController {
       return;
     }
 
-    let total = this.vacationState === this.VACATIONS ? this.user.availableDays : this.user.availableDaysOff;
+    let total;
+    if (this.vacationState === this.VACATIONS) total = this.user.availableDays;
+    if (this.vacationState === this.DAYSOFF) total = this.user.availableDaysOff;
+    if (this.vacationState === this.WORKFROMHOME) total = this.user.availableWorkFromHome;
+//    let total = this.vacationState === this.VACATIONS ? this.user.availableDays : this.user.availableDaysOff;
     if (this.user.vacationDays > total) {
       this.toastr.error('You have exceeded the number of available days!');
       this.sending = false;
@@ -269,7 +280,7 @@ export default class UserController {
   }
 
   combineVacations() {
-    return this.user.vacations.concat(this.user.daysoff);
+    return this.user.vacations.concat(this.user.daysoff, this.user.workfromhome);
   }
 
 }
