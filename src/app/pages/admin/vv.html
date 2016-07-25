@@ -30,7 +30,7 @@
                       aria-expanded="true" 
                       aria-invalid="false">
             </div>
-            <span class="user inline-block" ng-repeat="user in admin.users | filter:admin.groupFilter | filter:admin.search | filter:{deleted: admin.showDeletedUsers}">
+            <span class="user inline-block" ng-repeat="user in admin.users | strictFilter:admin.groupFilter:'group' | filter:admin.search | filter:{deleted: admin.showDeletedUsers}">
               <a class="btn btn-sm m-button m-button-user-list"  ng-click="admin.choiceUser(user.id, user.group, user)" ng-class="{'m-button--active': admin.filter.id == user.id}">{{user.firstname + " " + user.lastname}}</a>
             </span>
           </div>

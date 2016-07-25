@@ -16,6 +16,7 @@ require('./services/sailsResolver.provider')(shared);
 require('./services/resolver.provider')(shared);
 
 require('./filters/status.filter')(shared);
+require('./filters/strictFilter.filter')(shared);
 require('./filters/statusUser.filter')(shared);
 require('./filters/phoneFilter.filter')(shared);
 require('./filters/userFilterVacation.filter')(shared);
