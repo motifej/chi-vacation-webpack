@@ -53,6 +53,7 @@ export default class VvController {
     this.showDeletedUsers = false;
     this.sendingAdditional = false;
     this.sendingRequest = false;
+    this.maxDate = moment().add(1, 'year').add(1, 'month');
 }
 
   activate(scope) {

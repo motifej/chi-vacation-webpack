@@ -5,13 +5,12 @@ export default class UserController {
   constructor ($scope, $parse, $log, $timeout, sailsService, moment, toastr, user, $uibModal, settings, $rootScope, actions) {
     'ngInject';
     if (moment().weekday() === 6) $scope.startdate = new Date(moment().add(2, 'days')); else
-    if (moment().weekday() === 0) $scope.startdate = new Date(moment().add(1, 'days')); else
+    if (moment().weekday() === 7) $scope.startdate = new Date(moment().add(1, 'days')); else
     $scope.startdate = new Date();
-
     $scope.minStartDate = new Date($scope.startdate);
     $scope.enddate = new Date($scope.startdate);
     $scope.minEndDate = new Date($scope.startdate);
-
+    
     this.user = user;
     this.DAYSOFF = DAYSOFF;
     this.VACATIONS = VACATIONS;
@@ -36,6 +35,9 @@ export default class UserController {
     this.showNotification = false;
     this.calcEnableDays(this.$scope.startdate);
     this.calcDaysCalc();
+
+    this.maxDate = moment().add(1, 'year').add(1, 'month');
+    this.maxDateHomeFromWork = moment().isoAddWeekdaysFromSet(4, [1,2,3,4,5], angular.copy(this.holidays))
   }
 
   activate(scope) {
