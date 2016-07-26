@@ -7,6 +7,7 @@ export default function DatepickerDirective() {
         scope: {
             curDate: '=ngModel',
             minDate: '=',
+            maxDate2: '=',
             calcDays: '&',
             isShowAllDays: '=',
             isDisableDate: '=',
@@ -21,10 +22,9 @@ export default function DatepickerDirective() {
     return directive;
 
     function link(scope, element, attrs) {
-        //scope.test = function () {alert('test')};
         scope.name = attrs.name;
-
-        scope.maxDate = moment().add(1, 'year').add(1, 'month');
+        //scope.maxDate = moment().add(1, 'year').add(1, 'month');
+        scope.maxDate = scope.maxDate2;
 
         scope.open= function() {
             scope.popup.opened = true;

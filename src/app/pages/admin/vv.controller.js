@@ -53,6 +53,7 @@ export default class VvController {
     this.showDeletedUsers = false;
     this.sendingAdditional = false;
     this.sendingRequest = false;
+    this.maxDate = moment().add(1, 'year').add(1, 'month');
 }
 
   activate(scope) {
@@ -72,11 +73,12 @@ export default class VvController {
     if ( type && id ) {
       let curUser = _.find(this.users, { id });
       if ( curUser ) {
-        this.pageState = type === 'Vacation' ? VACATIONS : DAYSOFF; 
+        if ( type === 'Vacaction') this.pageState = VACATIONS;
+        if ( type === 'DaysOff') this.pageState = DAYSOFF;
+        if ( type === 'workFromHome') this.pageState = WORKFROMHOME;
         this.choiceUser(id, curUser.group, curUser)
       }
     }
-    
     if ( this.user.role === this.roles.TEAMLEAD ) {
       let { responsibleFor, group } = this.user;
       let filterGroups = ( responsibleFor && responsibleFor.length ) ? responsibleFor : [ group ];
