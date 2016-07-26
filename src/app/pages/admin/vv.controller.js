@@ -74,7 +74,7 @@ export default class VvController {
       let curUser = _.find(this.users, { id });
       if ( curUser ) {
         if ( type === 'Vacaction') this.pageState = VACATIONS;
-        if ( type === 'DaysOff') this.pageState = DAYSOFF;
+        if ( type === 'Day-Off') this.pageState = DAYSOFF;
         if ( type === 'workFromHome') this.pageState = WORKFROMHOME;
         this.choiceUser(id, curUser.group, curUser)
       }
