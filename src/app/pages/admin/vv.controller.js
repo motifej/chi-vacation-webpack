@@ -10,6 +10,9 @@ export default class VvController {
     this.$stateParams = $stateParams;
     this.toastr = toastr;
     this.roles = users;
+    this.DAYSOFF = DAYSOFF;
+    this.VACATIONS = VACATIONS;
+    this.WORKFROMHOME = WORKFROMHOME;
     this.users = userData;
     this.groups = groups;
     this.status = status;
@@ -18,7 +21,7 @@ export default class VvController {
     this.statusFilter = { status: status.NEW };
     this.groupFilter = {};
     this.modal = $uibModal;
-    this.pageState = "vacations";
+    this.pageState = this.VACATIONS;
     let today = new Date();
     today = today.setHours(0,0,0,0);
     this.order = 'startDate';
@@ -44,9 +47,6 @@ export default class VvController {
     this.$timeout = $timeout;
     this.vacationDays = this.calcDays();
     this.moment = moment;
-    this.DAYSOFF = DAYSOFF;
-    this.VACATIONS = VACATIONS;
-    this.WORKFROMHOME = WORKFROMHOME;
     this.vacationState = VACATIONS;
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
@@ -73,9 +73,9 @@ export default class VvController {
     if ( type && id ) {
       let curUser = _.find(this.users, { id });
       if ( curUser ) {
-        if ( type === 'Vacaction') this.pageState = VACATIONS;
-        if ( type === 'DaysOff') this.pageState = DAYSOFF;
-        if ( type === 'workFromHome') this.pageState = WORKFROMHOME;
+        if ( type === this.VACATIONS) this.pageState = VACATIONS;
+        if ( type === this.DAYSOFF) this.pageState = DAYSOFF;
+        if ( type === this.WORKFROMHOME) this.pageState = WORKFROMHOME;
         this.choiceUser(id, curUser.group, curUser)
       }
     }
@@ -109,7 +109,10 @@ export default class VvController {
       modalInstance.result.then(
         selectedItem => {
           if (selectedItem) {
-            let vac_type = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
+            let vac_type;// = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
+            if (this.pageState === this.VACATIONS) vac_type = 'Vacation';
+            if (this.pageState === this.DAYSOFF) vac_type = 'Day-off';
+            if (this.pageState === this.WORKFROMHOME) vac_type = 'Work from home';
             let vacation = find(user[this.pageState], { id: id });
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
@@ -134,7 +137,10 @@ export default class VvController {
       modalInstance.result.then(
         selectedItem => {
           if (selectedItem) {
-            let vac_type = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
+            let vac_type;// = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
+            if (this.pageState === this.VACATIONS) vac_type = 'Vacation';
+            if (this.pageState === this.DAYSOFF) vac_type = 'Day-off';
+            if (this.pageState === this.WORKFROMHOME) vac_type = 'Work from home';
             let vacation = find(user[this.pageState], { id: id });
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
@@ -368,7 +374,10 @@ setDateInfo() {
         if (selectedItem) {
 
           this.sendingRequest = true;
-          let vac_type = this.vacationState === this.VACATIONS ? 'Vacation' : 'Day-off';
+          let vac_type;// = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
+            if (this.pageState === 'vacations') vac_type = 'Vacation';
+            if (this.pageState === 'daysoff') vac_type = 'Day-off';
+            if (this.pageState === 'workfromhome') vac_type = 'Work from home';
           let vm = this;
           let sDate = new Date(startDate).getTime();
           let eDate = new Date(endDate).getTime();
