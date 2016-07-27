@@ -5,6 +5,7 @@ import { API_URL } from './api.consts';
 import * as roles  from './roles.consts';
 import * as states  from './routeStates.const';
 import * as status from './status.consts';
+import * as vacations from './vacations.consts';
 import { groups } from './groups.consts';
 
 export default function (app) {
@@ -15,5 +16,6 @@ export default function (app) {
         .constant('roles', roles)
         .constant('states', states)
         .constant('status', status)
+        .constant('vacations', vacations)
         .constant('groups', groups)
 }

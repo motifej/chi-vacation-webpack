@@ -1,5 +1,13 @@
 import { find } from 'lodash';
-import {DAYSOFF, VACATIONS, WORKFROMHOME} from '../../core/constants/vacations.consts';
+import {  DAYSOFF, 
+          VACATIONS, 
+          WORKFROMHOME,
+          TYPE_VACATION,
+          TYPE_DAYOFF,
+          TYPE_WORKFROMHOME,
+          SHOW_VACATION,
+          SHOW_DAYOFF,
+          SHOW_WORKFROMHOME } from '../../core/constants/vacations.consts';
 
 export default class VvController {
   constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams) {
@@ -109,7 +117,7 @@ export default class VvController {
       modalInstance.result.then(
         selectedItem => {
           if (selectedItem) {
-            let vac_type = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
+            let vac_type = this.getStatus(this.pageState, true);
             let vacation = find(user[this.pageState], { id: id });
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
@@ -134,7 +142,7 @@ export default class VvController {
       modalInstance.result.then(
         selectedItem => {
           if (selectedItem) {
-            let vac_type = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
+            let vac_type = this.getStatus(this.pageState, true);
             let vacation = find(user[this.pageState], { id: id });
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
@@ -261,7 +269,7 @@ export default class VvController {
                   {
                     title: (firstname.length > 15 ? firstname.slice(0, 1) + '.' : firstname) + ' '+ (lastname.length > 20 ? lastname.slice(0, 20) + '...' : lastname),
                     type: typeEvent[status],
-                    cssClass: vacation === 'vacations' ? '' : 'm-dayoff',
+                    cssClass: vacation,// === 'vacations' ? '' : vacation === 'daysoff' ? 'dayoff' : 'workfromhome',
                     startsAt: new Date(startdate),
                     endsAt: new Date(moment(enddate).add(12, 'hour')),
                     editable: false,
@@ -281,8 +289,9 @@ export default class VvController {
 
 setDateInfo() {
     var events = this.events = [];
-    this._fillEvents('vacations');
-    this._fillEvents('daysoff');
+    this._fillEvents(VACATIONS);
+    this._fillEvents(DAYSOFF);
+    this._fillEvents(WORKFROMHOME);
 
   }
 
@@ -368,7 +377,7 @@ setDateInfo() {
         if (selectedItem) {
 
           this.sendingRequest = true;
-          let vac_type = this.vacationState === this.VACATIONS ? 'Vacation' : 'Day-off';
+          let vac_type = this.getStatus(this.vacationState, true);
           let vm = this;
           let sDate = new Date(startDate).getTime();
           let eDate = new Date(endDate).getTime();
@@ -503,6 +512,23 @@ setDateInfo() {
 
   isActive(val) {
     return val === this.order;
+  }
+
+  getStatus(vac_type, capitalize) {
+    switch(vac_type) {
+      case undefined:
+      case VACATIONS:
+      case TYPE_VACATION: return capitalize ? _.capitalize(SHOW_VACATION) : SHOW_VACATION;
+      case DAYSOFF:
+      case TYPE_DAYOFF: return capitalize ? _.capitalize(SHOW_DAYOFF) : SHOW_DAYOFF;
+      case WORKFROMHOME:
+      case TYPE_WORKFROMHOME: return capitalize ? _.capitalize(SHOW_WORKFROMHOME) : SHOW_WORKFROMHOME;
+    }
+  }
+
+  getTotalDaysWFH(vac) {
+    return vac.reduce( (prev, el) =>
+        prev + moment().isoWeekdayCalc(el.startdate, el.enddate, [1, 2, 3, 4, 5], angular.copy(this.holidays)), 0)
   }
 
 }
