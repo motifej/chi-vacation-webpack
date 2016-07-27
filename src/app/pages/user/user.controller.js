@@ -1,4 +1,12 @@
-import {DAYSOFF, VACATIONS, WORKFROMHOME} from '../../core/constants/vacations.consts';
+import {  DAYSOFF, 
+          VACATIONS, 
+          WORKFROMHOME,
+          TYPE_VACATION,
+          TYPE_DAYOFF,
+          TYPE_WORKFROMHOME,
+          SHOW_VACATION,
+          SHOW_DAYOFF,
+          SHOW_WORKFROMHOME } from '../../core/constants/vacations.consts';
 
 export default class UserController {
 
@@ -139,11 +147,7 @@ export default class UserController {
 
   submitHandler(startDate, endDate) {
     this.sending = true;
-    let vac_type;
-    if (this.vacationState === this.VACATIONS) vac_type = 'Vacation';
-    if (this.vacationState === this.DAYSOFF) vac_type = 'Day-off';
-    if (this.vacationState === this.WORKFROMHOME) vac_type = 'Work from home';
-    //let vac_type = this.vacationState === this.VACATIONS ? 'Vacation' : 'Day-off';
+    let vac_type = this.getStatus(this.vacationState, true);
     let vm = this;
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
@@ -283,6 +287,18 @@ export default class UserController {
 
   combineVacations() {
     return this.user.vacations.concat(this.user.daysoff, this.user.workfromhome);
+  }
+
+  getStatus(vac_type, capitalize) {
+    switch(vac_type) {
+      case undefined:
+      case VACATIONS:
+      case TYPE_VACATION: return capitalize ? _.capitalize(SHOW_VACATION) : SHOW_VACATION;
+      case DAYSOFF:
+      case TYPE_DAYOFF: return capitalize ? _.capitalize(SHOW_DAYOFF) : SHOW_DAYOFF;
+      case WORKFROMHOME:
+      case TYPE_WORKFROMHOME: return capitalize ? _.capitalize(SHOW_WORKFROMHOME) : SHOW_WORKFROMHOME;
+    }
   }
 
 }

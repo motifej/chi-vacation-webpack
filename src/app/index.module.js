@@ -35,6 +35,7 @@ const App = angular.module(
 
     // pages
     require("./pages/user/user.module").name,
+    require("./pages/manual/manual.module").name,
     require("./pages/error/error.module").name
 
   ]

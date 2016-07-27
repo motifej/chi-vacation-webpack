@@ -16,23 +16,26 @@ export default function NavbarDirective() {
 }
 
 class NavbarController {
-  constructor ($rootScope, $scope, toastr, actions, roles, states, sailsService, sailsAuthService, $uibModal) {
+  constructor ($rootScope, $scope, toastr, actions, roles, states, sailsService, sailsAuthService, $uibModal, users, $state) {
     'ngInject';
     this.sailsAuthService = sailsAuthService;
     this.sailsService = sailsService;
     this.states = states;
     this.roles = roles;
+    this.users = users;
+    this.$state = $state;
     this.isCollapsed = false;
     this.user = {};
     this.actions = actions;
     this.toastr = toastr;
+    this.manualState = this.states.MANUAL;
     this.$uibModal = $uibModal;
     this.activate($rootScope, $scope);
   }
 
   activate($rootScope, $scope) {
     let destr = $rootScope.$on(this.actions.USERLOADED,
-                  (ev, user) => this.user = user );
+      (ev, user) => this.user = user )
     $scope.$on('destroy', destr);
   }
 
@@ -52,6 +55,14 @@ class NavbarController {
   
   isTeamLead() {
     return this.user.role == this.roles.TEAMLEAD;
+  }
+
+  manual() {
+    this.$state.go(
+      ~this.roles.MANAGERS.indexOf(this.user.role) ? 
+        this.states.MANUALMANAGER : 
+        this.states.MANUAL
+    ); 
   }
   
   collapsed(val) {
