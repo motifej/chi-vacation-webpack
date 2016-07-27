@@ -26,7 +26,7 @@ function route($stateProvider, roles, states) {
       parent: states.SITE,
       url: '/full_manual',
       data: {
-          roles: roles.USER
+          roles: roles.MANAGERS
       },
       views: {
         'content@': {
