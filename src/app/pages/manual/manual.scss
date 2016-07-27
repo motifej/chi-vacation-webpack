@@ -1,0 +1,52 @@
+@import '../../../assets/styles/sass/variables.scss';
+
+.manual{
+	background-color:rgba(255, 255, 255, 0.95);
+	padding:50px;
+	border-radius:$br-size;
+	font-size:16px;
+	margin-bottom:50px;
+	h1{
+		font-size:26px;
+		line-height:1.2;
+		margin-bottom:50px;
+	}
+	h2{
+		font-size:22px;
+		line-height:1.2;
+		margin-bottom:15px;
+	}
+}
+.scr-holder{
+	margin:0 0 50px;
+}
+.manual-list{
+	list-style:none;
+	margin:0;
+	padding:0;
+	padding-top:20px;
+	&>li{
+		margin:0 0 50px;
+	}
+	h2{
+		text-align:center;
+	}
+}
+.square{
+	padding:0 0 0 50px;
+	margin:0 0 20px;
+	list-style-type: square;
+}
+
+.manual-holder{
+	.panel{
+		background:none;
+	}
+	.panel-body{
+		padding:0;
+	}
+	.manual{
+		margin-bottom:0;
+		border-radius:0;
+	}
+}
