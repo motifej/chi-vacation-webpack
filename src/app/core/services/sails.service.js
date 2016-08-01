@@ -1,4 +1,4 @@
-import { DAYSOFF, VACATIONS } from '../constants/vacations.consts';
+import { DAYSOFF, VACATIONS, WORKFROMHOME } from '../constants/vacations.consts';
 import { SETTINGS_KEY } from '../constants/settings.consts';
 
 export default class SailsService {
@@ -25,10 +25,17 @@ export default class SailsService {
 			create: {isArray: false, method: "POST"},
 			delete: {isArray: false, method: "DELETE"}
 		});
+		this.workfromhomeResource = $resource(API_URL + "/workfromhome/:id", {id: "@id"}, {
+			get: {isArray: false, method: "GET"},
+			update: {isArray: false, method: "PUT"},
+			create: {isArray: false, method: "POST"},
+			delete: {isArray: false, method: "DELETE"}
+		});		
 
 		//http vacation create
 		this['create' + VACATIONS] = (vacation) => this.http.post(API_URL + '/vacations/create2', vacation);
 		this['create' + DAYSOFF] = (vacation) => this.http.post(API_URL + '/daysoff/create2', vacation);
+		this['create' + WORKFROMHOME] = (vacation) => this.http.post(API_URL + '/workfromhome/create2', vacation);
 		
 		//http settings
 		this.saveSettings = (settings) => this.http.put(API_URL + '/settings/' + SETTINGS_KEY, settings);
@@ -39,25 +46,26 @@ export default class SailsService {
 		this.socketInit = () => {
 
 			io.socket.on('connect', () => {
-      			/*console.log('*** Socket connected');*/
+      			console.log('*** Socket connected');
       			if (!io.socket.alreadyListeningToModels) {
     				io.socket.alreadyListeningToModels = true;
     				io.socket.on('users', socketUserActions.bind(this));
 					io.socket.on('vacations', socketActions.bind(this, 'vacations'));
 					io.socket.on('daysoff', socketActions.bind(this, 'daysoff'));	
+					io.socket.on('workfromhome', socketActions.bind(this, 'workfromhome'));	
     			}
       			io.socket.get(io.sails.url + '/users', null, this.updateData);
   			});
 
 			function socketUserActions(obj) {
-				/*console.log('socket user data received', obj);*/
+				console.log('socket user data received', obj);
 				let users = $parse('users')(this);
 				if (obj.attribute || !users) return;
 				let {data, id, verb} = obj;
 
 				switch (verb) {
 					case 'created': {
-						/*console.log('user created', obj);*/
+						console.log('user created', obj);
 						$rootScope.$applyAsync(
 							users.push(angular.extend(data, {vacations: [], daysoff: []}))
 						);
@@ -65,7 +73,7 @@ export default class SailsService {
 					}
 
 					case 'updated': {
-						/*console.log('user updated', obj);*/
+						console.log('user updated', obj);
 						$rootScope.$applyAsync(
 							angular.extend(_.find(users, {id}) || {}, data)
 						);
@@ -86,12 +94,12 @@ export default class SailsService {
 			};
 
 			function socketActions(params, obj) {
-				/*console.log('socket vacation data received', obj);*/
+				console.log('socket vacation data received', obj);
 				let {verb, data, id} = obj;
 
 				switch (verb) {
 					case 'created': {
-						/*console.log('vacation created', obj);*/
+						console.log('vacation created', obj);
 						$rootScope.$applyAsync( () => {
 							if (this.user.id === data.uid) 
 								if (!_.find(this.user[params], {id: data.id}))
@@ -106,18 +114,18 @@ export default class SailsService {
 					}
 
 					case 'updated': {
-						/*console.log('vacation updated', obj);*/
+						console.log('vacation updated', obj);
 						$rootScope.$applyAsync( () => {
 							let user = _.find(this.users, {id: data.uid});
 							angular.extend(_.find(user[params], {id}) || {}, data);
 							angular.extend(_.find(this.user[params], {id}) || {}, data);
 						});
-						/*console.log('vacation updated, new status:', this.users);*/
+						console.log('vacation updated, new status:', this.users);
 						break;
 					}
 
 					case 'destroyed': {
-						/*console.log('vacation deleted', obj);*/
+						console.log('vacation deleted', obj);
 						$rootScope.$applyAsync( () => {
 							let copy = _.filter(this.user[params], 
 								el => el.id !== id

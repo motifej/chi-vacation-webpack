@@ -1,13 +1,23 @@
 import { find } from 'lodash';
-import {DAYSOFF, VACATIONS} from '../../core/constants/vacations.consts';
+import {  DAYSOFF, 
+          VACATIONS, 
+          WORKFROMHOME,
+          TYPE_VACATION,
+          TYPE_DAYOFF,
+          TYPE_WORKFROMHOME,
+          SHOW_VACATION,
+          SHOW_DAYOFF,
+          SHOW_WORKFROMHOME } from '../../core/constants/vacations.consts';
 
 export default class VvController {
-  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, settings, sailsService) {
+  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams) {
     'ngInject';
     
     this.sailsService = sailsService;
     this.$parse = $parse;
+    this.$stateParams = $stateParams;
     this.toastr = toastr;
+    this.roles = users;
     this.users = userData;
     this.groups = groups;
     this.status = status;
@@ -44,14 +54,15 @@ export default class VvController {
     this.moment = moment;
     this.DAYSOFF = DAYSOFF;
     this.VACATIONS = VACATIONS;
+    this.WORKFROMHOME = WORKFROMHOME;
     this.vacationState = VACATIONS;
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
     this.showDeletedUsers = false;
     this.sendingAdditional = false;
     this.sendingRequest = false;
-    
-  }
+    this.maxDate = moment().add(1, 'year').add(1, 'month');
+}
 
   activate(scope) {
 
@@ -66,6 +77,21 @@ export default class VvController {
       scope.dateFilter.minEndDate = new Date(scope.dateFilter.startdate);
     }, true);
 
+    let { type, id } = this.$stateParams;
+    if ( type && id ) {
+      let curUser = _.find(this.users, { id });
+      if ( curUser ) {
+        if ( type === 'Vacaction') this.pageState = VACATIONS;
+        if ( type === 'Day-Off') this.pageState = DAYSOFF;
+        if ( type === 'workFromHome') this.pageState = WORKFROMHOME;
+        this.choiceUser(id, curUser.group, curUser)
+      }
+    }
+    if ( this.user.role === this.roles.TEAMLEAD ) {
+      let { responsibleFor, group } = this.user;
+      let filterGroups = ( responsibleFor && responsibleFor.length ) ? responsibleFor : [ group ];
+      this.groups = this.groups.filter( group => ~filterGroups.indexOf(group) )
+    }
   }
 
     calcNewVacations(group) {
@@ -91,7 +117,7 @@ export default class VvController {
       modalInstance.result.then(
         selectedItem => {
           if (selectedItem) {
-            let vac_type = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
+            let vac_type = this.getStatus(this.pageState, true);
             let vacation = find(user[this.pageState], { id: id });
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
@@ -116,7 +142,7 @@ export default class VvController {
       modalInstance.result.then(
         selectedItem => {
           if (selectedItem) {
-            let vac_type = this.pageState === 'vacations' ? 'Vacation' : 'Day-off';
+            let vac_type = this.getStatus(this.pageState, true);
             let vacation = find(user[this.pageState], { id: id });
             this.sailsService[this.pageState + 'Resource']
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
@@ -194,7 +220,8 @@ export default class VvController {
         controllerAs: 'info',
         resolve: {
           user: user,
-          isDelShow: this.user.role == "admin" ? true : false
+          isDelShow: this.user.role == this.roles.ADMIN ? true : false,
+          isEditShow: this.user.role == this.roles.ADMIN ? true : false
         }
       });
     }
@@ -242,7 +269,7 @@ export default class VvController {
                   {
                     title: (firstname.length > 15 ? firstname.slice(0, 1) + '.' : firstname) + ' '+ (lastname.length > 20 ? lastname.slice(0, 20) + '...' : lastname),
                     type: typeEvent[status],
-                    cssClass: vacation === 'vacations' ? '' : 'm-dayoff',
+                    cssClass: vacation,// === 'vacations' ? '' : vacation === 'daysoff' ? 'dayoff' : 'workfromhome',
                     startsAt: new Date(startdate),
                     endsAt: new Date(moment(enddate).add(12, 'hour')),
                     editable: false,
@@ -262,8 +289,9 @@ export default class VvController {
 
 setDateInfo() {
     var events = this.events = [];
-    this._fillEvents('vacations');
-    this._fillEvents('daysoff');
+    this._fillEvents(VACATIONS);
+    this._fillEvents(DAYSOFF);
+    this._fillEvents(WORKFROMHOME);
 
   }
 
@@ -349,7 +377,7 @@ setDateInfo() {
         if (selectedItem) {
 
           this.sendingRequest = true;
-          let vac_type = this.vacationState === this.VACATIONS ? 'Vacation' : 'Day-off';
+          let vac_type = this.getStatus(this.vacationState, true);
           let vm = this;
           let sDate = new Date(startDate).getTime();
           let eDate = new Date(endDate).getTime();
@@ -360,6 +388,7 @@ setDateInfo() {
           vm.vacations = [];
           listArray.push(this.filtredUser['vacations']);
           listArray.push(this.filtredUser['daysoff']);
+          listArray.push(this.filtredUser['workfromhome']);
 
 
 
@@ -483,6 +512,23 @@ setDateInfo() {
 
   isActive(val) {
     return val === this.order;
+  }
+
+  getStatus(vac_type, capitalize) {
+    switch(vac_type) {
+      case undefined:
+      case VACATIONS:
+      case TYPE_VACATION: return capitalize ? _.capitalize(SHOW_VACATION) : SHOW_VACATION;
+      case DAYSOFF:
+      case TYPE_DAYOFF: return capitalize ? _.capitalize(SHOW_DAYOFF) : SHOW_DAYOFF;
+      case WORKFROMHOME:
+      case TYPE_WORKFROMHOME: return capitalize ? _.capitalize(SHOW_WORKFROMHOME) : SHOW_WORKFROMHOME;
+    }
+  }
+
+  getTotalDaysWFH(vac) {
+    return vac.reduce( (prev, el) =>
+        prev + moment().isoWeekdayCalc(el.startdate, el.enddate, [1, 2, 3, 4, 5], angular.copy(this.holidays)), 0)
   }
 
 }

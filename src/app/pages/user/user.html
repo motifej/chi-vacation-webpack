@@ -2,7 +2,7 @@
   <div class="container user__container">
     <div class="row">
       <div class="row" ng-repeat="item in userCtrl.allVacations | userFilterVacation:'inprogress'">
-        <h2 class="col-md-12 inprogress-header-info">You are on vacation from {{item.startdate | date:'dd.MM'}} to {{item.enddate | date:'dd.MM'}}</h2>
+        <h2 class="col-md-12 inprogress-header-info">You are on {{userCtrl.getStatus(item.vac_type)}} from {{item.startdate | date:'dd.MM'}} to {{item.enddate | date:'dd.MM'}}</h2>
       </div>
       <div class="btn-group
             col-lg-8 col-lg-offset-4
@@ -10,16 +10,22 @@
             col-sm-6 col-sm-offset-6
             col-xs-12">
         <label
-          class="btn col-xs-2 col-md-3 col-sm-4 col-xs-6 vacation-option"
+          class="btn col-sm-4 col-xs-12 vacation-option"
           ng-class="{'vacation-option-active': userCtrl.vacationState == userCtrl.VACATIONS}"
           ng-click="userCtrl.changeVacationState(userCtrl.VACATIONS)">
           Vacations
         </label>
         <label
-          class="btn col-xs-2 col-md-3 col-sm-4 col-xs-6 vacation-option"
+          class="btn col-sm-4 col-xs-12 vacation-option"
           ng-class="{'vacation-option-active': userCtrl.vacationState == userCtrl.DAYSOFF}"
           ng-click="userCtrl.changeVacationState(userCtrl.DAYSOFF)">
           Days-off
+        </label>
+        <label
+          class="btn col-sm-4 col-xs-12 vacation-option"
+          ng-class="{'vacation-option-active': userCtrl.vacationState == userCtrl.WORKFROMHOME}"
+          ng-click="userCtrl.changeVacationState(userCtrl.WORKFROMHOME)">
+          Work from home
         </label>
       </div>
     </div>
@@ -34,6 +40,7 @@
                   <div class="col-xs-10 text-center">
                     <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation requests</span>
                     <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Day-off requests</span>
+                    <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home requests</span>
                   </div>
                 </div>
               </uib-accordion-heading>
@@ -67,6 +74,7 @@
                   <div class="col-xs-10 text-center">
                     <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Rejected vacations</span>
                     <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Rejected days-off</span>
+                    <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Rejected Work from home</span>
                   </div>
                 </div>
               </uib-accordion-heading>
@@ -98,6 +106,7 @@
                   <div class="col-xs-10 text-center">
                     <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Approved vacations</span>
                     <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Approved days-off</span>
+                    <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Approved Work from home</span>
                   </div>
                 </div>
               </uib-accordion-heading>
@@ -129,6 +138,7 @@
                   <div class="col-xs-10 text-center">
                     <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Spent vacations</span>
                     <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Spent days-off</span>
+                    <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Spent Work from home</span>
                   </div>
                 </div>
               </uib-accordion-heading>
@@ -159,15 +169,17 @@
           <legend class="user-form__title">
             <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation request</span>
             <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Days-off request</span>
+            <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home request</span>
             <span ng-show="userCtrl.showNotification" class="pull-right"><i class="text-danger glyphicon glyphicon-exclamation-sign" title="Your {{userCtrl.vacationState === userCtrl.VACATIONS ? 'vacations' : 'days-off'}} expire {{userCtrl.vacationExpire}}"></i></span> 
           </legend>
-          <div class="row">
+          <div class="row" ng-hide="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">
             <div class="form-group col-md-6">
               <label for="">Start date</label>
               <chi-datepicker class="datepicker"
               name="startdate"
               ng-model="startdate"
               min-date="minStartDate"
+              max-date2="userCtrl.maxDate"
               calc-days="userCtrl.calcDaysCalc()"
               holidays="{{userCtrl.holidays}}"
               >
@@ -179,16 +191,44 @@
               name="enddate"
               ng-model="enddate"
               min-date="minEndDate"
+              max-date2="userCtrl.maxDate"
               calc-days="userCtrl.calcDaysCalc()"
               holidays="{{userCtrl.holidays}}"
               >
               </chi-datepicker>
             </div>
           </div>
+          <div class="row" ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">
+            <div class="form-group col-md-6">
+              <label for="">Start date</label>
+              <chi-datepicker class="datepicker"
+              name="startdate"
+              ng-model="startdate"
+              min-date="minStartDate"
+              max-date2="userCtrl.maxDateHomeFromWork"
+              calc-days="userCtrl.calcDaysCalc()"
+              holidays="{{userCtrl.holidays}}"
+              >
+              </chi-datepicker>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="">End date</label>
+              <chi-datepicker class="datepicker"
+              name="enddate"
+              ng-model="enddate"
+              min-date="minEndDate"
+              max-date2="userCtrl.maxDateHomeFromWork"
+              calc-days="userCtrl.calcDaysCalc()"
+              holidays="{{userCtrl.holidays}}"
+              >
+              </chi-datepicker>
+            </div>
+          </div>          
           <div class="row user-form__last-row">
             <div class="form-group col-md-6">
               <label for="selected" ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation days</label>
               <label for="selected" ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Days-off</label>
+              <label for="selected" ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home</label>
               <input type="text" id="selected" class="form-control user__total-days" readonly
               ng-value="userCtrl.user.vacationDays">
             </div>
@@ -201,6 +241,10 @@
               <label for="daysoff">Available days-off</label>
               <input type="text" id="daysoff" class="form-control user__left-days" readonly
               ng-value="userCtrl.user.availableDaysOff">
+            </div>
+            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">
+              <label for="workfromhome">Available Work from home</label>
+              <input type="text" id="workfromhome" class="form-control user__left-days" readonly value="5">
             </div>
           </div>
           <div class="row">

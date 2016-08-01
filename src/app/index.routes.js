@@ -27,7 +27,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
         })
         .state(states.ADMIN, {
           parent: states.SITE,
-          url: '/admin',
+          url: '/admin?id?type',
           data: {
               roles: roles.ADMIN
           },
@@ -46,7 +46,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
         })
         .state(states.MANAGER, {
           parent: states.SITE,
-          url: '/manager',
+          url: '/manager?id?type',
           data: {
               roles: roles.MANAGER
           },
@@ -64,6 +64,26 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
               }
           }
         })
+        .state(states.TEAMLEAD, {
+          parent: states.SITE,
+          url: '/team-lead?id?type',
+          data: {
+              roles: roles.TEAMLEAD
+          },
+          resolve: {
+            asyncPreloading: resolverProvider.adminPagePrealoading,
+            userData : sailsService => sailsService.getUsers(),
+            settings: sailsService => sailsService.getSettings()
+          },
+
+          views: {
+            'content@': {
+              templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/admin/vv.html'),
+              controller: 'VvController',
+              controllerAs: 'admin'
+              }
+          }
+        })        
         .state(states.SETTINGS, {
           parent: states.SITE,
           url: '/settings',

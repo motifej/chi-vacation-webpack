@@ -53,9 +53,6 @@
     .m-button {
         margin-bottom: 5px;
     }
-    .m-button-user {
-        float: right;
-    }
     .m-vacation-group {
         font-weight: bold;
     }
@@ -82,9 +79,6 @@
     }
     .m-button--active:hover {
         background-color: $default-color;
-    }
-    .m-button-user {
-        float: right;
     }
     .m-vacation-group {
         font-weight: bold;
@@ -249,8 +243,11 @@
         font-weight: bold;
         text-transform: uppercase;
     }
-    .m-dayoff {
+    .daysoff {
         border-radius: 0;
+    }
+    .workfromhome {
+        border-radius: 10px 10px 0 0;
     }
     .m-action-inprogress {
         background-color: rgba(227, 188, 8, 0.1);
@@ -287,20 +284,29 @@
     }
 
 }
+.col-5 {
+    width: 20%;
+    float: right;
+}
+.new-user-wrapper {
+    margin: 0 0 0 -4px;
+}
+
 @media (max-width: 767px) {
-    .m-button-margin {
-        margin-bottom: 20px;
-    }
     .btn-group label.btn, .btn {
         border-radius: 0;
     }
     .btn-group .btn + .btn, 
     .btn-group .btn + .btn-group, 
     .btn-group .btn-group + .btn, 
-    .btn-group .btn-group + .btn-group {
+    .btn-group .btn-group + .btn-group, 
+    .new-user-wrapper {
         margin-left: 0;
     }
     .additional-form button {
         margin: 0 0 10px;
+    }
+    .col-5 {
+        width: 100%;
     }
 }

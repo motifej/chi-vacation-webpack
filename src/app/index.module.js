@@ -19,6 +19,7 @@ const App = angular.module(
     "ui.bootstrap",
     "mwl.calendar",
     "ngStorage",
+    "btorfs.multiselect",
     //"ngSails",
 
 
@@ -34,6 +35,7 @@ const App = angular.module(
 
     // pages
     require("./pages/user/user.module").name,
+    require("./pages/manual/manual.module").name,
     require("./pages/error/error.module").name
 
   ]
