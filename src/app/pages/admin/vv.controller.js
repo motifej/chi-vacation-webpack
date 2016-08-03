@@ -83,7 +83,7 @@ export default class VvController {
       if ( curUser ) {
         if ( type === 'Vacaction') this.pageState = VACATIONS;
         if ( type === 'Day-Off') this.pageState = DAYSOFF;
-        if ( type === 'workFromHome') this.pageState = WORKFROMHOME;
+        if ( type === 'WFH') this.pageState = WORKFROMHOME;
         this.choiceUser(id, curUser.group, curUser)
       }
     }
