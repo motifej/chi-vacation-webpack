@@ -1,0 +1,261 @@
+/* custom checkbox styles */
+.jcf-checkbox{
+	vertical-align: middle;
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	background: #9ab6dd;
+	border: 1px solid #9ab6dd;
+	margin: 0 6px 2px 0;
+	height: 16px;
+	width: 16px;
+	border-radius: 2px;
+	left: auto;
+	span{
+		position:absolute;
+		opacity: 0;
+		top: 50%;
+		left: 50%;	
+		transform: translate(-50%,-53%);
+		transition:0.3s opacity 0.3s;
+		margin-top: 1px;
+		&:before{
+			content:"\e910";
+			font-family: 'icomoon' !important;
+			font-size: 9px;
+			color: #fff;
+			font-weight: 400;
+		}
+	}
+}
+.jcf-checkbox.jcf-checked span{opacity: 1;}
+
+
+
+/* custom select styles */
+.jcf-select {
+	display: block;
+	position: relative;
+	background: #fff;
+	min-width: 130px;
+  border: 1px solid #ccc;
+  padding: 10px 0 0;
+  min-height: 49px;
+  width: 100%;
+  border-radius: 2px;
+  transition: border-color 0.3s;
+  @include media('<desktop') {
+  	padding: 10px;
+  }
+  @include media('<phone') {
+		min-height: 40px;
+		padding: 6px 0 5px;
+	}
+}
+.jcf-select select {
+	z-index: 1;
+	left: 0;
+	top: 0;
+}
+.jcf-select .jcf-select-text {
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: default;
+	display: block;
+	font-size: 15px;
+	line-height: 1.8;
+	margin: 0 35px 0 8px;
+	color: #000;
+	@include media('<phone') {
+		font-size: 13px;
+		margin: 0 22px 0 10px;
+	}
+	span{text-transform: capitalize;}
+}
+.jcf-select .jcf-select-opener {
+	position: absolute;
+	text-align: center;
+	width: 26px;
+	bottom: 0;
+	right: 0;
+	top: 0;
+	&:before{
+		content:"\e911";
+		font: 10px/12px 'icomoon';
+		color: #e51561;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		right: 24px;
+		transition: transform 0.3s;
+		@include media('<phone') {
+			right: 7px;
+		}
+	}
+}
+body > .jcf-select-drop {
+	position: static;
+	margin: 0;
+	z-index: 99;
+	@include media('<phone') {
+		// width: 250px !important;
+	}
+}
+body > .jcf-select-drop.jcf-drop-flipped {
+	margin: 1px 0 0;
+}
+
+#sidebar .jcf-select-drop{
+	
+}
+.jcf-select .jcf-select-drop {
+	position: static;
+    border:  solid #ccc;
+	border-width: 0 1px;
+	z-index: 99;
+	background: #fff;
+	margin: 0 -1px;
+}
+.jcf-drop-active .jcf-select-drop{
+	border: none;
+}
+.jcf-select .jcf-drop-flipped {
+	bottom: 100%;
+	top: auto;
+}
+
+/* multiple select styles */
+.jcf-list-box {
+	overflow: hidden;
+	display: inline-block;
+	border: 1px solid #b8c3c9;
+	min-width: 200px;
+	margin: 0 15px;
+}
+/* select options styles */
+.jcf-list {
+	display: block;
+	position: relative;
+	background: #fff;
+	font-size: 12px;
+	font-weight: 600;
+	.jcf-list-content {
+		display: block;
+		max-height: 9999px !important;
+		padding: 15px 20px;
+		@include media('<phone') {
+			padding: 10px;
+		}
+	}
+	ul {
+		@extend %listreset;
+		@extend %clearfix;
+		li {
+			float: left;
+		}
+		.jcf-disabled {
+			background: #fff !important;
+			color: #aaa !important;
+		}
+	}
+	.jcf-option{
+		border-radius: 3px;
+		border: 1px solid #e0e0e0;
+		cursor: pointer;
+		display: block;
+		padding: 3px 8px;
+		color: #8d8d8d;
+		font-size: 12px;
+		text-transform: uppercase;
+		margin: 0 5px 5px 0;
+		transition: all 0.3s;
+	}
+}
+
+// 
+.jcf-select-drop .jcf-option.jcf-selected {
+	border-color: #9ab6dd !important;
+	color: #9ab6dd !important;
+}
+.jcf-select-drop .jcf-hover,
+.jcf-select-drop .jcf-option:active {
+	border-color: #9ab6dd !important;
+	color: #000 !important;
+}
+.jcf-list .jcf-optgroup-caption {
+	white-space: nowrap;
+	font-weight: bold;
+	display: block;
+	padding: 5px 9px;
+	cursor: default;
+	color: #000;
+}
+.jcf-list .jcf-optgroup .jcf-option {
+	padding-left: 30px;
+}
+/* custom file input styles */
+.jcf-file {
+	display: inline-block;
+	white-space: nowrap;
+	position: relative;
+	overflow: hidden;
+	background: #fff;
+	.jcf-real-element {
+		position: absolute;
+		font-size: 200px;
+		height: 200px;
+		margin: 0;
+		right: 0;
+		top: 0;
+	}
+	.jcf-fake-input {
+		display: inline-block;
+		text-overflow:ellipsis;
+		white-space: nowrap;
+		vertical-align: top;
+		overflow: hidden;
+		border: 1px solid #777;
+		padding: 0 8px;
+		font-size: 13px;
+		line-height: 28px;
+		height: 28px;
+		width: 125px;
+	}
+	.jcf-upload-button {
+		display: inline-block;
+		vertical-align: top;
+		white-space: nowrap;
+		overflow: hidden;
+		border: 1px solid #777;
+		margin: 0 0 0 -1px;
+		padding: 0 10px;
+		line-height: 28px;
+		height: 28px;
+	}
+}
+/* common custom form elements styles */
+.jcf-disabled {background: #ddd !important;}
+.jcf-focus { 
+	&.jcf-select {
+  	border-color: transparent;
+  	box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
+  	@include media('<phone') {
+  		box-shadow: none;
+  		border-color: #ccc;
+  	}
+	}
+}
+
+.jcf-drop-active{
+	.jcf-select-text{color: #e51561;}
+	.jcf-select-opener:before{
+		transform: rotate(180deg) translateY(36%);
+	}
+	&.jcf-select {
+		@include media('<phone') {
+  		box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
+			
+		}
+	}
+}
