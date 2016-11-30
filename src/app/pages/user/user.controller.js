@@ -50,7 +50,7 @@ export default class UserController {
     this.calcDaysCalc();
 
     this.maxDate = moment().add(1, 'year').add(1, 'month');
-    this.maxDateHomeFromWork = moment().isoAddWeekdaysFromSet(4, [1,2,3,4,5], angular.copy(this.holidays))
+    this.maxDateHomeFromWork = moment().isoAddWeekdaysFromSet(moment().weekday() === 5 || moment().weekday() === 6 ? 5 : 4, [1,2,3,4,5], angular.copy(this.holidays))
   }
 
   activate(scope) {
