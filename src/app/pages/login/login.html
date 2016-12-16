@@ -1,19 +1,21 @@
-<div class="login-block">
+<div class="login-page">
+  <div id="wrapper">
+    <div class="login-block">
       <div class="logo ">
         <img src="images/logo.svg" alt="CHI">
       </div>
       <h1 class="login-title">Log into your CHI vacation account</h1>
-      <form action="#" class="login-form">
+      <form class="login-form" name="authForm" novalidate="novalidate" ng-submit='signin()'>
         <fieldset>
           <div class="row">
             <label for="email-login">Email</label>
-            <input type="email" name="email-login" id="email-login">
+            <input type="email" name="Email" ng-model='email'>
           </div>
           <div class="row">
             <label for="password-login">Password</label>
-            <input type="password" name="password-login" id="password-login">
+            <input type="password" name="password" ng-pattern="passwordPattern" required ng-model='passw'>
           </div>
-          <div class="btn-holder"><button type="submit" class="btn btn-red">LOG IN</button></div>
+          <div class="btn-holder"><button type="Submit" class="btn btn-red">LOG IN</button></div>
         </fieldset>
       </form>
       <div class="login-foter">
@@ -23,3 +25,5 @@
         <p>If you have any problems with your account leave a message to Julia Rassokha ( <a href="skype:ulie.rassokha" class="skype">ulie.rassokha</a> )</p>
       </div>
     </div>
+  </div>
+</div>

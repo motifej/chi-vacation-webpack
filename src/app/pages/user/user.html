@@ -1,260 +1,140 @@
-<div class="user-wrapper clearfix">
-  <div class="container user__container">
-    <div class="row">
-      <div class="row" ng-repeat="item in userCtrl.allVacations | userFilterVacation:'inprogress'">
-        <h2 class="col-md-12 inprogress-header-info">You are on {{userCtrl.getStatus(item.vac_type)}} from {{item.startdate | date:'dd.MM'}} to {{item.enddate | date:'dd.MM'}}</h2>
-      </div>
-      <div class="btn-group
-            col-lg-8 col-lg-offset-4
-            col-md-7 col-md-offset-5
-            col-sm-6 col-sm-offset-6
-            col-xs-12">
-        <label
-          class="btn col-sm-4 col-xs-12 vacation-option"
-          ng-class="{'vacation-option-active': userCtrl.vacationState == userCtrl.VACATIONS}"
-          ng-click="userCtrl.changeVacationState(userCtrl.VACATIONS)">
-          Vacations
-        </label>
-        <label
-          class="btn col-sm-4 col-xs-12 vacation-option"
-          ng-class="{'vacation-option-active': userCtrl.vacationState == userCtrl.DAYSOFF}"
-          ng-click="userCtrl.changeVacationState(userCtrl.DAYSOFF)">
-          Days-off
-        </label>
-        <label
-          class="btn col-sm-4 col-xs-12 vacation-option"
-          ng-class="{'vacation-option-active': userCtrl.vacationState == userCtrl.WORKFROMHOME}"
-          ng-click="userCtrl.changeVacationState(userCtrl.WORKFROMHOME)">
-          Work from home
-        </label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
-        <div class="panel-group">
-          <uib-accordion>
-            <uib-accordion-group is-open="false">
-              <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
-                <div class="row">
-                  <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-folder-open"></span></div>
-                  <div class="col-xs-10 text-center">
-                    <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation requests</span>
-                    <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Day-off requests</span>
-                    <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home requests</span>
-                  </div>
+<div id="wrapper">
+    <main id="main" role="main">
+      <div class="container">
+        <aside id="sidebar">
+          <ul class="sidebar-links">
+            <li ng-class="{'active': userCtrl.vacationState == userCtrl.VACATIONS}"
+                ng-click="userCtrl.changeVacationState(userCtrl.VACATIONS)"
+            ><a href="#">Vacations <span class="counter">4</span></a></li>
+            <li ng-class="{'active': userCtrl.vacationState == userCtrl.DAYSOFF}"
+                ng-click="userCtrl.changeVacationState(userCtrl.DAYSOFF)"><a href="#"
+            >Days-off <span class="counter">4</span></a></li>
+            <li ng-class="{'active': userCtrl.vacationState == userCtrl.WORKFROMHOME}"
+                ng-click="userCtrl.changeVacationState(userCtrl.WORKFROMHOME)"
+            ><a href="#">Work from home <span class="counter">410</span></a></li>
+          </ul>
+          <div class="logic-holder">
+            <!-- <form action="#" class="sidebar-filter custom-form">
+              <fieldset>
+                add class active  open drop
+                <div class="filter-holder ">
+                  <input type="search" name="Filter" id="Filter" placeholder="Filter by user">
+                  <ul class="filter-list-user">
+                    <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
+                    <li><a href="#" class="name">Андрей Аваигян</a><span class="location">Android</span></li>
+                    <li><a href="#" class="name">Игорь Пилипенко</a><span class="location">Node JS</span></li>
+                    <li><a href="#" class="name">Влада Пилигрим</a><span class="location">Marketing managers</span></li>
+                    <li><a href="#" class="name">Максим Шигалов</a><span class="location">Design</span></li>
+                    <li><a href="#" class="name">Игорь Прокопченко</a><span class="location">Js</span></li>
+                    <li><a href="#" class="name">Владислав Илигиминов</a><span class="location">Js</span></li>
+                  </ul>
                 </div>
-              </uib-accordion-heading>
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th class="col-xs-1 text-center">№</th>
-                      <th class="col-xs-5 text-center">Start date</th>
-                      <th class="col-xs-5 text-center">End date</th>
-                      <th class="col-xs-1 text-center">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'new' | orderBy:'enddate'">
-                      <td class="col-xs-1 text-center">{{$index+1}}</td>
-                      <td class="col-xs-5 text-center">{{item.startdate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-5 text-center">{{item.enddate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </uib-accordion-group>
-          </uib-accordion>
-          <uib-accordion>
-            <uib-accordion-group is-open="isCollapsed">
-              <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
-                <div class="row">
-                  <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-remove"></span></div>
-                  <div class="col-xs-10 text-center">
-                    <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Rejected vacations</span>
-                    <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Rejected days-off</span>
-                    <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Rejected Work from home</span>
-                  </div>
+                <div class="filter-holder ">
+                  <select>
+                    <option value="">All departments</option>
+                    <option value="">.net</option>
+                    <option value="">Android</option>
+                    <option value="">business analyst</option>
+                    <option value="">data bases</option>
+                    <option value="">design</option>
+                    <option value="">hr</option>
+                    <option value="">ios</option>
+                    <option value="">it</option>
+                    <option value="">java</option>
+                    <option value="">js</option>
+                    <option value="">managers</option>
+                    <option value="">marketing</option>
+                    <option value="">markup</option>
+                    <option value="">node js</option>
+                    <option value="">operations</option>
+                    <option value="">php</option>
+                    <option value="">python</option>
+                    <option value="">qa</option>
+                    <option value="">ruby</option>
+                    <option value="">sales</option>
+                    <option value="">c++</option>
+                  </select>
                 </div>
-              </uib-accordion-heading>
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th class="col-xs-2 text-center">№</th>
-                      <th class="col-xs-5 text-center">Start date</th>
-                      <th class="col-xs-5 text-center">End date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'rejected' | orderBy:'enddate'">
-                      <td class="col-xs-1 text-center">{{$index+1}}</td>
-                      <td class="col-xs-5 text-center">{{item.startdate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-5 text-center">{{item.enddate | date:'dd-MM-yyyy'}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </uib-accordion-group>
-          </uib-accordion>
-          <uib-accordion>
-            <uib-accordion-group is-open="isCollapsed">
-              <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
-                <div class="row">
-                  <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-ok"></span></div>
-                  <div class="col-xs-10 text-center">
-                    <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Approved vacations</span>
-                    <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Approved days-off</span>
-                    <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Approved Work from home</span>
+                <div class="filter-holder">
+                  <div class="icom-calendar ">
+                    <input class="calendar" type="text"  placeholder="Sep 12, 2016">
                   </div>
-                </div>
-              </uib-accordion-heading>
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th class="col-xs-1 text-center">№</th>
-                      <th class="col-xs-5 text-center">Start date</th>
-                      <th class="col-xs-5 text-center">End date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'confirmed' | orderBy:'enddate'">
-                      <td class="col-xs-1 text-center">{{$index+1}}</td>
-                      <td class="col-xs-5 text-center">{{item.startdate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-5 text-center">{{item.enddate | date:'dd-MM-yyyy'}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </uib-accordion-group>
-          </uib-accordion>
-          <uib-accordion>
-            <uib-accordion-group is-open="isCollapsed">
-              <uib-accordion-heading ng-click="isCollapsed = !isCollapsed">
-                <div class="row">
-                  <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-lock"></span></div>
-                  <div class="col-xs-10 text-center">
-                    <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Spent vacations</span>
-                    <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Spent days-off</span>
-                    <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Spent Work from home</span>
+                  <span class="line"></span>
+                  <div class="icom-calendar">
+                    <input class="calendar" type="text" placeholder="Sep 18, 2016">
                   </div>
+                  add class btn-visible
+                  <div class="btn-holder"><a href="#">Clear date filter</a></div>
                 </div>
-              </uib-accordion-heading>
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th class="col-xs-2 text-center">№</th>
-                      <th class="col-xs-5 text-center">Start date</th>
-                      <th class="col-xs-5 text-center">End date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'spent' | orderBy:'enddate'">
-                      <td class="col-xs-1 text-center">{{$index+1}}</td>
-                      <td class="col-xs-5 text-center">{{item.startdate | date:'dd-MM-yyyy'}}</td>
-                      <td class="col-xs-5 text-center">{{item.enddate | date:'dd-MM-yyyy'}}</td>
-                    </tr>
-                  </tbody>
-                </table>
+              </fieldset>
+            </form> -->
+            <!-- <ul class="admin-panel">
+              <li><a href="#" class=" btn btn-border-blue">ADD USER</a></li>
+              <li><a href="#popup2" class="lightbox btn btn-border-blue">sHOW DELETED USERS</a></li>
+              <li><a href="#popup3" class=" lightbox btn btn-border-blue">USER REQUEST</a></li>
+            </ul> -->
+          </div>
+        </aside>
+        <div id="content">
+          <div class="vacation-left">
+            <h1>Request a Vacation</h1>
+            <span class="vacation-day">Vacation days expire at <time datetime="13-09">Sep 13, 2010</time></span>
+            <form action="#" class="calendar-form">
+              <fieldset>
+                <div class="col dashed">
+                  <label for="start_date">Start date</label>
+                  <div class="icom-calendar ">
+                    <input class="calendar" type="text" name="" id="start_date" >
+                  </div>
+                  <label for="end_date">End date</label>
+                  <div class="icom-calendar">
+                    <input class="calendar" type="text" name="" id="start_date" placeholder="Sep 25, 2016">
+                  </div>
+                  <div class="btn-holder"><button type="submit" class="btn-blue" >Send a request</button></div>
+                </div>
+                <div class="col">
+                  <strong class="day-counter" ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">{{userCtrl.user.availableDays}}<span>days available</span></strong>
+                  <strong class="day-counter" ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">{{userCtrl.user.availableDaysOff}}<span>days available</span></strong>
+                  <strong class="day-counter" ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">5<span>days available</span></strong>
+                  <strong class="day-counter">11<span>will be used</span></strong>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div class="vacation-right">
+            <article class="vacation-box">
+              <h2>Active vacation requests</h2>
+              <div class="vacations-holder">
+                <time datetime="" class="date">Sep 12, 2016 — Sep 23, 2016</time>
               </div>
-            </uib-accordion-group>
-          </uib-accordion>
+            </article>
+            <article class="vacation-box">
+              <h2>Rejected vacations <span class="counter">1 new</span></h2>
+              <div class="vacations-holder">
+                <time datetime="" class="date">Sep 12, 2016 — Sep 23, 2016</time>
+                <div class="vacations-slider">
+                  <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
+                  <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
+                  <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
+                </div>
+                <a href="#" class="opener"><span class="visible">View all</span><span class="hidden">Hide</span></a>
+              </div>
+            </article>
+            <article class="vacation-box">
+              <h2>Approved vacations</h2>
+              <div class="vacations-holder">
+                <span class="none">&mdash;</span>
+              </div>
+            </article>
+            <article class="vacation-box">
+              <h2>Spent vacations</h2>
+              <div class="vacations-holder">
+                <time datetime="" class="date">Sep 12, 2016 — Sep 23, 2016</time>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
-        <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue)'>
-          <legend class="user-form__title">
-            <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation request</span>
-            <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Days-off request</span>
-            <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home request</span>
-            <span ng-show="userCtrl.showNotification" class="pull-right"><i class="text-danger glyphicon glyphicon-exclamation-sign" title="Your {{userCtrl.vacationState === userCtrl.VACATIONS ? 'vacations' : 'days-off'}} expire {{userCtrl.vacationExpire}}"></i></span> 
-          </legend>
-          <div class="row" ng-hide="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">
-            <div class="form-group col-md-6">
-              <label for="">Start date</label>
-              <chi-datepicker class="datepicker"
-              name="startdate"
-              ng-model="startdate"
-              min-date="minStartDate"
-              max-date2="userCtrl.maxDate"
-              calc-days="userCtrl.calcDaysCalc()"
-              holidays="{{userCtrl.holidays}}"
-              >
-              </chi-datepicker>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="">End date</label>
-              <chi-datepicker class="datepicker"
-              name="enddate"
-              ng-model="enddate"
-              min-date="minEndDate"
-              max-date2="userCtrl.maxDate"
-              calc-days="userCtrl.calcDaysCalc()"
-              holidays="{{userCtrl.holidays}}"
-              >
-              </chi-datepicker>
-            </div>
-          </div>
-          <div class="row" ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">
-            <div class="form-group col-md-6">
-              <label for="">Start date</label>
-              <chi-datepicker class="datepicker"
-              name="startdate"
-              ng-model="startdate"
-              min-date="minStartDate"
-              max-date2="userCtrl.maxDateHomeFromWork"
-              calc-days="userCtrl.calcDaysCalc()"
-              holidays="{{userCtrl.holidays}}"
-              >
-              </chi-datepicker>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="">End date</label>
-              <chi-datepicker class="datepicker"
-              name="enddate"
-              ng-model="enddate"
-              min-date="minEndDate"
-              max-date2="userCtrl.maxDateHomeFromWork"
-              calc-days="userCtrl.calcDaysCalc()"
-              holidays="{{userCtrl.holidays}}"
-              >
-              </chi-datepicker>
-            </div>
-          </div>          
-          <div class="row user-form__last-row">
-            <div class="form-group col-md-6">
-              <label for="selected" ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation days</label>
-              <label for="selected" ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Days-off</label>
-              <label for="selected" ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home</label>
-              <input type="text" id="selected" class="form-control user__total-days" readonly
-              ng-value="userCtrl.user.vacationDays">
-            </div>
-            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">
-              <label for="available">Available days</label>
-              <input type="text" id="available" class="form-control user__left-days" readonly
-              ng-value="userCtrl.user.availableDays">
-            </div>
-            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">
-              <label for="daysoff">Available days-off</label>
-              <input type="text" id="daysoff" class="form-control user__left-days" readonly
-              ng-value="userCtrl.user.availableDaysOff">
-            </div>
-            <div class="form-group col-md-6" ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">
-              <label for="workfromhome">Available Work from home</label>
-              <input type="text" id="workfromhome" class="form-control user__left-days" readonly value="5">
-            </div>
-          </div>
-          <div class="row">
-            <button type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default" ng-disabled="userCtrl.sending">
-              <span ng-show="userCtrl.sending"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-              Send
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    </main>
+    <a href="#main" class="back-to-top icom-arrow-down"></a>
   </div>
-</div>
