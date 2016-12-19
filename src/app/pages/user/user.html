@@ -79,57 +79,85 @@
           <div class="vacation-left">
             <h1>Request a Vacation</h1>
             <span class="vacation-day">Vacation days expire at <time datetime="13-09">Sep 13, 2010</time></span>
-            <form action="#" class="calendar-form">
+            <form class="calendar-form" ng-submit='userCtrl.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue)'>
               <fieldset>
                 <div class="col dashed">
                   <label for="start_date">Start date</label>
-                  <div class="icom-calendar ">
-                    <input class="calendar" type="text" name="" id="start_date" >
-                  </div>
+                  <chi-datepicker class="datepicker"
+              name="startdate"
+              ng-model="startdate"
+              min-date="minStartDate"
+              max-date2="userCtrl.maxDate"
+              calc-days="userCtrl.calcDaysCalc()"
+              holidays="{{userCtrl.holidays}}"
+              >
+              </chi-datepicker>
                   <label for="end_date">End date</label>
-                  <div class="icom-calendar">
-                    <input class="calendar" type="text" name="" id="start_date" placeholder="Sep 25, 2016">
-                  </div>
+                  <chi-datepicker class="datepicker"
+              name="enddate"
+              ng-model="enddate"
+              min-date="minEndDate"
+              max-date2="userCtrl.maxDate"
+              calc-days="userCtrl.calcDaysCalc()"
+              holidays="{{userCtrl.holidays}}"
+              >
+              </chi-datepicker>
                   <div class="btn-holder"><button type="submit" class="btn-blue" >Send a request</button></div>
                 </div>
                 <div class="col">
                   <strong class="day-counter" ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">{{userCtrl.user.availableDays}}<span>days available</span></strong>
                   <strong class="day-counter" ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">{{userCtrl.user.availableDaysOff}}<span>days available</span></strong>
                   <strong class="day-counter" ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">5<span>days available</span></strong>
-                  <strong class="day-counter">11<span>will be used</span></strong>
+                  <strong class="day-counter">{{userCtrl.user.vacationDays}}<span>will be used</span></strong>
                 </div>
               </fieldset>
             </form>
           </div>
           <div class="vacation-right">
             <article class="vacation-box">
-              <h2>Active vacation requests</h2>
-              <div class="vacations-holder">
-                <time datetime="" class="date">Sep 12, 2016 — Sep 23, 2016</time>
+              <h2>
+                <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation requests</span>
+                <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Day-off requests</span>
+                <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home requests</span>
+              </h2>
+              <div class="vacations-holder" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'new' | orderBy:'enddate'">
+                <time datetime="" class="date">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
               </div>
             </article>
             <article class="vacation-box">
-              <h2>Rejected vacations <span class="counter">1 new</span></h2>
+              <h2>
+                <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Rejected vacations</span>
+                <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Rejected days-off</span>
+                <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Rejected Work from home</span>
+               <span class="counter">1 new</span></h2>
               <div class="vacations-holder">
-                <time datetime="" class="date">Sep 12, 2016 — Sep 23, 2016</time>
+                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'rejected' | orderBy:'enddate'">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
                 <div class="vacations-slider">
+                  <!-- <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
                   <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
-                  <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
-                  <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
+                  <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time> -->
                 </div>
                 <a href="#" class="opener"><span class="visible">View all</span><span class="hidden">Hide</span></a>
               </div>
             </article>
             <article class="vacation-box">
-              <h2>Approved vacations</h2>
+              <h2>
+                <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Approved vacations</span>
+                <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Approved days-off</span>
+                <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Approved Work from home</span>
+              </h2>
               <div class="vacations-holder">
                 <span class="none">&mdash;</span>
               </div>
             </article>
             <article class="vacation-box">
-              <h2>Spent vacations</h2>
+              <h2>
+                <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Spent vacations</span>
+                <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Spent days-off</span>
+                <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Spent Work from home</span>
+              </h2>
               <div class="vacations-holder">
-                <time datetime="" class="date">Sep 12, 2016 — Sep 23, 2016</time>
+                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'spent' | orderBy:'enddate'">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
               </div>
             </article>
           </div>
