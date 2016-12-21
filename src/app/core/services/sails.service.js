@@ -58,14 +58,12 @@ export default class SailsService {
   			});
 
 			function socketUserActions(obj) {
-				console.log('socket user data received', obj);
 				let users = $parse('users')(this);
 				if (obj.attribute || !users) return;
 				let {data, id, verb} = obj;
 
 				switch (verb) {
 					case 'created': {
-						console.log('user created', obj);
 						$rootScope.$applyAsync(
 							users.push(angular.extend(data, {vacations: [], daysoff: []}))
 						);
@@ -73,7 +71,6 @@ export default class SailsService {
 					}
 
 					case 'updated': {
-						console.log('user updated', obj);
 						$rootScope.$applyAsync(
 							angular.extend(_.find(users, {id}) || {}, data)
 						);
@@ -94,12 +91,10 @@ export default class SailsService {
 			};
 
 			function socketActions(params, obj) {
-				console.log('socket vacation data received', obj);
 				let {verb, data, id} = obj;
 
 				switch (verb) {
 					case 'created': {
-						console.log('vacation created', obj);
 						$rootScope.$applyAsync( () => {
 							if (this.user.id === data.uid) 
 								if (!_.find(this.user[params], {id: data.id}))
@@ -114,18 +109,15 @@ export default class SailsService {
 					}
 
 					case 'updated': {
-						console.log('vacation updated', obj);
 						$rootScope.$applyAsync( () => {
 							let user = _.find(this.users, {id: data.uid});
 							angular.extend(_.find(user[params], {id}) || {}, data);
 							angular.extend(_.find(this.user[params], {id}) || {}, data);
 						});
-						console.log('vacation updated, new status:', this.users);
 						break;
 					}
 
 					case 'destroyed': {
-						console.log('vacation deleted', obj);
 						$rootScope.$applyAsync( () => {
 							let copy = _.filter(this.user[params], 
 								el => el.id !== id
