@@ -23,7 +23,7 @@ export default class VvController {
     this.status = status;
     this.filter = {};
     this.filtredUser;
-    this.statusFilter = { status: status.NEW };
+    this.statusFilter = { status: {new: true} };
     this.groupFilter = {};
     this.modal = $uibModal;
     this.pageState = "vacations";
@@ -196,7 +196,19 @@ export default class VvController {
     }
 
     choiceButtonFilter(filter) {
+      /*switch(filter) {
+        case 'new':
+          this.statusFilter.status.new = true;
+          break;
+        case 'handled':
+          this.statusFilter.status.new = false;
+          break;
+        default:
+          break;
+      }*/
+      /*this.statusFilter.status[filter] = true;*/
       this.statusFilter.status = filter;
+      console.log(this.statusFilter.status);
       this.setDateInfo();
     }
 

@@ -1,45 +1,10 @@
-<div id="wrapper">
-    <header id="header" >
-      <div class="container">
-        <div class="logo">
-          <img src="images/logo.svg" alt="CHI"/>
-        </div>
-        <nav class="menu">
-          <ul id="nav">
-            <li ><a href="#"><i class="icom-house"></i>My Requests</a></li>
-            <li class="active"><a href="#"><i class="icom-queen"></i>Team-lead</a></li>
-            <li><a href="#"><i class="icom-question"></i>Help</a></li>
-          </ul>
-        </nav>
-        <!-- burger menu opener-->
-        <a href="#" class="nav-opener"><span></span></a>
-        <!-- open-close structure example -->
-        <div class="open-close-nav">
-          <span class="name-user" href="#">Сергей Филоненко</span >
-          <div class="slide">
-            <div class="slide-box">
-              <time datetime="13-09-2010" class="date">Employed on Sep 13, 2010</time>
-              <ul class="link-nav">
-                <li><span class="counter">15</span><a href="#">Days-off remaining</a></li>
-                <li><span class="counter">12</span><a href="#">Vacation days remaining</a></li>
-              </ul>
-              <ul class="login-list-link">
-                <li><a class="lightbox" href="#popup1">Setting</a></li>
-                <li><a href="#">Change password</a></li>
-                <li><a href="#">Log out</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <main id="main" role="main">
+<main id="main" role="main">
       <div class="container">
         <aside id="sidebar">
           <ul class="sidebar-links">
-            <li class="active"><a href="#">Vacations <span class="counter">4</span></a></li>
-            <li><a href="#">Days-off <span class="counter">4</span></a></li>
-            <li><a href="#">Work from home <span class="counter">410</span></a></li>
+            <li ng-class="{'active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')"><a href="#">Vacations <span class="counter">4</span></a></li>
+            <li ng-class="{'active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')"><a href="#">Days-off <span class="counter">4</span></a></li>
+            <li ng-class="{'active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')"><a href="#">Work from home <span class="counter">410</span></a></li>
           </ul>
           <div class="logic-holder">
             <form action="#" class="sidebar-filter custom-form">
@@ -85,11 +50,28 @@
                 </div>
                 <div class="filter-holder">
                   <div class="icom-calendar ">
-                    <input class="calendar" type="text"  placeholder="Sep 12, 2016">
+                    <chi-datepicker class="datepicker"
+                      name="startdate"
+                      ng-model="dateFilter.startdate"
+                      is-show-all-days="true"
+                      ng-model-options="{timezone:'UTC'}"
+                      holidays="{{admin.holidays}}"
+                      max-date2="admin.maxDate"
+                      >
+                      </chi-datepicker>
                   </div>
                   <span class="line"></span>
                   <div class="icom-calendar">
-                    <input class="calendar" type="text" placeholder="Sep 18, 2016">
+                    <chi-datepicker class="datepicker"
+                      name="enddate"
+                      ng-model="dateFilter.enddate"
+                      min-date="dateFilter.startdate"
+                      is-show-all-days="true"
+                      ng-model-options="{timezone:'UTC'}"
+                      holidays="{{admin.holidays}}"
+                      max-date2="admin.maxDate"
+                      >
+                      </chi-datepicker>
                   </div>
                   <!-- add class btn-visible  -->
                   <!-- <div class="btn-holder"><a href="#">Clear date filter</a></div> -->
@@ -106,26 +88,35 @@
         <div id="content">
           <div class="tabs ">
             <ul>
-            <li><a href="#tabs-2">Active Requests <span class="counter">(9)</span></a></li>
-            <li><a href="#tabs-3">Handled Requests <span class="counter">(67)</span></a></li>
+            <li ng-class="{'active': admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('new')"><a href="#tabs-2">Active Requests <span class="counter">(9)</span></a></li>
+            <li ng-class="{'active': !admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('handled')"><a href="#tabs-2"><a href="#tabs-3">Handled Requests <span class="counter">(67)</span></a></li>
             </ul>
+            <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status == 'handled'">
+              <span class="show-text">SHOWING VACATIONS</span>
+              <label class="label-btn" for="started">HAven’t STARTED<input type="checkbox" id="started"></label>
+              <label class="label-btn" for="progress">IN PROGRESS<input type="checkbox" id="progress"></label>
+              <label class="label-btn" for="past">PAST<input type="checkbox" name="past" id="past" btn-small></label>
+              <label for="rejected"><input type="checkbox" name="Show_rejected" id="rejected" > Show rejected</label>
+            </form>
             <div id="tabs-2">
             <div class="table">
-              <div class="table-row">
-                <div class="table-col">
-                  <span class="circle">Js</span>
-                  <a href="#popup4" class="user-name lightbox">Тимофей Лебедев</a>
-                </div>
-                <div class="table-col">
-                  <span class="counter-day">5 days<time class="date-time" datetime="12-09-2016">Sep 12, 2016 — Sep 16, 2016</time></span>
-                </div>
-                <div class="table-col">
-                  <a href="#" class="btn-small-green icom-approve ">Approve</a>
-                  <a href="#" class="btn-small-red icom-reject">Reject</a>
-                  <!-- <span class="wait">Waiting for approval</span> -->
+              <div class="table-row" ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
+                <div ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
+                  <div class="table-col">
+                    <span class="circle">Js</span>
+                    <a href="#popup4" class="user-name lightbox">{{user.firstname.charAt(0) + ". " + user.lastname}}</a>
+                  </div>
+                  <div class="table-col">
+                    <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} days<time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
+                  </div>
+                  <div class="table-col">
+                    <a href="#" class="btn-small-green icom-approve " ng-hide="item.status!='new'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Approve</a>
+                    <a href="#" class="btn-small-red icom-reject" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</a>
+                    <!-- <span class="wait">Waiting for approval</span> -->
+                  </div>
                 </div>
               </div>
-              <div class="table-row">
+              <!-- <div class="table-row">
                 <div class="table-col">
                   <span class="circle">Js</span>
                   <a href="#" class="user-name">Максим Новак</a>
@@ -136,7 +127,7 @@
                 <div class="table-col">
                   <a href="#" class="btn-small-green icom-approve ">Approve</a>
                   <a href="#" class="btn-small-red icom-reject">Reject</a>
-                  <!-- <span class="wait">Waiting for approval</span> -->
+                  <span class="wait">Waiting for approval</span>
                 </div>
               </div>
               <div class="table-row">
@@ -208,17 +199,10 @@
                   <a href="#" class="btn-small-green icom-approve ">Approve</a>
                   <a href="#" class="btn-small-red icom-reject">Reject</a>
                 </div>
-              </div>
+              </div> -->
             </div>
             </div>
             <div id="tabs-3">
-            <form action="#" class="show-filter custom-form">
-              <span class="show-text">SHOWING VACATIONS</span>
-              <label class="label-btn" for="started">HAven’t STARTED<input type="checkbox" id="started"></label>
-              <label class="label-btn" for="progress">IN PROGRESS<input type="checkbox" id="progress"></label>
-              <label class="label-btn" for="past">PAST<input type="checkbox" name="past" id="past" btn-small></label>
-              <label for="rejected"><input type="checkbox" name="Show_rejected" id="rejected" > Show rejected</label>
-            </form>
             <div class="table">
               <div class="table-row">
                 <div class="table-col">
@@ -313,5 +297,3 @@
         </div>
       </div>
     </main>
-    <a href="#main" class="back-to-top icom-arrow-down"></a>
-  </div>
