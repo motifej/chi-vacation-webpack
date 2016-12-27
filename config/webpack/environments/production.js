@@ -11,7 +11,7 @@ module.exports = function(_path) {
     },
     devServer: {
       host: '0.0.0.0',
-      port: '8080'
+      port: '8090'
     }
 
   }
