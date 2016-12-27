@@ -2,9 +2,9 @@
       <div class="container">
         <aside id="sidebar">
           <ul class="sidebar-links">
-            <li ng-class="{'active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')"><a href="#">Vacations <span class="counter">4</span></a></li>
-            <li ng-class="{'active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')"><a href="#">Days-off <span class="counter">4</span></a></li>
-            <li ng-class="{'active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')"><a href="#">Work from home <span class="counter">410</span></a></li>
+            <li ng-class="{'active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')"><a href="#">Vacations <span class="counter">{{admin.calcNewVacationsCounter('vacations')}}</span></a></li>
+            <li ng-class="{'active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')"><a href="#">Days-off <span class="counter">{{admin.calcNewVacationsCounter('daysoff')}}</span></a></li>
+            <li ng-class="{'active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')"><a href="#">Work from home <span class="counter">{{admin.calcNewVacationsCounter('workfromhome')}}</span></a></li>
           </ul>
           <div class="logic-holder">
             <form action="#" class="sidebar-filter custom-form">
@@ -88,8 +88,8 @@
         <div id="content">
           <div class="tabs ">
             <ul>
-            <li ng-class="{'active': admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('new')"><a href="#tabs-2">Active Requests <span class="counter">(9)</span></a></li>
-            <li ng-class="{'active': !admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('handled')"><a href="#tabs-2"><a href="#tabs-3">Handled Requests <span class="counter">(67)</span></a></li>
+            <li ng-class="{'active': admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('new')"><a href="#tabs-2">Active Requests <span class="counter">({{admin.calcNewVacationsStatus('new')}})</span></a></li>
+            <li ng-class="{'active': !admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('handled')"><a href="#tabs-2"><a href="#tabs-3">Handled Requests <span class="counter">({{admin.calcNewVacationsStatus('handled')}})</span></a></li>
             </ul>
             <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status == 'handled'">
               <span class="show-text">SHOWING VACATIONS</span>
@@ -104,7 +104,7 @@
                 <div ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
                   <div class="table-col">
                     <span class="circle">Js</span>
-                    <a href="#popup4" class="user-name lightbox">{{user.firstname.charAt(0) + ". " + user.lastname}}</a>
+                    <a href="#popup4" class="user-name lightbox" ng-click="admin.userInfo(user)">{{user.firstname.charAt(0) + ". " + user.lastname}}</a>
                   </div>
                   <div class="table-col">
                     <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} days<time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>

@@ -97,8 +97,42 @@ export default class VvController {
     calcNewVacations(group) {
      var sum = 0;
      this.users.forEach(item => {
-      if(item.group == group && !item.deleted) {
+      if(/*item.group == group &&*/ !item.deleted) {
         angular.forEach(item[this.pageState], el => {
+          if(el.status == this.status.NEW) {
+            sum++;
+          }
+        })
+      }
+     })
+     return sum; 
+    }
+
+    calcNewVacationsStatus(status) {
+     var sum = 0;
+     this.users.forEach(item => {
+      if(/*item.group == group &&*/ !item.deleted) {
+        angular.forEach(item[this.pageState], el => {
+          if(status == 'new') {
+            if(el.status == this.status.NEW) {
+              sum++;
+            }
+          } else {
+            if(el.status != this.status.NEW) {
+              sum++;
+            }
+          }
+        })
+      }
+     })
+     return sum; 
+    }
+
+    calcNewVacationsCounter(group) {
+     var sum = 0;
+     this.users.forEach(item => {
+      if(/*item.group == group &&*/ !item.deleted) {
+        angular.forEach(item[group], el => {
           if(el.status == this.status.NEW) {
             sum++;
           }

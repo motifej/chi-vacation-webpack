@@ -1,35 +1,88 @@
-<div class="modal-header">
-  <h3 class="modal-title">User Info<span ng-if="info.isEditShow" title="Edit User" class="close glyphicon glyphicon-pencil" ng-click="info.editUser(info.user)"></span></h3>
-</div>
-<div class="modal-body">
-	<div class="table-responsive">
-		<table class="table table-striped">
-			<tbody>
-				<tr>
-					<td>FirstName</td>
-					<td>{{info.user.firstname}}</td>
-				</tr>
-				<tr>
-					<td>LastName</td>
-					<td>{{info.user.lastname}}</td>
-				</tr>
-				<tr>
-					<td>Department</td>
-					<td>{{info.user.group}}</td>
-				</tr>
-				<tr>
-					<td>Employment date</td>
-					<td>{{info.user.employmentdate | date}}</td>
-				</tr>				
-	<!-- 			<tr>
-					<td>Phone</td>
-					<td>{{info.user.phone}}</td>
-				</tr> -->
-				<tr>
-					<td>Mail</td>
-					<td>{{info.user.email}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
+<div class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%; display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; left: 703px; opacity: 1; overflow: visible;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px; height: 497px;"><section id="popup4" class="user-edit-profile lightbox" style="display: block;">
+			<h1>User Profile <a href="#popup5" class="icom-trash lightbox"></a></h1>
+			<!-- form Edit profile for admin-->
+			<!-- <form action="#" class="fancybox-form ">
+				<fieldset>
+					<div class="row">
+						<label class="label-left" for="First_name" >First name</label>
+						<input type="text" id="First_name" placeholder="Константин">
+					</div>
+					<div class="row">
+						<label class="label-left" for="Last_name">Last name</label>
+						<input type="text" id="Last_name"  placeholder="Константинопольский">
+					</div>
+					<div class="row">
+						<label class="label-left" for="Email3">Email</label>
+						<input type="email" id="Email3" placeholder="timofey.lebedev@chisw.com">
+					</div>
+					<div class="row">
+						<label for="User1" class="label-left">Role</label>
+						<select  id="User1">
+							<option value="">User</option>
+							<option value="">.net</option>
+							<option value="">Android</option>
+							<option value="">business analyst</option>
+							<option value="">data bases</option>
+							<option value="">design</option>
+							<option value="">hr</option>
+						</select>
+					</div>
+					<div class="row">
+						<label for="Team1" class="label-left">Team</label>
+						<select  id="Team1">
+							<option value="">Marketing manager</option>
+							<option value="">manager</option>
+							<option value="">Android</option>
+							<option value="">business analyst</option>
+							<option value="">data bases</option>
+							<option value="">design</option>
+							<option value="">hr</option>
+						</select>
+					</div>
+					<div class="row">
+						<label class="label-left" for="date1">Employed on</label>
+						<div class="icom-calendar">
+							<input class="calendar" type="text" placeholder="Sep 12, 2016">
+						</div>
+					</div>
+					<div class="row">
+						<a href="#" class="btn btn-red">SAVE CHANGES</a>
+						<a href="#" class="btn btn-border-red close" title="cansel">Cansel</a>
+					</div>
+				</fieldset>
+			</form> -->
+
+			<!-- form User profile for admin -->
+			<form action="#" class="fancybox-form ">
+				<fieldset>
+					<div class="row">
+						<label class="label-left">First name</label>
+						<strong class="user-information">{{info.user.firstname}}</strong>
+					</div>
+					<div class="row">
+						<label class="label-left">Last name</label>
+						<strong class="user-information">{{info.user.lastname}}</strong>
+					</div>
+					<div class="row">
+						<label class="label-left">Email</label>
+						<strong class="user-information">{{info.user.email}}</strong>
+					</div>
+					<div class="row">
+						<label class="label-left">Role</label>
+						<strong class="user-information">{{info.user.role}}</strong>
+					</div>
+					<div class="row">
+						<label class="label-left">Team</label>
+						<strong class="user-information">{{info.user.group}}</strong>
+					</div>
+					<div class="row">
+						<label class="label-left">Employed on</label>
+						<strong class="user-information">{{info.user.employmentdate | date}}</strong>
+					</div>
+					<div class="row">
+						<a href="#" class="btn btn-red" ng-click="info.editUser(info.user)">EDIT USER INFO</a>
+						<a href="#" class="btn btn-border-red close" title="cansel">SET NEW PASSWORD</a>
+					</div>
+				</fieldset>
+			</form>
+		</section></div></div><a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a></div></div></div>
