@@ -1,122 +1,76 @@
-<div class="modal-header">
-  <h3 class="modal-title">Edit user form
-    <span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteUser()" ng-show="user.isDelShow && !user.newUser.deleted"></span>
-    <span title="Restore User" class="close icon-warning glyphicon glyphicon-exclamation-sign" ng-click="user.restoreUser()" ng-show="user.newUser.deleted"></span>
-    <span title="Generate New Password" class="close icon-warning glyphicon glyphicon-lock" ng-click="user.resetPassword()"></span>
-  </h3>
-</div>
-
-<div class="modal-body">
-  <form class="form-horizontal" name="addUserForm"  ng-submit="user.submitForm(addUserForm.$valid)" novalidate>
-    <fieldset>
-
-      <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.firstname.$invalid && (user.invalidForm || addUserForm.firstname.$dirty)}">
-          <label class="col-md-4 control-label" for="firstname">First name</label>  
-          <div class="col-md-4">
-            <input id="firstname" name="firstname" type="text" placeholder="First name..." class="form-control input-md" ng-model="user.newUser.firstname" ng-pattern="user.namePattern" required>
+<div class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%; display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; opacity: 1; overflow: visible;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px; height: 497px;"><section id="popup4" class="user-edit-profile lightbox" style="display: block;">
+      <h1>User Profile <a href="#popup5" class="icom-trash lightbox" ng-click="info.deleteUser()" ng-show="info.isDelShow && !info.newUser.deleted"></a></h1>
+      <!-- form Edit profile for admin-->
+      <form class="fancybox-form " name="addUserForm"  ng-submit="user.submitForm(addUserForm.$valid)" novalidate>
+        <fieldset>
+          <div class="row">
+            <label class="label-left" for="First_name" >First name</label>
+            <input type="text" id="First_name" ng-model="user.newUser.firstname" ng-pattern="user.namePattern" required>
           </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.lastname.$invalid && (user.invalidForm || addUserForm.lastname.$dirty)}">
-          <label class="col-md-4 control-label" for="lastname">Last name</label>  
-          <div class="col-md-4">
-            <input id="lastname" name="lastname" type="text" placeholder="Last name..." class="form-control input-md" ng-model="user.newUser.lastname" ng-pattern="user.namePattern" required>
+          <div class="row">
+            <label class="label-left" for="Last_name">Last name</label>
+            <input type="text" id="Last_name"  ng-model="user.newUser.lastname" ng-pattern="user.namePattern" required>
           </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div>
-          <label class="col-md-4 control-label" for="lastname">Employment date</label>  
-          <div class="col-md-4">
-            <chi-datepicker class="datepicker" name="employmentdate" ng-model="user.newUser.employmentdate" is-show-all-days="true"></chi-datepicker>
+          <div class="row">
+            <label class="label-left" for="Email3">Email</label>
+            <input type="email" id="Email3" ng-model="user.newUser.email" ng-pattern="user.emailPattern" required>
           </div>
-        </div>
-      </div>
-
-      <!-- <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.phone.$invalid && (user.invalidForm || addUserForm.phone.$dirty)}">
-          <label class="col-md-4 control-label" for="phone">Phone Number</label>
-          <div class="col-md-4">
-            <div class="input-group">
-              <input id="phone" name="phone" class="form-control bfh-phone" placeholder="phone..." type="text" ng-model="user.newUser.phone" ng-change="user.phoneChanged()" required>
-              <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-      <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.email.$invalid && (user.invalidForm || addUserForm.email.$dirty)}">
-          <label class="col-md-4 control-label" for="email">Email</label>
-          <div class="col-md-4">
-            <div class="input-group">
-              <input id="email" name="email" class="form-control" placeholder="Email..." type="text" ng-model="user.newUser.email" ng-pattern="user.emailPattern" required>
-              <span class="input-group-addon">@</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.userGroup.$invalid && (user.invalidForm || addUserForm.userGroup.$dirty)}">
-          <label class="col-md-4 control-label" for="userGroup">User's group</label>
-          <div class="col-md-4">
-            <select id="userGroup" name="userGroup" class="form-control" ng-model="user.newUser.group" ng-options="group as group for group in user.group" required>
-              <option value="">-- Chose user's group --</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.userRole.$invalid && (user.invalidForm || addUserForm.userRole.$dirty)}">
-          <label class="col-md-4 control-label" for="userRole">User's role</label>
-          <div class="col-md-4">
-            <select id="userRole" name="userRole" class="form-control" ng-model="user.newUser.role" ng-options="role as role for role in user.role" required>
+          <div class="row">
+            <label for="User1" class="label-left">Role</label>
+            <select  id="User1" ng-model="user.newUser.role" ng-options="role as role for role in user.role" required>
               <option value="">-- Chose user's role --</option>
             </select>
           </div>
-        </div>
-      </div>
-
-      <div class="form-group" ng-if="user.newUser.role === 'team-lead'">
-        <div>
-          <label class="col-md-4 control-label" for="groups">Responsible for</label>
-          <multiselect class="col-md-4" id="groups" ng-model="user.newUser.responsibleFor" options="user.group"></multiselect>
-        </div>
-      </div>
-<!--       <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.totalVacation.$invalid && (user.invalidForm || addUserForm.totalVacation.$dirty)}">
-          <label class="col-md-4 control-label" for="totalVacation">Total Vacation</label>  
-          <div class="col-md-4">
-            <input id="totalVacation" name="totalVacation" type="number" placeholder="" class="form-control input-md" ng-model="user.newUser.vacations.total" required min="0">
+          <div class="row">
+            <label for="Team1" class="label-left">Team</label>
+            <select  id="Team1" ng-model="user.newUser.group" ng-options="group as group for group in user.group" required>
+              <option value="">-- Chose user's group --</option>
+            </select>
           </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div ng-class="{'has-error': addUserForm.dayOff.$invalid && (user.invalidForm || addUserForm.dayOff.$dirty)}">
-          <label class="col-md-4 control-label" for="dayOff">Day Off</label>  
-          <div class="col-md-4">
-            <input id="dayOff" name="dayOff" type="number" placeholder="" class="form-control input-md" ng-model="user.newUser.vacations.dayOff" required min="0">
+          <div class="row">
+            <label class="label-left" for="date1">Employed on</label>
+            <div class="icom-calendar">
+              <input class="calendar" type="text" name="employmentdate" ng-model="user.newUser.employmentdate" is-show-all-days="true">
+            </div>
           </div>
-        </div>
-      </div> -->
-
-      <div class="modal-footer">
-        <div class="form-group">
-          <div class="col-md-8 col-md-offset-4">
-            <button class="btn btn-warning" type="button" ng-click="user.cancelNewUser()">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save</button>
+          <div class="row">
+            <button type="submit" class="btn btn-red">SAVE CHANGES</button>
+            <a href="#" class="btn btn-border-red close" title="cansel" ng-click="user.cancelNewUser()">Cansel</a>
           </div>
-        </div>
-      </div>
+        </fieldset>
+      </form>
 
-    </fieldset>
-  </form>
-</div>
+      <!-- form User profile for admin -->
+      <!-- <form action="#" class="fancybox-form ">
+        <fieldset>
+          <div class="row">
+            <label class="label-left">First name</label>
+            <strong class="user-information">{{info.user.firstname}}</strong>
+          </div>
+          <div class="row">
+            <label class="label-left">Last name</label>
+            <strong class="user-information">{{info.user.lastname}}</strong>
+          </div>
+          <div class="row">
+            <label class="label-left">Email</label>
+            <strong class="user-information">{{info.user.email}}</strong>
+          </div>
+          <div class="row">
+            <label class="label-left">Role</label>
+            <strong class="user-information">{{info.user.role}}</strong>
+          </div>
+          <div class="row">
+            <label class="label-left">Team</label>
+            <strong class="user-information">{{info.user.group}}</strong>
+          </div>
+          <div class="row">
+            <label class="label-left">Employed on</label>
+            <strong class="user-information">{{info.user.employmentdate | date}}</strong>
+          </div>
+          <div class="row">
+            <a href="#" class="btn btn-red" ng-click="info.editUser(info.user)">EDIT USER INFO</a>
+            <a href="#" class="btn btn-border-red close" title="cansel" ng-click="info.resetPassword()">SET NEW PASSWORD</a>
+          </div>
+        </fieldset>
+      </form> -->
+    </section></div></div><!-- <a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a> --></div></div></div>

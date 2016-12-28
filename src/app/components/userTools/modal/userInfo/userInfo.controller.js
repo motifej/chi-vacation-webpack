@@ -5,6 +5,7 @@ export default class UserInfoController {
     this.modal = $uibModal;
     this.isDelShow = isDelShow;
     this.isEditShow = isEditShow;
+    console.log(this.isDelShow)
     
     }
     editUser(user) {

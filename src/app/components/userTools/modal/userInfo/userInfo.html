@@ -1,5 +1,5 @@
-<div class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%; display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; left: 703px; opacity: 1; overflow: visible;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px; height: 497px;"><section id="popup4" class="user-edit-profile lightbox" style="display: block;">
-			<h1>User Profile <a href="#popup5" class="icom-trash lightbox"></a></h1>
+<div class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%; display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; opacity: 1; overflow: visible;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px; height: 497px;"><section id="popup4" class="user-edit-profile lightbox" style="display: block;">
+			<h1>User Profile <a href="#popup5" class="icom-trash lightbox" ng-click="info.deleteUser()" ng-show="info.isDelShow && !info.newUser.deleted"></a></h1>
 			<!-- form Edit profile for admin-->
 			<!-- <form action="#" class="fancybox-form ">
 				<fieldset>
@@ -81,8 +81,8 @@
 					</div>
 					<div class="row">
 						<a href="#" class="btn btn-red" ng-click="info.editUser(info.user)">EDIT USER INFO</a>
-						<a href="#" class="btn btn-border-red close" title="cansel">SET NEW PASSWORD</a>
+						<a href="#" class="btn btn-border-red close" title="cansel" ng-click="info.resetPassword()">SET NEW PASSWORD</a>
 					</div>
 				</fieldset>
 			</form>
-		</section></div></div><a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a></div></div></div>
+		</section></div></div><!-- <a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a> --></div></div></div>
