@@ -1215,7 +1215,7 @@ form.calendar-form{
     font-size: 19px;
     color: $black;
     transition: color 0.3s;
-    z-index: -1;
+    z-index: 1;
   }
   &:hover:before{
     color: $blue2;
