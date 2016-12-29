@@ -140,3 +140,8 @@ body {
 .modal-content .fancybox-overlay {
   overflow: visible;
 }
+.open-close-nav:hover .slide {
+  top: 100% !important;
+  opacity: 1;
+  left: 50% !important;
+}

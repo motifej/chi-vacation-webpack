@@ -37,6 +37,9 @@ class NavbarController {
     let destr = $rootScope.$on(this.actions.USERLOADED,
       (ev, user) => this.user = user )
     $scope.$on('destroy', destr);
+    let getAvalableDays = $rootScope.$on('getAvalableDays',
+      (ev, sum) => {this.avalableDays = sum} )
+    $scope.$on('destroy', getAvalableDays);
   }
 
   logOut() {

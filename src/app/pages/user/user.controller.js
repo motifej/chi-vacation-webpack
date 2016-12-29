@@ -120,6 +120,8 @@ export default class UserController {
       });
       user.availableDaysOff = 5 - user.spendDaysOff + user.addedCurDaysOff;
       user.availableWorkFromHome = 5;
+
+      this.$rootScope.$emit('getAvalableDays', {availableDays: user.availableDays, availableDaysOff: user.availableDaysOff});
       /*console.log(user);*/
   }
 
