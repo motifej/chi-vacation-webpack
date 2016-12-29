@@ -104,7 +104,7 @@
                 <div ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
                   <div class="table-col">
                     <span class="circle">Js</span>
-                    <a href="#popup4" class="user-name lightbox" ng-click="admin.userInfo(user)">{{user.firstname.charAt(0) + ". " + user.lastname}}</a>
+                    <a href="#popup4" class="user-name lightbox" ng-click="admin.userInfo(user)">{{user.firstname + " " + user.lastname}}</a>
                   </div>
                   <div class="table-col">
                     <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} days<time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
