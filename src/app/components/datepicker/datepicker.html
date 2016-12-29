@@ -1,5 +1,5 @@
-<div class="input-group">
-    <input ng-disabled="isDisableDate" name="{{name}}" type="text" class="form-control datepicker__input" readonly
+<div class="input-group icom-calendar">
+    <input ng-disabled="isDisableDate" name="{{name}}" type="text" class="form-control datepicker__input calendar" readonly
         uib-datepicker-popup="{{format}}"
         ng-change="calcDays()"
         ng-model="curDate"
@@ -10,6 +10,6 @@
         alt-input-formats="altInputFormats"
         >
     <span class="input-group-btn">
-        <button type="button" class="btn btn-default datepicker__btn" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+        <button type="button" class="btn btn-default datepicker__btn" ng-click="open()"></button>
     </span>
 </div>
