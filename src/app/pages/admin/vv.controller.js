@@ -578,8 +578,12 @@ setDateInfo() {
   }
 
   showUserRequest() {
-    console.log(1);
     this.isUserRequestShown = true;
+  }
+
+  hideUserRequest(e) {
+    if(e.target.className == "fancybox-overlay fancybox-overlay-fixed")
+    this.isUserRequestShown = false
   }
 
 }

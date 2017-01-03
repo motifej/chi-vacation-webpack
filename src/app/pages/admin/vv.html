@@ -11,21 +11,23 @@
               <fieldset>
                 <!-- add class active  open drop-->
                 <div class="filter-holder ">
-                  <input type="search" name="Filter" id="Filter" placeholder="Filter by user">
-                  <ul class="filter-list-user">
-                    <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
+                  <input ng-model="admin.search" type="search" name="Filter" id="Filter" placeholder="Filter by user">
+                  <ul ng-show="admin.search" class="filter-list-user">
+                    <li ng-repeat="user in admin.users | strictFilter:admin.groupFilter:'group' | filter:admin.search | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUser(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
+                    <!-- <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
                     <li><a href="#" class="name">Андрей Аваигян</a><span class="location">Android</span></li>
                     <li><a href="#" class="name">Игорь Пилипенко</a><span class="location">Node JS</span></li>
                     <li><a href="#" class="name">Влада Пилигрим</a><span class="location">Marketing managers</span></li>
                     <li><a href="#" class="name">Максим Шигалов</a><span class="location">Design</span></li>
                     <li><a href="#" class="name">Игорь Прокопченко</a><span class="location">Js</span></li>
-                    <li><a href="#" class="name">Владислав Илигиминов</a><span class="location">Js</span></li>
+                    <li><a href="#" class="name">Владислав Илигиминов</a><span class="location">Js</span></li> -->
                   </ul>
                 </div>
                 <div class="filter-holder">
-                  <select  id="">
-                    <option value="">All departments</option>
-                    <option value="">.net</option>
+                  <select  id="" ng-model="admin.choicedGroup" ng-change="admin.choiceGroup(admin.choicedGroup)">
+                  <option value="" ng-click="admin.choiceGroup()">All departments</option>
+                  <option ng-repeat="group in admin.groups" ng-click="admin.choiceGroup(group)">{{group}}</option>
+                    <!-- <option value="">.net</option>
                     <option value="">Android</option>
                     <option value="">business analyst</option>
                     <option value="">data bases</option>
@@ -45,7 +47,7 @@
                     <option value="">qa</option>
                     <option value="">ruby</option>
                     <option value="">sales</option>
-                    <option value="">c++</option>
+                    <option value="">c++</option> -->
                   </select>
                 </div>
                 <div class="filter-holder">
@@ -81,7 +83,7 @@
             <ul class="admin-panel">
               <li><a href="#" class=" btn btn-border-blue" ng-click="admin.openNewUserForm()">ADD USER</a></li>
               <li><a href="#popup2" class="lightbox btn btn-border-blue">sHOW DELETED USERS</a></li>
-              <li><a href="#popup3" class=" lightbox btn btn-border-blue" ng-click="admin.showUserRequest()">USER REQUEST</a></li>
+              <li><div href="#popup3" class=" lightbox btn btn-border-blue" ng-click="admin.showUserRequest()">USER REQUEST</div></li>
             </ul>
           </div>
         </aside>
@@ -202,7 +204,7 @@
               </div> -->
             </div>
             </div>
-            <div id="tabs-3">
+            <!-- <div id="tabs-3">
             <div class="table">
               <div class="table-row">
                 <div class="table-col">
@@ -293,11 +295,11 @@
                 </div>
               </div>
             </div>
-          </div>
+                      </div> -->
         </div>
       </div>
     </main>
-    <div ng-if="admin.isUserRequestShown" ng-click="admin.isUserRequestShown = false" class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6); display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; left: 703px; opacity: 1; overflow: visible;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px; height: 397px;"><section id="popup3" class="lightbox" style="display: block;">
+    <div ng-if="admin.isUserRequestShown" ng-click="admin.hideUserRequest($event)" class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6); display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; left: 703px; opacity: 1; overflow: visible; cursor: default;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px; height: 397px;"><section id="popup3" class="lightbox" style="display: block;">
       <h1>User request</h1>
       <input type="search" placeholder="User search">
       <div class="tabs-fancybox ui-tabs ui-corner-all ui-widget ui-widget-content">

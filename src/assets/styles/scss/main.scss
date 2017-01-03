@@ -1084,11 +1084,11 @@ input[type="search"] {
   box-shadow: 0 5px 7px rgba($black,0.15);
   padding: 16px 22px;
   position: absolute;
-  width: 100%;
-  left: -99999px;
+  width: 100%;/* 
+  left: -99999px; */
   z-index: 10;
-  background: $white;
-  opacity: 0;
+  background: $white;/* 
+  opacity: 0; */
   a{
     text-decoration: none;
     color: $gray3;

@@ -40,5 +40,6 @@ import "moment-weekday-calc";
 
 import "../assets/vendor/sails.io.config";
 
+import "!!file?name=assets/images/[name].[ext]!../assets/images/logo.png";
 // local scripts
 //import "../assets/js/...";
