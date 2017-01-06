@@ -23,7 +23,7 @@ export default class VvController {
     this.status = status;
     this.filter = {};
     this.filtredUser;
-    this.statusFilter = { status: {new: true} };
+    this.statusFilter = { status: /*{new: true}*/'new' };
     this.groupFilter = {};
     this.modal = $uibModal;
     this.pageState = "vacations";
@@ -62,6 +62,7 @@ export default class VvController {
     this.sendingAdditional = false;
     this.sendingRequest = false;
     this.maxDate = moment().add(1, 'year').add(1, 'month');
+    this.search = "";
 }
 
   activate(scope) {
