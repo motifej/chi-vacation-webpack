@@ -93,7 +93,7 @@
             <li ng-class="{'active': admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('new')"><a href="#tabs-2">Active Requests <span class="counter">({{admin.calcNewVacationsStatus('new')}})</span></a></li>
             <li ng-class="{'active': !admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('handled')"><a href="#tabs-2"><a href="#tabs-3">Handled Requests <span class="counter">({{admin.calcNewVacationsStatus('handled')}})</span></a></li>
             </ul>
-            <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status == 'handled'">
+            <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status.handled">
               <span class="show-text">SHOWING VACATIONS</span>
               <label class="label-btn" for="started">HAven’t STARTED<input type="checkbox" id="started"></label>
               <label class="label-btn" for="progress">IN PROGRESS<input type="checkbox" id="progress"></label>
