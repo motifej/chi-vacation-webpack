@@ -23,7 +23,7 @@ export default class VvController {
     this.status = status;
     this.filter = {};
     this.filtredUser;
-    this.statusFilter = { status: /*{new: true}*/'new' };
+    this.statusFilter = { status: {new: true} };
     this.groupFilter = {};
     this.modal = $uibModal;
     this.pageState = "vacations";
@@ -217,15 +217,13 @@ export default class VvController {
       this.filter = { group: group };
       this.groupFilter = { group: group };
      // this.setDateInfo();
-      this.filtredUser = {};
+      /*this.filtredUser = {};*/
     }
 
     choiceUser(id, group, user) {
       this.filter = { id: id, group:group };
       this.groupFilter = { group: group };
-      this.filtredUser = user;
-      this.filtredUser.addedDays = 0;
-      this.filtredUser.newDaysOff = 0;
+      /*this.filtredUser = user;*/
       this.setDateInfo();
       this.calcEnableDays(this.$scope.startdate);
     }
@@ -241,8 +239,8 @@ export default class VvController {
         default:
           break;
       }*/
-      /*this.statusFilter.status[filter] = true;*/
-      this.statusFilter.status = filter;
+      this.statusFilter.status = {};
+      this.statusFilter.status[filter] = true;
       console.log(this.statusFilter.status);
       this.setDateInfo();
     }
@@ -582,9 +580,19 @@ setDateInfo() {
     this.isUserRequestShown = true;
   }
 
+  choiceUserForRequest(id, group, user) {
+    this.filtredUser = user;
+    this.filtredUser.addedDays = 0;
+    this.filtredUser.newDaysOff = 0;
+  }
+
   hideUserRequest(e) {
-    if(e.target.className == "fancybox-overlay fancybox-overlay-fixed")
-    this.isUserRequestShown = false
+    if(e.target.className == "fancybox-overlay fancybox-overlay-fixed") {
+      this.isUserRequestShown = false
+      this.filtredUser = {};
+      this.filtredUser.addedDays = 0;
+      this.filtredUser.newDaysOff = 0;
+    }
   }
 
 }
