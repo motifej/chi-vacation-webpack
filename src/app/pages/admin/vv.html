@@ -95,10 +95,10 @@
             </ul>
             <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status.handled">
               <span class="show-text">SHOWING VACATIONS</span>
-              <label class="label-btn" for="started">HAven’t STARTED<input type="checkbox" id="started"></label>
-              <label class="label-btn" for="progress">IN PROGRESS<input type="checkbox" id="progress"></label>
-              <label class="label-btn" for="past">PAST<input type="checkbox" name="past" id="past" btn-small></label>
-              <label for="rejected"><input type="checkbox" name="Show_rejected" id="rejected" > Show rejected</label>
+              <label class="label-btn" for="started">HAven’t STARTED<input type="checkbox" id="started" ng-model="admin.statusFilter.status.confirmed"></label>
+              <label class="label-btn" for="progress">IN PROGRESS<input type="checkbox" id="progress" ng-model="admin.statusFilter.status.inprogress"></label>
+              <label class="label-btn" for="past">PAST<input type="checkbox" name="past" id="past" btn-small ng-model="admin.statusFilter.status.spent"></label>
+              <label for="rejected"><input type="checkbox" name="Show_rejected" id="rejected" ng-model="admin.statusFilter.status.rejected"> Show rejected</label>
             </form>
             <div id="tabs-2">
             <div class="table">
@@ -112,8 +112,9 @@
                     <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} days<time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
                   </div>
                   <div class="table-col">
-                    <a href="#" class="btn-small-green icom-approve " ng-hide="item.status!='new'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Approve</a>
-                    <a href="#" class="btn-small-red icom-reject" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</a>
+                    <a href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(user, item.id)">Approve</a>
+                    <a href="#" class="btn-small-red icom-reject" ng-hide="item.status == 'confirmed'" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</a>
+                    <a href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(user, item.id)">Delete</a>
                     <!-- <span class="wait">Waiting for approval</span> -->
                   </div>
                 </div>
@@ -299,7 +300,7 @@
         </div>
       </div>
     </main>
-    <div ng-if="admin.isUserRequestShown" ng-click="admin.hideUserRequest($event)" class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6); display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; left: 703px; opacity: 1; overflow: visible; cursor: default;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px; height: 397px;"><section id="popup3" class="lightbox" style="display: block;">
+    <div ng-if="admin.isUserRequestShown" ng-click="admin.hideUserRequest($event)" class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6); display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; left: 703px; opacity: 1; overflow: visible; cursor: default;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px;"><section id="popup3" class="lightbox" style="display: block;">
       <h1>User request</h1>
       <input ng-model="admin.userRequestSearch" type="search" name="Filter" id="Filter" placeholder="User search">
       <ul ng-show="admin.userRequestSearch" class="filter-list-user">

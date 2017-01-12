@@ -12,6 +12,7 @@ export default function (app) {
 			            new Date(item.enddate) >= date.startdate : 
 			            new Date(item.enddate) >= date.startdate);
 			        }
+			        console.log(status)
 			        var filteredInput = [];
 					
 						if(status.new) {

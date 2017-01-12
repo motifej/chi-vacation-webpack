@@ -14,19 +14,23 @@ export default function (app) {
                             if(some(vacationsList,(item)=>item.status=='new' && filterDate(date, item))){
                                 filteredInput[key] = value
                             };
-                        } else if(filterVal.rejected) {
+                        };
+                        if(filterVal.rejected) {
                             if(some(vacationsList,(item)=>item.status == 'rejected' && filterDate(date, item))){
                                 filteredInput[key] = value
                             };
-                        } else if(filterVal.confirmed) {
+                        };
+                        if(filterVal.confirmed) {
                             if(some(vacationsList,(item)=>new Date(item.startdate) > new Date() && item.status == 'confirmed' && filterDate(date, item))){
                                 filteredInput[key] = value
                             };
-                        } else if(filterVal.inprogress) {
+                        };
+                        if(filterVal.inprogress) {
                             if(some(vacationsList,(item)=>new Date(item.startdate) < new Date() && new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) > new Date() && item.status == 'confirmed' && filterDate(date, item))){
                                 filteredInput[key] = value
                             };
-                        } else if(filterVal.spent) {
+                        };
+                        if(filterVal.spent) {
                             if(some(vacationsList,(item)=>new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) < new Date() && item.status == 'confirmed' && filterDate(date, item))){
                                 filteredInput[key] = value
                             };

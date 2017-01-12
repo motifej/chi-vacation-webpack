@@ -120,7 +120,7 @@
                 <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Day-off requests</span>
                 <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home requests</span>
               </h2>
-              <div class="vacations-holder" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'new' | orderBy:'enddate'">
+              <div class="vacations-holder" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{new: true} | orderBy:'enddate'">
                 <time datetime="" class="date">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
               </div>
             </article>
@@ -131,7 +131,7 @@
                 <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Rejected Work from home</span>
                <span class="counter">1 new</span></h2>
               <div class="vacations-holder">
-                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'rejected' | orderBy:'enddate'">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
+                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{rejected: true} | orderBy:'enddate'">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
                 <div class="vacations-slider">
                   <!-- <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
                   <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
@@ -157,7 +157,7 @@
                 <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Spent Work from home</span>
               </h2>
               <div class="vacations-holder">
-                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:'spent' | orderBy:'enddate'">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
+                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{spent: true} | orderBy:'enddate'">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
               </div>
             </article>
           </div>
