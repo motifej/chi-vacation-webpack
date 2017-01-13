@@ -595,4 +595,8 @@ setDateInfo() {
     }
   }
 
+  openGroupSelectMenu() {
+    this.groupSelectMenuIsOpened == true;
+  }
+
 }
