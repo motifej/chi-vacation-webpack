@@ -171,6 +171,10 @@ body > .jcf-select-drop.jcf-drop-flipped {
 		margin: 0 5px 5px 0;
 		transition: all 0.3s;
 	}
+	.jcf-option:hover {
+		border-color: #9ab6dd !important;
+    	color: #000 !important;
+	}
 }
 
 // 
