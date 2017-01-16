@@ -49,18 +49,18 @@
                     <option value="">sales</option>
                     <option value="">c++</option> -->
                   </select>
-                  <span class="jcf-select jcf-unselectable">
+                  <span ng-click="admin.openGroupSelectMenu()" ng-blur="admin.closeGroupSelectMenu($event)" class="jcf-select jcf-unselectable">
                     <span class="jcf-select-text">
                       <span class="">{{admin.filter.group ? admin.filter.group :'All departaments'}}</span>
                     </span>
                     <span class="jcf-select-opener"></span>
-                    <div ng-show="groupSelectMenuIsOpened" class="jcf-select-drop jcf-select-jcf-hidden jcf-unselectable" style="width: 285px;">
+                    <div ng-show="admin.groupSelectMenuIsOpened" class="jcf-select-drop jcf-select-jcf-hidden jcf-unselectable" style="width: 285px;">
                       <div class="jcf-select-drop-content">
                         <span class="jcf-list jcf-scroll-active">
                           <span class="jcf-list-content" style="max-height: 217px; overflow: auto;">
                             <ul>
                               <li><span ng-click="admin.choiceGroup()" class="jcf-option" ng-class="{'jcf-selected': !admin.filter.group}">All departments</span></li>
-                              <li ng-repeat="group in admin.groups"><span ng-click="admin.choiceGroup(group)" class="jcf-option" ng-class="{'jcf-selected': admin.filter.group == group}">{{group}}</span></li>
+                              <li ng-repeat="group in admin.groups"><span ng-click="admin.choiceGroup(group, $event)" class="jcf-option" ng-class="{'jcf-selected': admin.filter.group == group}">{{group}}</span></li>
                             </ul>
                           </span>
                         </span>
@@ -320,9 +320,10 @@
     </main>
     <div ng-if="admin.isUserRequestShown" ng-click="admin.hideUserRequest($event)" class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6); display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; left: 703px; opacity: 1; overflow: visible; cursor: default;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px;"><section id="popup3" class="lightbox" style="display: block;">
       <h1>User request</h1>
+      <div>for <span>{{admin.filtredUser.firstname + " " + admin.filtredUser.lastname}}</span></div>
       <input ng-model="admin.userRequestSearch" type="search" name="Filter" id="Filter" placeholder="User search">
       <ul ng-show="admin.userRequestSearch" class="filter-list-user">
-        <li ng-repeat="user in admin.users | inputUserFilter:admin.userRequestSearch | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUser(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
+        <li ng-repeat="user in admin.users | inputUserFilter:admin.userRequestSearch | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUserForRequest(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
         <!-- <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
         <li><a href="#" class="name">Андрей Аваигян</a><span class="location">Android</span></li>
         <li><a href="#" class="name">Игорь Пилипенко</a><span class="location">Node JS</span></li>

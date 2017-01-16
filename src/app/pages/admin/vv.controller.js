@@ -216,6 +216,7 @@ export default class VvController {
     choiceGroup(group) {
       this.filter = { group: group };
       this.groupFilter = { group: group };
+      this.groupSelectMenuIsOpened = false;
      // this.setDateInfo();
       /*this.filtredUser = {};*/
     }
@@ -596,7 +597,14 @@ setDateInfo() {
   }
 
   openGroupSelectMenu() {
-    this.groupSelectMenuIsOpened == true;
+    this.groupSelectMenuIsOpened = true;
+  }
+
+  closeGroupSelectMenu(e) {
+    console.log(e.target.className);
+    
+      this.$timeout(() => this.groupSelectMenuIsOpened = false, 100);
+    
   }
 
 }
