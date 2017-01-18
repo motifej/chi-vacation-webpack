@@ -12,7 +12,7 @@
                 <!-- add class active  open drop-->
                 <div class="filter-holder ">
                   <input ng-model="admin.search" type="search" name="Filter" id="Filter" placeholder="Filter by user">
-                  <ul ng-show="admin.search" class="filter-list-user">
+                  <ul ng-show="admin.isUserListShown()" class="filter-list-user">
                     <li ng-repeat="user in admin.users | strictFilter:admin.groupFilter:'group' | inputUserFilter:admin.search | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUser(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
                     <!-- <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
                     <li><a href="#" class="name">Андрей Аваигян</a><span class="location">Android</span></li>
@@ -124,7 +124,7 @@
                 <div class="table-row" ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
                   <div class="table-col">
                     <span class="circle">Js</span>
-                    <a href="#popup4" class="user-name lightbox" ng-click="admin.userInfo(user)">{{user.firstname + " " + user.lastname}}</a>
+                    <span class="user-name lightbox" ng-click="admin.userInfo(user)">{{user.firstname + " " + user.lastname}}</span>
                   </div>
                   <div class="table-col">
                     <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} days<time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>

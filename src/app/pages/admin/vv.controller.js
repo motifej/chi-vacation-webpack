@@ -577,6 +577,10 @@ setDateInfo() {
         prev + moment().isoWeekdayCalc(el.startdate, el.enddate, [1, 2, 3, 4, 5], angular.copy(this.holidays)), 0)
   }
 
+  isUserListShown() {
+    return this.search.length >= 3;
+  }
+
   showUserRequest() {
     this.isUserRequestShown = true;
   }
