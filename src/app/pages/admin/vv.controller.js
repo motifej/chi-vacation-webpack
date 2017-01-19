@@ -217,6 +217,7 @@ export default class VvController {
       this.filter = { group: group };
       this.groupFilter = { group: group };
       this.groupSelectMenuIsOpened = false;
+      this.search = "";
      // this.setDateInfo();
       /*this.filtredUser = {};*/
     }
@@ -227,6 +228,8 @@ export default class VvController {
       /*this.filtredUser = user;*/
       this.setDateInfo();
       this.calcEnableDays(this.$scope.startdate);
+      this.search = user.firstname + " " + user.lastname;
+      this.isUserListShown = false;
     }
 
     choiceButtonFilter(filter) {
@@ -469,6 +472,7 @@ setDateInfo() {
           };
           const {create} = this.sailsService[this.vacationState + 'Resource'];
           const {id: uid, year} = this.filtredUser;
+          console.log(this.filtredUser);
           const {startdate, enddate, status} = vacation;
           const createError = ({data: data}) => {
             this.sendingRequest = false;
@@ -577,8 +581,9 @@ setDateInfo() {
         prev + moment().isoWeekdayCalc(el.startdate, el.enddate, [1, 2, 3, 4, 5], angular.copy(this.holidays)), 0)
   }
 
-  isUserListShown() {
-    return this.search.length >= 3;
+  isUserListShow() {
+    this.filter.id = undefined;
+    this.isUserListShown = this.search.length >= 3;
   }
 
   showUserRequest() {

@@ -11,8 +11,8 @@
               <fieldset>
                 <!-- add class active  open drop-->
                 <div class="filter-holder ">
-                  <input ng-model="admin.search" type="search" name="Filter" id="Filter" placeholder="Filter by user">
-                  <ul ng-show="admin.isUserListShown()" class="filter-list-user">
+                  <input ng-model="admin.search" ng-change="admin.isUserListShow()" type="search" name="Filter" id="Filter" placeholder="Filter by user">
+                  <ul ng-show="admin.isUserListShown" class="filter-list-user">
                     <li ng-repeat="user in admin.users | strictFilter:admin.groupFilter:'group' | inputUserFilter:admin.search | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUser(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
                     <!-- <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
                     <li><a href="#" class="name">Андрей Аваигян</a><span class="location">Android</span></li>
@@ -24,31 +24,6 @@
                   </ul>
                 </div>
                 <div class="filter-holder">
-                  <select class="jcf-select jcf-unselectable" id="" ng-model="admin.choicedGroup" ng-change="admin.choiceGroup(admin.choicedGroup)">
-                  <option value="" ng-click="admin.choiceGroup()">All departments</option>
-                  <option ng-repeat="group in admin.groups" ng-click="admin.choiceGroup(group)">{{group}}</option>
-                    <!-- <option value="">.net</option>
-                    <option value="">Android</option>
-                    <option value="">business analyst</option>
-                    <option value="">data bases</option>
-                    <option value="">design</option>
-                    <option value="">hr</option>
-                    <option value="">ios</option>
-                    <option value="">it</option>
-                    <option value="">java</option>
-                    <option value="">js</option>
-                    <option value="">managers</option>
-                    <option value="">marketing</option>
-                    <option value="">markup</option>
-                    <option value="">node js</option>
-                    <option value="">operations</option>
-                    <option value="">php</option>
-                    <option value="">python</option>
-                    <option value="">qa</option>
-                    <option value="">ruby</option>
-                    <option value="">sales</option>
-                    <option value="">c++</option> -->
-                  </select>
                   <span ng-click="admin.openGroupSelectMenu()" ng-blur="admin.closeGroupSelectMenu($event)" class="jcf-select jcf-unselectable">
                     <span class="jcf-select-text">
                       <span class="">{{admin.filter.group ? admin.filter.group :'All departaments'}}</span>
@@ -339,7 +314,7 @@
           <li role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-133" aria-labelledby="ui-id-7" aria-selected="false" aria-expanded="false" ng-class="{'ui-state-active': admin.vacationState == 'workfromhome'}"><a ng-click="admin.changeVacationState('workfromhome')" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-7">Work from home</a></li>
         </ul>
         <div id="tabs-113" aria-labelledby="ui-id-5" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="false">
-          <form ng-submit='admin.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue)' class="fancybox-form custom-form">
+          <form name="userForm" ng-submit='admin.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue)' class="fancybox-form custom-form">
             <fieldset>
               <div class="row">
                 <span class="label-left">Make a request</span>

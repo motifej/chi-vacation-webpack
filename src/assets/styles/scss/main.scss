@@ -1082,13 +1082,19 @@ input[type="search"] {
   @extend %listreset;
   border-top: 1px solid $gray7;
   box-shadow: 0 5px 7px rgba($black,0.15);
-  padding: 16px 22px;
+  padding: 0 22px;
   position: absolute;
   width: 100%;/* 
   left: -99999px; */
   z-index: 10;
   background: $white;/* 
   opacity: 0; */
+  li:first-child{
+   padding-top: 16px; 
+  }
+  li:last-child{
+    padding-bottom: 16px;
+  }
   a{
     text-decoration: none;
     color: $gray3;
