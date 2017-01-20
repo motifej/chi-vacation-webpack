@@ -2,11 +2,11 @@
     <section id="popup1" class="lightbox">
       <h1>Setting</h1>
       <div class="tabs-fancybox">
-        <ul>
-          <li><a href="#tabs-11">EMAILs</a></li>
-          <li><a href="#tabs-12">HOLIDAYS</a></li>
+        <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+          <li ng-click="user.changePageState('emails')" ng-class="{' ui-tabs-active ui-state-active': user.pageState == 'emails'}" role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-11" aria-labelledby="ui-id-3" aria-selected="true" aria-expanded="true"><span role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-3">EMAILs</span></li>
+          <li ng-click="user.changePageState('holidays')" ng-class="{' ui-tabs-active ui-state-active': user.pageState == 'holidays'}" role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-12" aria-labelledby="ui-id-4" aria-selected="false" aria-expanded="false"><span role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-4">HOLIDAYS</span></li>
         </ul>
-        <div id="tabs-11">
+        <div ng-show="user.pageState == 'emails'" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
           <form ng-submit="user.submitForm()" class="fancybox-form settings">
             <fieldset>
               <div class="row">
@@ -55,7 +55,7 @@
             </fieldset>
           </form>
         </div>
-        <div id="tabs-12">
+        <div ng-show="user.pageState == 'holidays'" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
           <form ng-submit="user.submitForm()" class="fancybox-form settings ">
             <fieldset>
               <div class="row">

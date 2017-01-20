@@ -10,6 +10,7 @@ export default class SettingsController {
     this.moment = moment;
     this.$state = $state;
     this.states = states;
+    this.pageState = "emails";
 
     this.settings = settings.data.data;
     this.settings.holidays = this.settings.holidays || [];
@@ -99,6 +100,9 @@ export default class SettingsController {
     this.settings.holidays = this.settings.holidays.filter(
       el => el !== holiday
     );
+  }
+  changePageState(state) {
+    this.pageState = state;
   }
 
 }

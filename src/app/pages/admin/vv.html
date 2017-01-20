@@ -295,9 +295,9 @@
     </main>
     <div ng-if="admin.isUserRequestShown" ng-click="admin.hideUserRequest($event)" class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; height: auto; background: rgba(0, 0, 0, 0.6); display: block;"><div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; left: 703px; opacity: 1; overflow: visible; cursor: default;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner" style="overflow: auto; width: 427px;"><section id="popup3" class="lightbox" style="display: block;">
       <h1>User request</h1>
-      <div>for <span>{{admin.filtredUser.firstname + " " + admin.filtredUser.lastname}}</span></div>
-      <input ng-model="admin.userRequestSearch" type="search" name="Filter" id="Filter" placeholder="User search">
-      <ul ng-show="admin.userRequestSearch" class="filter-list-user">
+      <div ng-show="admin.isUserRequestUserShown">for <span>{{admin.filtredUser.firstname + " " + admin.filtredUser.lastname}}</span></div>
+      <input ng-model="admin.userRequestSearch" ng-change="admin.changeUserRequestInput()" type="search" name="Filter" id="Filter" placeholder="User search">
+      <ul ng-show="admin.isUserRequestUserListShown" class="filter-list-user">
         <li ng-repeat="user in admin.users | inputUserFilter:admin.userRequestSearch | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUserForRequest(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
         <!-- <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
         <li><a href="#" class="name">Андрей Аваигян</a><span class="location">Android</span></li>

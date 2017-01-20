@@ -590,10 +590,19 @@ setDateInfo() {
     this.isUserRequestShown = true;
   }
 
+  changeUserRequestInput() {
+    this.isUserRequestUserListShown = this.userRequestSearch.length >= 3;
+    this.filtredUser = {};
+    this.isUserRequestUserShown = false;
+  }
+
   choiceUserForRequest(id, group, user) {
     this.filtredUser = user;
     this.filtredUser.addedDays = 0;
     this.filtredUser.newDaysOff = 0;
+    this.userRequestSearch = user.firstname + " " + user.lastname;
+    this.isUserRequestUserListShown = false;
+    this.isUserRequestUserShown = true;
   }
 
   hideUserRequest(e) {
