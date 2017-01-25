@@ -120,8 +120,9 @@
                 <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Day-off requests</span>
                 <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home requests</span>
               </h2>
-              <div class="vacations-holder" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{new: true} | orderBy:'enddate'">
-                <time datetime="" class="date">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
+              <div class="vacations-holder">
+                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{new: true} | orderBy:'enddate' | limitTo: userCtrl.listLimits.new as listNew">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
+                <a href="#" class="opener"><span ng-show="userCtrl.listLimits.new == 4" ng-click="userCtrl.listLimits.new = infinity" class="visible">View all</span><span ng-show="userCtrl.listLimits.new != 4" ng-click="userCtrl.listLimits.new = 4">Hide</span></a>
               </div>
             </article>
             <article class="vacation-box">
@@ -131,13 +132,13 @@
                 <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Rejected Work from home</span>
                <span class="counter">1 new</span></h2>
               <div class="vacations-holder">
-                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{rejected: true} | orderBy:'enddate'">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
+                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{rejected: true} | orderBy:'enddate' | limitTo: userCtrl.listLimits.rejected as listRejected">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
                 <div class="vacations-slider">
                   <!-- <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
                   <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
                   <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time> -->
                 </div>
-                <a href="#" class="opener"><span class="visible">View all</span><span class="hidden">Hide</span></a>
+                <a href="#" class="opener"><span ng-show="userCtrl.listLimits.rejected == 4" ng-click="userCtrl.listLimits.rejected = infinity" class="visible">View all</span><span ng-show="userCtrl.listLimits.rejected != 4" ng-click="userCtrl.listLimits.rejected = 4">Hide</span></a>
               </div>
             </article>
             <article class="vacation-box">
@@ -147,8 +148,10 @@
                 <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Approved Work from home</span>
               </h2>
               <div class="vacations-holder">
+                <div class="vacations-holder" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{confirmed: true} | orderBy:'enddate' | limitTo: userCtrl.listLimits.confirmed as listConfirmed">
                 <span class="none">&mdash;</span>
               </div>
+              <a href="#" class="opener"><span ng-show="userCtrl.listLimits.confirmed == 4" ng-click="userCtrl.listLimits.confirmed = infinity" class="visible">View all</span><span ng-show="userCtrl.listLimits.confirmed != 4" ng-click="userCtrl.listLimits.confirmed = 4">Hide</span></a>
             </article>
             <article class="vacation-box">
               <h2>
@@ -157,7 +160,8 @@
                 <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Spent Work from home</span>
               </h2>
               <div class="vacations-holder">
-                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{spent: true} | orderBy:'enddate'">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
+                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{spent: true} | orderBy:'enddate' | limitTo: userCtrl.listLimits.spent as listSpent">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
+                <a href="#" class="opener"><span ng-show="userCtrl.listLimits.spent == 4" ng-click="userCtrl.listLimits.spent = infinity" class="visible">View all</span><span ng-show="userCtrl.listLimits.spent != 4" ng-click="userCtrl.listLimits.spent = 4">Hide</span></a>
               </div>
             </article>
           </div>

@@ -45,6 +45,7 @@ export default class UserController {
     this.sending = false;
     this.allVacations = this.combineVacations();
     this.holidays = angular.copy(settings.data.data.holidays);
+    this.listLimits = {new: 4, rejected: 4, confirmed: 4, spent: 4};
     this.showNotification = false;
     this.calcEnableDays(this.$scope.startdate);
     this.calcDaysCalc();

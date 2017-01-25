@@ -26,7 +26,7 @@
                 <div class="filter-holder">
                   <span ng-click="admin.openGroupSelectMenu()" ng-blur="admin.closeGroupSelectMenu($event)" class="jcf-select jcf-unselectable">
                     <span class="jcf-select-text">
-                      <span class="">{{admin.filter.group ? admin.filter.group :'All departaments'}}</span>
+                      <span class="">{{admin.filter.group ? admin.filter.group :'All departments'}}</span>
                     </span>
                     <span class="jcf-select-opener"></span>
                     <div ng-show="admin.groupSelectMenuIsOpened" class="jcf-select-drop jcf-select-jcf-hidden jcf-unselectable" style="width: 285px;">
@@ -396,4 +396,4 @@
           </form>
         </div>
       </div>
-    </section></div></div><a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a></div></div></div>
+    </section></div></div><a title="Close" class="fancybox-item fancybox-close" ng-click="admin.hideUserRequest($event)"></a></div></div></div>

@@ -606,7 +606,7 @@ setDateInfo() {
   }
 
   hideUserRequest(e) {
-    if(e.target.className == "fancybox-overlay fancybox-overlay-fixed") {
+    if(e.target.className == "fancybox-overlay fancybox-overlay-fixed" || e.target.className == "fancybox-item fancybox-close") {
       this.isUserRequestShown = false
       this.filtredUser = {};
       this.filtredUser.addedDays = 0;
