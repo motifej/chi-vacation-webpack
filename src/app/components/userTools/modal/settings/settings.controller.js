@@ -70,6 +70,7 @@ export default class SettingsController {
   }
 
   submitForm (isValid) {
+    debugger;
     this.sailsService.saveSettings(this.settings)
       .then(
         data => {

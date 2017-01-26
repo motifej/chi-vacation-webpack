@@ -150,12 +150,14 @@ export default class UserController {
     user.availableDaysOff = 0;
     user.availableWorkFromHome = 0;
     user.spendDaysOff = 0;
+    user.vacationsExpireDate = new Date(moment(user.employmentdate).add(user.year + 1, 'year').add(1, 'month'));
     return user;
   }
 
   submitHandler(startdate, enddate) {
     let vm = this;
     this.sending = true;
+    console.log(startdate);
     let vac_type = this.getStatus(this.vacationState, true);
     let sDate = new Date(startdate).getTime();
     let eDate = new Date(enddate).getTime();

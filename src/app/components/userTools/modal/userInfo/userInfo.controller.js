@@ -1,10 +1,15 @@
 export default class UserInfoController {
-  constructor (user, isDelShow, isEditShow, $uibModal, moment) {
+  constructor (user, isDelShow, isEditShow, $uibModal, moment, $uibModalInstance, sailsService, toastr) {
     'ngInject';
     this.user = user;
     this.modal = $uibModal;
     this.isDelShow = isDelShow;
     this.isEditShow = isEditShow;
+    this.modalInstance = $uibModalInstance;
+    this.newUser = angular.copy(user);
+    this.sailsService = sailsService;
+    this.updateUser = this.sailsService.userResource.updateUser;
+    this.toastr = toastr;
     console.log(this.isDelShow)
     
     }

@@ -252,8 +252,7 @@ body{
   }
   li{
     float: left;
-    margin-left: 47px;
-    margin-right: 47px;
+    margin: 0 94px 0 0;
     @include media('<desktop') {
       float: none;
       width: 100%;
@@ -269,7 +268,6 @@ body{
         color: $red !important
       }
     }
-    &:first-child,
     &:last-child{
       margin: 0;
     }
