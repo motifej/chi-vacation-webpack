@@ -1,3 +1,18 @@
+@import 'vendors/include-media';
+@import 'vendors/normalize';
+@import 'vendors/fonts';
+@import 'vendors/datepiker';
+@import 'vendors/custom-form';
+@import 'vendors/fancybox';
+
+@import 'base/variables';
+@import 'base/functions';
+@import 'base/mixins';
+@import 'base/helpers';
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/forms';
+
 $breakpoints: (
   'xs-phone': 320px,
   'phone': 480px,
@@ -19,20 +34,6 @@ $media-expressions: (
 
 // ligatured operators ≥ ≤
 
-@import 'vendors/include-media';
-@import 'vendors/normalize';
-@import 'vendors/fonts';
-@import 'vendors/datepiker';
-@import 'vendors/custom-form';
-@import 'vendors/fancybox';
-
-@import 'base/variables';
-@import 'base/functions';
-@import 'base/mixins';
-@import 'base/helpers';
-@import 'base/reset';
-@import 'base/typography';
-@import 'base/forms';
 
 a[href^="skype"],
 a.skype{
@@ -1940,5 +1941,14 @@ a.icom-trash{
       color: darken($red,15%);
     }
   }
+}
+
+.modal-content .fancybox-overlay {
+  overflow: visible;
+}
+.open-close-nav:hover .slide {
+  top: 100% !important;
+  opacity: 1;
+  left: 50% !important;
 }
     

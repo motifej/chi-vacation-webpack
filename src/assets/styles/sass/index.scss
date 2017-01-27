@@ -1,6 +1,4 @@
 /*@import '../../../assets/styles/sass/variables.scss';*/
-@import '../../../assets/styles/bootstrap.min.scss';
-@import '../../../assets/styles/scss/main.scss';
 
 /*$font-color: white;
 
@@ -137,11 +135,3 @@ body {
 } */
 
 
-.modal-content .fancybox-overlay {
-  overflow: visible;
-}
-.open-close-nav:hover .slide {
-  top: 100% !important;
-  opacity: 1;
-  left: 50% !important;
-}
