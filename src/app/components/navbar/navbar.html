@@ -25,8 +25,8 @@
                 <li><span class="counter">{{vm.user.availableDaysOff}}</span><a href="#">Vacation days remaining</a></li>
               </ul>
               <ul class="login-list-link">
-                <li ng-if='vm.isManager() || vm.isAdmin()'><a class="lightbox" href="#popup1" ng-click="vm.settings()">Setting</a></li>
-                <li><a href="#">Change password</a></li>
+                <li ng-if='vm.isManager() || vm.isAdmin()'><a class="lightbox" href="#popup1" ng-click="vm.settings()">Settings</a></li>
+                <li><a href="#" ui-sref={{vm.states.CHANGEPASSWORD}}>Change password</a></li>
                 <li><a href="#" ng-click="vm.logOut()">Log out</a></li>
               </ul>
             </div>

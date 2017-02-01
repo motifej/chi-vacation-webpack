@@ -31,6 +31,7 @@ class NavbarController {
     this.manualState = this.states.MANUAL;
     this.$uibModal = $uibModal;
     this.activate($rootScope, $scope);
+    console.log(this.states);
   }
 
   activate($rootScope, $scope) {

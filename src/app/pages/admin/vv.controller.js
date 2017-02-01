@@ -593,7 +593,6 @@ setDateInfo() {
   changeUserRequestInput() {
     this.isUserRequestUserListShown = this.userRequestSearch.length >= 3;
     this.filtredUser = {};
-    this.isUserRequestUserShown = false;
   }
 
   choiceUserForRequest(id, group, user) {
@@ -602,7 +601,6 @@ setDateInfo() {
     this.filtredUser.newDaysOff = 0;
     this.userRequestSearch = user.firstname + " " + user.lastname;
     this.isUserRequestUserListShown = false;
-    this.isUserRequestUserShown = true;
   }
 
   hideUserRequest(e) {
