@@ -63,6 +63,7 @@ export default class VvController {
     this.sendingRequest = false;
     this.maxDate = moment().add(1, 'year').add(1, 'month');
     this.search = "";
+    this.settings = settings;
 }
 
   activate(scope) {
@@ -271,6 +272,19 @@ export default class VvController {
           user: user,
           isDelShow: this.user.role == this.roles.ADMIN ? true : false,
           isEditShow: this.user.role == this.roles.ADMIN ? true : false
+        }
+      });
+    }
+
+    showUserRequest() {
+      this.modal.open({
+        templateUrl: require('!!file!../../components/userTools/modal/userRequest/userRequest.html'),
+        controller: require('./vv.controller'),
+        controllerAs: 'admin',
+        resolve: {
+          userData : () => this.users,
+          settings: () => this.settings,
+          user: () => this.user
         }
       });
     }
@@ -586,9 +600,9 @@ setDateInfo() {
     this.isUserListShown = this.search.length >= 3;
   }
 
-  showUserRequest() {
+  /*showUserRequest() {
     this.isUserRequestShown = true;
-  }
+  }*/
 
   changeUserRequestInput() {
     this.isUserRequestUserListShown = this.userRequestSearch.length >= 3;
