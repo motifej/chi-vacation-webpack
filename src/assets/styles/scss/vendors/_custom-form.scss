@@ -111,11 +111,11 @@ body > .jcf-select-drop.jcf-drop-flipped {
 }
 .jcf-select .jcf-select-drop {
 	position: static;
-    border:  solid #ccc;
-	border-width: 0 1px;
+    // border:  solid #ccc;
+	// border-width: 0 1px;
 	z-index: 99;
 	background: #fff;
-	margin: 0 -1px;
+	width: 100% !important;
 }
 .jcf-drop-active .jcf-select-drop{
 	border: none;
