@@ -1316,19 +1316,6 @@ input.calendar{
 			margin: 0 -10px;
 			padding: 0 30px 10px 0;
 		}
-		&:before{
-			content: '\e915';
-			position: absolute;
-			font-family: 'icomoon';
-			right: 0;
-			top: 3px;
-			font-size: 20px;
-			font-weight: 400;
-			@include media('<tablet') {
-				font-size: 24px;
-				right: 6px;
-			}
-		}
 	}
 	.ui-tabs-tab{
 		float: left;

@@ -107,7 +107,7 @@
                   <div class="table-col">
                     <a href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(user, item.id)">Approve</a>
                     <a href="#" class="btn-small-red icom-reject" ng-hide="item.status == 'confirmed'" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</a>
-                    <a href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(user, item.id)">Delete</a>
+                    <a href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(user, item.id)">Reject</a>
                     <!-- <span class="wait">Waiting for approval</span> -->
                   </div>
                 </div>
