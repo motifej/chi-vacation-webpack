@@ -52,6 +52,9 @@ export default function DatepickerDirective() {
         scope.getDayClass = function({date, mode}) {
             if (mode === 'day') {
                 let iDate = moment(date).format('YYYY-MM-DD');
+                let today = new Date();
+                if (date.getDay() === today.getDay()) 
+                    return 'datepicker-holidays datepicker-today';
                 if ((scope.holidays && ~scope.holidays.indexOf(iDate)) || date.getDay() === 0 || date.getDay() === 6) 
                     return 'datepicker-holidays';
             }

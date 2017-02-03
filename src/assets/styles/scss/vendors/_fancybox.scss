@@ -45,7 +45,7 @@
 		right: 20px !important;
 		width: auto !important;
 	}
-	@include media('<phone') {
+	@include media('<480px') {
 		left: 10px !important;
 		right: 10px !important;
 	}
@@ -121,7 +121,7 @@
 		@include media('<tablet') {
 			color: #000;
 		}
-		@include media('<phone') {
+		@include media('<480px') {
 			font-size: 11px;
 		}
 	}
@@ -163,7 +163,7 @@
 		right: 5px;
 		top: 5px;
 	}
-	@include media('<phone') {
+	@include media('<480px') {
 		right: 3px;
 	}
 }
@@ -323,14 +323,14 @@
 		@extend %listreset;
 		@extend %clearfix;
 		border-bottom: 1px solid #e0e0e0;
-		@include media('<phone') {
+		@include media('<480px') {
 			
 		}
 	}
 	.ui-tabs-tab{
 		float: left;
 		&:last-child .ui-tabs-anchor{margin-right: 0;}
-		@include media('<phone') {
+		@include media('<480px') {
 			width: 100%;
 		}
 	}
@@ -348,7 +348,7 @@
 		@include media('<tablet') {
 			font-size: 15px;
 		}
-		@include media('<phone') {
+		@include media('<480px') {
 			border-width: 0 0 0 3px;
 			padding: 8px 7px;
 			font-size: 14px;
@@ -368,7 +368,7 @@
 
 	.ui-tabs-panel{
 		padding: 36px 0 0;
-		@include media('<phone') {
+		@include media('<480px') {
 			padding: 20px 0 0;
 		}
 	}
