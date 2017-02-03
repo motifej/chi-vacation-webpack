@@ -87,10 +87,10 @@
               <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': !admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('handled')"><a class="ui-tabs-anchor">Handled Requests <span class="counter">({{admin.calcNewVacationsStatus('handled')}})</span></a></li>
             </ul>
             <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status.handled">
-              <span class="show-text">SHOWING VACATIONS</span>
-              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.confirmed}" for="started">HAven’t STARTED<input type="checkbox" id="started" ng-model="admin.statusFilter.status.confirmed" hidden></label>
-              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.inprogress}" for="progress">IN PROGRESS<input type="checkbox" id="progress" ng-model="admin.statusFilter.status.inprogress" hidden></label>
-              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.spent}" for="past">PAST<input type="checkbox" name="past" id="past" btn-small ng-model="admin.statusFilter.status.spent" hidden></label>
+              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.all}" for="all" ng-click="admin.choiceStatusFilter('all')">All<input type="checkbox" id="all" ng-model="admin.statusFilter.status.all" hidden></label>
+              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.confirmed && !admin.statusFilter.status.all}" for="started" ng-click="admin.choiceStatusFilter('confirmed')">HAven’t STARTED<input type="checkbox" id="started" ng-model="admin.statusFilter.status.confirmed" hidden></label>
+              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.inprogress && !admin.statusFilter.status.all}" for="progress" ng-click="admin.choiceStatusFilter('inprogress')">IN PROGRESS<input type="checkbox" id="progress" ng-model="admin.statusFilter.status.inprogress" hidden></label>
+              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.spent && !admin.statusFilter.status.all}" for="past" ng-click="admin.choiceStatusFilter('spent')">PAST<input type="checkbox" name="past" id="past" btn-small ng-model="admin.statusFilter.status.spent" hidden></label>
               <label for="rejected"><input type="checkbox" name="Show_rejected" id="rejected" ng-model="admin.statusFilter.status.rejected"> Show rejected</label>
             </form>
             <div id="tabs-2">

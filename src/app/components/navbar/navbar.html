@@ -8,7 +8,7 @@
             <li ng-if='vm.user.role' ui-sref-active="active" ui-sref={{vm.states.HOME}}><a ng-click="vm.selected()" href="#"><i class="icom-house"></i>My Requests</a></li>
             <li ng-if='vm.isAdmin()' ui-sref-active="active" ui-sref={{vm.states.ADMIN}}><a ng-click="vm.selected()" href="#"><i class="icom-queen"></i>Admin</a></li>
             <li ng-if='vm.isManager()' ui-sref-active="active" ui-sref={{vm.states.MANAGER}}><a ng-click="vm.selected()" href="#"><i class="icom-queen"></i>Manager</a></li>
-            <li ng-if='vm.isTeamLead()' ui-sref-active="active" ui-sref={{vm.states.TEAMLEAD}}><a ng-click="vm.selected()" href="#"><i class="icom-queen"></i>Team-lead</a></li>
+            <li ng-if='vm.isTeamLead()' ui-sref-active="active" ui-sref={{vm.states.TEAMLEAD}}><a ng-click="vm.selected()" href="#"><i class="icom-queen"></i>Team lead</a></li>
             <li ui-sref-active="active"><a ng-click="vm.selected(); vm.manual()" href="#"><i class="icom-question"></i>Help</a></li>
           </ul>
         </nav>

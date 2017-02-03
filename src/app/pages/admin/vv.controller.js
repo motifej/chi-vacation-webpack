@@ -250,6 +250,18 @@ export default class VvController {
       this.setDateInfo();
     }
 
+    choiceStatusFilter(status) {
+      this.statusFilter.status = {handled: true};
+      if(status == "all") {
+        this.statusFilter.status.confirmed = true;
+        this.statusFilter.status.inprogress = true;
+        this.statusFilter.status.spent = true;
+        this.statusFilter.status.all = true;
+      } else {
+        this.statusFilter.status[status] = true;
+      }
+    }
+
     choiceDropdownFilter(filter) {
       this.dropdownFilter = filter;
     }
