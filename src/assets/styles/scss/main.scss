@@ -1631,6 +1631,8 @@ input.calendar{
 		}
 		.btn-small-red-form{float: right;}
 		&.form-align-center{
+			@extend %clearfix;
+			overflow: visible;
 			max-width: 285px;
 			margin: 0 auto;
 			width: 100%;
