@@ -562,6 +562,7 @@ body{
 		}
 		@include media('<phone') {
 			font-size: 11px;
+			padding: 11px 7px 10px;
 		}
 	}
 }
