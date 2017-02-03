@@ -85,25 +85,29 @@
               <fieldset>
                 <div class="col dashed">
                   <label for="start_date">Start date</label>
-                  <chi-datepicker class="datepicker "
-              name="startdate"
-              ng-model="startdate"
-              min-date="minStartDate"
-              max-date2="userCtrl.maxDate"
-              calc-days="userCtrl.calcDaysCalc()"
-              holidays="{{userCtrl.holidays}}"
-              >
-              </chi-datepicker>
+                  <div class="icom-calendar">
+                    <chi-datepicker class="datepicker "
+                      name="startdate"
+                      ng-model="startdate"
+                      min-date="minStartDate"
+                      max-date2="userCtrl.maxDate"
+                      calc-days="userCtrl.calcDaysCalc()"
+                      holidays="{{userCtrl.holidays}}"
+                      >
+                    </chi-datepicker>
+                  </div>
                   <label for="end_date">End date</label>
-                  <chi-datepicker class="datepicker"
-              name="enddate"
-              ng-model="enddate"
-              min-date="minEndDate"
-              max-date2="userCtrl.maxDate"
-              calc-days="userCtrl.calcDaysCalc()"
-              holidays="{{userCtrl.holidays}}"
-              >
-              </chi-datepicker>
+                  <div class="icom-calendar">
+                    <chi-datepicker class="datepicker"
+                      name="enddate"
+                      ng-model="enddate"
+                      min-date="minEndDate"
+                      max-date2="userCtrl.maxDate"
+                      calc-days="userCtrl.calcDaysCalc()"
+                      holidays="{{userCtrl.holidays}}"
+                      >
+                    </chi-datepicker>
+                  </div>
                   <div class="btn-holder"><button type="submit" class="btn-blue" >Send a request</button></div>
                 </div>
                 <div class="col">

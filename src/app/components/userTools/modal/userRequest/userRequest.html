@@ -1,7 +1,7 @@
 <section id="popup3" class="lightbox" style="display: block;">
       <h1>User request</h1>
       <div ng-show="admin.filtredUser.firstname">for <span>{{admin.filtredUser.firstname + " " + admin.filtredUser.lastname}}</span></div>
-      <input ng-model="admin.userRequestSearch" ng-change="admin.changeUserRequestInput()" type="search" name="Filter" id="Filter" placeholder="User search">
+      <input ng-model="admin.userRequestSearch" ng-change="admin.changeUserRequestInput()" type="search" name="Filter" id="Filter" placeholder="Please, select user!">
       <ul ng-show="admin.isUserRequestUserListShown" class="filter-list-user">
         <li ng-repeat="user in admin.users | inputUserFilter:admin.userRequestSearch | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUserForRequest(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
         <!-- <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
@@ -12,7 +12,6 @@
         <li><a href="#" class="name">Игорь Прокопченко</a><span class="location">Js</span></li>
         <li><a href="#" class="name">Владислав Илигиминов</a><span class="location">Js</span></li> -->
       </ul>
-      <h1 ng-if="!admin.filtredUser.firstname">Please, select user!</h1>
       <div ng-if="admin.filtredUser.firstname" class="tabs-fancybox ui-tabs ui-corner-all ui-widget ui-widget-content">
         <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
           <li role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active" aria-controls="tabs-113" aria-labelledby="ui-id-5" aria-selected="true" aria-expanded="true" ng-class="{'ui-state-active': admin.vacationState == 'vacations'}"><a ng-click="admin.changeVacationState('vacations')" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-5">Vacations</a></li>
