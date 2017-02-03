@@ -1636,6 +1636,16 @@ input.calendar{
 			max-width: 285px;
 			margin: 0 auto;
 			width: 100%;
+			position: relative;
+			@include media('<phone') {
+				max-width: none;
+			}
+			.btn-small-red-form{
+				float: none;
+				position: absolute;
+				top: 0;
+				right: 0;
+			}
 		}
 	}
 	.btn-small-red-form{
@@ -1726,7 +1736,7 @@ a.icom-trash{
 	position: relative;
 	z-index: 2;
 	@include media('<phone') {
-		margin:0 0 0 15px;
+		margin:-3px 0 0 15px;
 	}
 	&:after{
 		content:"";
