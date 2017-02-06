@@ -1,0 +1,15 @@
+<div class="input-group ">
+    <input ng-disabled="isDisableDate" name="{{name}}" type="text" class="form-control datepicker__input calendar" readonly
+        uib-datepicker-popup="{{format}}"
+        ng-change="calcDays()"
+        ng-model="curDate"
+        is-open="popup.opened"
+        datepicker-options="{dateDisabled: isShowAllDays ? false : disabled, startingDay: 1, minDate: minDate, customClass: getDayClass, maxDate: maxDate}"
+        template-url="/src/app/components/datepicker/datepicker-popup.html"
+        show-button-bar="false"
+        alt-input-formats="altInputFormats"
+        >
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default datepicker__btn" ng-click="open()"></button>
+    </span>
+</div>
