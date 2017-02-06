@@ -121,23 +121,6 @@ div[uib-datepicker-popup-wrap]{
 			color: #000 !important;
 			&:before{
 				content:"";
-				display: inline-block;
-				position: absolute;
-				top: 2px;
-				left: 50%;
-				width: 4px;
-				height: 4px;
-				border-radius: 50%;
-				background: #000;
-			}
-		}
-	}
-	.datepicker-holidays {
-		button{
-			color:#e51561;
-			span{position: relative;}
-			&:after{
-				content:"";
 				position: absolute;
 				border-radius: 50%;
 				border: 1px solid #e51561;
@@ -146,6 +129,13 @@ div[uib-datepicker-popup-wrap]{
 				height: 100%;
 				width: 100%;
 			}
+		}
+	}
+	.datepicker-holidays {
+		button,
+		button[disabled]{
+			// color:#e51561;
+			color: rgba(229,21,97,.4) !important;
 		}
 	}
 	button{
