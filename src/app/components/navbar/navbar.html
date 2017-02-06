@@ -21,8 +21,8 @@
             <div class="slide-box">
               <time datetime="13-09-2010" class="date">Employed on {{vm.user.employmentdate | date}}</time>
               <ul class="link-nav">
-                <li><span class="counter">{{vm.user.availableDays}}</span><a href="#">Days-off remaining</a></li>
-                <li><span class="counter">{{vm.user.availableDaysOff}}</span><a href="#">Vacation days remaining</a></li>
+                <li><span class="counter">{{vm.user.availableDaysOff}}</span><a href="#">Days-off remaining</a></li>
+                <li><span class="counter">{{vm.user.availableDays}}</span><a href="#">Vacation days remaining</a></li>
               </ul>
               <ul class="login-list-link">
                 <li ng-if='vm.isManager() || vm.isAdmin()'><a class="lightbox" href="#popup1" ng-click="vm.settings()">Settings</a></li>

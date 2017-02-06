@@ -84,7 +84,7 @@
           <div class="tabs ui-corner-all ui-widget ui-widget-content">
             <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
               <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('new')"><a class="ui-tabs-anchor">Active Requests <span class="counter">({{admin.calcNewVacationsStatus('new')}})</span></a></li>
-              <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': !admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('handled')"><a class="ui-tabs-anchor">Handled Requests <span class="counter">({{admin.calcNewVacationsStatus('handled')}})</span></a></li>
+              <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': !admin.statusFilter.status.new}" ng-click="admin.choiceStatusFilter('all')"><a class="ui-tabs-anchor">Handled Requests <span class="counter">({{admin.calcNewVacationsStatus('handled')}})</span></a></li>
             </ul>
             <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status.handled">
               <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.all}" for="all" ng-click="admin.choiceStatusFilter('all')">All<input type="checkbox" id="all" ng-model="admin.statusFilter.status.all" hidden></label>
