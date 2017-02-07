@@ -106,8 +106,8 @@ body{
 	overflow: hidden;
 	position: relative;
 	height: auto;
+	min-height: 100vh;
 	.login-page &{
-		height: 100vh;
 		width: 100vw;
 	}
 }
