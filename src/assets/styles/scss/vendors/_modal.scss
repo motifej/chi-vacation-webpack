@@ -60,6 +60,7 @@
 			}
 		}
 	}
+	.input-group {position: relative;}
 	.ui-tabs-nav{
 		@extend %listreset;
 		@extend %clearfix;
