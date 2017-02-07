@@ -118,7 +118,7 @@ export default class SettingsController {
   closeGroupSelectMenu(e) {
     console.log(e.target.className);
     
-      this.$timeout(() => this.groupSelectMenuIsOpened = false, 100);
+      this.$timeout(() => this.groupSelectMenuIsOpened = false, 300);
     
   }
 
