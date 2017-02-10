@@ -26,7 +26,7 @@
                 <div class="filter-holder">
                   <span ng-click="admin.openGroupSelectMenu()" ng-blur="admin.closeGroupSelectMenu($event)" class="jcf-select jcf-unselectable">
                     <span class="jcf-select-text">
-                      <span class="">{{admin.filter.group ? admin.filter.group :'All departments'}}</span>
+                      <span class="">{{admin.filter.user.group ? admin.filter.user.group :'All departments'}}</span>
                     </span>
                     <span class="jcf-select-opener"></span>
                     <div ng-show="admin.groupSelectMenuIsOpened" class="jcf-select-drop jcf-select-jcf-hidden jcf-unselectable" style="width: 285px;">
@@ -34,8 +34,8 @@
                         <span class="jcf-list jcf-scroll-active">
                           <span class="jcf-list-content" style="max-height: 217px; overflow: auto;">
                             <ul>
-                              <li><span ng-click="admin.choiceGroup()" class="jcf-option" ng-class="{'jcf-selected': !admin.filter.group}">All departments</span></li>
-                              <li ng-repeat="group in admin.groups"><span ng-click="admin.choiceGroup(group, $event)" class="jcf-option" ng-class="{'jcf-selected': admin.filter.group == group}">{{group}}</span></li>
+                              <li><span ng-click="admin.choiceGroup()" class="jcf-option" ng-class="{'jcf-selected': !admin.filter.user.group}">All departments</span></li>
+                              <li ng-repeat="group in admin.groups"><span ng-click="admin.choiceGroup(group, $event)" class="jcf-option" ng-class="{'jcf-selected': admin.filter.user.group == group}">{{group}}</span></li>
                             </ul>
                           </span>
                         </span>
@@ -97,7 +97,7 @@
             </form>
             <div id="tabs-2">
             <div class="table">
-              <div ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
+              <!-- <div ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
                 <div class="table-row" ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
                   <div class="table-col">
                     <span class="circle">Js</span>
@@ -110,10 +110,25 @@
                     <a href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(user, item.id)">Approve</a>
                     <a href="#" class="btn-small-red icom-reject" ng-hide="item.status == 'confirmed'" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</a>
                     <a href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(user, item.id)">Reject</a>
+                    <span class="wait">Waiting for approval</span>
+                  </div>
+                </div>
+              </div> -->
+              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
+                  <div class="table-col">
+                    <span class="circle">Js</span>
+                    <span class="user-name lightbox" ng-click="admin.userInfo(item.user)">{{item.user.firstname + " " + item.user.lastname}}</span>
+                  </div>
+                  <div class="table-col">
+                    <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} days<time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
+                  </div>
+                  <div class="table-col">
+                    <a href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(item.user, item.id)">Approve</a>
+                    <a href="#" class="btn-small-red icom-reject" ng-hide="item.status == 'confirmed'" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(item.user, item.id)">Reject</a>
+                    <a href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(item.user, item.id)">Reject</a>
                     <!-- <span class="wait">Waiting for approval</span> -->
                   </div>
                 </div>
-              </div>
               <!-- <div class="table-row">
                 <div class="table-col">
                   <span class="circle">Js</span>

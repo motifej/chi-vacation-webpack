@@ -10,7 +10,7 @@ import {  DAYSOFF,
           SHOW_WORKFROMHOME } from '../../core/constants/vacations.consts';
 
 export default class VvController {
-  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams) {
+  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams, vacationsTransformatedData) {
     'ngInject';
     
     this.sailsService = sailsService;
@@ -64,6 +64,7 @@ export default class VvController {
     this.maxDate = moment().add(1, 'year').add(1, 'month');
     this.search = "";
     this.settings = settings;
+    this.vacationsTransformatedData = vacationsTransformatedData;
 }
 
   activate(scope) {
@@ -215,7 +216,9 @@ export default class VvController {
     }
 
     choiceGroup(group) {
-      this.filter = { group: group };
+      this.filter = { user :
+        { group: group }
+      };
       this.groupFilter = { group: group };
       this.groupSelectMenuIsOpened = false;
       this.search = "";
@@ -224,7 +227,9 @@ export default class VvController {
     }
 
     choiceUser(id, group, user) {
-      this.filter = { id: id, group:group };
+      this.filter = { user: 
+        { id: id, group:group }
+      };
       this.groupFilter = { group: group };
       /*this.filtredUser = user;*/
       this.setDateInfo();
@@ -296,7 +301,8 @@ export default class VvController {
         resolve: {
           userData : () => this.users,
           settings: () => this.settings,
-          user: () => this.user
+          user: () => this.user,
+          vacationsTransformatedData: () => this.vacationsTransformatedData
         }
       });
     }
@@ -647,6 +653,10 @@ setDateInfo() {
     
       this.$timeout(() => this.groupSelectMenuIsOpened = false, 300);
     
+  }
+  initVacationsTransformatedData(users) {
+    
+    return vacationsTransformatedData;
   }
 
 }
