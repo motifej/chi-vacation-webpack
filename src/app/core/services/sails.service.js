@@ -6,6 +6,11 @@ export default class SailsService {
 		'ngInject';
 
 		//http resources
+						this.vacationsTransformatedData = {
+					      vacations: [],
+					      daysoff: [],
+					      workfromhome: []
+					    }
 		this.http = $http;
 		this.userResource = $resource(API_URL + "/users/:id", {id: "@id"}, {
 			getUserData: {isArray: false, method: "GET"},
@@ -156,6 +161,15 @@ export default class SailsService {
 				}
 			)
 
+		this.getVacations = (id) => 
+			this.userResource.getUserData(id).$promise.then(
+				r => {
+      		console.log("1", r.data);
+					this.updateData(r);
+					return this.vacationsTransformatedData
+				}
+			)
+
 		this.getUser = (id) => 
 			this.userResource.getUserData(id).$promise.then(
 				r => {
@@ -168,9 +182,34 @@ export default class SailsService {
 			if (!r) return;
       		if (!this.users)
       			this.users = [];
+      		this.vacationsTransformatedData = {
+		      vacations: [],
+		      daysoff: [],
+		      workfromhome: []
+		    }
+      		console.log("2", r.data);
    			$rootScope.$applyAsync( () => {
 				this.users.length = 0;
-				this.users = angular.extend(this.users, r.data);	
+				this.users = angular.extend(this.users, r.data);
+				    this.users.forEach(user => {
+				      if(!user.deleted) {
+				        user.vacations.forEach(vacation => {
+				        	vacation = angular.copy(vacation);
+				        	vacation.user = user;
+				        	this.vacationsTransformatedData.vacations.push(vacation);
+				        });
+				        user.daysoff.forEach(dayoff => {
+				        	dayoff = angular.copy(dayoff);
+				        	dayoff.user = user;
+				        	this.vacationsTransformatedData.daysoff.push(dayoff);
+				        });
+				        user.workfromhome.forEach(workfromhome => {
+				        	workfromhome = angular.copy(workfromhome);
+				        	workfromhome.user = user;
+				        	this.vacationsTransformatedData.workfromhome.push(workfromhome);
+				        });
+				      }
+				    });	
 			})
 		}
 		

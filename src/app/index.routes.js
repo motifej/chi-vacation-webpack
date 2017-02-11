@@ -34,6 +34,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
             userData : sailsService => sailsService.getUsers(),
+            vacationsTransformatedData : sailsService => sailsService.getVacations(),
             settings: sailsService => sailsService.getSettings()
           },
           views: {
@@ -53,6 +54,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
             userData : sailsService => sailsService.getUsers(),
+            vacationsTransformatedData : sailsService => sailsService.getVacations(),
             settings: sailsService => sailsService.getSettings()
           },
 
@@ -73,6 +75,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
             userData : sailsService => sailsService.getUsers(),
+            vacationsTransformatedData : sailsService => sailsService.getVacations(),
             settings: sailsService => sailsService.getSettings()
           },
 
