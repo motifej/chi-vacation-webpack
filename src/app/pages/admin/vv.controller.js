@@ -21,7 +21,7 @@ export default class VvController {
     this.users = userData;
     this.groups = groups;
     this.status = status;
-    this.filter = {};
+    this.filter = { user: {}};
     this.filtredUser;
     this.statusFilter = { status: {new: true} };
     this.groupFilter = {};
@@ -29,7 +29,7 @@ export default class VvController {
     this.pageState = "vacations";
     let today = new Date();
     today = today.setHours(0,0,0,0);
-    this.order = 'startDate';
+    this.order = '-startdate';
     this.oneThing = [];
     this.userName = [];
     this.events = [];
@@ -114,8 +114,11 @@ export default class VvController {
     calcNewVacationsStatus(status) {
      var sum = 0;
      this.users.forEach(item => {
+      if(this.filter.user.id && this.filter.user.id != item.id) return;
+      if(this.filter.user.group && this.filter.user.group != item.group) return;
       if(/*item.group == group &&*/ !item.deleted) {
         angular.forEach(item[this.pageState], el => {
+          if(!this.statusFilter.status.rejected && el.status == 'rejected') return;
           if(status == 'new') {
             if(el.status == this.status.NEW) {
               sum++;
@@ -135,7 +138,10 @@ export default class VvController {
      var sum = 0;
      this.users.forEach(item => {
       if(/*item.group == group &&*/ !item.deleted) {
+      if(this.filter.user.id && this.filter.user.id != item.id) return;
+      if(this.filter.user.group && this.filter.user.group != item.group) return;
         angular.forEach(item[group], el => {
+          if(!this.statusFilter.status.rejected && el.status == 'rejected') return;
           if(el.status == this.status.NEW) {
             sum++;
           }
