@@ -10,7 +10,7 @@ import {  DAYSOFF,
           SHOW_WORKFROMHOME } from '../../core/constants/vacations.consts';
 
 export default class VvController {
-  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams) {
+  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams, vacationsTransformatedData) {
     'ngInject';
     
     this.sailsService = sailsService;
@@ -21,7 +21,7 @@ export default class VvController {
     this.users = userData;
     this.groups = groups;
     this.status = status;
-    this.filter = {};
+    this.filter = { user: {}};
     this.filtredUser;
     this.statusFilter = { status: {new: true} };
     this.groupFilter = {};
@@ -29,7 +29,7 @@ export default class VvController {
     this.pageState = "vacations";
     let today = new Date();
     today = today.setHours(0,0,0,0);
-    this.order = 'startDate';
+    this.order = '-startdate';
     this.oneThing = [];
     this.userName = [];
     this.events = [];
@@ -64,6 +64,7 @@ export default class VvController {
     this.maxDate = moment().add(1, 'year').add(1, 'month');
     this.search = "";
     this.settings = settings;
+    this.vacationsTransformatedData = vacationsTransformatedData;
 }
 
   activate(scope) {
@@ -113,8 +114,11 @@ export default class VvController {
     calcNewVacationsStatus(status) {
      var sum = 0;
      this.users.forEach(item => {
+      if(this.filter.user.id && this.filter.user.id != item.id) return;
+      if(this.filter.user.group && this.filter.user.group != item.group) return;
       if(/*item.group == group &&*/ !item.deleted) {
         angular.forEach(item[this.pageState], el => {
+          if(!this.statusFilter.status.rejected && el.status == 'rejected') return;
           if(status == 'new') {
             if(el.status == this.status.NEW) {
               sum++;
@@ -134,7 +138,10 @@ export default class VvController {
      var sum = 0;
      this.users.forEach(item => {
       if(/*item.group == group &&*/ !item.deleted) {
+      if(this.filter.user.id && this.filter.user.id != item.id) return;
+      if(this.filter.user.group && this.filter.user.group != item.group) return;
         angular.forEach(item[group], el => {
+          if(!this.statusFilter.status.rejected && el.status == 'rejected') return;
           if(el.status == this.status.NEW) {
             sum++;
           }
@@ -215,7 +222,9 @@ export default class VvController {
     }
 
     choiceGroup(group) {
-      this.filter = { group: group };
+      this.filter = { user :
+        { group: group }
+      };
       this.groupFilter = { group: group };
       this.groupSelectMenuIsOpened = false;
       this.search = "";
@@ -224,7 +233,9 @@ export default class VvController {
     }
 
     choiceUser(id, group, user) {
-      this.filter = { id: id, group:group };
+      this.filter = { user: 
+        { id: id, group:group }
+      };
       this.groupFilter = { group: group };
       /*this.filtredUser = user;*/
       this.setDateInfo();
@@ -296,7 +307,8 @@ export default class VvController {
         resolve: {
           userData : () => this.users,
           settings: () => this.settings,
-          user: () => this.user
+          user: () => this.user,
+          vacationsTransformatedData: () => this.vacationsTransformatedData
         }
       });
     }
@@ -645,8 +657,12 @@ setDateInfo() {
   closeGroupSelectMenu(e) {
     console.log(e.target.className);
     
-      this.$timeout(() => this.groupSelectMenuIsOpened = false, 100);
+      this.$timeout(() => this.groupSelectMenuIsOpened = false, 300);
     
+  }
+  initVacationsTransformatedData(users) {
+    
+    return vacationsTransformatedData;
   }
 
 }

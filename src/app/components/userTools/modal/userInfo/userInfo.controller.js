@@ -1,5 +1,5 @@
 export default class UserInfoController {
-  constructor (user, isDelShow, isEditShow, $uibModal, moment, $uibModalInstance, sailsService, toastr) {
+  constructor (user, isDelShow, isEditShow, $uibModal, moment, $uibModalInstance, sailsService, toastr, sailsAuthService) {
     'ngInject';
     this.user = user;
     this.modal = $uibModal;
@@ -10,6 +10,7 @@ export default class UserInfoController {
     this.sailsService = sailsService;
     this.updateUser = this.sailsService.userResource.updateUser;
     this.toastr = toastr;
+    this.sailsAuthService = sailsAuthService;
     console.log(this.isDelShow)
     
     }
@@ -54,4 +55,36 @@ export default class UserInfoController {
         }
       )
     }
+    resetPassword () {
+    let modalInstance = this.modal.open({
+      templateUrl: require('!!file!../confirmDialog/confirmDialog.html'),
+      controller: require('../confirmDialog/confirmDialog.controller'),
+      controllerAs: 'confirm',
+      size: 'sm'
+    }); 
+    modalInstance.result.then(
+      selectedItem => {
+        if (selectedItem) {
+          this.sailsAuthService.resetPassword(this.newUser.email)
+            .then( (res) => 
+              this.mailService.sendMailResetPassword({
+                address: [{
+                  address: this.newUser.email
+                }],
+                user: this.newUser,
+                new_password: res.data.data,
+                template_id: 'chi-password-reset',
+                host_addr: location.origin + '/#/login' 
+              }))
+            .then( () => {
+              this.toastr.success('A new password was sent to user');
+            })
+            .catch( err => {
+              this.toastr.error(err);
+            });
+        }
+
+      }
+    )
+  }
   }

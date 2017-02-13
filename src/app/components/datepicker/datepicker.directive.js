@@ -23,6 +23,7 @@ export default function DatepickerDirective() {
 
     function link(scope, element, attrs) {
         scope.name = attrs.name;
+        scope.placeholder = attrs.placeholder;
         //scope.maxDate = moment().add(1, 'year').add(1, 'month');
         scope.maxDate = scope.maxDate2;
 
