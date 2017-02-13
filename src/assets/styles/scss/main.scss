@@ -1596,6 +1596,7 @@ input.calendar{
 		@include placeholder { color: #898a8d; }
 	}
 	&.settings{
+		.form-align input,
 		input[type="email"],
 		input[type="text"]{
 			height: 35px;
@@ -1626,6 +1627,7 @@ input.calendar{
 	}
 	.form-align{
 		overflow: hidden;
+		max-width: 286px;	
 		@include media('<phone') {
 			overflow: visible;
 			float: left;
@@ -1634,7 +1636,6 @@ input.calendar{
 		&.form-align-center{
 			@extend %clearfix;
 			overflow: visible;
-			max-width: 285px;
 			margin: 0 auto;
 			width: 100%;
 			position: relative;
@@ -1646,6 +1647,7 @@ input.calendar{
 				position: absolute;
 				top: 0;
 				right: 0;
+				z-index: 5;
 			}
 		}
 	}
@@ -1718,6 +1720,14 @@ body {
 	}
 	li{
 		padding: 4px 0;
+		strong{
+			display: inline-block;	
+			vertical-align: middle;
+			white-space: nowrap;
+			max-width: 88%;
+			overflow: hidden;	
+			text-overflow: ellipsis;	
+		}
 	}
 	a.icom-trash{
 		font-size: 15px;
@@ -1737,7 +1747,7 @@ a.icom-trash{
 	position: relative;
 	z-index: 2;
 	@include media('<phone') {
-		margin:-3px 0 0 15px;
+		margin:-3px 0 0 11px;
 	}
 	&:after{
 		content:"";
