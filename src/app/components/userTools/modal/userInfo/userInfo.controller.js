@@ -1,5 +1,5 @@
 export default class UserInfoController {
-  constructor (user, isDelShow, isEditShow, $uibModal, moment, $uibModalInstance, sailsService, toastr) {
+  constructor (user, isDelShow, isEditShow, $uibModal, moment, $uibModalInstance, sailsService, toastr, sailsAuthService) {
     'ngInject';
     this.user = user;
     this.modal = $uibModal;
@@ -10,6 +10,7 @@ export default class UserInfoController {
     this.sailsService = sailsService;
     this.updateUser = this.sailsService.userResource.updateUser;
     this.toastr = toastr;
+    this.sailsAuthService = sailsAuthService;
     console.log(this.isDelShow)
     
     }

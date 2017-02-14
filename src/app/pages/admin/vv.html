@@ -114,7 +114,7 @@
                   </div>
                 </div>
               </div> -->
-              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
+              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order as vacationsFilteredData" ng-class="'m-action-' + item.status">
                   <div class="table-col">
                     <span class="circle">Js</span>
                     <span class="user-name lightbox" ng-click="admin.userInfo(item.user)">{{item.user.firstname + " " + item.user.lastname}}</span>
@@ -129,6 +129,7 @@
                     <!-- <span class="wait">Waiting for approval</span> -->
                   </div>
                 </div>
+                <div ng-if="!vacationsFilteredData.length"></div>
               <!-- <div class="table-row">
                 <div class="table-col">
                   <span class="circle">Js</span>
