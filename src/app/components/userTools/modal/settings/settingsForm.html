@@ -59,7 +59,8 @@
                   <a ng-click="user.addGroupEmail()" class="btn-small-red-form"><i class="icom-circle-plus"></i>Add</a>
                   <ul class="list-add-email">
                   <li ng-repeat="item in user.group.emails track by $index">
-                    <strong>{{item}}<a class="icom-trash" ng-click="user.deleteGroupEmail(item)"></a></strong>
+                    <strong>{{item}}</strong>
+                    <a class="icom-trash" ng-click="user.deleteGroupEmail(item)"></a>
                   </li>
                     <!-- <li><strong>alexey.stepchenkov@chisw.com<a href="#" class="icom-trash"></a></strong></li> -->
                   </ul>
