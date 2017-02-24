@@ -120,7 +120,7 @@
                     <span class="user-name lightbox" ng-click="admin.userInfo(item.user)">{{item.user.firstname + " " + item.user.lastname}}</span>
                   </div>
                   <div class="table-col">
-                    <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} days<time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
+                    <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} <span ng-show="admin.calcDays(item.startdate, item.enddate) == 1">day</span><span ng-show="admin.calcDays(item.startdate, item.enddate) != 1">days</span><time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
                   </div>
                   <div class="table-col">
                     <a href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(item.user, item.id)">Approve</a>
