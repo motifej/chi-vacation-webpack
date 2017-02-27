@@ -127,7 +127,7 @@
                 <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Work from home requests</span>
               </h2>
               <div class="vacations-holder">
-                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{new: true} | orderBy:'-enddate' | limitTo: userCtrl.listLimits.new as listNew">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
+                <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{new: true} | orderBy:'-enddate' | limitTo: userCtrl.listLimits.new as listNew">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}<a class="icom-reject delete-vacation" ng-click="userCtrl.deleteVacation(item)"></a></time>
                 <a href="#" class="opener"><span ng-show="userCtrl.listLimits.new == 4" ng-click="userCtrl.listLimits.new = infinity" class="visible">View all</span><span ng-show="userCtrl.listLimits.new != 4" ng-click="userCtrl.listLimits.new = 4">Hide</span></a>
               </div>
             </article>
