@@ -1,6 +1,6 @@
 <section id="popup4" class="user-edit-profile lightbox" style="display: block;">
       <h1>User Profile <a href="#popup5" class="icom-trash lightbox" ng-click="info.deleteUser()" ng-show="info.isDelShow && !info.newUser.deleted"></a></h1>
-      <!-- form Edit profile for admin-->
+      <!-- form Edit profile for user-->
       <form class="fancybox-form " name="addUserForm"  ng-submit="user.submitForm(addUserForm.$valid)" novalidate>
         <fieldset>
           <div class="row">
@@ -17,15 +17,47 @@
           </div>
           <div class="row">
             <label for="User1" class="label-left">Role</label>
-            <select  id="User1" ng-model="user.newUser.role" ng-options="role as role for role in user.role" required>
-              <option value="">-- Chose user's role --</option>
-            </select>
+            <div class="filter-holder">
+              <span ng-click="user.openRoleSelectMenu()" ng-blur="user.closeRoleSelectMenu($event)" class="jcf-select jcf-unselectable">
+                <span class="jcf-select-text">
+                  <span class="">{{user.newUser.role}}</span>
+                </span>
+                <span class="jcf-select-opener"></span>
+                <div ng-show="user.roleSelectMenuIsOpened" class="jcf-select-drop jcf-select-jcf-hidden jcf-unselectable" style="width: 285px;">
+                  <div class="jcf-select-drop-content">
+                    <span class="jcf-list jcf-scroll-active">
+                      <span class="jcf-list-content" style="max-height: 217px; overflow: auto;">
+                        <ul>
+                          <li ng-repeat="role in user.role"><span ng-click="user.choiceRole(role, $event)" class="jcf-option" ng-class="{'jcf-selected': user.newUser.role == role}">{{role}}</span></li>
+                        </ul>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </span>
+            </div>
           </div>
           <div class="row">
             <label for="Team1" class="label-left">Team</label>
-            <select  id="Team1" ng-model="user.newUser.group" ng-options="group as group for group in user.group" required>
-              <option value="">-- Chose user's group --</option>
-            </select>
+            <div class="filter-holder">
+              <span ng-click="user.openGroupSelectMenu()" ng-blur="user.closeGroupSelectMenu($event)" class="jcf-select jcf-unselectable">
+                <span class="jcf-select-text">
+                  <span class="">{{user.newUser.group}}</span>
+                </span>
+                <span class="jcf-select-opener"></span>
+                <div ng-show="user.groupSelectMenuIsOpened" class="jcf-select-drop jcf-select-jcf-hidden jcf-unselectable" style="width: 285px;">
+                  <div class="jcf-select-drop-content">
+                    <span class="jcf-list jcf-scroll-active">
+                      <span class="jcf-list-content" style="max-height: 217px; overflow: auto;">
+                        <ul>
+                          <li ng-repeat="group in user.group"><span ng-click="user.choiceGroup(group, $event)" class="jcf-option" ng-class="{'jcf-selected': user.newUser.group == group}">{{group}}</span></li>
+                        </ul>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </span>
+            </div>
           </div>
           <div class="row">
             <label class="label-left" for="date1">Employed on</label>
@@ -40,7 +72,7 @@
         </fieldset>
       </form>
 
-      <!-- form User profile for admin -->
+      <!-- form User profile for user -->
       <!-- <form action="#" class="fancybox-form ">
         <fieldset>
           <div class="row">
