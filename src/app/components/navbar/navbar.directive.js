@@ -31,6 +31,7 @@ class NavbarController {
     this.manualState = this.states.MANUAL;
     this.$uibModal = $uibModal;
     this.activate($rootScope, $scope);
+    this.isMenuOpened = false;
     console.log(this.states);
   }
 
@@ -75,6 +76,7 @@ class NavbarController {
 
   selected() {
     this.isCollapsed = false;
+    this.isMenuOpened = false;
   }
 
   editProfile() {

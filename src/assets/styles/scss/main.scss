@@ -299,6 +299,14 @@ body{
 	}
 }
 
+.menu-opened {
+	#nav {
+		@include media('<desktop') {
+			right: 0;
+		}
+	}
+}
+
 .opener{
 	display: inline-block;
 	vertical-align: top;

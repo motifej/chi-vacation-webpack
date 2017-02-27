@@ -10,7 +10,7 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
 
   function signin () {
     if($scope.authForm.$invalid) {
-      toastr.warning('Fields can\'t be empty!');
+      toastr.warning('Email or Password is incorrect');
       return
     }
     $scope.sending = true;

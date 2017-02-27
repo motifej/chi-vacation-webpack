@@ -3,7 +3,7 @@
         <div class="logo">
           <img src="../../../assets/styles/images/logo.svg" alt="CHI"/>
         </div>
-        <nav class="menu">
+        <nav class="menu" ng-class="{'menu-opened': vm.isMenuOpened}">
           <ul id="nav">
             <li ng-if='vm.user.role' ui-sref-active="active" ui-sref={{vm.states.HOME}}><a ng-click="vm.selected()" href="#"><i class="icom-house"></i>My Requests</a></li>
             <li ng-if='vm.isAdmin()' ui-sref-active="active" ui-sref={{vm.states.ADMIN}}><a ng-click="vm.selected()" href="#"><i class="icom-queen"></i>Admin</a></li>
@@ -13,7 +13,7 @@
           </ul>
         </nav>
         <!-- burger menu opener-->
-        <a href="#" class="nav-opener"><span></span></a>
+        <a href="#" class="nav-opener" ng-click="vm.isMenuOpened = !vm.isMenuOpened"><span></span></a>
         <!-- open-close structure example -->
         <div class="open-close-nav">
           <span class="name-user" href="#">{{vm.user.firstname + " " + vm.user.lastname}}</span >
