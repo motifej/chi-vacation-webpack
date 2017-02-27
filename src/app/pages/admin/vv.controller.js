@@ -166,7 +166,7 @@ export default class VvController {
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
             .then(
               data => {
-                this.toastr.success(vac_type + ' confirmed', 'Success');
+                this.toastr.success(vac_type + ' is confirmed', 'Success');
                 vacation.status = data.data.status;
               },
               error => this.toastr.error(error.data.data.raw.message, 'Error confirming ' + vac_type.toLowerCase())
@@ -191,7 +191,7 @@ export default class VvController {
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
             .then(
               data => {
-                this.toastr.success(vac_type + ' rejected', 'Success');
+                this.toastr.success(vac_type + ' is rejected', 'Success');
                 vacation.status = data.data.status;
               },
               error => this.toastr.error(error.data.data.raw.message, 'Error rejecting ' + vac_type.toLowerCase())
@@ -489,7 +489,7 @@ setDateInfo() {
           });
 
           if (vm.vacations && isCrossingIntervals(vm.vacations)) {
-            this.toastr.error(vac_type + ' intervals are crossing! Please, choose correct date.', toastrOptions);
+            this.toastr.error(vac_type + ' intervals are crossing! Please choose correct date.', toastrOptions);
             this.sendingRequest = false;
             return;
           }

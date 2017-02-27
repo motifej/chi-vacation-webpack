@@ -183,7 +183,7 @@ export default class UserController {
 
     //проверка на пересечение интервалов
     if (isCrossingIntervals(vm.vacations)) {
-      this.toastr.error(vac_type + ' intervals are crossing! Please, choose correct date.');
+      this.toastr.error(vac_type + ' intervals are crossing! Please choose correct date.');
       this.sending = false;
       return;
     }

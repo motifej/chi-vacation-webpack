@@ -48,7 +48,7 @@ export default class UserInfoController {
               deleted: true
             })).$promise
               .then(
-                () => this.toastr.success('Deleting user success', 'Success'),
+                () => this.toastr.success('User is deleted successfully', 'Success'),
                 error => this.toastr.error(error.data.message, 'Error updating user')
               );
           }
