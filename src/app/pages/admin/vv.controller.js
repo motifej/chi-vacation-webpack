@@ -116,7 +116,7 @@ export default class VvController {
      this.users.forEach(item => {
       if(this.filter.user.id && this.filter.user.id != item.id) return;
       if(this.filter.user.group && this.filter.user.group != item.group) return;
-      if(/*item.group == group &&*/ !item.deleted) {
+      if(/*item.group == group &&*/ item.deleted == this.showDeletedUsers) {
         angular.forEach(item[this.pageState], el => {
           if(!this.statusFilter.status.rejected && el.status == 'rejected') return;
           if(status == 'new') {
@@ -137,7 +137,7 @@ export default class VvController {
     calcNewVacationsCounter(group) {
      var sum = 0;
      this.users.forEach(item => {
-      if(/*item.group == group &&*/ !item.deleted) {
+      if(/*item.group == group &&*/ item.deleted == this.showDeletedUsers) {
       if(this.filter.user.id && this.filter.user.id != item.id) return;
       if(this.filter.user.group && this.filter.user.group != item.group) return;
         angular.forEach(item[group], el => {

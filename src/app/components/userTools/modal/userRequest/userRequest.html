@@ -2,7 +2,7 @@
 <section id="popup3" class="lightbox" style="display: block;">
       <h1>User request</h1>
       <div ng-show="admin.filtredUser.firstname">for <span>{{admin.filtredUser.firstname + " " + admin.filtredUser.lastname}}</span></div>
-      <input ng-model="admin.userRequestSearch" ng-change="admin.changeUserRequestInput()" type="search" name="Filter" id="Filter" placeholder="Please, select user!">
+      <input ng-model="admin.userRequestSearch" ng-change="admin.changeUserRequestInput()" type="search" name="Filter" id="Filter" placeholder="Please select user!">
       <ul ng-show="admin.isUserRequestUserListShown" class="filter-list-user">
         <li ng-repeat="user in admin.users | inputUserFilter:admin.userRequestSearch | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUserForRequest(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
         <!-- <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>

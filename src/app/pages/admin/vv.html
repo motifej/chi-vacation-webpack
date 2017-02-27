@@ -71,22 +71,23 @@
                       </chi-datepicker>
                   </div>
                   <!-- add class btn-visible  -->
-                  <!-- <div class="btn-holder"><a href="#">Clear date filter</a></div> -->
+                  <div class="btn-holder btn-visible" ng-click="dateFilter = {}"><a href="#">Clear date filter</a></div>
                 </div>
               </fieldset>
             </form>
-            <ul class="admin-panel">
+            <ul class="admin-panel" ng-show="admit.user.role == admin.roles.ADMIN">
               <li><a href="#" class=" btn btn-border-blue" ng-click="admin.openNewUserForm()">ADD USER</a></li>
-              <li><a href="#popup2" class="lightbox btn btn-border-blue">sHOW DELETED USERS</a></li>
+              <!-- <li><a href="#popup2" class="lightbox btn btn-border-blue">sHOW DELETED USERS</a></li> -->
               <li><div href="#popup3" class=" lightbox btn btn-border-blue" ng-click="admin.showUserRequest()">USER REQUEST</div></li>
             </ul>
           </div>
         </aside>
         <div id="content">
           <div class="tabs ui-corner-all ui-widget ui-widget-content">
-            <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+            <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header show-filter">
               <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('new')"><a class="ui-tabs-anchor">Active Requests <span class="counter">({{admin.calcNewVacationsStatus('new')}})</span></a></li>
               <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': !admin.statusFilter.status.new}" ng-click="admin.choiceStatusFilter('all')"><a class="ui-tabs-anchor">Handled Requests <span class="counter">({{admin.calcNewVacationsStatus('handled')}})</span></a></li>
+              <label for="deleted"><input type="checkbox" name="Show_rejected" id="deleted" ng-model="admin.showDeletedUsers"> Show deleted</label>
             </ul>
             <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status.handled">
               <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.all}" for="all" ng-click="admin.choiceStatusFilter('all')">All<input type="checkbox" id="all" ng-model="admin.statusFilter.status.all" hidden></label>
@@ -114,19 +115,40 @@
                   </div>
                 </div>
               </div> -->
-              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order as vacationsFilteredData" ng-class="'m-action-' + item.status">
+              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | filter:{deleted: admin.showDeletedUsers} | orderByObject: admin.order as vacationsFilteredData" ng-class="'m-action-' + item.status">
                   <div class="table-col">
-                    <span class="circle">Js</span>
+                    <span class="circle" ng-if="item.user.group == 'JS'">Js</span>
+                    <span class="circle" ng-if="item.user.group == '.Net'">.net</span>
+                    <span class="circle" ng-if="item.user.group == 'Android'">andr</span>
+                    <span class="circle" ng-if="item.user.group == 'Business Analyst'">ba</span>
+                    <span class="circle" ng-if="item.user.group == 'Data Bases'">db</span>
+                    <span class="circle" ng-if="item.user.group == 'Design'">dsgn</span>
+                    <span class="circle" ng-if="item.user.group == 'HR'">hr</span>
+                    <span class="circle" ng-if="item.user.group == 'iOS'">ios</span>
+                    <span class="circle" ng-if="item.user.group == 'IT'">it</span>
+                    <span class="circle" ng-if="item.user.group == 'Java'">java</span>
+                    <span class="circle" ng-if="item.user.group == 'Managers'">mng</span>
+                    <span class="circle" ng-if="item.user.group == 'Marketing Managers'">mkt</span>
+                    <span class="circle" ng-if="item.user.group == 'Markup'">mrkp</span>
+                    <span class="circle" ng-if="item.user.group == 'NodeJS'">node</span>
+                    <span class="circle" ng-if="item.user.group == 'Operations'">opr</span>
+                    <span class="circle" ng-if="item.user.group == 'PHP'">php</span>
+                    <span class="circle" ng-if="item.user.group == 'Python'">pyth</span>
+                    <span class="circle" ng-if="item.user.group == 'QA'">qa</span>
+                    <span class="circle" ng-if="item.user.group == 'Ruby'">Ruby</span>
+                    <span class="circle" ng-if="item.user.group == 'Sales'">sales</span>
+                    <span class="circle" ng-if="item.user.group == 'C++'">c++</span>
                     <span class="user-name lightbox" ng-click="admin.userInfo(item.user)">{{item.user.firstname + " " + item.user.lastname}}</span>
                   </div>
                   <div class="table-col">
-                    <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} days<time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
+                    <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} <span ng-show="admin.calcDays(item.startdate, item.enddate) == 1">day</span><span ng-show="admin.calcDays(item.startdate, item.enddate) != 1">days</span><time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
                   </div>
                   <div class="table-col">
-                    <a href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(item.user, item.id)">Approve</a>
-                    <a href="#" class="btn-small-red icom-reject" ng-hide="item.status == 'confirmed'" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(item.user, item.id)">Reject</a>
-                    <a href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(item.user, item.id)">Reject</a>
+                    <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(item.user, item.id)">{{item.status=='confirmed' ? 'Aproved' : 'Approve'}}</a>
+                    <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-red icom-reject" ng-hide="item.status == 'confirmed'" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(item.user, item.id)">{{item.status=='rejected' ? 'Rejected' : 'Reject'}}</a>
+                    <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(item.user, item.id)">Reject</a>
                     <!-- <span class="wait">Waiting for approval</span> -->
+                    <span class="updated-by" ng-if="item.updatedBy">Updated by {{item.updatedBy.firstname + " " + item.updatedBy.lastname}}</span>
                   </div>
                 </div>
                 <div ng-if="!vacationsFilteredData.length"></div>
