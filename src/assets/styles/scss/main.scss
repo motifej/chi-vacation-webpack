@@ -61,11 +61,7 @@ body{
 }
 .scroll{
 	#header{
-		@include media('<phone') {
-			padding: 6px 0 4px;
-			min-height: 1px;
-		}
-		@include media('landscape') {
+		@include media('<tablet') {
 			padding: 6px 0 4px;
 			min-height: 1px;
 		}
