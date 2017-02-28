@@ -65,6 +65,7 @@ export default class VvController {
     this.search = "";
     this.settings = settings;
     this.vacationsTransformatedData = vacationsTransformatedData;
+    this.vacationsCounter = 10;
 }
 
   activate(scope) {
@@ -132,6 +133,10 @@ export default class VvController {
       }
      })
      return sum; 
+    }
+
+    loadMore(){
+      this.vacationsCounter += 10;
     }
 
     calcNewVacationsCounter(group) {

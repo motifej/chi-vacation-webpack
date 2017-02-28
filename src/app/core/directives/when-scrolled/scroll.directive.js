@@ -1,20 +1,17 @@
 'use strict';
 
-export default function (app) {
+export default angular.module('scroll', []).directive('scroll', scroll); 
 
-    app.directive('scroll', scroll);
-
-    function scroll ($window) {
+function scroll ($window) {
         return function(scope, element, attrs) {
             angular.element($window).bind("scroll", function() {
-              console.log(10);
+                let body = document.getElementsByTagName('body');
                  if (this.pageYOffset >= 100) {
-                     scope.boolChangeClass = true;
+                     body[0].classList.add('scroll');
                  } else {
-                     scope.boolChangeClass = false;
+                     body[0].classList.remove('scroll');
                  }
                 scope.$apply();
             });
         };
     }
-}

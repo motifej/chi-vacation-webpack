@@ -25,10 +25,10 @@ export default angular.module('infinite-scroll', []).directive('infiniteScroll',
         }
         handler = function() {
           var elementBottom, remaining, shouldScroll, windowBottom;
-          windowBottom = $window.offsetHeight
-          elementBottom = elem.offset().top + elem.offsetHeight;
+          windowBottom = document.body.scrollTop + $window[0].innerHeight;
+          elementBottom = document.body.scrollHeight;
           remaining = elementBottom - windowBottom;
-          shouldScroll = remaining <= $window.offsetHeight * scrollDistance;
+          shouldScroll = remaining <= $window[0].innerHeight * scrollDistance;
           if (shouldScroll && scrollEnabled) {
             if ($rootScope.$$phase) {
               return scope.$eval(attrs.infiniteScroll);

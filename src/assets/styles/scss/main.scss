@@ -1379,6 +1379,7 @@ input.calendar{
 	z-index: 5;
 	.table-row{
 		@extend %clearfix;
+		position: relative;
 		vertical-align: middle;
 		box-shadow: 0 1px 0 $gray10;
 		transition: box-shadow 0.5s;

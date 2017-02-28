@@ -87,7 +87,7 @@
             <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header show-filter">
               <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('new')"><a class="ui-tabs-anchor">Active Requests <span class="counter">({{admin.calcNewVacationsStatus('new')}})</span></a></li>
               <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': !admin.statusFilter.status.new}" ng-click="admin.choiceStatusFilter('all')"><a class="ui-tabs-anchor">Handled Requests <span class="counter">({{admin.calcNewVacationsStatus('handled')}})</span></a></li>
-              <label for="deleted"><input type="checkbox" name="Show_rejected" id="deleted" ng-model="admin.showDeletedUsers"> Show deleted</label>
+              <label for="deleted"><input type="checkbox" name="Show_rejected" id="deleted" ng-model="admin.showDeletedUsers"> Show only deleted</label>
             </ul>
             <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status.handled">
               <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.all}" for="all" ng-click="admin.choiceStatusFilter('all')">All<input type="checkbox" id="all" ng-model="admin.statusFilter.status.all" hidden></label>
@@ -97,7 +97,7 @@
               <label for="rejected"><input type="checkbox" name="Show_rejected" id="rejected" ng-model="admin.statusFilter.status.rejected"> Show rejected</label>
             </form>
             <div id="tabs-2">
-            <div class="table">
+            <div class="table" infinite-scroll='admin.loadMore()' infinite-scroll-distance='2'>
               <!-- <div ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
                 <div class="table-row" ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
                   <div class="table-col">
@@ -115,7 +115,7 @@
                   </div>
                 </div>
               </div> -->
-              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | filter:{deleted: admin.showDeletedUsers} | orderByObject: admin.order as vacationsFilteredData" ng-class="'m-action-' + item.status">
+              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | filter:{deleted: admin.showDeletedUsers} | orderByObject: admin.order | limitTo: admin.vacationsCounter as vacationsFilteredData" ng-class="'m-action-' + item.status">
                   <div class="table-col">
                     <span class="circle" ng-if="item.user.group == 'JS'">Js</span>
                     <span class="circle" ng-if="item.user.group == '.Net'">.net</span>
@@ -144,7 +144,7 @@
                     <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} <span ng-show="admin.calcDays(item.startdate, item.enddate) == 1">day</span><span ng-show="admin.calcDays(item.startdate, item.enddate) != 1">days</span><time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
                   </div>
                   <div class="table-col">
-                    <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(item.user, item.id)">{{item.status=='confirmed' ? 'Aproved' : 'Approve'}}</a>
+                    <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(item.user, item.id)">{{item.status=='confirmed' ? 'Approved' : 'Approve'}}</a>
                     <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-red icom-reject" ng-hide="item.status == 'confirmed'" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(item.user, item.id)">{{item.status=='rejected' ? 'Rejected' : 'Reject'}}</a>
                     <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(item.user, item.id)">Reject</a>
                     <!-- <span class="wait">Waiting for approval</span> -->
@@ -152,7 +152,7 @@
                   </div>
                 </div>
                 <div ng-if="!vacationsFilteredData.length">
-          <!-- <img src="../../../assets/styles/images/logo.svg" alt="CHI"/> --></div>
+          <img src="../../../assets/styles/images/logo.svg" alt="CHI"/></div>
               <!-- <div class="table-row">
                 <div class="table-col">
                   <span class="circle">Js</span>
