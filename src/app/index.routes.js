@@ -104,14 +104,14 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
               controllerAs: 'admin'
               }
           }
-        }).state(states.CHANGEPASSWORD, {
+        })/*.state(states.CHANGEPASSWORD, {
             views: {
               'content@': {
                 templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/login/changePassword.html'),
                 controller: 'LoginController'
               }
             }          
-          });
+          })*/;
 
 
   $urlRouterProvider.otherwise('/login');

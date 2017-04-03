@@ -295,6 +295,10 @@ body{
 	}
 }
 
+.has-error{
+	color:red;
+}
+
 .menu-opened {
 	#nav {
 		@include media('<desktop') {

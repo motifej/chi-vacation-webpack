@@ -164,7 +164,6 @@ export default class SailsService {
 		this.getVacations = (id) => 
 			this.userResource.getUserData(id).$promise.then(
 				r => {
-      		console.log("1", r.data);
 					this.updateData(r);
 					return this.vacationsTransformatedData
 				}
@@ -187,7 +186,6 @@ export default class SailsService {
 		      daysoff: [],
 		      workfromhome: []
 		    }
-      		console.log("2", r.data);
    			$rootScope.$applyAsync( () => {
 				this.users.length = 0;
 				this.users = angular.extend(this.users, r.data);
