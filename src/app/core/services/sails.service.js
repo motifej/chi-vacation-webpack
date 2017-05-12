@@ -120,11 +120,20 @@ export default class SailsService {
 
 					case 'updated': {
 						console.log('vacation updated', obj);
+				   console.log("vvvvv");
 						$rootScope.$applyAsync( () => {
 							let user = _.find(this.users, {id: data.uid});
 							angular.extend(_.find(user[params], {id}) || {}, data);
 							angular.extend(_.find(this.user[params], {id}) || {}, data);
+							this.updateVacationsTransformatedData(params);
 						});
+
+					// console.log("user[params]");
+				  	// console.log(this.user[params]);
+				  	// console.log(params);
+
+					  
+						
 						console.log('vacation updated, new status:', this.users);
 						break;
 					}
@@ -211,6 +220,19 @@ export default class SailsService {
 				    });	
 			})
 		}
-		
+
+		this.updateVacationsTransformatedData = (type) => {
+				this.tempData = [];
+				        this.users.forEach(user => {
+				        user.vacations.forEach(vacation => {
+				        	vacation = angular.copy(vacation);
+				        	vacation.user = user;
+				        	vacation.deleted = user.deleted;
+				        	this.tempData.push(vacation);
+				        });
+				    });	
+				this.vacationsTransformatedData[type] = this.tempData;					
+			}
 	}
 }
+
