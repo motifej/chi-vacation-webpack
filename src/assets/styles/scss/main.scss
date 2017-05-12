@@ -1817,7 +1817,8 @@ a.icom-trash{
 		margin: 0;
 	}
 	.icom-calendar{
-		z-index: 1;
+		//fixing overlay of calendars
+		// z-index: 1;
 		margin: 0;
 	}
 	input{
