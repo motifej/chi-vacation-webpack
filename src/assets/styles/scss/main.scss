@@ -1641,6 +1641,10 @@ input.calendar{
 			overflow: visible;
 			float: left;
 		}
+		&.calendar-wrapper {
+			overflow: visible;	
+			float: right;
+		}
 		.btn-small-red-form{float: right;}
 		&.form-align-center{
 			@extend %clearfix;
