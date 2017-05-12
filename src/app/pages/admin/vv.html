@@ -115,7 +115,7 @@
                   </div>
                 </div>
               </div> -->
-              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | filter:{deleted: admin.showDeletedUsers} | orderByObject: admin.order | limitTo: admin.vacationsCounter as vacationsFilteredData track by key" ng-class="'m-action-' + item.status">
+              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | filter:{deleted: admin.showDeletedUsers} | orderByObject: admin.order | limitTo: admin.vacationsCounter as vacationsFilteredData track by item.id" ng-class="'m-action-' + item.status">
                   <div class="table-col">
                     <span class="circle" ng-if="item.user.group == 'JS'">Js</span>
                     <span class="circle" ng-if="item.user.group == '.Net'">.net</span>
