@@ -10,6 +10,11 @@ html {
   outline: none;
 }
 
+*:focus{
+  outline: none !important;
+  text-decoration: none !important;
+}
+
 body {
   color: $base-text-color;
   background: $base-background-color;

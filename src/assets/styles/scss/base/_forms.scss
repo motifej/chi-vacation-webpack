@@ -22,7 +22,8 @@ input[type='search'],
 input[type='password'],
 input[type='url'],
 input[type='date'],
-textarea {
+textarea,
+.datepicker__input {
   -webkit-appearance: none;
   -webkit-border-radius: 0;
   box-sizing: border-box;
@@ -32,7 +33,7 @@ textarea {
   width: 100%;
   border-radius: 2px;
   transition: border-color 0.3s;
-  @include media('<phone') {
+  @include media('<480px') {
     height: 40px;
     padding: 8px 10px;
   }

@@ -47,7 +47,7 @@
   @include media('<desktop') {
   	padding: 10px;
   }
-  @include media('<phone') {
+  @include media('<480px') {
 		min-height: 40px;
 		padding: 6px 0 5px;
 	}
@@ -67,7 +67,7 @@
 	line-height: 1.8;
 	margin: 0 35px 0 8px;
 	color: #000;
-	@include media('<phone') {
+	@include media('<480px') {
 		font-size: 13px;
 		margin: 0 22px 0 10px;
 	}
@@ -89,7 +89,7 @@
 		transform: translateY(-50%);
 		right: 24px;
 		transition: transform 0.3s;
-		@include media('<phone') {
+		@include media('<480px') {
 			right: 7px;
 		}
 	}
@@ -98,9 +98,6 @@ body > .jcf-select-drop {
 	position: static;
 	margin: 0;
 	z-index: 99;
-	@include media('<phone') {
-		// width: 250px !important;
-	}
 }
 body > .jcf-select-drop.jcf-drop-flipped {
 	margin: 1px 0 0;
@@ -111,11 +108,9 @@ body > .jcf-select-drop.jcf-drop-flipped {
 }
 .jcf-select .jcf-select-drop {
 	position: static;
-    border:  solid #ccc;
-	border-width: 0 1px;
 	z-index: 99;
 	background: #fff;
-	margin: 0 -1px;
+	width: 100% !important;
 }
 .jcf-drop-active .jcf-select-drop{
 	border: none;
@@ -144,7 +139,7 @@ body > .jcf-select-drop.jcf-drop-flipped {
 		display: block;
 		max-height: 9999px !important;
 		padding: 15px 20px;
-		@include media('<phone') {
+		@include media('<480px') {
 			padding: 10px;
 		}
 	}
@@ -244,7 +239,7 @@ body > .jcf-select-drop.jcf-drop-flipped {
 	&.jcf-select {
   	border-color: transparent;
   	box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
-  	@include media('<phone') {
+  	@include media('<480px') {
   		box-shadow: none;
   		border-color: #ccc;
   	}
@@ -257,7 +252,7 @@ body > .jcf-select-drop.jcf-drop-flipped {
 		transform: rotate(180deg) translateY(36%);
 	}
 	&.jcf-select {
-		@include media('<phone') {
+		@include media('<480px') {
   		box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
 			
 		}

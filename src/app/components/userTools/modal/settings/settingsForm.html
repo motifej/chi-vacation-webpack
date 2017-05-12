@@ -1,6 +1,6 @@
-<div class="fancybox-wrap fancybox-desktop fancybox-type-inline fancybox-opened" tabindex="-1" style="width: 513px; height: auto; position: absolute; top: 20px; opacity: 1; overflow: visible;"><div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;"><div class="fancybox-outer"><div class="fancybox-inner">
+    <a class="close" ng-click="user.cancel()"></a>
     <section id="popup1" class="lightbox">
-      <h1>Setting</h1>
+      <h1>Settings</h1>
       <div class="tabs-fancybox">
         <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
           <li ng-click="user.changePageState('emails')" ng-class="{' ui-tabs-active ui-state-active': user.pageState == 'emails'}" role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-11" aria-labelledby="ui-id-3" aria-selected="true" aria-expanded="true"><span role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-3">EMAILs</span></li>
@@ -10,8 +10,8 @@
           <form ng-submit="user.submitForm()" class="fancybox-form settings">
             <fieldset>
               <div class="row">
-                <label for="new_vacations"><input ng-model="user.settings.emailCreate" type="checkbox" id="new_vacations">Send email when new vacations were created</label>
-                <label for="email_user"><input ng-model="user.settings.emailChanged" type="checkbox" id="email_user">Send email to user when status of vacation was changed</label>
+                <label for="new_vacations"><input ng-model="user.settings.emailCreate" type="checkbox" id="new_vacations">Send email when new request were created</label>
+                <label for="email_user"><input ng-model="user.settings.emailChanged" type="checkbox" id="email_user">Send email to user when status of request was changed</label>
               </div>
               <div class="row">
                 <span class="label-left">General Recepients</span>
@@ -25,32 +25,50 @@
                       </strong>
                       <a class="icom-trash" ng-click="user.deleteEmail(item)"></a>
                     </li>
-                    <li><strong>Management@chisw.com<a href="#" class="icom-trash"></a></strong></li>
+                    <!-- <li><strong>Management@chisw.com<a href="#" class="icom-trash"></a></strong></li>
                     <li><strong>hr@chisw.com<a href="#" class="icom-trash"></a></strong></li>
-                    <li><strong>finance_department@chisw.com<a href="#" class="icom-trash"></a></strong></li>
+                    <li><strong>finance_department@chisw.com<a href="#" class="icom-trash"></a></strong></li> -->
                   </ul>
                 </div>
               </div>
               <div class="row">
                 <span class="label-left">Recepients by departments</span>
                 <div class="form-align">
-                  <select ng-options="value.name for value in user.groups"
+                  <!-- <select ng-options="value.name for value in user.groups"
                       ng-model="user.group">
                     
-                  </select>
+                  </select> -->
+                  <span ng-click="user.openGroupSelectMenu()" ng-blur="user.closeGroupSelectMenu($event)" class="jcf-select jcf-unselectable">
+                    <span class="jcf-select-text">
+                      <span class="">{{user.group ? user.group.name :'All departments'}}</span>
+                    </span>
+                    <span class="jcf-select-opener"></span>
+                    <div ng-show="user.groupSelectMenuIsOpened" class="jcf-select-drop jcf-select-jcf-hidden jcf-unselectable" style="width: 285px;">
+                      <div class="jcf-select-drop-content">
+                        <span class="jcf-list jcf-scroll-active">
+                          <span class="jcf-list-content" style="max-height: 217px; overflow: auto;">
+                            <ul>
+                              <li ng-repeat="group in user.groups"><span ng-click="user.choiceGroup(group, $event)" class="jcf-option" ng-class="{'jcf-selected': user.group.name == group.name}">{{group.name}}</span></li>
+                            </ul>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </span>
                   <input type="email" id="New_email1" placeholder="New email" ng-model="user.newGroupEmail" ng-pattern="user.emailPattern">
                   <a ng-click="user.addGroupEmail()" class="btn-small-red-form"><i class="icom-circle-plus"></i>Add</a>
                   <ul class="list-add-email">
                   <li ng-repeat="item in user.group.emails track by $index">
-                    <strong>{{item}}<a class="icom-trash" ng-click="user.deleteGroupEmail(item)"></a></strong>
+                    <strong>{{item}}</strong>
+                    <a class="icom-trash" ng-click="user.deleteGroupEmail(item)"></a>
                   </li>
-                    <li><strong>alexey.stepchenkov@chisw.com<a href="#" class="icom-trash"></a></strong></li>
+                    <!-- <li><strong>alexey.stepchenkov@chisw.com<a href="#" class="icom-trash"></a></strong></li> -->
                   </ul>
                 </div>
               </div>
               <div class="row">
                 <button type="submit" class="btn btn-red">SAVE CHANGES</button>
-                <button ng-click="user.cancel()" class="btn btn-border-red close" title="cansel">Cansel</button>
+                <button type="button" ng-click="user.cancel()" class="btn btn-border-red close" title="cansel">Cancel</button>
               </div>
             </fieldset>
           </form>
@@ -71,19 +89,18 @@
                     <li ng-repeat="item in user.settings.holidays | orderBy: date | filter:user.holidayFilter || '-'" class="list-group-item">
                       <strong>{{item}} <a ng-click="user.deleteHoliday(item)" class="icom-trash"></a></strong>
                     </li>
-                    <li><strong>Management@chisw.com<a href="#" class="icom-trash"></a></strong></li>
+                    <!-- <li><strong>Management@chisw.com<a href="#" class="icom-trash"></a></strong></li>
                     <li><strong>hr@chisw.com<a href="#" class="icom-trash"></a></strong></li>
-                    <li><strong>finance_department@chisw.com<a href="#" class="icom-trash"></a></strong></li>
+                    <li><strong>finance_department@chisw.com<a href="#" class="icom-trash"></a></strong></li> -->
                   </ul>
                 </div>
               </div>
               <div class="row">
                 <button type="submit" class="btn btn-red">SAVE CHANGES</button>
-                <button ng-click="user.cancel()" class="btn btn-border-red close" title="cansel">Cansel</button>
+                <button type="button" ng-click="user.cancel()" class="btn btn-border-red close" title="cansel">Cancel</button>
               </div>
             </fieldset>
           </form>
         </div>
       </div>
     </section>
-  </div></div></div></div>

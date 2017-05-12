@@ -23,6 +23,7 @@ export default function DatepickerDirective() {
 
     function link(scope, element, attrs) {
         scope.name = attrs.name;
+        scope.placeholder = attrs.placeholder;
         //scope.maxDate = moment().add(1, 'year').add(1, 'month');
         scope.maxDate = scope.maxDate2;
 
@@ -52,6 +53,9 @@ export default function DatepickerDirective() {
         scope.getDayClass = function({date, mode}) {
             if (mode === 'day') {
                 let iDate = moment(date).format('YYYY-MM-DD');
+                let today = new Date();
+                if (date.toDateString() === today.toDateString()) 
+                    return 'datepicker-today';
                 if ((scope.holidays && ~scope.holidays.indexOf(iDate)) || date.getDay() === 0 || date.getDay() === 6) 
                     return 'datepicker-holidays';
             }

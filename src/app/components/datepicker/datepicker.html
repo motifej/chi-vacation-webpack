@@ -1,4 +1,4 @@
-<div class="input-group icom-calendar">
+<div class="input-group ">
     <input ng-disabled="isDisableDate" name="{{name}}" type="text" class="form-control datepicker__input calendar" readonly
         uib-datepicker-popup="{{format}}"
         ng-change="calcDays()"
@@ -8,6 +8,7 @@
         template-url="/src/app/components/datepicker/datepicker-popup.html"
         show-button-bar="false"
         alt-input-formats="altInputFormats"
+        placeholder="{{placeholder}}"
         >
     <span class="input-group-btn">
         <button type="button" class="btn btn-default datepicker__btn" ng-click="open()"></button>

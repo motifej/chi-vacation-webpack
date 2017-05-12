@@ -2,7 +2,7 @@ export default function (app) {
     app.filter('inputUserFilter', inputUserFilter);
 
     function inputUserFilter() {
-        return function(usersArray, input) {
+        return function(usersArray, input = "") {
             var splitedInput = input.toLowerCase().split(" ").filter(item => item.length >= 3);
             var fiteredUsers = [];
             splitedInput.forEach((item, index) => {

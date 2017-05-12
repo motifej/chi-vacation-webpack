@@ -6,6 +6,11 @@ export default class SailsService {
 		'ngInject';
 
 		//http resources
+						this.vacationsTransformatedData = {
+					      vacations: [],
+					      daysoff: [],
+					      workfromhome: []
+					    }
 		this.http = $http;
 		this.userResource = $resource(API_URL + "/users/:id", {id: "@id"}, {
 			getUserData: {isArray: false, method: "GET"},
@@ -46,7 +51,6 @@ export default class SailsService {
 		this.socketInit = () => {
 
 			io.socket.on('connect', () => {
-      			console.log('*** Socket connected');
       			if (!io.socket.alreadyListeningToModels) {
     				io.socket.alreadyListeningToModels = true;
     				io.socket.on('users', socketUserActions.bind(this));
@@ -58,14 +62,12 @@ export default class SailsService {
   			});
 
 			function socketUserActions(obj) {
-				console.log('socket user data received', obj);
 				let users = $parse('users')(this);
 				if (obj.attribute || !users) return;
 				let {data, id, verb} = obj;
 
 				switch (verb) {
 					case 'created': {
-						console.log('user created', obj);
 						$rootScope.$applyAsync(
 							users.push(angular.extend(data, {vacations: [], daysoff: []}))
 						);
@@ -73,7 +75,6 @@ export default class SailsService {
 					}
 
 					case 'updated': {
-						console.log('user updated', obj);
 						$rootScope.$applyAsync(
 							angular.extend(_.find(users, {id}) || {}, data)
 						);
@@ -94,12 +95,10 @@ export default class SailsService {
 			};
 
 			function socketActions(params, obj) {
-				console.log('socket vacation data received', obj);
 				let {verb, data, id} = obj;
 
 				switch (verb) {
 					case 'created': {
-						console.log('vacation created', obj);
 						$rootScope.$applyAsync( () => {
 							if (this.user.id === data.uid) 
 								if (!_.find(this.user[params], {id: data.id}))
@@ -114,18 +113,17 @@ export default class SailsService {
 					}
 
 					case 'updated': {
-						console.log('vacation updated', obj);
 						$rootScope.$applyAsync( () => {
 							let user = _.find(this.users, {id: data.uid});
 							angular.extend(_.find(user[params], {id}) || {}, data);
 							angular.extend(_.find(this.user[params], {id}) || {}, data);
+							this.updateVacationsTransformatedData(params);
 						});
-						console.log('vacation updated, new status:', this.users);
+
 						break;
 					}
 
 					case 'destroyed': {
-						console.log('vacation deleted', obj);
 						$rootScope.$applyAsync( () => {
 							let copy = _.filter(this.user[params], 
 								el => el.id !== id
@@ -156,6 +154,14 @@ export default class SailsService {
 				}
 			)
 
+		this.getVacations = (id) => 
+			this.userResource.getUserData(id).$promise.then(
+				r => {
+					this.updateData(r);
+					return this.vacationsTransformatedData
+				}
+			)
+
 		this.getUser = (id) => 
 			this.userResource.getUserData(id).$promise.then(
 				r => {
@@ -163,16 +169,38 @@ export default class SailsService {
 					return this.user
 				}
 		)
-
 		this.updateData = (r) => {
 			if (!r) return;
       		if (!this.users)
       			this.users = [];
+      		this.vacationsTransformatedData = {
+		      vacations: [],
+		      daysoff: [],
+		      workfromhome: []
+		    }
    			$rootScope.$applyAsync( () => {
 				this.users.length = 0;
-				this.users = angular.extend(this.users, r.data);	
+				this.users = angular.extend(this.users, r.data);
+				for(let i in  this.vacationsTransformatedData) {
+					this.updateVacationsTransformatedData(i);
+				}				
 			})
 		}
-		
+
+		this.updateVacationsTransformatedData = (type) => {
+				this.tempData = [];
+				        this.users.forEach(user => {
+				        user.vacations.forEach(vacation => {
+				        	vacation = angular.copy(vacation);
+				        	vacation.user = user;
+				        	vacation.deleted = user.deleted;
+				        	this.tempData.push(vacation);
+				        });
+				    });	
+					
+					angular.extend(this.vacationsTransformatedData[type], this.tempData);
+					
+			}
 	}
 }
+

@@ -10,7 +10,7 @@ import {  DAYSOFF,
           SHOW_WORKFROMHOME } from '../../core/constants/vacations.consts';
 
 export default class VvController {
-  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams) {
+  constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams, vacationsTransformatedData) {
     'ngInject';
     
     this.sailsService = sailsService;
@@ -21,7 +21,7 @@ export default class VvController {
     this.users = userData;
     this.groups = groups;
     this.status = status;
-    this.filter = {};
+    this.filter = { user: {}};
     this.filtredUser;
     this.statusFilter = { status: {new: true} };
     this.groupFilter = {};
@@ -29,7 +29,7 @@ export default class VvController {
     this.pageState = "vacations";
     let today = new Date();
     today = today.setHours(0,0,0,0);
-    this.order = 'startDate';
+    this.order = '-startdate';
     this.oneThing = [];
     this.userName = [];
     this.events = [];
@@ -63,6 +63,9 @@ export default class VvController {
     this.sendingRequest = false;
     this.maxDate = moment().add(1, 'year').add(1, 'month');
     this.search = "";
+    this.settings = settings;
+    this.vacationsTransformatedData = vacationsTransformatedData;
+    this.vacationsCounter = 10;
 }
 
   activate(scope) {
@@ -112,8 +115,11 @@ export default class VvController {
     calcNewVacationsStatus(status) {
      var sum = 0;
      this.users.forEach(item => {
-      if(/*item.group == group &&*/ !item.deleted) {
+      if(this.filter.user.id && this.filter.user.id != item.id) return;
+      if(this.filter.user.group && this.filter.user.group != item.group) return;
+      if(/*item.group == group &&*/ item.deleted == this.showDeletedUsers) {
         angular.forEach(item[this.pageState], el => {
+          if(!this.statusFilter.status.rejected && el.status == 'rejected') return;
           if(status == 'new') {
             if(el.status == this.status.NEW) {
               sum++;
@@ -129,11 +135,18 @@ export default class VvController {
      return sum; 
     }
 
+    loadMore(){
+      this.vacationsCounter += 10;
+    }
+
     calcNewVacationsCounter(group) {
      var sum = 0;
      this.users.forEach(item => {
-      if(/*item.group == group &&*/ !item.deleted) {
+      if(/*item.group == group &&*/ item.deleted == this.showDeletedUsers) {
+      if(this.filter.user.id && this.filter.user.id != item.id) return;
+      if(this.filter.user.group && this.filter.user.group != item.group) return;
         angular.forEach(item[group], el => {
+          if(!this.statusFilter.status.rejected && el.status == 'rejected') return;
           if(el.status == this.status.NEW) {
             sum++;
           }
@@ -158,7 +171,7 @@ export default class VvController {
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'confirmed'})).$promise
             .then(
               data => {
-                this.toastr.success(vac_type + ' confirmed', 'Success');
+                this.toastr.success(vac_type + ' is confirmed', 'Success');
                 vacation.status = data.data.status;
               },
               error => this.toastr.error(error.data.data.raw.message, 'Error confirming ' + vac_type.toLowerCase())
@@ -183,7 +196,7 @@ export default class VvController {
             .update({id: vacation.id}, angular.extend({}, vacation, {status: 'rejected'})).$promise
             .then(
               data => {
-                this.toastr.success(vac_type + ' rejected', 'Success');
+                this.toastr.success(vac_type + ' is rejected', 'Success');
                 vacation.status = data.data.status;
               },
               error => this.toastr.error(error.data.data.raw.message, 'Error rejecting ' + vac_type.toLowerCase())
@@ -214,7 +227,9 @@ export default class VvController {
     }
 
     choiceGroup(group) {
-      this.filter = { group: group };
+      this.filter = { user :
+        { group: group }
+      };
       this.groupFilter = { group: group };
       this.groupSelectMenuIsOpened = false;
       this.search = "";
@@ -223,7 +238,9 @@ export default class VvController {
     }
 
     choiceUser(id, group, user) {
-      this.filter = { id: id, group:group };
+      this.filter = { user: 
+        { id: id, group:group }
+      };
       this.groupFilter = { group: group };
       /*this.filtredUser = user;*/
       this.setDateInfo();
@@ -249,6 +266,18 @@ export default class VvController {
       this.setDateInfo();
     }
 
+    choiceStatusFilter(status) {
+      this.statusFilter.status = {handled: true};
+      if(status == "all") {
+        this.statusFilter.status.confirmed = true;
+        this.statusFilter.status.inprogress = true;
+        this.statusFilter.status.spent = true;
+        this.statusFilter.status.all = true;
+      } else {
+        this.statusFilter.status[status] = true;
+      }
+    }
+
     choiceDropdownFilter(filter) {
       this.dropdownFilter = filter;
     }
@@ -271,6 +300,20 @@ export default class VvController {
           user: user,
           isDelShow: this.user.role == this.roles.ADMIN ? true : false,
           isEditShow: this.user.role == this.roles.ADMIN ? true : false
+        }
+      });
+    }
+
+    showUserRequest() {
+      this.modal.open({
+        templateUrl: require('!!file!../../components/userTools/modal/userRequest/userRequest.html'),
+        controller: require('./vv.controller'),
+        controllerAs: 'admin',
+        resolve: {
+          userData : () => this.users,
+          settings: () => this.settings,
+          user: () => this.user,
+          vacationsTransformatedData: () => this.vacationsTransformatedData
         }
       });
     }
@@ -451,7 +494,7 @@ setDateInfo() {
           });
 
           if (vm.vacations && isCrossingIntervals(vm.vacations)) {
-            this.toastr.error(vac_type + ' intervals are crossing! Please, choose correct date.', toastrOptions);
+            this.toastr.error(vac_type + ' intervals are crossing! Please choose correct date.', toastrOptions);
             this.sendingRequest = false;
             return;
           }
@@ -586,14 +629,13 @@ setDateInfo() {
     this.isUserListShown = this.search.length >= 3;
   }
 
-  showUserRequest() {
+  /*showUserRequest() {
     this.isUserRequestShown = true;
-  }
+  }*/
 
   changeUserRequestInput() {
     this.isUserRequestUserListShown = this.userRequestSearch.length >= 3;
     this.filtredUser = {};
-    this.isUserRequestUserShown = false;
   }
 
   choiceUserForRequest(id, group, user) {
@@ -602,11 +644,10 @@ setDateInfo() {
     this.filtredUser.newDaysOff = 0;
     this.userRequestSearch = user.firstname + " " + user.lastname;
     this.isUserRequestUserListShown = false;
-    this.isUserRequestUserShown = true;
   }
 
   hideUserRequest(e) {
-    if(e.target.className == "fancybox-overlay fancybox-overlay-fixed") {
+    if(e.target.className == "fancybox-overlay fancybox-overlay-fixed" || e.target.className == "fancybox-item fancybox-close") {
       this.isUserRequestShown = false
       this.filtredUser = {};
       this.filtredUser.addedDays = 0;
@@ -621,8 +662,12 @@ setDateInfo() {
   closeGroupSelectMenu(e) {
     console.log(e.target.className);
     
-      this.$timeout(() => this.groupSelectMenuIsOpened = false, 100);
+      this.$timeout(() => this.groupSelectMenuIsOpened = false, 300);
     
+  }
+  initVacationsTransformatedData(users) {
+    
+    return vacationsTransformatedData;
   }
 
 }

@@ -10,7 +10,7 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
 
   function signin () {
     if($scope.authForm.$invalid) {
-      toastr.warning('Fieldes hasn\'t be empty!');
+      toastr.warning('Email or Password is incorrect');
       return
     }
     $scope.sending = true;
@@ -53,10 +53,6 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
   }*/
 
    function changePassword () {
-    if ($scope.newPassword !== $scope.newPassword2) {
-      toastr.error('Entered passwords are different!', 'Error');
-      return
-    }
     if ($scope.authForm.$valid) {
       $scope.sending = true;
       sailsAuthService.changePassword($scope.email, $scope.oldPassword, $scope.newPassword)

@@ -1,9 +1,9 @@
 export default class AddNewUserController {
-  constructor ($filter, $uibModalInstance, $uibModal, toastr, sailsService, users, groups, user, isDelShow, sailsAuthService, mailService) {
+  constructor ($filter, $uibModalInstance, $uibModal, toastr, sailsService, users, groups, user, isDelShow, sailsAuthService, mailService, $timeout) {
     'ngInject';
 
     this.invalidForm = false;
-    this.namePattern = '[a-zA-Zа-яА-Я]+';
+    this.namePattern = '[a-zA-Zа-яА-Я\-]+';
     this.emailPattern = '\\w+.?\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}';
     this.filter = $filter;
     this.sailsService = sailsService;
@@ -15,6 +15,7 @@ export default class AddNewUserController {
     this.group = groups;
     this.role = users;
     this.isDelShow = isDelShow;
+    this.$timeout = $timeout;
 
     this.newUser = angular.copy(user);
     this.newUser.employmentdate = new Date(this.newUser.employmentdate || 0);
@@ -129,6 +130,36 @@ export default class AddNewUserController {
 
       }
     )
+  }
+
+  openGroupSelectMenu() {
+    this.groupSelectMenuIsOpened = true;
+  }
+
+  closeGroupSelectMenu(e) {
+    console.log(e.target.className);
+    
+      this.$timeout(() => this.groupSelectMenuIsOpened = false, 300);
+    
+  }
+
+  choiceGroup(group) {
+    this.newUser.group = group;
+  }
+
+  openRoleSelectMenu() {
+    this.roleSelectMenuIsOpened = true;
+  }
+
+  closeRoleSelectMenu(e) {
+    console.log(e.target.className);
+    
+      this.$timeout(() => this.roleSelectMenuIsOpened = false, 300);
+    
+  }
+
+  choiceRole(role) {
+    this.newUser.role = role;
   }
 
 }
