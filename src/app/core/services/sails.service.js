@@ -183,18 +183,39 @@ export default class SailsService {
 				this.users = angular.extend(this.users, r.data);
 				for(let i in  this.vacationsTransformatedData) {
 					this.updateVacationsTransformatedData(i);
-				}				
+				}	
+					//     this.users.forEach(user => {
+					// 	console.log('qq');
+				    //     user.vacations.forEach(vacation => {
+				    //     	vacation = angular.copy(vacation);
+				    //     	vacation.user = user;
+				    //     	vacation.deleted = user.deleted;
+				    //     	this.vacationsTransformatedData.vacations.push(vacation);
+				    //     });
+				    //     user.daysoff.forEach(dayoff => {
+				    //     	dayoff = angular.copy(dayoff);
+				    //     	dayoff.user = user;
+				    //     	dayoff.deleted = user.deleted;
+				    //     	this.vacationsTransformatedData.daysoff.push(dayoff);
+				    //     });
+				    //     user.workfromhome.forEach(workfromhome => {
+				    //     	workfromhome = angular.copy(workfromhome);
+				    //     	workfromhome.user = user;
+				    //     	workfromhome.deleted = user.deleted;
+				    //     	this.vacationsTransformatedData.workfromhome.push(workfromhome);
+				    //     });
+				    // });			
 			})
 		}
 
 		this.updateVacationsTransformatedData = (type) => {
 				this.tempData = [];
 				        this.users.forEach(user => {
-				        user.vacations.forEach(vacation => {
-				        	vacation = angular.copy(vacation);
-				        	vacation.user = user;
-				        	vacation.deleted = user.deleted;
-				        	this.tempData.push(vacation);
+				        user[type].forEach(item => {
+				        	item = angular.copy(item);
+				        	item.user = user;
+				        	item.deleted = user.deleted;
+				        	this.tempData.push(item);
 				        });
 				    });	
 					
