@@ -45,6 +45,7 @@ export default class UserController {
     this.sending = false;
     this.allVacations = this.combineVacations();
     this.holidays = angular.copy(settings.data.data.holidays);
+    this.listLimits = {new: 4, rejected: 4, confirmed: 4, spent: 4};
     this.showNotification = false;
     this.calcEnableDays(this.$scope.startdate);
     this.calcDaysCalc();
@@ -120,6 +121,8 @@ export default class UserController {
       });
       user.availableDaysOff = 5 - user.spendDaysOff + user.addedCurDaysOff;
       user.availableWorkFromHome = 5;
+
+      this.$rootScope.$emit('getAvalableDays', {availableDays: user.availableDays, availableDaysOff: user.availableDaysOff});
       /*console.log(user);*/
   }
 
@@ -147,12 +150,14 @@ export default class UserController {
     user.availableDaysOff = 0;
     user.availableWorkFromHome = 0;
     user.spendDaysOff = 0;
+    user.vacationsExpireDate = new Date(moment(user.employmentdate).add(user.year + 1, 'year').add(1, 'month'));
     return user;
   }
 
   submitHandler(startdate, enddate) {
     let vm = this;
     this.sending = true;
+    console.log(startdate);
     let vac_type = this.getStatus(this.vacationState, true);
     let sDate = new Date(startdate).getTime();
     let eDate = new Date(enddate).getTime();
@@ -178,7 +183,7 @@ export default class UserController {
 
     //проверка на пересечение интервалов
     if (isCrossingIntervals(vm.vacations)) {
-      this.toastr.error(vac_type + ' intervals are crossing! Please, choose correct date.');
+      this.toastr.error(vac_type + ' intervals are crossing! Please choose correct date.');
       this.sending = false;
       return;
     }

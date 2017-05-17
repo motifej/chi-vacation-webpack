@@ -1,5 +1,5 @@
 export default class SettingsController {
-  constructor ($uibModalInstance, settings, toastr, sailsService, groups, moment, $state, states) {
+  constructor ($uibModalInstance, settings, toastr, sailsService, groups, moment, $state, states, $timeout) {
     'ngInject';
 
     this.invalidForm = false;
@@ -10,6 +10,8 @@ export default class SettingsController {
     this.moment = moment;
     this.$state = $state;
     this.states = states;
+    this.pageState = "emails";
+    this.$timeout = $timeout;
 
     this.settings = settings.data.data;
     this.settings.holidays = this.settings.holidays || [];
@@ -69,6 +71,7 @@ export default class SettingsController {
   }
 
   submitForm (isValid) {
+    debugger;
     this.sailsService.saveSettings(this.settings)
       .then(
         data => {
@@ -99,6 +102,24 @@ export default class SettingsController {
     this.settings.holidays = this.settings.holidays.filter(
       el => el !== holiday
     );
+  }
+  changePageState(state) {
+    this.pageState = state;
+  }
+
+  choiceGroup(group) {
+    this.group = group;
+  }
+
+  openGroupSelectMenu() {
+    this.groupSelectMenuIsOpened = true;
+  }
+
+  closeGroupSelectMenu(e) {
+    console.log(e.target.className);
+    
+      this.$timeout(() => this.groupSelectMenuIsOpened = false, 300);
+    
   }
 
 }

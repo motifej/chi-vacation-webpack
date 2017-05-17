@@ -21,5 +21,6 @@ require('./filters/statusUser.filter')(shared);
 require('./filters/phoneFilter.filter')(shared);
 require('./filters/userFilterVacation.filter')(shared);
 require('./filters/orderByObject.filter')(shared);
+require('./filters/inputUser.filter')(shared);
 
 export default shared;

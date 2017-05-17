@@ -1,0 +1,114 @@
+
+<section id="popup3" class="lightbox fancybox-wrap" style="display: block;">
+      <h1>User request</h1>
+      <div ng-show="admin.filtredUser.firstname">for <span>{{admin.filtredUser.firstname + " " + admin.filtredUser.lastname}}</span></div>
+      <input ng-model="admin.userRequestSearch" ng-change="admin.changeUserRequestInput()" type="search" name="Filter" id="Filter" placeholder="Please select user!">
+      <ul ng-show="admin.isUserRequestUserListShown" class="filter-list-user">
+        <li ng-repeat="user in admin.users | inputUserFilter:admin.userRequestSearch | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUserForRequest(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
+        <!-- <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
+        <li><a href="#" class="name">Андрей Аваигян</a><span class="location">Android</span></li>
+        <li><a href="#" class="name">Игорь Пилипенко</a><span class="location">Node JS</span></li>
+        <li><a href="#" class="name">Влада Пилигрим</a><span class="location">Marketing managers</span></li>
+        <li><a href="#" class="name">Максим Шигалов</a><span class="location">Design</span></li>
+        <li><a href="#" class="name">Игорь Прокопченко</a><span class="location">Js</span></li>
+        <li><a href="#" class="name">Владислав Илигиминов</a><span class="location">Js</span></li> -->
+      </ul>
+      <div ng-if="admin.filtredUser.firstname" class="tabs-fancybox ui-tabs ui-corner-all ui-widget ui-widget-content">
+        <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+          <li role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active" aria-controls="tabs-113" aria-labelledby="ui-id-5" aria-selected="true" aria-expanded="true" ng-class="{'ui-state-active': admin.vacationState == 'vacations'}"><a ng-click="admin.changeVacationState('vacations')" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-5">Vacations</a></li>
+          <li role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-123" aria-labelledby="ui-id-6" aria-selected="false" aria-expanded="false" ng-class="{'ui-state-active': admin.vacationState == 'daysoff'}"><a ng-click="admin.changeVacationState('daysoff')" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-6">Days-off</a></li>
+          <li role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-133" aria-labelledby="ui-id-7" aria-selected="false" aria-expanded="false" ng-class="{'ui-state-active': admin.vacationState == 'workfromhome'}"><a ng-click="admin.changeVacationState('workfromhome')" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-7">Work from home</a></li>
+        </ul>
+        <div id="tabs-113" aria-labelledby="ui-id-5" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="false">
+          <form name="userForm" ng-submit='admin.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue)' class="fancybox-form custom-form">
+            <fieldset>
+              <div class="row">
+                <span class="label-left">Make a request</span>
+                <div class="form-align calendar-wrapper">
+                  <div class="filter-holder">
+                    <div class="icom-calendar">
+                      <chi-datepicker class="datepicker"
+                        name="startdate"
+                        ng-model="startdate"
+                        calc-days="admin.calcDaysCalc(name, date)"
+                        is-show-all-days="true"
+                        is-disable-date="admin.filtredUser.id ? false : true"
+                        holidays="{{admin.holidays}}"
+                        max-date2="admin.maxDate"
+                        >
+                        </chi-datepicker>
+                    </div>
+                    <span class="line"></span>
+                    <div class="icom-calendar qqqq">
+                      <chi-datepicker class="datepicker"
+                        name="enddate"
+                        ng-model="enddate"
+                        min-date="startdate"
+                        calc-days="admin.calcDaysCalc(name)"
+                        is-show-all-days="true"
+                        is-disable-date="admin.filtredUser.id ? false : true"
+                        holidays="{{admin.holidays}}"
+                        max-date2="admin.maxDate"
+                        >
+                        </chi-datepicker>
+                    </div>
+                    <!-- add class btn-visible  -->
+                    <!-- <div class="btn-holder">
+                      <a href="#">Clear date filter</a>
+                    </div> -->
+                  </div>
+                  <span class="info">
+                    <span ng-show="admin.isVacationState('vacations')">{{admin.calcEnableDays(startdate)}}</span>
+                    <span ng-show="admin.isVacationState('daysoff')">{{admin.filtredUser.availableDaysOff}}</span>
+                    <span ng-show="admin.isVacationState('workfromhome')">5</span>
+                    Days available, {{admin.calcDays(startdate, enddate)}} Will be used
+                  </span>
+                  <button type="submit" class="btn-request">SEND A REQUEST</button>
+                </div>
+              </div>
+              <div class="row" ng-show="admin.isVacationState('vacations')">
+                <span class="label-left">Change the number of vacation days</span>
+                <div class="form-align">
+                  <input type="text" id="added" class="form-control text-center" ng-model="admin.filtredUser.addedDays" restrict-pattern="[^\d]+">
+                  <span class="info">{{admin.filtredUser.added[admin.filtredUser.year]}} Added in Current Year</span>
+                  <span ng-show="admin.filtredUser.isCrossingYear" class="info">{{admin.filtredUser.addedPrev}} Added in Previous Year</span>
+                  <a ng-click="admin.pushAddedDays(true)" class="btn-request"><i class="icom-circle-plus"></i>Add</a>
+                  <a ng-click="admin.pushAddedDays(false)" class="btn-request"><i class="icom-circle-minus"></i>DEDUCT</a>
+                </div>
+              </div>
+              <div class="row" ng-show="admin.isVacationState('daysoff')">
+                <span class="label-left">Change the number of days-off</span>
+                <div class="form-align">
+                  <input type="text" id="added" class="form-control text-center" ng-model="admin.filtredUser.newDaysOff" restrict-pattern="[^\d]+">
+                  <span class="info">{{admin.filtredUser.addedCurDaysOff}} Added in Current Year</span>
+                  <a ng-click="admin.pushAddedDaysOff(true)" class="btn-request"><i class="icom-circle-plus"></i>Add</a>
+                  <a ng-click="admin.pushAddedDaysOff(false)" class="btn-request"><i class="icom-circle-minus"></i>DEDUCT</a>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div id="tabs-123" aria-labelledby="ui-id-6" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="true" style="display: none;">
+          <form action="#" class="fancybox-form">
+            <fieldset>
+              <div class="row">
+                <div class="form-align form-align-center">
+                  <input type="text" class="calendar hasDatepicker" id="dp1483093443221">
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div id="tabs-133" aria-labelledby="ui-id-7" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="true" style="display: none;">
+          <form action="#" class="fancybox-form">
+            <fieldset>
+              <div class="row">
+                <div class="form-align form-align-center">
+                  <input type="text" class="calendar hasDatepicker" id="dp1483093443222">
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </section><a title="Close" class="close" ng-click="admin.hideUserRequest($event)"></a>

@@ -34,6 +34,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
             userData : sailsService => sailsService.getUsers(),
+            vacationsTransformatedData : sailsService => sailsService.getVacations(),
             settings: sailsService => sailsService.getSettings()
           },
           views: {
@@ -53,6 +54,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
             userData : sailsService => sailsService.getUsers(),
+            vacationsTransformatedData : sailsService => sailsService.getVacations(),
             settings: sailsService => sailsService.getSettings()
           },
 
@@ -73,6 +75,7 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
           resolve: {
             asyncPreloading: resolverProvider.adminPagePrealoading,
             userData : sailsService => sailsService.getUsers(),
+            vacationsTransformatedData : sailsService => sailsService.getVacations(),
             settings: sailsService => sailsService.getSettings()
           },
 
@@ -101,7 +104,14 @@ function routeConfig($urlRouterProvider, $stateProvider, resolverProvider, sails
               controllerAs: 'admin'
               }
           }
-        });
+        })/*.state(states.CHANGEPASSWORD, {
+            views: {
+              'content@': {
+                templateUrl: require('!!file-loader?name=templates/[name].[ext]!./pages/login/changePassword.html'),
+                controller: 'LoginController'
+              }
+            }          
+          })*/;
 
 
   $urlRouterProvider.otherwise('/login');

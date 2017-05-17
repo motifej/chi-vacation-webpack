@@ -31,12 +31,17 @@ class NavbarController {
     this.manualState = this.states.MANUAL;
     this.$uibModal = $uibModal;
     this.activate($rootScope, $scope);
+    this.isMenuOpened = false;
+    console.log(this.states);
   }
 
   activate($rootScope, $scope) {
     let destr = $rootScope.$on(this.actions.USERLOADED,
       (ev, user) => this.user = user )
     $scope.$on('destroy', destr);
+    let getAvalableDays = $rootScope.$on('getAvalableDays',
+      (ev, sum) => {this.avalableDays = sum} )
+    $scope.$on('destroy', getAvalableDays);
   }
 
   logOut() {
@@ -71,6 +76,7 @@ class NavbarController {
 
   selected() {
     this.isCollapsed = false;
+    this.isMenuOpened = false;
   }
 
   editProfile() {

@@ -7,39 +7,45 @@ export default function (app) {
 			return function(input, status, date = 0) {
 				if (input.length > 0) {
 					if(date.startdate){
-            input = filter(input, item => (date.enddate) ? 
-            new Date(item.startdate) <= date.enddate && 
-            new Date(item.enddate) >= date.startdate : 
-            new Date(item.enddate) >= date.startdate);
-          }
-					switch (status) {
-						case 'new':
-						return filter(input, function(item) {
-							return item.status == 'new';
-						});
-						case 'rejected':
-						return filter(input, function(item) {
-							return item.status == 'rejected';
-						});
-						case 'confirmed':
-						return filter(input, function(item) {
-							return new Date(item.startdate) > 
-							new Date() && item.status == 'confirmed';
-						});
-						case 'inprogress':
-						return filter(input, function(item) {
-							return new Date(item.startdate) < new Date() && 
-							new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) > 
-							new Date() && item.status == 'confirmed';
-						});
-						case 'spent':
-						return filter(input, function(item) {
-							return new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) < 
-							new Date() && item.status == 'confirmed';
-						});
-						default:
-							return input;
-					}
+			            input = filter(input, item => (date.enddate) ? 
+			            new Date(item.startdate) <= date.enddate && 
+			            new Date(item.enddate) >= date.startdate : 
+			            new Date(item.enddate) >= date.startdate);
+			        }
+			        var filteredInput = [];
+					
+						if(status.new) {
+							filteredInput = [...filteredInput, ...filter(input, function(item) {
+								return item.status == 'new';
+							})]
+						}
+						if(status.rejected) {
+							filteredInput = [...filteredInput, ...filter(input, function(item) {
+								return item.status == 'rejected';
+							})]
+						}
+						if(status.confirmed) {
+							filteredInput = [...filteredInput, ...filter(input, function(item) {
+								return new Date(item.startdate) > 
+								new Date() && item.status == 'confirmed';
+							})]
+						}
+						if(status.inprogress) {
+							filteredInput = [...filteredInput, ...filter(input, function(item) {
+								return new Date(item.startdate) < new Date() && 
+								new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) > 
+								new Date() && item.status == 'confirmed';
+							})]
+						}
+						if(status.spent) {
+							filteredInput = [...filteredInput, ...filter(input, function(item) {
+								return new Date(new Date(item.enddate).setDate(new Date(item.enddate).getDate() + 1)) < 
+								new Date() && item.status == 'confirmed';
+							})]
+						}
+						/*default:
+							return input;*/
+					return filteredInput;
 				}
 			};
 		}

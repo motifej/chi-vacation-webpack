@@ -1,567 +1,337 @@
-
-<div class="container-fluid m-content">
-  <div class="">
-    <div class="col-md-3">
-      <div class="row">
-        <div class="panel m-panel">
-          <div class="panel-heading m-panel-head groups">
-            <div class="row">
-              <div class="form-group col-md-12">
-                <div class="checkbox">
-                  <label ng-hide="admin.user.role == admin.roles.TEAMLEAD">
-                    <input type="checkbox" ng-model="admin.showDeletedUsers"> <u>Show deleted users</u>
-                  </label>
+<main id="main" role="main">
+      <div class="container">
+        <aside id="sidebar">
+          <ul class="sidebar-links">
+            <li ng-class="{'active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')"><a href="#">Vacations <span class="counter">{{admin.calcNewVacationsCounter('vacations')}}</span></a></li>
+            <li ng-class="{'active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')"><a href="#">Days-off <span class="counter">{{admin.calcNewVacationsCounter('daysoff')}}</span></a></li>
+            <li ng-class="{'active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')"><a href="#">Work from home <span class="counter">{{admin.calcNewVacationsCounter('workfromhome')}}</span></a></li>
+          </ul>
+          <div class="logic-holder">
+            <form action="#" class="sidebar-filter custom-form">
+              <fieldset>
+                <!-- add class active  open drop-->
+                <div class="filter-holder ">
+                  <input ng-model="admin.search" ng-change="admin.isUserListShow()" type="search" name="Filter" id="Filter" placeholder="Filter by user">
+                  <ul ng-show="admin.isUserListShown" class="filter-list-user">
+                    <li ng-repeat="user in admin.users | strictFilter:admin.groupFilter:'group' | inputUserFilter:admin.search | filter:{deleted: admin.showDeletedUsers}" class="name"><a ng-click="admin.choiceUser(user.id, user.group, user)">{{user.firstname + " " + user.lastname}}</a><span class="location">{{user.group}}</span></li>
+                    <!-- <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
+                    <li><a href="#" class="name">Андрей Аваигян</a><span class="location">Android</span></li>
+                    <li><a href="#" class="name">Игорь Пилипенко</a><span class="location">Node JS</span></li>
+                    <li><a href="#" class="name">Влада Пилигрим</a><span class="location">Marketing managers</span></li>
+                    <li><a href="#" class="name">Максим Шигалов</a><span class="location">Design</span></li>
+                    <li><a href="#" class="name">Игорь Прокопченко</a><span class="location">Js</span></li>
+                    <li><a href="#" class="name">Владислав Илигиминов</a><span class="location">Js</span></li> -->
+                  </ul>
                 </div>
-              </div>
-            </div>
-            <span ng-repeat="group in admin.groups">
-              <a class="btn btn-sm m-button" ng-class="{'m-button--active': admin.filter.group == group}" ng-click="admin.choiceGroup(group)">{{group}} <span class="badge progress-bar-warning" ng-show="admin.calcNewVacations(group)">{{admin.calcNewVacations(group)}}</span></a>
-            </span>
-            <a class="btn btn-sm m-button" ng-class="{'m-button--active': !admin.filter.group}"  ng-click="admin.choiceGroup()">All</a>
-          </div>
-          <div class="panel-body m-panel-body users">
-            <div class="form-group">
-              <input  class="form-control dropdown-toggle ng-pristine ng-valid ng-empty ng-touched" 
-                      placeholder="choose user..." 
-                      id="statusinput" 
-                      type="text" 
-                      ng-model="admin.search" 
-                      aria-haspopup="true" 
-                      aria-expanded="true" 
-                      aria-invalid="false">
-            </div>
-            <span class="user inline-block" ng-repeat="user in admin.users | strictFilter:admin.groupFilter:'group' | filter:admin.search | filter:{deleted: admin.showDeletedUsers}">
-              <a class="btn btn-sm m-button m-button-user-list"  ng-click="admin.choiceUser(user.id, user.group, user)" ng-class="{'m-button--active': admin.filter.id == user.id}">{{user.firstname + " " + user.lastname}}</a>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-9">
-      <div class="buttons-panel clearfix" ng-if="admin.user.role == admin.roles.ADMIN">
-        <div class="col-xs-12 new-user-wrapper">
-          <button class="col-5 btn chi-btn--default" ng-click="admin.openNewUserForm()">Add User</button>
-        </div>
-      </div>
-      <hr ng-show="admin.user.role == admin.roles.ADMIN">
-      <div class="buttons-panel clearfix">
-        <div class="btn-group col-xs-12" ng-show="admin.user.role == admin.roles.ADMIN">
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">Days-Off</label>
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
-        </div>
-        <div class="btn-group col-xs-12" ng-show="admin.user.role == admin.roles.MANAGER || admin.user.role == admin.roles.TEAMLEAD">
-          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
-          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">DaysOff</label>
-          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
-          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
-        </div>
-      </div>
-      <div class="buttons-panel clearfix" ng-hide="admin.pageState == 'userRequest'">
-      <hr>
-        <div class="btn-group col-xs-12">
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': admin.statusFilter.status == 'new'}" ng-click="admin.choiceButtonFilter('new')">New</label>
-          <label class="btn-group btn col-xs-12 col-sm-3 col-md-3 m-tab--confirmed" uib-dropdown uib-dropdown-toggle ng-disabled="disabled" is-open="status.isopen" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed' || admin.statusFilter.status == 'inprogress' || admin.statusFilter.status == 'spent'}">
-            {{admin.dropdownFilter}} <span class="caret"></span>
-            <ul class="m-dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-              <li role="menuitem">
-                <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'confirmed'}" ng-click="admin.choiceButtonFilter('confirmed'); admin.choiceDropdownFilter('Confirmed')">Confirmed</label>
-              </li>
-              <li role="menuitem">
-                <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'inprogress'}" ng-click="admin.choiceButtonFilter('inprogress'); admin.choiceDropdownFilter('In progress')">In progress</label>
-              </li>
-              <li role="menuitem">
-                <label class="btn col-xs-12 m-tab--confirmed" ng-class="{'m-tab--confirmed--active': admin.statusFilter.status == 'spent'}" ng-click="admin.choiceButtonFilter('spent'); admin.choiceDropdownFilter('History')">History</label>
-              </li>
+                <div class="filter-holder">
+                  <span ng-click="admin.openGroupSelectMenu()" ng-blur="admin.closeGroupSelectMenu($event)" class="jcf-select jcf-unselectable">
+                    <span class="jcf-select-text">
+                      <span class="">{{admin.filter.user.group ? admin.filter.user.group :'All departments'}}</span>
+                    </span>
+                    <span class="jcf-select-opener"></span>
+                    <div ng-show="admin.groupSelectMenuIsOpened" class="jcf-select-drop jcf-select-jcf-hidden jcf-unselectable" style="width: 285px;">
+                      <div class="jcf-select-drop-content">
+                        <span class="jcf-list jcf-scroll-active">
+                          <span class="jcf-list-content" style="max-height: 217px; overflow: auto;">
+                            <ul>
+                              <li><span ng-click="admin.choiceGroup()" class="jcf-option" ng-class="{'jcf-selected': !admin.filter.user.group}">All departments</span></li>
+                              <li ng-repeat="group in admin.groups "><span ng-click="admin.choiceGroup(group, $event)" class="jcf-option" ng-class="{'jcf-selected': admin.filter.user.group == group}">{{group}}</span></li>
+                            </ul>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="filter-holder">
+                  <div class="icom-calendar ">
+                    <chi-datepicker class="datepicker"
+                      name="startdate"
+                      ng-model="dateFilter.startdate"
+                      is-show-all-days="true"
+                      ng-model-options="{timezone:'UTC'}"
+                      holidays="{{admin.holidays}}"
+                      max-date2="admin.maxDate"
+                      placeholder="Start date"
+                      >
+                      </chi-datepicker>
+                  </div>
+                  <span class="line"></span>
+                  <div class="icom-calendar">
+                    <chi-datepicker class="datepicker"
+                      name="enddate"
+                      ng-model="dateFilter.enddate"
+                      min-date="dateFilter.startdate"
+                      is-show-all-days="true"
+                      ng-model-options="{timezone:'UTC'}"
+                      holidays="{{admin.holidays}}"
+                      max-date2="admin.maxDate"
+                      placeholder="End date"
+                      >
+                      </chi-datepicker>
+                  </div>
+                  <!-- add class btn-visible  -->
+                  <div class="btn-holder btn-visible" ng-click="dateFilter = {}"><a href="#">Clear date filter</a></div>
+                </div>
+              </fieldset>
+            </form>
+            <ul class="admin-panel" ng-show="admin.user.role == admin.roles.ADMIN">
+              <li><a href="#" class=" btn btn-border-blue" ng-click="admin.openNewUserForm()">ADD USER</a></li>
+              <!-- <li><a href="#popup2" class="lightbox btn btn-border-blue">sHOW DELETED USERS</a></li> -->
+              <li><div href="#popup3" class=" lightbox btn btn-border-blue" ng-click="admin.showUserRequest()">USER REQUEST</div></li>
             </ul>
-          </label>
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--rejected" ng-class="{'m-tab--rejected--active': admin.statusFilter.status == 'rejected'}" ng-click="admin.choiceButtonFilter('rejected')">Rejected</label> 
-          <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--all" ng-class="{'m-tab--all--active': !admin.statusFilter.status}" ng-click="admin.choiceButtonFilter('')">All</label>
-        </div>
-      </div>
-      <hr>
-      <div class="m-calendar well clearfix" ng-show="admin.pageState == 'calendar'">
-        <div class="row col-md-12">
-
-          <br class="visible-xs visible-sm">
-
-          <!-- <h2 class="text-center">{{ admin.calendarTitle }}</h2> -->
-          <div class="row">
-            <div class="col-md-12 mWl-calendar-options">
-              <div class="btn-group">
-                <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'year'">Year</label>
-                <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'month'">Month</label>
-                <!-- <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'week'">Week</label> -->
-              </div>
-            </div>
-          </div>   
-          <div class="row">
-            <div class="col-md-12 text-center">
-              <div class="btn-group">
-                <button
-                  class="btn chi-btn--default"
-                  mwl-date-modifier
-                  date="admin.calendarDay"
-                  decrement="admin.calendarView">
-                  <<
-                </button>
-                <button
-                  class="btn chi-btn--default"
-                  mwl-date-modifier
-                  date="admin.calendarDay"
-                  set-to-today>
-                  {{ admin.calendarTitle }}
-                </button>
-                <button
-                  class="btn chi-btn--default"
-                  mwl-date-modifier
-                  date="admin.calendarDay"
-                  increment="admin.calendarView">
-                  >>
-                </button>
-              </div>
-            </div>
-          </div>               
-          <br class="visible-xs visible-sm">
           </div>
-          <div class="col-md-12">
-            <mwl-calendar
-              view="admin.calendarView"
-              view-date="admin.calendarDay"
-              events="admin.events"
-              view-title="admin.calendarTitle"
-              auto-open="true"
-              slide-box-disabled="true"
-              day-view-start="00:00"
-              day-view-end="00:00"
-              day-view-split="30"
-              on-event-click="admin.userInfo(calendarEvent.user)"
-              cell-modifier="admin.cellModifier(calendarCell)">
-            >
-            </mwl-calendar>
-          </div>
-        </div>        
-
-
-      <div class="well" ng-show="admin.pageState == 'vacations' || admin.pageState == 'daysoff' || admin.pageState == 'workfromhome'">
-
-        <div class="row">
-          <div class="col-md-4">
-            <label for="">Start date</label>
-            <chi-datepicker class="datepicker"
-              name="startdate"
-              ng-model="dateFilter.startdate"
-              is-show-all-days="true"
-              ng-model-options="{timezone:'UTC'}"
-              holidays="{{admin.holidays}}"
-              max-date2="admin.maxDate"
-              >
-              </chi-datepicker>
-          </div>
-          <div class="col-md-4">
-            <label for="">End date</label>
-            <chi-datepicker class="datepicker"
-              name="enddate"
-              ng-model="dateFilter.enddate"
-              min-date="dateFilter.startdate"
-              is-show-all-days="true"
-              ng-model-options="{timezone:'UTC'}"
-              holidays="{{admin.holidays}}"
-              max-date2="admin.maxDate"
-              >
-              </chi-datepicker>
-          </div>
-          <div class="col-md-offset-1 col-md-2" style="padding-top: 22px">
-            <div class="btn btn-primary" ng-click="dateFilter = {}">Clear date</div>
-          </div>
-          
-        </div>
-
-        <div ng-show="admin.isRepeated((admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter))">
-          <h4 ng-show="admin.filter.id"><span class="btn btn-sm chi-btn--reversed" ng-click="admin.userInfo(admin.filtredUser)">{{admin.filtredUser.firstname.charAt(0) + ". " + admin.filtredUser.lastname}}</span> <small class="text-warning">{{admin.filter.group}}</small> doesn't have <span ng-hide="!admin.filtredUser[admin.pageState]">{{admin.statusFilter.status}}</span> {{admin.getStatus(admin.pageState)}}</h4>
-          <h4 ng-hide="admin.filter.id">There is no {{admin.statusFilter.status}} {{admin.getStatus(admin.pageState)}}<span ng-show="admin.filter.group"> in <small class="text-warning">{{admin.filter.group}}</small></span></h4>
-        </div>
-
-        <div ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
-          <h4><span class="btn btn-sm chi-btn--reversed m-button-user-list" ng-click="admin.userInfo(user)">{{user.firstname.charAt(0) + ". " + user.lastname}}</span> <small class="text-warning">{{user.group}}</small><small class="pull-right text-warning">Total days: {{admin.getTotalDaysWFH(user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order)}}</small></h4>
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <colgroup>
-                <col class="col-xs-3">
-                <col class="col-xs-3">
-                <col class="col-xs-2">
-                <col class="col-xs-4">
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>Start date
-                    <span ng-click="admin.setOrder('startdate')" ng-class="{'m-tab--sort--active': admin.isActive('startdate')}" class="glyphicon glyphicon-arrow-up"></span>
-                    <span ng-click="admin.setOrder('-startdate')" ng-class="{'m-tab--sort--active': admin.isActive('-startdate')}" class="glyphicon glyphicon-arrow-down"></span>
-                  </th>
-                  <th>End date
-                    <span ng-click="admin.setOrder('enddate')" ng-class="{'m-tab--sort--active': admin.isActive('enddate')}" class="glyphicon glyphicon-arrow-up"></span>
-                    <span ng-click="admin.setOrder('-enddate')" ng-class="{'m-tab--sort--active': admin.isActive('-enddate')}" class="glyphicon glyphicon-arrow-down"></span>
-                  </th>
-                  <th>Duration</th>
-                  <th ng-if="!(admin.statusFilter.status == 'rejected' || admin.user.role == admin.roles.TEAMLEAD)">Action</th>
-                </tr>
-              </thead>
-              <tbody >
-                <tr ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
-                  <td>{{item.startdate | date:'dd MMMM yyyy'}}</td>
-                  <td>{{item.enddate | date:'dd MMMM yyyy'}}</td>
-                  <td>{{admin.calcDays(item.startdate, item.enddate)}}</td>
-                  <td ng-if="!(admin.statusFilter.status == 'rejected' || admin.user.role == admin.roles.TEAMLEAD)">
-                    <button ng-hide="item.status!='new'" class="btn btn-xs btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
-                    <button ng-hide="item.status=='rejected'" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="m-calendar well clearfix" ng-show="admin.pageState == 'userRequest'">
-        <div class="text-center">
-          <h2 ng-model="admin.filtredUser.name" class="m-button-user-list"> {{admin.filtredUser.lastname}} {{admin.filtredUser.firstname}} </h2>
-        </div>
-        <h2 class="text-center" ng-hide="admin.filtredUser.firstname">Please, select user.</h2>
-
-
-      <!-- <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
-          
-      <dropdown-list-directive 
-          data-items-list="admin.awesomeThings " 
-          data-show-events="admin.events" 
-          data-obj="admin.oneThing"
-          data-search="admin.searching">
-      </dropdown-list-directive> 
-
-      </div> -->
-
-
-<!-- <div class="container user__container"> -->
-      <!-- <div class="row"> -->
-        <div class="btn-group col-xs-12">
-          <label
-            class="btn col-xs-4 vacation-option"
-            ng-class="{'vacation-option-active': admin.vacationState == 'vacations'}"
-            ng-click="admin.changeVacationState('vacations')">
-            Vacations
-          </label>
-          <label
-            class="btn col-xs-4 vacation-option"
-            ng-class="{'vacation-option-active': admin.vacationState == 'daysoff'}"
-            ng-click="admin.changeVacationState('daysoff')">
-            Days-off
-          </label>
-          <label
-            class="btn col-xs-4 vacation-option"
-            ng-class="{'vacation-option-active': admin.vacationState == 'workfromhome'}"
-            ng-click="admin.changeVacationState('workfromhome')">
-            Work from home
-          </label>
-        </div>
-      <!-- </div> -->
-
-      <div class="col-xs-12">
-        <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='admin.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue)'>
-          <legend class="user-form__title">
-            <span ng-show="admin.isVacationState(admin.VACATIONS)">Vacations request</span>
-            <span ng-show="admin.isVacationState(admin.DAYSOFF)">Days-off request</span>
-            <span ng-show="admin.isVacationState(admin.WORKFROMHOME)">Work from home request</span>
-          </legend>
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label for="">Start date</label>
-              <chi-datepicker class="datepicker"
-              name="startdate"
-              ng-model="startdate"
-              calc-days="admin.calcDaysCalc(name, date)"
-              is-show-all-days="true"
-              is-disable-date="admin.filtredUser.id ? false : true"
-              holidays="{{admin.holidays}}"
-              max-date2="admin.maxDate"
-              >
-              </chi-datepicker>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="">End date</label>
-              <chi-datepicker class="datepicker"
-              name="enddate"
-              ng-model="enddate"
-              min-date="startdate"
-              calc-days="admin.calcDaysCalc(name)"
-              is-show-all-days="true"
-              is-disable-date="admin.filtredUser.id ? false : true"
-              holidays="{{admin.holidays}}"
-              max-date2="admin.maxDate"
-              >
-              </chi-datepicker>
-
-            </div>
-          </div>
-          <div class="row user-form__last-row">
-            <div class="form-group col-md-6">
-              <label for="selected" ng-show="admin.isVacationState('vacations')">Vacation days</label>
-              <label for="selected" ng-show="admin.isVacationState('daysoff')">Days-off</label>
-              <label for="selected" ng-show="admin.isVacationState('workfromhome')">Work from home</label>
-              <div id="selected" class="form-control user__total-days text-center"
-              ng-bind="admin.calcDays(startdate, enddate)"></div>
-            </div>
-            <div class="form-group col-md-6" ng-show="admin.isVacationState('vacations')">
-              <label for="available">Available days</label>
-              <div id="available" class="form-control user__left-days text-center"
-               ng-bind="admin.calcEnableDays(startdate)"></div>
-            </div>
-            <div class="form-group col-md-6" ng-show="admin.isVacationState('daysoff')">
-              <label for="DaysOff">Available days-off</label>
-              <input type="text" id="DaysOff" class="form-control user__left-days" readonly
-              ng-value="admin.filtredUser.availableDaysOff">
-            </div>
-            <div class="form-group col-md-6" ng-show="admin.isVacationState('workfromhome')">
-              <label for="workfromhome">Available work from home</label>
-              <input type="text" id="workfromhome" class="form-control user__left-days" readonly
-              value="5">
-            </div>            
-          </div>
-          <div class="row">
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingRequest) ? false : true" type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">
-              <span ng-show="admin.sendingRequest"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-              Send
-            </button>
-          </div>
-        </form>
-      </div>
-      <div class="col-xs-12 additional-form" ng-show="admin.isVacationState('vacations')">
-        <div class="well clearfix">
-          <legend class="user-form__title">Additional vacation days</legend>
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label for="selected">Cur year added</label>
-              <input type="text" id="selected" class="form-control user__total-days text-center" readonly
-              ng-value="admin.filtredUser.added[admin.filtredUser.year]">
-            </div>
-            <div class="form-group col-md-6" ng-show="admin.filtredUser.isCrossingYear">
-              <label for="available">Prev year added</label>
-              <input type="text" id="available" class="form-control user__left-days text-center" readonly
-              ng-value="admin.filtredUser.addedPrev">
-            </div>
-            <div class="form-group col-md-12">
-              <label for="added">Change the days of vacation</label>
-              <input type="text" id="added" class="form-control text-center" ng-model="admin.filtredUser.addedDays" restrict-pattern="[^\d]+">
-            </div>
-          </div>
-          <div class="form-group">
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-12 col-sm-5 chi-btn--default" ng-click="admin.pushAddedDays(true)">
-              <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-              Add
-            </button>
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-12 col-sm-5 col-sm-offset-2 chi-btn--default" ng-click="admin.pushAddedDays(false)">
-              <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-              Deduct
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-12 additional-form" ng-show="admin.isVacationState('daysoff')">
-        <div class="well clearfix">
-          <legend class="user-form__title">Additional days-off</legend>
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label for="selected">Cur year added</label>
-              <input type="text" id="selected" class="form-control user__total-days text-center" readonly
-              ng-value="admin.filtredUser.addedCurDaysOff">
-            </div>
-            <!-- <div class="form-group col-md-6" ng-show="admin.filtredUser.isCrossingYear">
-              <label for="available">Prev year added</label>
-              <input type="text" id="available" class="form-control user__left-days text-center" readonly
-              ng-value="admin.filtredUser.addedPrev">
-            </div> -->
-            <div class="form-group col-md-12">
-              <label for="addeDaysOff">Change count of days-off</label>
-              <input type="text" id="addedDaysOff" class="form-control text-center" ng-model="admin.filtredUser.newDaysOff" restrict-pattern="[^\d]+">
-            </div>
-          </div>
-          <div class="form-group">
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-12 col-sm-5 chi-btn--default" ng-click="admin.pushAddedDaysOff(true)">
-              <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-              Add
-            </button>
-            <button ng-disabled="(admin.filtredUser.id && !admin.sendingAdditional) ? false : true" class="btn col-xs-12 col-sm-5 col-sm-offset-2 chi-btn--default" ng-click="admin.pushAddedDaysOff(false)">
-              <span ng-show="admin.sendingAdditional"><i class="glyphicon glyphicon-refresh spinning"></i></span>
-              Deduct
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-      </div>  
-   <!-- </div>    -->
-  
-  
-
-      <!-- <div class="row">
-        <div class="vacations" ng-repeat="user in admin.users | filter:admin.filter">
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" ng-repeat="(key, item) in user.vacations.Vacations | statusFilter:'status':admin.statusFilter.status">
-            <div class="panel m-panel">
-              <div class="panel-heading m-panel-head">
-                <div class="row">
-                  <div class="col-xs-9"><div>{{user.firstname.charAt(0) + ". " + user.lastname}} </div><span class="m-vacation-group">{{user.group}}</span></div>
-                  <div class="col-xs-3"><span class="btn m-button-user chi-btn--default" ng-click="admin.userInfo(user)">Info</span></div>
+        </aside>
+        <div id="content">
+          <div class="tabs ui-corner-all ui-widget ui-widget-content">
+            <ul class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header show-filter">
+              <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': admin.statusFilter.status.new}" ng-click="admin.choiceButtonFilter('new')"><a class="ui-tabs-anchor">Active Requests <span class="counter">({{admin.calcNewVacationsStatus('new')}})</span></a></li>
+              <li class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" ng-class="{'ui-state-active': !admin.statusFilter.status.new}" ng-click="admin.choiceStatusFilter('all')"><a class="ui-tabs-anchor">Handled Requests <span class="counter">({{admin.calcNewVacationsStatus('handled')}})</span></a></li>
+              <label for="deleted"><input type="checkbox" name="Show_rejected" id="deleted" ng-model="admin.showDeletedUsers"> Show only deleted</label>
+            </ul>
+            <form action="#" class="show-filter custom-form" ng-show="admin.statusFilter.status.handled">
+              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.all}" for="all" ng-click="admin.choiceStatusFilter('all')">All<input type="checkbox" id="all" ng-model="admin.statusFilter.status.all" hidden></label>
+              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.confirmed && !admin.statusFilter.status.all}" for="started" ng-click="admin.choiceStatusFilter('confirmed')">HAven’t STARTED<input type="checkbox" id="started" ng-model="admin.statusFilter.status.confirmed" hidden></label>
+              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.inprogress && !admin.statusFilter.status.all}" for="progress" ng-click="admin.choiceStatusFilter('inprogress')">IN PROGRESS<input type="checkbox" id="progress" ng-model="admin.statusFilter.status.inprogress" hidden></label>
+              <label class="label-btn" ng-class="{'jcf-label-active': admin.statusFilter.status.spent && !admin.statusFilter.status.all}" for="past" ng-click="admin.choiceStatusFilter('spent')">PAST<input type="checkbox" name="past" id="past" btn-small ng-model="admin.statusFilter.status.spent" hidden></label>
+              <label for="rejected"><input type="checkbox" name="Show_rejected" id="rejected" ng-model="admin.statusFilter.status.rejected"> Show rejected</label>
+            </form>
+            <div id="tabs-2">
+            <div class="table" infinite-scroll='admin.loadMore()' infinite-scroll-distance='2'>
+              <!-- <div ng-repeat="user in admin.users | filter: {deleted: admin.showDeletedUsers} | filter:admin.filter | statusUserFilter:'status':admin.statusFilter.status:admin.pageState:dateFilter">
+                <div class="table-row" ng-repeat="(key, item) in user[admin.pageState] | userFilterVacation:admin.statusFilter.status:dateFilter | orderByObject: admin.order" ng-class="'m-action-' + item.status">
+                  <div class="table-col">
+                    <span class="circle">Js</span>
+                    <span class="user-name lightbox" ng-click="admin.userInfo(user)">{{user.firstname + " " + user.lastname}}</span>
+                  </div>
+                  <div class="table-col">
+                    <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} days<time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
+                  </div>
+                  <div class="table-col">
+                    <a href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(user, item.id)">Approve</a>
+                    <a href="#" class="btn-small-red icom-reject" ng-hide="item.status == 'confirmed'" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</a>
+                    <a href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(user, item.id)">Reject</a>
+                    <span class="wait">Waiting for approval</span>
+                  </div>
+                </div>
+              </div> -->
+              <div class="table-row" ng-repeat="(key, item) in admin.vacationsTransformatedData[admin.pageState] | filter:admin.filter | userFilterVacation:admin.statusFilter.status:dateFilter | filter:{deleted: admin.showDeletedUsers} | orderByObject: admin.order | limitTo: admin.vacationsCounter as vacationsFilteredData track by item.id" ng-class="'m-action-' + item.status">
+                  <div class="table-col">
+                    <span class="circle" ng-if="item.user.group == 'JS'">Js</span>
+                    <span class="circle" ng-if="item.user.group == '.Net'">.net</span>
+                    <span class="circle" ng-if="item.user.group == 'Android'">andr</span>
+                    <span class="circle" ng-if="item.user.group == 'Business Analyst'">ba</span>
+                    <span class="circle" ng-if="item.user.group == 'Data Bases'">db</span>
+                    <span class="circle" ng-if="item.user.group == 'Design'">dsgn</span>
+                    <span class="circle" ng-if="item.user.group == 'HR'">hr</span>
+                    <span class="circle" ng-if="item.user.group == 'iOS'">ios</span>
+                    <span class="circle" ng-if="item.user.group == 'IT'">it</span>
+                    <span class="circle" ng-if="item.user.group == 'Java'">java</span>
+                    <span class="circle" ng-if="item.user.group == 'Managers'">mng</span>
+                    <span class="circle" ng-if="item.user.group == 'Marketing Managers'">mkt</span>
+                    <span class="circle" ng-if="item.user.group == 'Markup'">mrkp</span>
+                    <span class="circle" ng-if="item.user.group == 'NodeJS'">node</span>
+                    <span class="circle" ng-if="item.user.group == 'Operations'">opr</span>
+                    <span class="circle" ng-if="item.user.group == 'PHP'">php</span>
+                    <span class="circle" ng-if="item.user.group == 'Python'">pyth</span>
+                    <span class="circle" ng-if="item.user.group == 'QA'">qa</span>
+                    <span class="circle" ng-if="item.user.group == 'Ruby'">Ruby</span>
+                    <span class="circle" ng-if="item.user.group == 'Sales'">sales</span>
+                    <span class="circle" ng-if="item.user.group == 'C++'">c++</span>
+                    <span class="user-name lightbox" ng-click="admin.userInfo(item.user)">{{item.user.firstname + " " + item.user.lastname}}</span>
+                  </div>
+                  <div class="table-col">
+                    <span class="counter-day">{{admin.calcDays(item.startdate, item.enddate)}} <span ng-show="admin.calcDays(item.startdate, item.enddate) == 1">day</span><span ng-show="admin.calcDays(item.startdate, item.enddate) != 1">days</span><time class="date-time" datetime="12-09-2016">{{item.startdate | date:'dd MMM yyyy'}} — {{item.enddate | date:'dd MMM yyyy'}}</time></span>
+                  </div>
+                  <div class="table-col">
+                    <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-green icom-approve " ng-hide="item.status=='rejected'" class="btn btn-xs btn-primary col-md-offset-2" ng-class="{'disabled': item.status=='confirmed'}" ng-click="admin.confirmVacation(item.user, item.id)">{{item.status=='confirmed' ? 'Approved' : 'Approve'}}</a>
+                    <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-red icom-reject" ng-hide="item.status == 'confirmed'" ng-class="{'disabled': item.status=='rejected'}" class="btn btn-xs btn-danger col-md-offset-2" ng-click="admin.rejectVacation(item.user, item.id)">{{item.status=='rejected' ? 'Rejected' : 'Reject'}}</a>
+                    <a ng-if="!(admin.user.role == admin.roles.TEAMLEAD)" href="#" class="btn-small-red" ng-show="item.status == 'confirmed'" ng-click="admin.rejectVacation(item.user, item.id)">Reject</a>
+                    <!-- <span class="wait">Waiting for approval</span> -->
+                    <span class="updated-by" ng-if="item.updatedBy">Updated by {{item.updatedBy.firstname + " " + item.updatedBy.lastname}}</span>
+                  </div>
+                </div>
+                <div ng-if="!vacationsFilteredData.length">
+          <!-- <img src="../../../assets/styles/images/logo.svg" alt="CHI"/> --></div>
+              <!-- <div class="table-row">
+                <div class="table-col">
+                  <span class="circle">Js</span>
+                  <a href="#" class="user-name">Максим Новак</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">10 days<time class="date-time" datetime="12-09-2016">Sep 5, 2016 — Sep 16, 2016</time></span>
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve ">Approve</a>
+                  <a href="#" class="btn-small-red icom-reject">Reject</a>
+                  <span class="wait">Waiting for approval</span>
                 </div>
               </div>
-              <div class="panel-body m-panel-body">
-                <div class="vacation-data well m-well">
-                  <div>from {{item.startdate | date:'dd MMMM yyyy'}}</div>
-                  <div>to {{item.enddate | date:'dd MMMM yyyy'}}</div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle">Mng</span>
+                  <a href="#" class="user-name">Игорь Олейник</a>
                 </div>
-                <div class="buttons-wrapper">
-                  <button ng-disabled="item.status!='inprogress'" class="btn btn-primary col-md-offset-2" ng-click="admin.confirmVacation(user, item.id)">Confirm</button>
-                  <button ng-disabled="item.status=='rejected'" class="btn btn-danger col-md-offset-2" ng-click="admin.rejectVacation(user, item.id)">Reject</button>
+                <div class="table-col">
+                  <span class="counter-day">14 days<time class="date-time" datetime="12-09-2016">Aug 08, 2016 — Sep 26, 2016</time></span>
+                  
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve ">Approve</a>
+                  <a href="#" class="btn-small-red icom-reject">Reject</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle icom-apple"></span>
+                  <a href="#" class="user-name">Яков Школьников</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">1 days<time class="date-time" datetime="12-09-2016">Aug 09, 2016</time></span>
+                  
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve ">Approve</a>
+                  <a href="#" class="btn-small-red icom-reject">Reject</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle icom-android"></span>
+                  <a href="#" class="user-name">Яков Школьников</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">1 days<time class="date-time" datetime="12-09-2016">Sep 16, 2016 — Sep 30, 2016</time></span>
+                  
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve ">Approve</a>
+                  <a href="#" class="btn-small-red icom-reject">Reject</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle icom-apple"></span>
+                  <a href="#" class="user-name">Яков Школьников</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">1 days<time class="date-time" datetime="12-09-2016">Sep 16, 2016 — Sep 30, 2016</time></span>
+                  
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve ">Approve</a>
+                  <a href="#" class="btn-small-red icom-reject">Reject</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle">Mng</span>
+                  <a href="#" class="user-name">Яков Школьников</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">1 days<time class="date-time" datetime="12-09-2016">Sep 16, 2016 — Sep 30, 2016</time></span>
+                  
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve ">Approve</a>
+                  <a href="#" class="btn-small-red icom-reject">Reject</a>
+                </div>
+              </div> -->
+            </div>
+            </div>
+            <!-- <div id="tabs-3">
+            <div class="table">
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle">Js</span>
+                  <a href="#" class="user-name">Тимофей Лебедев</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">5 days<time class="date-time" datetime="12-09-2016">Sep 12, 2016 — Sep 16, 2016</time></span>
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve disabled">Approve</a>
+                  <a href="#" class="btn-small-red">Delete</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle">Js</span>
+                  <a href="#" class="user-name">Максим Новак</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">10 days<time class="date-time" datetime="12-09-2016">Sep 12, 2016 — Sep 16, 2016</time></span>
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-red icom-reject disabled">Reject</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle">Mng</span>
+                  <a href="#" class="user-name">Игорь Олейник</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">14 days<time class="date-time" datetime="12-09-2016">Sep 12, 2016 — Sep 16, 2016</time></span>
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-red icom-reject disabled">Reject</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle icom-apple"></span>
+                  <a href="#" class="user-name">Яков Школьников</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">1 days<time class="date-time" datetime="12-09-2016">Sep 12, 2016 — Sep 16, 2016</time></span>
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve disabled">Approve</a>
+                  <a href="#" class="btn-small-red">Delete</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle icom-android"></span>
+                  <a href="#" class="user-name">Яков Школьников</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">1 days<time class="date-time" datetime="12-09-2016">Sep 12, 2016 — Sep 16, 2016</time></span>
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve disabled">Approve</a>
+                  <a href="#" class="btn-small-red">Delete</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle icom-apple"></span>
+                  <a href="#" class="user-name">Яков Школьников</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">1 days<time class="date-time" datetime="12-09-2016">Sep 12, 2016 — Sep 16, 2016</time></span>
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-green icom-approve disabled">Approve</a>
+                  <a href="#" class="btn-small-red">Delete</a>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-col">
+                  <span class="circle icom-apple"></span>
+                  <a href="#" class="user-name">Яков Школьников</a>
+                </div>
+                <div class="table-col">
+                  <span class="counter-day">1 days<time class="date-time" datetime="12-09-2016">Sep 12, 2016 — Sep 16, 2016</time></span>
+                </div>
+                <div class="table-col">
+                  <a href="#" class="btn-small-red icom-reject disabled">Reject</a>
                 </div>
               </div>
             </div>
-          </div>
-
-        </div>
-      </div> -->
-    </div>
-  </div>
-</div>
-
-
-
-
-
-<!-- 
-
-<div class="wrap">
-<div class="container admin__container">
-  <div class="jumbotron text-center">
-    <h2 ng-model="admin.oneThing.name"> {{admin.oneThing.lastname}} {{admin.oneThing.firstname}} </h2>
-    <div class="row">
-    <div class="form-group col-md-3 col-md-offset-3 ">
-      Total:<input class="form-control text-center" type="text" value="{{admin.oneThing.vacations.total}}" readonly="">
-    </div>
-    <div class="form-group col-md-3 ">
-      DayOff: <input class="form-control text-center" type="text" value="{{admin.oneThing.vacations.dayOff}}" readonly="">
-    </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="col-md-3">
-
-        <dropdown-list-directive 
-          data-items-list="admin.awesomeThings " 
-          data-show-events="admin.events" 
-          data-obj="admin.oneThing"
-          data-search="admin.search">
-        </dropdown-list-directive> 
-
-      </div>
-
-    <div class="row col-md-9">
-
-        <div  class="col-sm-4 col-sm-offset-2">
-          <chi-datepicker
-          ng-model =  "admin.newEvent.startsAt"
-          ng-click="admin.dateChange()"
-          >
-        </chi-datepicker>
-        </div>
-
-          <div  class="col-sm-4">
-            <chi-datepicker
-            ng-model = "admin.newEvent.endsAt"
-            min-date = "admin.newEvent.startsAt"
-            >
-          </chi-datepicker>
-        </div>
-
-        <div class="col-sm-2 add-event-block">
-          <button class="btn btn-block chi-btn--default"
-          ng-disabled="!admin.newEvent.startsAt ||
-          !admin.newEvent.endsAt"
-          ng-click="admin.setdateInfo()"
-          >
-          OK
-        </button>
+                      </div> -->
         </div>
       </div>
-    </div>
-  </div>
-
-
-  <div class="row col-md-12">
-
-    <br class="visible-xs visible-sm">
-
-
-    <!-- <h2 class="text-center">{{ admin.calendarTitle }}</h2> -->
-
-<!-- 
-    <div class="row">
-    <div class="col-md-12 text-right">
-      <div class="btn-group">
-        <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'year'">Year</label>
-        <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'month'">Month</label>
-        <!-- <label class="btn chi-btn--default" ng-model="admin.calendarView" uib-btn-radio="'week'">Week</label> -->
-<!--       </div>
-    </div>
-    <h3 class="text-center">{{ admin.calendarTitle }}</h3>
-      <div class="col-md-12 text-center">
-        <div class="btn-group">
-          <button
-            class="btn chi-btn--default"
-            mwl-date-modifier
-            date="admin.calendarDay"
-            decrement="admin.calendarView">
-            <<
-          </button>
-          <button
-            class="btn chi-btn--default"
-            mwl-date-modifier
-            date="admin.calendarDay"
-            set-to-today>
-            Today
-          </button>
-          <button
-            class="btn chi-btn--default"
-            mwl-date-modifier
-            date="admin.calendarDay"
-            increment="admin.calendarView">
-            >>
-          </button>
-        </div>
-    </div>
-
-    <br class="visible-xs visible-sm">
-
-    </div>
-
-  </div>
-
-  <div class="col-md-12">
-    <mwl-calendar
-    view="admin.calendarView"
-    view-date="admin.calendarDay"
-    events="admin.events"
-    view-title="admin.calendarTitle"
-    auto-open="true"
-    slide-box-disabled="true"
-    day-view-start="06:00"
-    day-view-end="22:00"
-    day-view-split="30"
-    >
-    </mwl-calendar>
-  </div>
-</div>
-</div> -->
+    </main>
+    

@@ -1,124 +1,106 @@
-<div class="modal-header">
-  <h3 class="modal-title">Settings</h3>
-</div>
-
-<div class="modal-body">
-
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <form class="form-horizontal" name="SettingsForm"  ng-submit="user.submitForm()" novalidate>
-
-        <uib-tabset active="active">
-          <uib-tab index="0" heading="Emails">
-            <br>
-            <div class="form-group">
-              <div class="checkbox">
-                <label>
-                  <input id="emailCreate" name="emailCreate" type="checkbox" ng-model="user.settings.emailCreate">
-                  Send email when new vacations were created
-                </label>
+    <a class="close" ng-click="user.cancel()"></a>
+    <section id="popup1" class="lightbox">
+      <h1>Settings</h1>
+      <div class="tabs-fancybox">
+        <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+          <li ng-click="user.changePageState('emails')" ng-class="{' ui-tabs-active ui-state-active': user.pageState == 'emails'}" role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-11" aria-labelledby="ui-id-3" aria-selected="true" aria-expanded="true"><span role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-3">EMAILs</span></li>
+          <li ng-click="user.changePageState('holidays')" ng-class="{' ui-tabs-active ui-state-active': user.pageState == 'holidays'}" role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-12" aria-labelledby="ui-id-4" aria-selected="false" aria-expanded="false"><span role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-4">HOLIDAYS</span></li>
+        </ul>
+        <div ng-show="user.pageState == 'emails'" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+          <form ng-submit="user.submitForm()" class="fancybox-form settings">
+            <fieldset>
+              <div class="row">
+                <label for="new_vacations"><input ng-model="user.settings.emailCreate" type="checkbox" id="new_vacations">Send email when new request were created</label>
+                <label for="email_user"><input ng-model="user.settings.emailChanged" type="checkbox" id="email_user">Send email to user when status of request was changed</label>
               </div>
-            </div>
-
-            <div class="form-group">
-              <div class="checkbox">
-                <label>
-                  <input id="emailCreate" name="emailCreate" type="checkbox" ng-model="user.settings.emailChanged">
-                  Send email to user when status of vacation was changed
-                </label>
+              <div class="row">
+                <span class="label-left">General Recepients</span>
+                <div class="form-align">
+                  <input type="email" id="New_email1" placeholder="New email" ng-model="user.newEmail" ng-pattern="user.emailPattern">
+                  <a ng-click="user.addEmail()" class="btn-small-red-form"><i class="icom-circle-plus"></i>Add</a>
+                  <ul class="list-add-email">
+                    <li ng-repeat="item in user.settings.email track by $index">
+                      <strong>
+                        {{item}}
+                      </strong>
+                      <a class="icom-trash" ng-click="user.deleteEmail(item)"></a>
+                    </li>
+                    <!-- <li><strong>Management@chisw.com<a href="#" class="icom-trash"></a></strong></li>
+                    <li><strong>hr@chisw.com<a href="#" class="icom-trash"></a></strong></li>
+                    <li><strong>finance_department@chisw.com<a href="#" class="icom-trash"></a></strong></li> -->
+                  </ul>
+                </div>
               </div>
-            </div>      
-
-
-            <div class="form-group">
-              <label for="newEmail">General recipients:</label>
-              <ul class="list-group" >
-                <li ng-repeat="item in user.settings.email track by $index" class="list-group-item">
-                  <span class="glyphicon glyphicon-envelope"></span> {{item}}
-                  <span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteEmail(item)"></span>
-                </li>
-              </ul>
-
-              <div class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                <input id="newEmail" name="newEmail" type="text" class="form-control" ng-model="user.newEmail" placeholder="Add email" ng-pattern="user.emailPattern">
-                <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button" ng-click="user.addEmail()">Add</button>
-                </span>
-              </div>
-            </div>
-
-
-<hr>
-            <div class="form-group">
-              <label for="newGroupEmail">Recipients by groups:</label>
-
-              <div class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
-
-                <select class="form-control" placeholder="Select group"
-                      ng-options="value.name for value in user.groups"
-                      ng-model="user.group"
-                ></select>
-
-              </div>
-            
-              <ul class="list-group" >
-                  <li ng-repeat="item in user.group.emails track by $index" class="list-group-item">
-                    <span class="glyphicon glyphicon-envelope"></span> {{item}}
-                    <span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteGroupEmail(item)"></span>
+              <div class="row">
+                <span class="label-left">Recepients by departments</span>
+                <div class="form-align">
+                  <!-- <select ng-options="value.name for value in user.groups"
+                      ng-model="user.group">
+                    
+                  </select> -->
+                  <span ng-click="user.openGroupSelectMenu()" ng-blur="user.closeGroupSelectMenu($event)" class="jcf-select jcf-unselectable">
+                    <span class="jcf-select-text">
+                      <span class="">{{user.group ? user.group.name :'All departments'}}</span>
+                    </span>
+                    <span class="jcf-select-opener"></span>
+                    <div ng-show="user.groupSelectMenuIsOpened" class="jcf-select-drop jcf-select-jcf-hidden jcf-unselectable" style="width: 285px;">
+                      <div class="jcf-select-drop-content">
+                        <span class="jcf-list jcf-scroll-active">
+                          <span class="jcf-list-content" style="max-height: 217px; overflow: auto;">
+                            <ul>
+                              <li ng-repeat="group in user.groups"><span ng-click="user.choiceGroup(group, $event)" class="jcf-option" ng-class="{'jcf-selected': user.group.name == group.name}">{{group.name}}</span></li>
+                            </ul>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </span>
+                  <input type="email" id="New_email1" placeholder="New email" ng-model="user.newGroupEmail" ng-pattern="user.emailPattern">
+                  <a ng-click="user.addGroupEmail()" class="btn-small-red-form"><i class="icom-circle-plus"></i>Add</a>
+                  <ul class="list-add-email">
+                  <li ng-repeat="item in user.group.emails track by $index">
+                    <strong>{{item}}</strong>
+                    <a class="icom-trash" ng-click="user.deleteGroupEmail(item)"></a>
                   </li>
-              </ul>
-
-              <div class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                <input id="newGroupEmail" name="newGroupEmail" type="text" class="form-control" ng-model="user.newGroupEmail" placeholder="Add email for {{user.group.name}} group" ng-pattern="user.emailPattern">
-                <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button" ng-click="user.addGroupEmail()">Add</button>
-                </span>
+                    <!-- <li><strong>alexey.stepchenkov@chisw.com<a href="#" class="icom-trash"></a></strong></li> -->
+                  </ul>
+                </div>
               </div>
-            </div>
-
-<hr>
-
-        </uib-tab>
-        <uib-tab index="1" heading="Holidays">
-          <br>
-            <div class="form-group">
-              <label for="newEmail">List of holidays:</label>
-              <input type="text" class="form-control" placeholder="Filter by year" ng-model="user.holidayFilter">
-              <ul class="list-group modal-holidays-list">
-                <li ng-repeat="item in user.settings.holidays | orderBy: date | filter:user.holidayFilter || '-'" class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar"></span> {{item}}
-                  <span title="Delete holiday" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteHoliday(item)"></span>
-                </li>
-              </ul>
-
-                <div class="">
+              <div class="row">
+                <button type="submit" class="btn btn-red">SAVE CHANGES</button>
+                <button type="button" ng-click="user.cancel()" class="btn btn-border-red close" title="cansel">Cancel</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div ng-show="user.pageState == 'holidays'" class="ui-tabs-panel ui-corner-bottom ui-widget-content">
+          <form ng-submit="user.submitForm()" class="fancybox-form settings ">
+            <fieldset>
+              <div class="row">
+                <div class="form-align form-align-center">
                   <chi-datepicker class="datepicker col-md-10 col-xs-9 row"
                     name="user.holdayDate"
                     ng-model="user.holidayDate"
                     holidays="{{user.settings.holidays}}"
                   >
                   </chi-datepicker>
-                  <button class="btn btn-secondary pull-right col-md-2 col-xs-3" type="button" ng-click="user.addHoliday()">Add</button>
+                  <a ng-click="user.addHoliday()" class="btn-small-red-form"><i class="icom-circle-plus"></i>Add</a>
+                  <ul class="list-add-email">
+                    <li ng-repeat="item in user.settings.holidays | orderBy: date | filter:user.holidayFilter || '-'" class="list-group-item">
+                      <strong>{{item}} <a ng-click="user.deleteHoliday(item)" class="icom-trash"></a></strong>
+                    </li>
+                    <!-- <li><strong>Management@chisw.com<a href="#" class="icom-trash"></a></strong></li>
+                    <li><strong>hr@chisw.com<a href="#" class="icom-trash"></a></strong></li>
+                    <li><strong>finance_department@chisw.com<a href="#" class="icom-trash"></a></strong></li> -->
+                  </ul>
+                </div>
               </div>
-          </div>
-        </uib-tab>
-      </uib-tabset>
-
-
-
-      <div class="modal-footer">
-        <div class="form-group">
-          <div class="col-md-8 col-md-offset-4">
-            <button class="btn btn-warning" type="button" ng-click="user.cancel()">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
+              <div class="row">
+                <button type="submit" class="btn btn-red">SAVE CHANGES</button>
+                <button type="button" ng-click="user.cancel()" class="btn btn-border-red close" title="cansel">Cancel</button>
+              </div>
+            </fieldset>
+          </form>
         </div>
       </div>
-
-  </form>
-</div>
+    </section>

@@ -1,0 +1,107 @@
+// forms
+
+form,
+fieldset {
+  @extend %clearfix;
+  margin: 0;
+  padding: 0;
+  border-style: none;
+  .row{
+    @extend %clearfix;
+    margin: 0 0 27px;
+  }
+  label{
+    margin: 0 0 20px;
+  }
+}
+
+input[type='text'],
+input[type='tel'],
+input[type='email'],
+input[type='search'],
+input[type='password'],
+input[type='url'],
+input[type='date'],
+textarea,
+.datepicker__input {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  box-sizing: border-box;
+  border: 1px solid $form-element-border-color;
+  padding: $form-element-padding;
+  height: 49px;
+  width: 100%;
+  border-radius: 2px;
+  transition: border-color 0.3s;
+  @include media('<480px') {
+    height: 40px;
+    padding: 8px 10px;
+  }
+  &:hover {
+    border-color: $red;
+  }
+  &:focus {
+    border-color: $form-element-focus-border-color;
+  }
+  @include placeholder {
+    color: $placeholder-color;
+  }
+}
+
+input[type="checkbox"]{
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+textarea {
+  resize: vertical;
+  vertical-align: top;
+  height: auto;
+}
+
+select {
+  -webkit-border-radius: 0;
+}
+
+label{
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 15px;
+  font-weight: 600;
+  color: $gray3;
+  @include media('<tablet') {
+    font-size: 13px;
+  }
+}
+
+button,
+input[type='button'],
+input[type='reset'],
+input[type='file'],
+input[type='submit'] {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  cursor: pointer;
+  background: none;
+  border: 1px solid $gray4;
+  padding: $btn-padding;
+  color: $btn-color;
+  min-width: 174px;
+  border-radius: 4px;
+  display: inline-block;
+  vertical-align: top;
+  text-transform: uppercase;
+  font-size: $btn-font-size;
+  transition: all 0.3s;
+  &:hover{
+    border-color: $blue2;
+  }
+}
+
+input[disabled],
+button[disabled]{
+  border-color: $gray8 !important;
+  background: $gray8 !important;
+}
+

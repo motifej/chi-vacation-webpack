@@ -79,7 +79,7 @@ module.exports = function(_path) {
         ]
       }, {
         test: /\.(jpe?g|png|gif)$/i,
-        loader: DEVELOPMENT ? 'url-loader' : 'url-loader?name=assets/images/[name]_[hash].[ext]&limit=10000'
+        loader: DEVELOPMENT ? 'url-loader' : 'url-loader?name=assets/images/[name]_[hash].[ext]&limit=10'
       }, {
         test: require.resolve("angular"),
         loaders: [

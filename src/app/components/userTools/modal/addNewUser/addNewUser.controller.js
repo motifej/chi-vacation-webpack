@@ -1,11 +1,12 @@
 export default class AddNewUserController {
-  constructor ($filter, $parse, $uibModalInstance, toastr, users, groups, sailsService) {
+  constructor ($filter, $parse, $timeout, $uibModalInstance, toastr, users, groups, sailsService) {
     'ngInject';
 
     this.invalidForm = false;
     this.namePattern = '[a-zA-Zа-яА-Я\-]+';
     this.emailPattern = '\\w+.?\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}';
     this.filter = $filter;
+    this.$timeout = $timeout;
     this.$parse = $parse;
     this.sailsService = sailsService;
     this.toastr = toastr;
@@ -59,12 +60,32 @@ export default class AddNewUserController {
     }
   }
 
-  phoneChanged() {
-   this.newUser.phone = this.filter('phoneFilter')(this.newUser.phone);
+  openGroupSelectMenu() {
+    this.groupSelectMenuIsOpened = true;
+  }
+
+  closeGroupSelectMenu(e) {
+    this.$timeout(() => this.groupSelectMenuIsOpened = false, 300);
+  }
+
+  choiceGroup(group) {
+    this.newUser.group = group;
+  }
+
+  openRoleSelectMenu() {
+    this.roleSelectMenuIsOpened = true;
+  }
+
+  closeRoleSelectMenu(e) {
+    this.$timeout(() => this.roleSelectMenuIsOpened = false, 300);
+  }
+
+  choiceRole(role) {
+    this.newUser.role = role;
   }
 
   cancelNewUser() {
-    this.modalInstance.dismiss('cancel');
+    this.modalInstance.close();
   }
 
 }
