@@ -19,9 +19,8 @@ const App = angular.module(
     "ui.bootstrap",
     "mwl.calendar",
     "ngStorage",
-    "ui.multiselect",
+    "btorfs.multiselect",
     //"ngSails",
-
 
     require('angular-resource'),
 

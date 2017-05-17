@@ -81,12 +81,12 @@
             <h1 ng-show="userCtrl.vacationState == userCtrl.DAYSOFF">Day-off request</h1>
             <h1 ng-show="userCtrl.vacationState == userCtrl.WORKFROMHOME">Work from home request</h1>
             <span class="vacation-day" ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation days expire on <time datetime="13-09">{{userCtrl.user.vacationsExpireDate | date:'dd MMM yyyy'}}</time></span>
-            <form name="userForm" class="calendar-form" ng-submit='userCtrl.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue)'>
+            <form name="userForm" class="calendar-form" ng-submit='userCtrl.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue);userCtrl.calcDaysCalc()'>
               <fieldset>
                 <div class="col dashed">
                   <label for="start_date">Start date</label>
                   <div class="icom-calendar">
-                    <chi-datepicker class="datepicker "
+                    <chi-datepicker class="datepicker"
                       name="startdate"
                       ng-model="startdate"
                       min-date="minStartDate"
