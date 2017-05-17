@@ -1641,6 +1641,10 @@ input.calendar{
 			overflow: visible;
 			float: left;
 		}
+		&.calendar-wrapper {
+			overflow: visible;	
+			float: right;
+		}
 		.btn-small-red-form{float: right;}
 		&.form-align-center{
 			@extend %clearfix;
@@ -1813,7 +1817,8 @@ a.icom-trash{
 		margin: 0;
 	}
 	.icom-calendar{
-		z-index: 1;
+		//fixing overlay of calendars
+		// z-index: 1;
 		margin: 0;
 	}
 	input{

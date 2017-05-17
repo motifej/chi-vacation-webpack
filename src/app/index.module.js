@@ -3,7 +3,7 @@
 import * as components from './index.components';
 import config from './index.config';
 import run from './index.run';
-
+console.log(require('angular-ui-router'))
 const App = angular.module(
   "test", [
     // plugins
@@ -19,7 +19,7 @@ const App = angular.module(
     "ui.bootstrap",
     "mwl.calendar",
     "ngStorage",
-    "btorfs.multiselect",
+    "ui.multiselect",
     //"ngSails",
 
 
