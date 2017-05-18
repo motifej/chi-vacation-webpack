@@ -125,10 +125,13 @@ export default class UserController {
 
      switch (state) {
         case VACATIONS: vacationType = 'availableDays';
+           this.user[vacationType] -=confirmedVacation; 
+          // this.calcDays();    
         break;
         case DAYSOFF:
           vacationType = 'availableDaysOff';
           this.user[vacationType] -=confirmedVacation; 
+          // this.calcDays();
         break;        
         case WORKFROMHOME: vacationType = 'availableWorkFromHome';
         break;        
@@ -186,8 +189,9 @@ export default class UserController {
         this.user[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
       this.sending = false; 
-      console.log(this.user);
-      this.reCalcAvaliableDays(this.vacationState, this.user.vacationDays);
+      this.$timeout(()=> {
+        this.reCalcAvaliableDays(this.vacationState, this.user.vacationDays);
+      });
     }
 
     //список новых и подтвержденных заявок
@@ -254,13 +258,16 @@ export default class UserController {
 
   calcDaysCalc() {
     this.$timeout(()=> {
+
       if (this.$scope.startdate && this.$scope.enddate) {
         this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], angular.copy(this.holidays));
         this.calcEnableDays(this.$scope.startdate)
       } else {
         this.user.vacationDays = 0;
       }
+
     });
+      
 
   }
 
