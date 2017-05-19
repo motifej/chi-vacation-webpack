@@ -14,65 +14,7 @@
             ><a href="#">Work from home</a></li>
           </ul>
           <div class="logic-holder">
-            <!-- <form action="#" class="sidebar-filter custom-form">
-              <fieldset>
-                add class active  open drop
-                <div class="filter-holder ">
-                  <input type="search" name="Filter" id="Filter" placeholder="Filter by user">
-                  <ul class="filter-list-user">
-                    <li><a href="#" class="name">Игорь Царенко</a><span class="location">Js</span></li>
-                    <li><a href="#" class="name">Андрей Аваигян</a><span class="location">Android</span></li>
-                    <li><a href="#" class="name">Игорь Пилипенко</a><span class="location">Node JS</span></li>
-                    <li><a href="#" class="name">Влада Пилигрим</a><span class="location">Marketing managers</span></li>
-                    <li><a href="#" class="name">Максим Шигалов</a><span class="location">Design</span></li>
-                    <li><a href="#" class="name">Игорь Прокопченко</a><span class="location">Js</span></li>
-                    <li><a href="#" class="name">Владислав Илигиминов</a><span class="location">Js</span></li>
-                  </ul>
-                </div>
-                <div class="filter-holder ">
-                  <select>
-                    <option value="">All departments</option>
-                    <option value="">.net</option>
-                    <option value="">Android</option>
-                    <option value="">business analyst</option>
-                    <option value="">data bases</option>
-                    <option value="">design</option>
-                    <option value="">hr</option>
-                    <option value="">ios</option>
-                    <option value="">it</option>
-                    <option value="">java</option>
-                    <option value="">js</option>
-                    <option value="">managers</option>
-                    <option value="">marketing</option>
-                    <option value="">markup</option>
-                    <option value="">node js</option>
-                    <option value="">operations</option>
-                    <option value="">php</option>
-                    <option value="">python</option>
-                    <option value="">qa</option>
-                    <option value="">ruby</option>
-                    <option value="">sales</option>
-                    <option value="">c++</option>
-                  </select>
-                </div>
-                <div class="filter-holder">
-                  <div class="icom-calendar ">
-                    <input class="calendar" type="text"  placeholder="Sep 12, 2016">
-                  </div>
-                  <span class="line"></span>
-                  <div class="icom-calendar">
-                    <input class="calendar" type="text" placeholder="Sep 18, 2016">
-                  </div>
-                  add class btn-visible
-                  <div class="btn-holder"><a href="#">Clear date filter</a></div>
-                </div>
-              </fieldset>
-            </form> -->
-            <!-- <ul class="admin-panel">
-              <li><a href="#" class=" btn btn-border-blue">ADD USER</a></li>
-              <li><a href="#popup2" class="lightbox btn btn-border-blue">sHOW DELETED USERS</a></li>
-              <li><a href="#popup3" class=" lightbox btn btn-border-blue">USER REQUEST</a></li>
-            </ul> -->
+
           </div>
         </aside>
         <div id="content">
@@ -81,7 +23,7 @@
             <h1 ng-show="userCtrl.vacationState == userCtrl.DAYSOFF">Day-off request</h1>
             <h1 ng-show="userCtrl.vacationState == userCtrl.WORKFROMHOME">Work from home request</h1>
             <span class="vacation-day" ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Vacation days expire on <time datetime="13-09">{{userCtrl.user.vacationsExpireDate | date:'dd MMM yyyy'}}</time></span>
-            <form name="userForm" class="calendar-form" ng-submit='userCtrl.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue);userCtrl.calcDaysCalc()'>
+            <form name="userForm" class="calendar-form" ng-submit='userCtrl.submitHandler(userForm.startdate.$viewValue, userForm.enddate.$viewValue);'>
               <fieldset>
                 <div class="col dashed">
                   <label for="start_date">Start date</label>
@@ -136,13 +78,11 @@
                 <span ng-show="userCtrl.isVacationState(userCtrl.VACATIONS)">Rejected vacations</span>
                 <span ng-show="userCtrl.isVacationState(userCtrl.DAYSOFF)">Rejected days-off</span>
                 <span ng-show="userCtrl.isVacationState(userCtrl.WORKFROMHOME)">Rejected Work from home</span>
-               <!-- <span class="counter">1 new</span> --></h2>
+              </h2>
               <div class="vacations-holder">
                 <time datetime="" class="date" ng-repeat="item in userCtrl.user[userCtrl.vacationState] | userFilterVacation:{rejected: true} | orderBy:'-enddate' | limitTo: userCtrl.listLimits.rejected as listRejected">{{item.startdate | date:'dd-MM-yyyy'}} — {{item.enddate | date:'dd-MM-yyyy'}}</time>
                 <div class="vacations-slider">
-                  <!-- <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
-                  <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time>
-                  <time datetime="" class="date">Sep 25, 2016 — Sep 30, 2016</time> -->
+               
                 </div>
                 <a href="#" class="opener"><span ng-show="userCtrl.listLimits.rejected == 4" ng-click="userCtrl.listLimits.rejected = infinity" class="visible">View all</span><span ng-show="userCtrl.listLimits.rejected != 4" ng-click="userCtrl.listLimits.rejected = 4">Hide</span></a>
               </div>

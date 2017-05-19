@@ -91,13 +91,6 @@ export default class UserController {
         && ((user.formatedEmploymentDate.getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() <= vacationStartDate.getDate()) 
           || (new Date(moment(user.formatedEmploymentDate).add(1, 'month')).getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() > vacationStartDate.getDate()))) 
       {
-        /*console.log(
-          this.calcDays(moment(user.formatedEmploymentDate)
-            .add(user.year, 'year')
-            .add(1, 'month'), vacationStartDate), 
-          this.calcDays(vacationStartDate, moment(user.formatedEmploymentDate)
-            .add(user.year, 'year')
-            .add(1, 'month')))*/
 
         user.vacations
           .filter( item => item.year == (user.year - 1) && item.status != REJECTED )
@@ -126,6 +119,26 @@ export default class UserController {
       /*console.log(user);*/
   }
 
+
+  reCalcAvaliableDays (state, confirmedVacation) {
+    let vacationType;
+
+     switch (state) {
+        case VACATIONS: vacationType = 'availableDays';
+           this.user[vacationType] -=confirmedVacation; 
+          // this.calcDays();    
+        break;
+        case DAYSOFF:
+          vacationType = 'availableDaysOff';
+          this.user[vacationType] -=confirmedVacation; 
+          // this.calcDays();
+        break;        
+        case WORKFROMHOME: vacationType = 'availableWorkFromHome';
+        break;        
+      }
+
+      
+  }
   calcAvailablePrevDays (vacationStartDate, user) {
     return (
     (user.totalPrevDays - user.spendPrevVacation > this.calcDays(vacationStartDate, moment(user.formatedEmploymentDate).add(user.year, 'year').add(1, 'month')) - 1) 
@@ -175,7 +188,10 @@ export default class UserController {
       if (!_.find(this.user[this.vacationState], {id:res.data.id}))
         this.user[this.vacationState].push(res.data);
       this.calcEnableDays(this.$scope.startdate);
-      this.sending = false;
+      this.sending = false; 
+      this.$timeout(()=> {
+        this.reCalcAvaliableDays(this.vacationState, this.user.vacationDays);
+      });
     }
 
     //список новых и подтвержденных заявок
@@ -241,15 +257,12 @@ export default class UserController {
   }
 
   calcDaysCalc() {
-    this.$timeout(()=> {
       if (this.$scope.startdate && this.$scope.enddate) {
         this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], angular.copy(this.holidays));
         this.calcEnableDays(this.$scope.startdate)
       } else {
         this.user.vacationDays = 0;
       }
-    });
-
   }
 
   calcDays(startDate, endDate) {
