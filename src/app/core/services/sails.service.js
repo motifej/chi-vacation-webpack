@@ -184,27 +184,6 @@ export default class SailsService {
 				for(let i in  this.vacationsTransformatedData) {
 					this.updateVacationsTransformatedData(i);
 				}	
-					//     this.users.forEach(user => {
-					// 	console.log('qq');
-				    //     user.vacations.forEach(vacation => {
-				    //     	vacation = angular.copy(vacation);
-				    //     	vacation.user = user;
-				    //     	vacation.deleted = user.deleted;
-				    //     	this.vacationsTransformatedData.vacations.push(vacation);
-				    //     });
-				    //     user.daysoff.forEach(dayoff => {
-				    //     	dayoff = angular.copy(dayoff);
-				    //     	dayoff.user = user;
-				    //     	dayoff.deleted = user.deleted;
-				    //     	this.vacationsTransformatedData.daysoff.push(dayoff);
-				    //     });
-				    //     user.workfromhome.forEach(workfromhome => {
-				    //     	workfromhome = angular.copy(workfromhome);
-				    //     	workfromhome.user = user;
-				    //     	workfromhome.deleted = user.deleted;
-				    //     	this.vacationsTransformatedData.workfromhome.push(workfromhome);
-				    //     });
-				    // });			
 			})
 		}
 

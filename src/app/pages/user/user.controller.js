@@ -257,18 +257,12 @@ export default class UserController {
   }
 
   calcDaysCalc() {
-    this.$timeout(()=> {
-
       if (this.$scope.startdate && this.$scope.enddate) {
         this.user.vacationDays = this.moment().isoWeekdayCalc(this.$scope.startdate, this.$scope.enddate, [1, 2, 3, 4, 5], angular.copy(this.holidays));
         this.calcEnableDays(this.$scope.startdate)
       } else {
         this.user.vacationDays = 0;
       }
-
-    });
-      
-
   }
 
   calcDays(startDate, endDate) {

@@ -18,6 +18,8 @@ function LoginController ($log, $state, $scope, toastr, states, sailsAuthService
       email: $scope.email,
       password: $scope.passw || $scope.newPassword
     }).then( (user) => {
+      //дополнительная перезагрузка страницы для установления сокетного соединения при первом запуске сайти в браузере
+      window.location.reload();
       if ($rootScope.prevState && 
         user && 
          (user.role === states.ADMIN || 
