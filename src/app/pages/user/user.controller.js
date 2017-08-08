@@ -1,12 +1,16 @@
 import {  DAYSOFF, 
-          VACATIONS, 
-          WORKFROMHOME,
-          TYPE_VACATION,
           TYPE_DAYOFF,
-          TYPE_WORKFROMHOME,
-          SHOW_VACATION,
           SHOW_DAYOFF,
-          SHOW_WORKFROMHOME } from '../../core/constants/vacations.consts';
+          VACATIONS, 
+          TYPE_VACATION,
+          SHOW_VACATION,
+          WORKFROMHOME,
+          TYPE_WORKFROMHOME,
+          SHOW_WORKFROMHOME,
+          UNPAIDLEAVE,
+          TYPE_UNPAIDLEAVE,
+          SHOW_UNPAIDLEAVE,
+        } from '../../core/constants/vacations.consts';
 import {  CONFIRMED, 
           REJECTED, 
           INPROGRESS,
@@ -28,6 +32,7 @@ export default class UserController {
     this.DAYSOFF = DAYSOFF;
     this.VACATIONS = VACATIONS;
     this.WORKFROMHOME = WORKFROMHOME;
+    this.UNPAIDLEAVE = UNPAIDLEAVE;
     this.today = new Date();
     this.$scope = $scope;
     this.actions = actions;
@@ -146,6 +151,7 @@ export default class UserController {
     user.spendPrevVacation = 0;
     user.availableDaysOff = 0;
     user.availableWorkFromHome = 0;
+    user.availableUnpaidLeave = 180;
     user.spendDaysOff = 0;
     return user;
   }
@@ -192,7 +198,7 @@ export default class UserController {
     }
 
     //если дей-офф или работа из дому -> создаем заявку
-    if(this.vacationState == DAYSOFF || this.vacationState == WORKFROMHOME) {
+    if(this.vacationState == DAYSOFF || this.vacationState == WORKFROMHOME || this.vacationState == UNPAIDLEAVE) {
       create({uid, startdate, enddate, status, year })
        .then(createSuccess, createError);
       return;
@@ -221,6 +227,7 @@ export default class UserController {
         case VACATIONS: return user.availableDays;
         case DAYSOFF: return user.availableDaysOff;
         case WORKFROMHOME: return user.availableWorkFromHome;
+        case UNPAIDLEAVE: return user.availableUnpaidLeave;
       }
     }
 
@@ -277,7 +284,8 @@ export default class UserController {
   combineVacations() {
     return [].concat(
       this.user[VACATIONS], 
-      this.user[DAYSOFF], 
+      this.user[DAYSOFF],
+      this.user[UNPAIDLEAVE],
       this.user[WORKFROMHOME])
     //return this.user.vacations.concat(this.user.daysoff, this.user.workfromhome);
   }
@@ -291,6 +299,8 @@ export default class UserController {
       case TYPE_DAYOFF: return capitalize ? _.capitalize(SHOW_DAYOFF) : SHOW_DAYOFF;
       case WORKFROMHOME:
       case TYPE_WORKFROMHOME: return capitalize ? _.capitalize(SHOW_WORKFROMHOME) : SHOW_WORKFROMHOME;
+      case UNPAIDLEAVE:
+      case TYPE_UNPAIDLEAVE: return capitalize ? _.capitalize(SHOW_UNPAIDLEAVE) : SHOW_UNPAIDLEAVE;
     }
   }
 

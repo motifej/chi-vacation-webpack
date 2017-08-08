@@ -13,6 +13,8 @@ export default class SettingsController {
 
     this.settings = settings.data.data;
     this.settings.holidays = this.settings.holidays || [];
+    if (!this.settings.accountantEmail) 
+      this.settings.accountantEmail = [];
     if (!this.settings.groups) 
       this.settings.groups = [];
     this.settings.groups = _.unionWith(this.settings.groups, groups.map( el => ({emails: [], name: el})), (el,vl) => el.name == vl.name);
@@ -38,6 +40,24 @@ export default class SettingsController {
 
   deleteEmail(email) {
     this.settings.email = this.settings.email.filter(
+      el => el !== email
+    );
+  }
+
+  addAccountantEmail() {
+    if (this.newAccountantEmail)
+      if (~this.settings.accountantEmail.indexOf(this.newAccountantEmail))
+        this.toastr.error('Duplicate email');
+      else {
+        this.settings.accountantEmail.push(this.newAccountantEmail); 
+        this.newAccountantEmail = '';
+      }
+    else
+      this.toastr.error('Incorrect email')
+  }
+
+  deleteAccountantEmail(email) {
+    this.settings.accountantEmail = this.settings.accountantEmail.filter(
       el => el !== email
     );
   }

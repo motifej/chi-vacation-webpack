@@ -50,6 +50,24 @@
               </div>
             </div>
 
+<hr>
+            <div class="form-group">
+              <label for="newAccountantEmail">Accountant recipients:</label>
+              <ul class="list-group" >
+                <li ng-repeat="item in user.settings.accountantEmail track by $index" class="list-group-item">
+                  <span class="glyphicon glyphicon-envelope"></span> {{item}}
+                  <span title="Delete User" class="close icon-warning glyphicon glyphicon-trash" ng-click="user.deleteAccountantEmail(item)"></span>
+                </li>
+              </ul>
+
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                <input id="newAccountantEmail" name="newAccountantEmail" type="text" class="form-control" ng-model="user.newAccountantEmail" placeholder="Add email" ng-pattern="user.emailPattern">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button" ng-click="user.addAccountantEmail()">Add</button>
+                </span>
+              </div>
+            </div>
 
 <hr>
             <div class="form-group">

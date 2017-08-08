@@ -1,4 +1,4 @@
-import { DAYSOFF, VACATIONS, WORKFROMHOME } from '../constants/vacations.consts';
+import { DAYSOFF, VACATIONS, WORKFROMHOME, UNPAIDLEAVE } from '../constants/vacations.consts';
 import { SETTINGS_KEY } from '../constants/settings.consts';
 
 export default class SailsService {
@@ -31,11 +31,18 @@ export default class SailsService {
 			create: {isArray: false, method: "POST"},
 			delete: {isArray: false, method: "DELETE"}
 		});		
+		this.unpaidleaveResource = $resource(API_URL + "/unpaidleave/:id", {id: "@id"}, {
+			get: {isArray: false, method: "GET"},
+			update: {isArray: false, method: "PUT"},
+			create: {isArray: false, method: "POST"},
+			delete: {isArray: false, method: "DELETE"}
+		});		
 
 		//http vacation create
 		this['create' + VACATIONS] = (vacation) => this.http.post(API_URL + '/vacations/create2', vacation);
 		this['create' + DAYSOFF] = (vacation) => this.http.post(API_URL + '/daysoff/create2', vacation);
 		this['create' + WORKFROMHOME] = (vacation) => this.http.post(API_URL + '/workfromhome/create2', vacation);
+		this['create' + UNPAIDLEAVE] = (vacation) => this.http.post(API_URL + '/unpaidleave/create2', vacation);
 		
 		//http settings
 		this.saveSettings = (settings) => this.http.put(API_URL + '/settings/' + SETTINGS_KEY, settings);
@@ -52,7 +59,8 @@ export default class SailsService {
     				io.socket.on('users', socketUserActions.bind(this));
 					io.socket.on('vacations', socketActions.bind(this, 'vacations'));
 					io.socket.on('daysoff', socketActions.bind(this, 'daysoff'));	
-					io.socket.on('workfromhome', socketActions.bind(this, 'workfromhome'));	
+					io.socket.on('workfromhome', socketActions.bind(this, 'workfromhome'));
+					io.socket.on('unpaidleave', socketActions.bind(this, 'unpaidleave'));
     			}
       			io.socket.get(io.sails.url + '/users', null, this.updateData);
   			});
@@ -65,7 +73,7 @@ export default class SailsService {
 				switch (verb) {
 					case 'created': {
 						$rootScope.$applyAsync(
-							users.push(angular.extend(data, {vacations: [], daysoff: []}))
+							users.push(angular.extend(data, {vacations: [], daysoff: [], unpaidleave: []}))
 						);
 						break;
 					}

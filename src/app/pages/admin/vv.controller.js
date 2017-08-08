@@ -1,13 +1,17 @@
 import { find } from 'lodash';
 import {  DAYSOFF, 
-          VACATIONS, 
-          WORKFROMHOME,
-          TYPE_VACATION,
           TYPE_DAYOFF,
-          TYPE_WORKFROMHOME,
-          SHOW_VACATION,
           SHOW_DAYOFF,
-          SHOW_WORKFROMHOME } from '../../core/constants/vacations.consts';
+          VACATIONS, 
+          TYPE_VACATION,
+          SHOW_VACATION,
+          WORKFROMHOME,
+          TYPE_WORKFROMHOME,
+          SHOW_WORKFROMHOME,
+          UNPAIDLEAVE,
+          TYPE_UNPAIDLEAVE,
+          SHOW_UNPAIDLEAVE,
+        } from '../../core/constants/vacations.consts';
 
 export default class VvController {
   constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams) {
@@ -55,6 +59,7 @@ export default class VvController {
     this.DAYSOFF = DAYSOFF;
     this.VACATIONS = VACATIONS;
     this.WORKFROMHOME = WORKFROMHOME;
+    this.UNPAIDLEAVE = UNPAIDLEAVE;
     this.vacationState = VACATIONS;
     this.activate($scope);
     this.dropdownFilter = "Confirmed";
@@ -84,6 +89,7 @@ export default class VvController {
         if ( type === 'Vacaction') this.pageState = VACATIONS;
         if ( type === 'Day-Off') this.pageState = DAYSOFF;
         if ( type === 'WFH') this.pageState = WORKFROMHOME;
+        if ( type === 'unpaidLeave') this.pageState = UNPAIDLEAVE;
         this.choiceUser(id, curUser.group, curUser)
       }
     }
@@ -213,7 +219,6 @@ export default class VvController {
     }
 
     userInfo(user) {
-      console.log(user);
       this.modal.open({
         templateUrl: require('!!file!../../components/userTools/modal/userInfo/userInfo.html'),
         controller: require('../../components/userTools/modal/userInfo/userInfo.controller'),
@@ -292,7 +297,7 @@ setDateInfo() {
     this._fillEvents(VACATIONS);
     this._fillEvents(DAYSOFF);
     this._fillEvents(WORKFROMHOME);
-
+    this._fillEvents(UNPAIDLEAVE);
   }
 
   calcEnableDays(vacationStartDate) {
@@ -306,13 +311,13 @@ setDateInfo() {
           || (new Date(moment(user.formatedEmploymentDate).add(1, 'month')).getMonth() == vacationStartDate.getMonth() && user.formatedEmploymentDate.getDate() >= vacationStartDate.getDate()))) 
       {
         user.isCrossingYear = true;
-        console.log(
-          this.calcDays(moment(user.formatedEmploymentDate)
-            .add(user.year, 'year')
-            .add(1, 'month'), vacationStartDate), 
-          this.calcDays(vacationStartDate, moment(user.formatedEmploymentDate)
-            .add(user.year, 'year')
-            .add(1, 'month')))
+        // console.log(
+        //   this.calcDays(moment(user.formatedEmploymentDate)
+        //     .add(user.year, 'year')
+        //     .add(1, 'month'), vacationStartDate), 
+        //   this.calcDays(vacationStartDate, moment(user.formatedEmploymentDate)
+        //     .add(user.year, 'year')
+        //     .add(1, 'month')))
 
         user.vacations
           .filter( item => item.year == (user.year - 1) && item.status != "rejected" )
@@ -326,7 +331,7 @@ setDateInfo() {
       .filter( item => item.year == user.year && item.status != "rejected" )
       .forEach( item => user.spendVacation += this.calcDays(item.startdate, item.enddate));
 
-      console.log(user.totalDays)
+      // console.log(user.totalDays)
       user.availableCurDays += user.totalDays - user.spendVacation;
       user.availableDays += user.availableCurDays < 0 ? 0 : user.availableCurDays;
       user.daysoff
@@ -361,6 +366,7 @@ setDateInfo() {
     user.spendVacation = 0;
     user.spendPrevVacation = 0;
     user.availableDaysOff = 0;
+    user.availableUnpaidLeave = 180;
     user.spendDaysOff = 0;
     user.isCrossingYear = false;
     return user;
@@ -389,6 +395,7 @@ setDateInfo() {
           listArray.push(this.filtredUser['vacations']);
           listArray.push(this.filtredUser['daysoff']);
           listArray.push(this.filtredUser['workfromhome']);
+          listArray.push(this.filtredUser['unpaidleave']);
 
 
 
@@ -523,6 +530,8 @@ setDateInfo() {
       case TYPE_DAYOFF: return capitalize ? _.capitalize(SHOW_DAYOFF) : SHOW_DAYOFF;
       case WORKFROMHOME:
       case TYPE_WORKFROMHOME: return capitalize ? _.capitalize(SHOW_WORKFROMHOME) : SHOW_WORKFROMHOME;
+      case UNPAIDLEAVE:
+      case TYPE_UNPAIDLEAVE: return capitalize ? _.capitalize(SHOW_UNPAIDLEAVE) : SHOW_UNPAIDLEAVE;
     }
   }
 

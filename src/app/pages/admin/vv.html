@@ -46,16 +46,18 @@
       <hr ng-show="admin.user.role == admin.roles.ADMIN">
       <div class="buttons-panel clearfix">
         <div class="btn-group col-xs-12" ng-show="admin.user.role == admin.roles.ADMIN">
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">Days-Off</label>
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
-          <label class="btn col-5 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
+          <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
+          <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">Days-Off</label>
+          <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
+          <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'unpaidleave'}" ng-click="admin.changePageState('unpaidleave')">Unpaid leave</label>
+          <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
+          <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
         </div>
         <div class="btn-group col-xs-12" ng-show="admin.user.role == admin.roles.MANAGER || admin.user.role == admin.roles.TEAMLEAD">
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'daysoff'}" ng-click="admin.changePageState('daysoff')">DaysOff</label>
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
+          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'unpaidleave'}" ng-click="admin.changePageState('unpaidleave')">Unpaid leave</label>
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
         </div>
       </div>
@@ -145,7 +147,7 @@
         </div>        
 
 
-      <div class="well" ng-show="admin.pageState == 'vacations' || admin.pageState == 'daysoff' || admin.pageState == 'workfromhome'">
+      <div class="well" ng-show="admin.pageState == 'vacations' || admin.pageState == 'daysoff' || admin.pageState == 'workfromhome' || admin.pageState == 'unpaidleave'">
 
         <div class="row">
           <div class="col-md-4">
@@ -249,22 +251,28 @@
       <!-- <div class="row"> -->
         <div class="btn-group col-xs-12">
           <label
-            class="btn col-xs-4 vacation-option"
+            class="btn col-xs-3 vacation-option"
             ng-class="{'vacation-option-active': admin.vacationState == 'vacations'}"
             ng-click="admin.changeVacationState('vacations')">
             Vacations
           </label>
           <label
-            class="btn col-xs-4 vacation-option"
+            class="btn col-xs-3 vacation-option"
             ng-class="{'vacation-option-active': admin.vacationState == 'daysoff'}"
             ng-click="admin.changeVacationState('daysoff')">
             Days-off
           </label>
           <label
-            class="btn col-xs-4 vacation-option"
+            class="btn col-xs-3 vacation-option"
             ng-class="{'vacation-option-active': admin.vacationState == 'workfromhome'}"
             ng-click="admin.changeVacationState('workfromhome')">
             Work from home
+          </label>
+          <label
+            class="btn col-xs-3 vacation-option"
+            ng-class="{'vacation-option-active': admin.vacationState == 'unpaidleave'}"
+            ng-click="admin.changeVacationState('unpaidleave')">
+            Unpaid leave
           </label>
         </div>
       <!-- </div> -->
@@ -275,6 +283,7 @@
             <span ng-show="admin.isVacationState(admin.VACATIONS)">Vacations request</span>
             <span ng-show="admin.isVacationState(admin.DAYSOFF)">Days-off request</span>
             <span ng-show="admin.isVacationState(admin.WORKFROMHOME)">Work from home request</span>
+            <span ng-show="admin.isVacationState(admin.UNPAIDLEAVE)">Unpaid leave request</span>
           </legend>
           <div class="row">
             <div class="form-group col-md-6">
@@ -311,6 +320,7 @@
               <label for="selected" ng-show="admin.isVacationState('vacations')">Vacation days</label>
               <label for="selected" ng-show="admin.isVacationState('daysoff')">Days-off</label>
               <label for="selected" ng-show="admin.isVacationState('workfromhome')">Work from home</label>
+              <label for="selected" ng-show="admin.isVacationState('unpaidleave')">Unpaid leave</label>
               <div id="selected" class="form-control user__total-days text-center"
               ng-bind="admin.calcDays(startdate, enddate)"></div>
             </div>
@@ -328,7 +338,12 @@
               <label for="workfromhome">Available work from home</label>
               <input type="text" id="workfromhome" class="form-control user__left-days" readonly
               value="5">
-            </div>            
+            </div>
+            <div class="form-group col-md-6" ng-show="admin.isVacationState('unpaidleave')">
+              <label for="unpaidleave">Available unpaid leave</label>
+              <input type="text" id="unpaidleave" class="form-control user__left-days" readonly
+              value="180">
+            </div>
           </div>
           <div class="row">
             <button ng-disabled="(admin.filtredUser.id && !admin.sendingRequest) ? false : true" type="submit" class="btn col-xs-6 col-xs-offset-3 chi-btn--default">

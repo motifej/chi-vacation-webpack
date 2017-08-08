@@ -7,7 +7,7 @@ export default function (app) {
         return function(input, filterKey, filterVal, list, date = 0) {
             var filteredInput = {};
             angular.forEach(input, function(value, key) {
-                var vacationsList = (list == 'vacations' || list == 'daysoff' || list == 'workfromhome') ? value[list] : [];
+                var vacationsList = (list == 'vacations' || list == 'daysoff' || list == 'workfromhome' || list == 'unpaidleave') ? value[list] : [];
                 if (vacationsList.length > 0) {
                     switch (filterVal) {
                         case 'new':
