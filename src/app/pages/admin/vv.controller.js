@@ -219,6 +219,7 @@ export default class VvController {
     }
 
     userInfo(user) {
+      this.calcEnableDays(this.calendarDay, user);
       this.modal.open({
         templateUrl: require('!!file!../../components/userTools/modal/userInfo/userInfo.html'),
         controller: require('../../components/userTools/modal/userInfo/userInfo.controller'),
@@ -300,9 +301,9 @@ setDateInfo() {
     this._fillEvents(UNPAIDLEAVE);
   }
 
-  calcEnableDays(vacationStartDate) {
+  calcEnableDays(vacationStartDate, filtredUser = this.filtredUser) {
 
-      let user = this.initUserData(vacationStartDate, this.filtredUser);
+      let user = this.initUserData(vacationStartDate, filtredUser);
       if (!user) return 0;
       
 
