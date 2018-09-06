@@ -22,6 +22,7 @@ export const groups = [
    'C++',
    'BI',
    'Business Development',
-   'ProMX'
+   'ProMX',
+   'Recruiters'
   ]
  
