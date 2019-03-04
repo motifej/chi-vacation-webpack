@@ -23,6 +23,9 @@ export const groups = [
    'BI',
    'Business Development',
    'ProMX',
-   'Recruiters'
+   'Recruiters',
+   'Machine Learning',
+   'Unreal Engine',
+   '3D artist'
   ]
  
