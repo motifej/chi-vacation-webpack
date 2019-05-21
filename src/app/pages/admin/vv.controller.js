@@ -16,7 +16,7 @@ import {  DAYSOFF,
 export default class VvController {
   constructor ($scope, $timeout, $parse, userData, $uibModal, moment, groups, status, toastr, user, users, settings, sailsService, $stateParams) {
     'ngInject';
-    
+
     this.sailsService = sailsService;
     this.$parse = $parse;
     this.$stateParams = $stateParams;
@@ -67,6 +67,8 @@ export default class VvController {
     this.sendingAdditional = false;
     this.sendingRequest = false;
     this.maxDate = moment().add(1, 'year').add(1, 'month');
+
+    this.choiceGroup(this.user.group);
 }
 
   activate(scope) {
@@ -534,6 +536,33 @@ setDateInfo() {
       case UNPAIDLEAVE:
       case TYPE_UNPAIDLEAVE: return capitalize ? _.capitalize(SHOW_UNPAIDLEAVE) : SHOW_UNPAIDLEAVE;
     }
+  }
+
+  calcAvailableDays(user) {
+    const vacationStartDay = this.calendarDay;
+    const days = moment().isoWeekdayCalc(user.employmentdate, vacationStartDay, [1,2,3,4,5,6,7]) - 1;
+    user.formatedEmploymentDate = new Date(user.employmentdate);
+    user.year = Math.floor(days / 365.25);
+    user.addedCur = user.added[user.year] || 0;
+    user.totalDays = Math.round((days % 365.25)*20/365.25) + user.addedCur;
+    user.spendVacation = 0;
+    user.availableDays = 0;
+    user.availableCurDays = 0;
+    user.availablePrevDays = 0;
+
+
+    if(user.year != 0 
+      && ((user.formatedEmploymentDate.getMonth() == vacationStartDay.getMonth() && user.formatedEmploymentDate.getDate() <= vacationStartDay.getDate()) 
+        || (new Date(moment(user.formatedEmploymentDate).add(1, 'month')).getMonth() == vacationStartDay.getMonth() && user.formatedEmploymentDate.getDate() >= vacationStartDay.getDate()))) 
+    {
+
+      user.availablePrevDays += this.calcAvailablePrevDays(vacationStartDay, user);
+      user.availableDays += user.availablePrevDays < 0 ? 0 : user.availablePrevDays;
+    }
+
+    user.availableCurDays += user.totalDays - user.spendVacation;
+    user.availableDays += user.availableCurDays < 0 ? 0 : user.availableCurDays;
+    return user.availableDays;
   }
 
   getTotalDaysWFH(vac) {

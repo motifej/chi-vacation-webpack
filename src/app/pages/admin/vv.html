@@ -52,6 +52,7 @@
           <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'unpaidleave'}" ng-click="admin.changePageState('unpaidleave')">Unpaid leave</label>
           <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
           <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'userRequest'}" ng-click="admin.changePageState('userRequest')">User request</label>
+          <label class="btn col-md-2 m-tab" ng-class="{'m-tab--active': admin.pageState == 'availableDays'}" ng-click="admin.changePageState('availableDays')">Available days</label>
         </div>
         <div class="btn-group col-xs-12" ng-show="admin.user.role == admin.roles.MANAGER || admin.user.role == admin.roles.TEAMLEAD">
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'vacations'}" ng-click="admin.changePageState('vacations')">Vacations</label>
@@ -59,9 +60,10 @@
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'workfromhome'}" ng-click="admin.changePageState('workfromhome')">Work from home</label>
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'unpaidleave'}" ng-click="admin.changePageState('unpaidleave')">Unpaid leave</label>
           <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'calendar'}" ng-click="admin.changePageState('calendar')">Calendar</label>
+          <label class="btn col-xs-12 col-sm-3 m-tab" ng-class="{'m-tab--active': admin.pageState == 'availableDays'}" ng-click="admin.changePageState('availableDays')">Available days</label>
         </div>
       </div>
-      <div class="buttons-panel clearfix" ng-hide="admin.pageState == 'userRequest'">
+      <div class="buttons-panel clearfix" ng-hide="admin.pageState == 'userRequest' || 'availableDays'">
       <hr>
         <div class="btn-group col-xs-12">
           <label class="btn col-xs-12 col-sm-3 col-md-3 m-tab--inprogress" ng-class="{'m-tab--inprogress--active': admin.statusFilter.status == 'new'}" ng-click="admin.choiceButtonFilter('new')">New</label>
@@ -146,6 +148,32 @@
           </div>
         </div>        
 
+        <div class="m-calendar well clearfix" ng-show="admin.pageState == 'availableDays'">
+          <div class="row col-md-12">
+            <div>
+              <table class="table table-bordered">
+                <tbody>
+                  <colgroup>
+                    <col class="col-xs-4">
+                    <col class="col-xs-4">
+                    <col class="col-xs-4">
+                  </colgroup>
+                  <tr>
+                    <th>Name</th>
+                    <th>Group</th>
+                    <th>Available Days</th>
+                  </tr>
+                  </thead>
+                  <tr ng-repeat="user in admin.users | strictFilter:admin.filter:'group'">
+                    <td>{{ user.firstname + ' ' + user.lastname}}</td>
+                    <td>{{ user.group }}</td>
+                    <td>{{ admin.calcAvailableDays(user) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
       <div class="well" ng-show="admin.pageState == 'vacations' || admin.pageState == 'daysoff' || admin.pageState == 'workfromhome' || admin.pageState == 'unpaidleave'">
 
