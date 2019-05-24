@@ -310,3 +310,8 @@
         width: 100%;
     }
 }
+
+.availableDays__row:hover {
+    cursor: pointer;
+    background-color: #00000050;
+}

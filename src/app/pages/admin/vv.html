@@ -152,7 +152,7 @@
           <div class="row col-md-12">
             <div>
               <table class="table table-bordered">
-                <tbody>
+                <thead>
                   <colgroup>
                     <col class="col-xs-4">
                     <col class="col-xs-4">
@@ -164,7 +164,8 @@
                     <th>Available Days</th>
                   </tr>
                   </thead>
-                  <tr ng-repeat="user in admin.users | strictFilter:admin.filter:'group'">
+                <tbody>
+                  <tr class="availableDays__row" ng-repeat="user in admin.users | strictFilter:admin.filter:'group'" ng-click="admin.userInfo(user)">
                     <td>{{ user.firstname + ' ' + user.lastname}}</td>
                     <td>{{ user.group }}</td>
                     <td>{{ admin.calcAvailableDays(user) }}</td>
